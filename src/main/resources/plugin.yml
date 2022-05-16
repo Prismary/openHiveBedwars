@@ -1,0 +1,7 @@
+name: OpenHiveBedwars
+version: '${project.version}'
+main: net.prismarray.openhivebedwars.OpenHiveBedwars
+api-version: 1.18
+authors: [ Prismary ]
+description: An open source re-implementation of the Bedwars plugin used on the now closed HiveMC Java Edition server
+website: https://github.com/Prismary/openHiveBedwars
