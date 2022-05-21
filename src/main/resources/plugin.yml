@@ -5,3 +5,9 @@ api-version: 1.18
 authors: [ Prismary ]
 description: An open source re-implementation of the Bedwars plugin used on the now closed HiveMC Java Edition server
 website: https://github.com/Prismary/openHiveBedwars
+
+commands:
+  openhivebedwars:
+    usage: /openhivebedwars <help|version|reload>
+    description: root command
+    aliases: [ ohbw, hbw, bw ]

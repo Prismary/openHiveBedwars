@@ -1,0 +1,13 @@
+# ------------------------------- #
+# OPEN HIVE BEDWARS CONFIGURATION #
+# ------------------------------- #
+
+# SERVER MODE (solo, duos, teams)
+mode: "teams"
+
+# General chat prefix
+prefix: "&8| &3&lBed&b&lWars&8 | &7"
+
+# World copy names
+lobby_name: "lobby"
+arena_name: "arena"

@@ -1,0 +1,8 @@
+# ------------------------------- #
+#        MAP CONFIGURATION        #
+# ------------------------------- #
+
+maps:
+  duos_test:
+    name: "Test"
+    mode: "duos"
