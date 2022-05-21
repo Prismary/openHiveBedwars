@@ -31,11 +31,11 @@ public enum TeamColor {
         this.isTeamsModeColor = isTeamsColor;
     }
 
-    public TeamColor[] getDousModeColours() {
-        return Arrays.stream(TeamColor.values()).filter( (c) -> c.isDuosModeColor).toArray(TeamColor[]::new);
+    public static TeamColor[] getDuosModeColours() {
+        return Arrays.stream(TeamColor.values()).filter((c) -> c.isDuosModeColor).sorted().toArray(TeamColor[]::new);
     }
 
-    public TeamColor[] getTeamsModeColours() {
-        return Arrays.stream(TeamColor.values()).filter( (c) -> c.isTeamsModeColor).toArray(TeamColor[]::new);
+    public static TeamColor[] getTeamsModeColours() {
+        return Arrays.stream(TeamColor.values()).filter((c) -> c.isTeamsModeColor).sorted().toArray(TeamColor[]::new);
     }
 }
