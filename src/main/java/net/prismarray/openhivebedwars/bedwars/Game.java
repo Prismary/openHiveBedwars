@@ -5,6 +5,7 @@ import net.prismarray.openhivebedwars.util.Mode;
 import net.prismarray.openhivebedwars.util.Status;
 import net.prismarray.openhivebedwars.util.WorldCopy;
 import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.WorldCreator;
 import org.bukkit.entity.Player;
@@ -61,5 +62,10 @@ public class Game {
 
     public void respawnPlayer(Player player) {
         player.setFallDistance(0);
+    }
+    public void fullPlayerClear(Player player) {
+        player.getInventory().clear();
+        player.setGameMode(GameMode.SURVIVAL);
+        player.setFlying(false);
     }
 }

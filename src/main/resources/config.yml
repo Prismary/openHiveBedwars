@@ -11,3 +11,7 @@ prefix: "&8| &3&lBed&b&lWars&8 | &7"
 # World copy names
 lobby_name: "lobby"
 arena_name: "arena"
+
+# Breakable blocks
+breakables:
+  - DEAD_BUSH
