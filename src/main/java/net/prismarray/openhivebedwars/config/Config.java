@@ -2,7 +2,11 @@ package net.prismarray.openhivebedwars.config;
 
 import net.prismarray.openhivebedwars.OpenHiveBedwars;
 import net.prismarray.openhivebedwars.util.Mode;
+import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Config {
 
@@ -38,10 +42,24 @@ public class Config {
                 return Mode.TEAMS;
         }
         // TODO: throw error
+
         return Mode.TEAMS;
     }
 
     public String getPrefix() {
         return config.getString("prefix");
+    }
+
+    public List<Material> getBreakables() {
+        List<String> strBreakables =  config.getStringList("breakables");
+
+        List<Material> matBreakables = new ArrayList<Material>();
+
+        // copy and convert to material type
+        for (int i = 0; i < strBreakables.size(); i++) {
+            matBreakables.add(Material.getMaterial(strBreakables.get(i)));
+        }
+
+        return matBreakables;
     }
 }
