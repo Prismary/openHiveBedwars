@@ -47,6 +47,7 @@ public final class OpenHiveBedwars extends JavaPlugin {
         getCommand("team").setExecutor(new CmdTeam(this));
     }
     private void registerEvents() {
+
         getServer().getPluginManager().registerEvents(new EvtPlayerJoin(this), this);
         getServer().getPluginManager().registerEvents(new EvtPlayerLogin(this), this);
         getServer().getPluginManager().registerEvents(new EvtBlockPhysics(this), this);

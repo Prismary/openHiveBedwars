@@ -2,6 +2,9 @@
 # OPEN HIVE BEDWARS CONFIGURATION #
 # ------------------------------- #
 
+
+# GENERAL SETTINGS #
+
 # SERVER MODE (solo, duos, teams)
 mode: "teams"
 
@@ -12,6 +15,12 @@ prefix: "&8| &3&lBed&b&lWars&8 | &7"
 lobby_name: "lobby"
 arena_name: "arena"
 
-# Breakable blocks
+
+# GAMEPLAY OPTIONS #
+
+# Merge 2-player teams in Teams mode
+merge-teams: true
+
+# Breakable arena blocks
 breakables:
   - DEAD_BUSH

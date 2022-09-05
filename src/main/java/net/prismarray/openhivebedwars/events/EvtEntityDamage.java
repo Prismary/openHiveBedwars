@@ -18,6 +18,7 @@ public class EvtEntityDamage extends EventBase {
             case INGAME:
                 break;
             case LOBBY:
+            case CONFIRMATION:
             case RESULTS:
                 voidRespawn(event);
                 break;
@@ -36,6 +37,7 @@ public class EvtEntityDamage extends EventBase {
                 if (e instanceof Player) {
                     switch (plugin.game.getStatus()) {
                         case LOBBY:
+                        case CONFIRMATION:
                             plugin.game.setLobbyPlayer((Player) e);
                             break;
                         case RESULTS:

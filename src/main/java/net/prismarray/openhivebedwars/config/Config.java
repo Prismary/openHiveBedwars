@@ -46,6 +46,10 @@ public class Config {
         return Mode.TEAMS;
     }
 
+    public boolean mergeTeams() {
+        return config.getBoolean("merge-teams");
+    }
+
     public String getPrefix() {
         return config.getString("prefix");
     }

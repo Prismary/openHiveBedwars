@@ -18,6 +18,9 @@ public class EvtPlayerLogin extends EventBase {
             case STARTUP:
                 disallow(event, "Server is starting up.");
                 break;
+            case CONFIRMATION:
+                disallow(event, "The game is starting.");
+                break;
             case SHUTDOWN:
                 disallow(event, "Server is shutting down.");
                 break;

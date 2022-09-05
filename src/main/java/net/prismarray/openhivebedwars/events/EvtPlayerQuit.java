@@ -17,10 +17,15 @@ public class EvtPlayerQuit extends EventBase {
     public void playerQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
 
+        // Update lobby counter
+        plugin.game.getLobbyTimer().update();
+
         // Remove player from team
-        Team team = plugin.game.getTeamHandler().getPlayerTeam(player);
-        plugin.game.getTeamHandler().broadcastPlayerLeave(team, player.getName());
-        plugin.game.getTeamHandler().removePlayer(player);
-        plugin.game.getTeamHandler().tryDissolution(team);
+        if (plugin.game.getTeamHandler().isInTeam(player)) {
+            Team team = plugin.game.getTeamHandler().getPlayerTeam(player);
+            plugin.game.getTeamHandler().broadcastPlayerLeave(team, player.getName());
+            plugin.game.getTeamHandler().removePlayer(player);
+            plugin.game.getTeamHandler().tryDissolution(team);
+        }
     }
 }

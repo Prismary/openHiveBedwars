@@ -53,16 +53,6 @@ public class TeamHandler {
         return null;
     }
 
-    public ArrayList<Team> getEmptyTeams() {
-        ArrayList<Team> empty = new ArrayList<>();
-        for (int i = 0; i < teams.size(); i++) {
-            if (teams.get(i).getPlayerCount() == 0) {
-                empty.add(teams.get(i));
-            }
-        }
-        return empty;
-    }
-
     public ArrayList<Player> getTeamlessPlayers() {
         ImmutableList<Player> currentPlayers =  ImmutableList.copyOf(game.plugin.getServer().getOnlinePlayers());
         ArrayList<Player> teamlessPlayers = new ArrayList<>();
@@ -141,15 +131,31 @@ public class TeamHandler {
         return invites.get(inviter).remove(invitee);
     }
 
-    public void assignAndMerge() { // todo merge logic
+    public void assignAndMerge() {
+        dissolveEmptyTeams();
         ArrayList<Player> teamless = getTeamlessPlayers();
 
+        // Assign teamless
         for (int i = 0; i < teams.size(); i++) {
             while (teams.get(i).getPlayerCount() < teams.get(i).size) {
                 if (!teamless.isEmpty()) {
                     teams.get(i).addPlayer(teamless.get(0));
                     teamless.remove(0);
                 }
+            }
+        }
+
+        // Merge remaining two-player teams in teams mode
+        if (game.plugin.config.mergeTeams() && game.mode == Mode.TEAMS) {
+            ArrayList<Team> mergeTeams = getTwoPlayerTeams();
+            while (mergeTeams.size() > 1) {
+                addToPlayer(mergeTeams.get(mergeTeams.size()-1).getPlayer(0), mergeTeams.get(0).getPlayer(0));
+                addToPlayer(mergeTeams.get(mergeTeams.size()-1).getPlayer(1), mergeTeams.get(0).getPlayer(0));
+
+                teams.remove(mergeTeams.get(mergeTeams.size()-1)); // Dissolve team
+
+                mergeTeams.remove(mergeTeams.size()-1); // Remove dissolved and full team from list
+                mergeTeams.remove(0);
             }
         }
     }
@@ -179,6 +185,24 @@ public class TeamHandler {
             broadcastToTeam(team, "§cYour team has been dissolved.");
             teams.remove(team);
         }
+    }
+
+    public void dissolveEmptyTeams() {
+        for (int i = 0; i < teams.size(); i++) {
+            if (teams.get(i).getPlayerCount() <= 1) {
+                teams.remove(teams.get(i));
+            }
+        }
+    }
+
+    public ArrayList<Team> getTwoPlayerTeams() {
+        ArrayList<Team> teams = new ArrayList<>();
+        for (int i = 0; i < teams.size(); i++) {
+            if (teams.get(i).getPlayerCount() == 2) {
+                teams.add(teams.get(i));
+            }
+        }
+        return teams;
     }
 
     public void broadcastToTeam(Team team, String message) {

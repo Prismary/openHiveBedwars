@@ -4,41 +4,65 @@ import net.prismarray.openhivebedwars.OpenHiveBedwars;
 import net.prismarray.openhivebedwars.util.Mode;
 import net.prismarray.openhivebedwars.util.Status;
 import net.prismarray.openhivebedwars.util.WorldCopy;
-import org.bukkit.ChatColor;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.WorldCreator;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitScheduler;
 
 import java.util.ArrayList;
 
 public class Game {
-
     OpenHiveBedwars plugin;
     Mode mode;
     Status status;
     TeamHandler teamHandler;
+
+    LobbyTimer lobbyTimer;
 
     public Game(OpenHiveBedwars plugin, Mode mode) {
         this.plugin = plugin;
         startup(mode);
     }
 
+
+
+    // GAME PHASE PROGRESSION
     public void startup(Mode mode) {
         status = Status.STARTUP;
 
         this.mode = mode;
         teamHandler = new TeamHandler(this);
+        lobbyTimer = new LobbyTimer(this);
 
         lobby();
     }
 
     public void lobby() {
         status = Status.LOBBY;
+        lobbyTimer.enable();
     }
+
+    public void confirmation() {
+        status = Status.CONFIRMATION;
+
+        // finalize team composition
+        teamHandler.assignAndMerge();
+        teamHandler.colorize();
+    }
+
+    public void warmup() {
+        status = Status.WARMUP;
+
+        lobbyTimer.disable();
+    }
+
+
 
     public TeamHandler getTeamHandler() {
         return teamHandler;
+    }
+
+    public LobbyTimer getLobbyTimer() {
+        return lobbyTimer;
     }
 
     public Status getStatus() {
@@ -77,4 +101,6 @@ public class Game {
         player.setGameMode(GameMode.SURVIVAL);
         player.setFlying(false);
     }
+
+
 }

@@ -1,6 +1,7 @@
 package net.prismarray.openhivebedwars.commands;
 
 import net.prismarray.openhivebedwars.OpenHiveBedwars;
+import net.prismarray.openhivebedwars.util.ActionBar;
 import net.prismarray.openhivebedwars.util.Format;
 import net.prismarray.openhivebedwars.util.GSU;
 import net.prismarray.openhivebedwars.util.Status;
@@ -29,6 +30,9 @@ public class CmdOpenHiveBedwars extends CommandBase {
                 return reload(sender, command, label, args);
             case "status":
                 return status(sender, command, label, args);
+            case "test":
+                ActionBar.send(GSU.getPlayer(sender.getName()), "amogus");
+                return true;
             case "nik":
                 sender.sendMessage(":skull:");
                 return true;
