@@ -2,6 +2,7 @@ package net.prismarray.openhivebedwars;
 
 import net.prismarray.openhivebedwars.bedwars.Game;
 import net.prismarray.openhivebedwars.commands.CmdOpenHiveBedwars;
+import net.prismarray.openhivebedwars.commands.CmdTeam;
 import net.prismarray.openhivebedwars.config.Config;
 import net.prismarray.openhivebedwars.events.*;
 import net.prismarray.openhivebedwars.util.WorldCopy;
@@ -43,6 +44,7 @@ public final class OpenHiveBedwars extends JavaPlugin {
 
     private void registerCommands() {
         getCommand("openhivebedwars").setExecutor(new CmdOpenHiveBedwars(this));
+        getCommand("team").setExecutor(new CmdTeam(this));
     }
     private void registerEvents() {
         getServer().getPluginManager().registerEvents(new EvtPlayerJoin(this), this);
@@ -55,5 +57,6 @@ public final class OpenHiveBedwars extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new EvtBlockPlace(this), this);
         getServer().getPluginManager().registerEvents(new EvtBlockBreak(this), this);
         getServer().getPluginManager().registerEvents(new EvtFireExtinguish(this), this);
+        getServer().getPluginManager().registerEvents(new EvtPlayerQuit(this), this);
     }
 }

@@ -2,6 +2,7 @@ package net.prismarray.openhivebedwars.commands;
 
 import net.prismarray.openhivebedwars.OpenHiveBedwars;
 import net.prismarray.openhivebedwars.util.Format;
+import net.prismarray.openhivebedwars.util.GSU;
 import net.prismarray.openhivebedwars.util.Status;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -28,6 +29,9 @@ public class CmdOpenHiveBedwars extends CommandBase {
                 return reload(sender, command, label, args);
             case "status":
                 return status(sender, command, label, args);
+            case "nik":
+                sender.sendMessage(":skull:");
+                return true;
             default:
                 return false;
         }
@@ -78,4 +82,5 @@ public class CmdOpenHiveBedwars extends CommandBase {
         sender.sendMessage("Status set.");
         return true;
     }
+
 }

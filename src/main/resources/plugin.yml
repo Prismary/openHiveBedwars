@@ -11,3 +11,7 @@ commands:
     usage: /openhivebedwars <help|version|reload>
     description: root command
     aliases: [ ohbw, hbw, bw ]
+  team:
+    usage: /team <player>
+    description: team another player
+    aliases: []

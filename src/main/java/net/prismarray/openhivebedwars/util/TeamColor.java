@@ -31,6 +31,10 @@ public enum TeamColor {
         this.isTeamsModeColor = isTeamsColor;
     }
 
+    public static TeamColor[] getSoloModeColours() {
+        return Arrays.stream(TeamColor.values()).sorted().toArray(TeamColor[]::new);
+    }
+
     public static TeamColor[] getDuosModeColours() {
         return Arrays.stream(TeamColor.values()).filter((c) -> c.isDuosModeColor).sorted().toArray(TeamColor[]::new);
     }

@@ -17,20 +17,29 @@ public class Game {
     OpenHiveBedwars plugin;
     Mode mode;
     Status status;
-    ArrayList<Team> teams;
+    TeamHandler teamHandler;
 
     public Game(OpenHiveBedwars plugin, Mode mode) {
         this.plugin = plugin;
-        setup(mode);
+        startup(mode);
     }
 
-    public void setup(Mode mode) {
+    public void startup(Mode mode) {
         status = Status.STARTUP;
 
         this.mode = mode;
-        teams = new ArrayList<Team>();
+        teamHandler = new TeamHandler(this);
+
+        lobby();
     }
 
+    public void lobby() {
+        status = Status.LOBBY;
+    }
+
+    public TeamHandler getTeamHandler() {
+        return teamHandler;
+    }
 
     public Status getStatus() {
         return status;
