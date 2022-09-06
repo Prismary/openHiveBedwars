@@ -4,6 +4,7 @@ import net.prismarray.openhivebedwars.bedwars.Game;
 import net.prismarray.openhivebedwars.commands.CmdOpenHiveBedwars;
 import net.prismarray.openhivebedwars.commands.CmdTeam;
 import net.prismarray.openhivebedwars.config.Config;
+import net.prismarray.openhivebedwars.config.MapManager;
 import net.prismarray.openhivebedwars.events.*;
 import net.prismarray.openhivebedwars.util.WorldCopy;
 import org.bukkit.WorldCreator;
@@ -13,6 +14,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public final class OpenHiveBedwars extends JavaPlugin {
 
     public Config config;
+    public MapManager mapManager;
     public Game game;
 
     @Override
@@ -20,6 +22,10 @@ public final class OpenHiveBedwars extends JavaPlugin {
 
         // Initialize config
         config = new Config(this);
+
+        // Initialize MapManager
+        mapManager = new MapManager(this);
+        mapManager.loadMaps();
 
         registerCommands();
         registerEvents();

@@ -1,0 +1,238 @@
+settings:
+  name: "Your Cool Map"
+  mode: "teams"
+
+locations:
+  # coordinates in format 'x,y,z'
+
+  general:
+    spectator_spawn: "0,0,0"
+    emerald_summoner_locations:
+      - "0,0,0"
+      - "0,0,1"
+    diamond_summoner_locations:
+      - "0,0,2"
+      - "0,0,3"
+    enchanter_npc_locations:
+      - "0,0,4"
+      - "0,0,5"
+    specialist_npc_locations:
+      - "0,0,6"
+      - "0,0,7"
+
+  teams:
+    red:
+      spawn: "0,1,0"
+      bed:
+        foot_location: "0,1,1"
+        head_location: "0,1,2"
+      summoner_locations:
+        - "0,1,2"
+        - "0,1,3"
+      item_npc_locations:
+        - "0,1,4"
+        - "0,1,5"
+      upgrades_npc_locations:
+        - "0,1,6"
+        - "0,1,7"
+      color_indicator_locations:
+        - "0,1,8"
+        - "0,1,9"
+
+    gold:
+      spawn: "0,1,0"
+      bed:
+        foot_location: "0,1,1"
+        head_location: "0,1,2"
+      summoner_locations:
+        - "0,1,2"
+        - "0,1,3"
+      item_npc_locations:
+        - "0,1,4"
+        - "0,1,5"
+      upgrades_npc_locations:
+        - "0,1,6"
+        - "0,1,7"
+      color_indicator_locations:
+        - "0,1,8"
+        - "0,1,9"
+
+    aqua:
+      spawn: "0,1,0"
+      bed:
+        foot_location: "0,1,1"
+        head_location: "0,1,2"
+      summoner_locations:
+        - "0,1,2"
+        - "0,1,3"
+      item_npc_locations:
+        - "0,1,4"
+        - "0,1,5"
+      upgrades_npc_locations:
+        - "0,1,6"
+        - "0,1,7"
+      color_indicator_locations:
+        - "0,1,8"
+        - "0,1,9"
+
+    green:
+      spawn: "0,1,0"
+      bed:
+        foot_location: "0,1,1"
+        head_location: "0,1,2"
+      summoner_locations:
+        - "0,1,2"
+        - "0,1,3"
+      item_npc_locations:
+        - "0,1,4"
+        - "0,1,5"
+      upgrades_npc_locations:
+        - "0,1,6"
+        - "0,1,7"
+      color_indicator_locations:
+        - "0,1,8"
+        - "0,1,9"
+
+    gray:
+      spawn: "0,1,0"
+      bed:
+        foot_location: "0,1,1"
+        head_location: "0,1,2"
+      summoner_locations:
+        - "0,1,2"
+        - "0,1,3"
+      item_npc_locations:
+        - "0,1,4"
+        - "0,1,5"
+      upgrades_npc_locations:
+        - "0,1,6"
+        - "0,1,7"
+      color_indicator_locations:
+        - "0,1,8"
+        - "0,1,9"
+
+    dark_green:
+      spawn: "0,1,0"
+      bed:
+        foot_location: "0,1,1"
+        head_location: "0,1,2"
+      summoner_locations:
+        - "0,1,2"
+        - "0,1,3"
+      item_npc_locations:
+        - "0,1,4"
+        - "0,1,5"
+      upgrades_npc_locations:
+        - "0,1,6"
+        - "0,1,7"
+      color_indicator_locations:
+        - "0,1,8"
+        - "0,1,9"
+
+    blue:
+      spawn: "0,1,0"
+      bed:
+        foot_location: "0,1,1"
+        head_location: "0,1,2"
+      summoner_locations:
+        - "0,1,2"
+        - "0,1,3"
+      item_npc_locations:
+        - "0,1,4"
+        - "0,1,5"
+      upgrades_npc_locations:
+        - "0,1,6"
+        - "0,1,7"
+      color_indicator_locations:
+        - "0,1,8"
+        - "0,1,9"
+
+    dark_red:
+      spawn: "0,1,0"
+      bed:
+        foot_location: "0,1,1"
+        head_location: "0,1,2"
+      summoner_locations:
+        - "0,1,2"
+        - "0,1,3"
+      item_npc_locations:
+        - "0,1,4"
+        - "0,1,5"
+      upgrades_npc_locations:
+        - "0,1,6"
+        - "0,1,7"
+      color_indicator_locations:
+        - "0,1,8"
+        - "0,1,9"
+
+    yellow:
+      spawn: "0,1,0"
+      bed:
+        foot_location: "0,1,1"
+        head_location: "0,1,2"
+      summoner_locations:
+        - "0,1,2"
+        - "0,1,3"
+      item_npc_locations:
+        - "0,1,4"
+        - "0,1,5"
+      upgrades_npc_locations:
+        - "0,1,6"
+        - "0,1,7"
+      color_indicator_locations:
+        - "0,1,8"
+        - "0,1,9"
+
+    magenta:
+      spawn: "0,1,0"
+      bed:
+        foot_location: "0,1,1"
+        head_location: "0,1,2"
+      summoner_locations:
+        - "0,1,2"
+        - "0,1,3"
+      item_npc_locations:
+        - "0,1,4"
+        - "0,1,5"
+      upgrades_npc_locations:
+        - "0,1,6"
+        - "0,1,7"
+      color_indicator_locations:
+        - "0,1,8"
+        - "0,1,9"
+
+    purple:
+      spawn: "0,1,0"
+      bed:
+        foot_location: "0,1,1"
+        head_location: "0,1,2"
+      summoner_locations:
+        - "0,1,2"
+        - "0,1,3"
+      item_npc_locations:
+        - "0,1,4"
+        - "0,1,5"
+      upgrades_npc_locations:
+        - "0,1,6"
+        - "0,1,7"
+      color_indicator_locations:
+        - "0,1,8"
+        - "0,1,9"
+
+    dark_aqua:
+      spawn: "0,1,0"
+      bed:
+        foot_location: "0,1,1"
+        head_location: "0,1,2"
+      summoner_locations:
+        - "0,1,2"
+        - "0,1,3"
+      item_npc_locations:
+        - "0,1,4"
+        - "0,1,5"
+      upgrades_npc_locations:
+        - "0,1,6"
+        - "0,1,7"
+      color_indicator_locations:
+        - "0,1,8"
+        - "0,1,9"
