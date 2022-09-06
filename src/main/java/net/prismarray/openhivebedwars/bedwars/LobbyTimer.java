@@ -1,8 +1,10 @@
 package net.prismarray.openhivebedwars.bedwars;
 
 import net.prismarray.openhivebedwars.util.ActionBar;
+import net.prismarray.openhivebedwars.util.SoundHandler;
 import net.prismarray.openhivebedwars.util.Status;
 import org.bukkit.Bukkit;
+import org.bukkit.Sound;
 import org.bukkit.scheduler.BukkitScheduler;
 
 public class LobbyTimer {
@@ -11,6 +13,7 @@ public class LobbyTimer {
     Countdown countdown;
     boolean refreshActionBar;
     boolean countdownActive;
+    boolean useRedCount;
     int requiredPlayerCount;
 
     public LobbyTimer(Game game) {
@@ -19,6 +22,7 @@ public class LobbyTimer {
         countdown = new Countdown(game.plugin, 60, 0, 1);
         refreshActionBar = false;
         countdownActive = false;
+        useRedCount = false;
         requiredPlayerCount = 2;
     }
 
@@ -74,7 +78,7 @@ public class LobbyTimer {
                 ActionBar.sendToAll("§e" + String.valueOf(requiredPlayerCount - Bukkit.getOnlinePlayers().size()) + " players needed to start...");
                 waitingLoop();
             }
-        }, 10);
+        }, 20);
     }
 
     private void countdownLoop() {
@@ -84,9 +88,31 @@ public class LobbyTimer {
                 if (!countdownActive || !refreshActionBar) { // return early if task should end
                     return;
                 }
-                ActionBar.sendToAll("§aStarting game in §a§l" + String.valueOf(countdown.getCount()));
+                tryGameConfirmation(); // Try to confirm game
+                tryGameStart(); // Try to start game
+
+                if (useRedCount) {
+                    ActionBar.sendToAll("§aStarting game in §c§l" + String.valueOf(countdown.getCount()));
+                    SoundHandler.globalPlayerSound(Sound.CLICK);
+                } else {
+                    ActionBar.sendToAll("§aStarting game in §a§l" + String.valueOf(countdown.getCount()));
+                }
                 countdownLoop();
             }
-        }, 10);
+        }, 20);
+    }
+
+    private void tryGameConfirmation() {
+        if (countdown.getCount() == 5) {
+            useRedCount = true;
+            game.confirmation();
+        }
+    }
+
+    private void tryGameStart() {
+        if (countdown.getCount() == 0) {
+            disable();
+            game.warmup();
+        }
     }
 }

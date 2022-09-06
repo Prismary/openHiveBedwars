@@ -135,12 +135,29 @@ public class TeamHandler {
         dissolveEmptyTeams();
         ArrayList<Player> teamless = getTeamlessPlayers();
 
-        // Assign teamless
-        for (int i = 0; i < teams.size(); i++) {
-            while (teams.get(i).getPlayerCount() < teams.get(i).size) {
+        // Assign teamless to existing teams
+        for (Team team : teams) {
+            while (!team.isFull()) {
                 if (!teamless.isEmpty()) {
-                    teams.get(i).addPlayer(teamless.get(0));
+                    team.addPlayer(teamless.get(0));
                     teamless.remove(0);
+                }
+            }
+        }
+
+        // Create new teams with remaining players
+        Team newTeam;
+        while (!teamless.isEmpty()) {
+            newTeam(teamless.get(0)); // create team with first player in list
+            teamless.remove(0);
+            newTeam = teams.get(teams.size()-1);
+
+            while (!newTeam.isFull()) {
+                if (!teamless.isEmpty()) {
+                    newTeam.addPlayer(teamless.get(0));
+                    teamless.remove(0);
+                } else {
+                    break;
                 }
             }
         }
