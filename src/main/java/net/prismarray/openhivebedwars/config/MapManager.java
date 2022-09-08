@@ -58,12 +58,7 @@ public class MapManager {
                         "Successfully loaded map '" + mapID + "' from file '" + configFile.getName() + "'."
                 );
 
-            } catch (IOException e) {
-                this.plugin.getLogger().warning(
-                        "Could not parse config file '" + configFile.getName() + "'. Skipping map..."
-                );
-
-            } catch (IllegalArgumentException e) {
+            } catch (ConfigValidationException | IOException e) {
                 this.plugin.getLogger().warning(
                         "Could not parse config file '" + configFile.getName() + "'. Skipping map..."
                 );
@@ -105,7 +100,7 @@ public class MapManager {
                     this.plugin.getLogger().warning("Directory creation failed.");
                 }
             } catch (SecurityException e) {
-                this.plugin.getLogger().warning("Directory creation failed due t omissing permissions:");
+                this.plugin.getLogger().warning("Directory creation failed due to missing permissions:");
                 this.plugin.getLogger().warning(e.getMessage());
             }
 

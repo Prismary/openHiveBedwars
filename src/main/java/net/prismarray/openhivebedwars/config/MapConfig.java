@@ -10,8 +10,6 @@ import org.bukkit.World;
 import org.bukkit.util.Vector;
 
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.*;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
@@ -36,11 +34,11 @@ public class MapConfig extends ConfigFile {
     private final Map<TeamColor, TeamConfig> teamConfigs;
 
 
-    public MapConfig(Logger logger, File configFile) throws IOException {
-        this(logger, configFile, (World) null);
+    public MapConfig(Logger logger, File configFile) {
+        this(logger, configFile, null);
     }
 
-    public MapConfig(Logger logger, File configFile, World arenaWorld) throws IOException {
+    public MapConfig(Logger logger, File configFile, World arenaWorld) {
 
         super(logger, configFile);
 
@@ -76,18 +74,39 @@ public class MapConfig extends ConfigFile {
         ).forEach(set -> set.forEach(location -> location.setWorld(this.arenaWorld)));
     }
 
+    private void offsetEntityLocations() {
+
+        Stream.of(
+                this.spectatorSpawn
+        ).forEach(MapConfig::offsetEntityLocation);
+
+        Stream.of(
+                this.emeraldSummonerLocations,
+                this.diamondSummonerLocations,
+                this.enchanterNPCLocations,
+                this.specialistNPCLocations
+        ).forEach(set -> set.forEach(MapConfig::offsetEntityLocation));
+
+        teamConfigs.values().forEach(TeamConfig::offsetEntityLocations);
+    }
+
+    private static void offsetEntityLocation(Location location) {
+        location.setX(location.getX() + 0.5 * Math.signum(location.getX()));
+        location.setX(location.getZ() + 0.5 * Math.signum(location.getZ()));
+    }
+
     @Override
-    protected void parseAndValidateConfig() throws IllegalArgumentException {
+    protected void parseAndValidateConfig(YamlDocument yamlContent) throws ConfigValidationException {
 
-        this.mapDisplayName = parseString(this.yamlContent.getString("settings.name"));
-        this.mode = parseMode(this.yamlContent.getString("settings.mode"));
+        this.mapDisplayName = parseString(yamlContent.getString("settings.name"));
+        this.mode = parseMode(yamlContent.getString("settings.mode"));
 
-        this.spectatorSpawn = parseLocation(this.yamlContent.getString("locations.general.spectator_spawn"));
+        this.spectatorSpawn = parseLocation(yamlContent.getString("locations.general.spectator_spawn"));
 
-        this.emeraldSummonerLocations = parseLocationSet(this.yamlContent.getStringList("locations.general.emerald_summoner_locations"));
-        this.diamondSummonerLocations = parseLocationSet(this.yamlContent.getStringList("locations.general.diamond_summoner_locations"));
-        this.enchanterNPCLocations = parseLocationSet(this.yamlContent.getStringList("locations.general.enchanter_npc_locations"));
-        this.specialistNPCLocations = parseLocationSet(this.yamlContent.getStringList("locations.general.specialist_npc_locations"));
+        this.emeraldSummonerLocations = parseLocationSet(yamlContent.getStringList("locations.general.emerald_summoner_locations"));
+        this.diamondSummonerLocations = parseLocationSet(yamlContent.getStringList("locations.general.diamond_summoner_locations"));
+        this.enchanterNPCLocations = parseLocationSet(yamlContent.getStringList("locations.general.enchanter_npc_locations"));
+        this.specialistNPCLocations = parseLocationSet(yamlContent.getStringList("locations.general.specialist_npc_locations"));
 
         switch (this.mode) {
 
@@ -95,36 +114,38 @@ public class MapConfig extends ConfigFile {
 
                 this.teamConfigs.clear();
                 Arrays.stream(TeamColor.getTeamsModeColours())
-                        .forEach(teamColor -> this.teamConfigs.put(teamColor, new TeamConfig(this, teamColor)));
+                        .forEach(teamColor -> this.teamConfigs.put(teamColor, new TeamConfig(yamlContent, teamColor)));
                 break;
 
             case DUOS:
 
                 this.teamConfigs.clear();
                 Arrays.stream(TeamColor.getDuosModeColours())
-                        .forEach(teamColor -> this.teamConfigs.put(teamColor, new TeamConfig(this, teamColor)));
+                        .forEach(teamColor -> this.teamConfigs.put(teamColor, new TeamConfig(yamlContent, teamColor)));
                 break;
 
             case SOLO:
 
                 this.teamConfigs.clear();
-                Arrays.stream(TeamColor.values())
-                        .forEach(teamColor -> this.teamConfigs.put(teamColor, new TeamConfig(this, teamColor)));
+                Arrays.stream(TeamColor.getSoloModeColours())
+                        .forEach(teamColor -> this.teamConfigs.put(teamColor, new TeamConfig(yamlContent, teamColor)));
                 break;
 
             default:
 
                 this.teamConfigs.clear();
                 Arrays.stream(TeamColor.values())
-                        .forEach(teamColor -> this.teamConfigs.put(teamColor, new TeamConfig(this, teamColor)));
+                        .forEach(teamColor -> this.teamConfigs.put(teamColor, new TeamConfig(yamlContent, teamColor)));
                 break;
         }
+
+        this.offsetEntityLocations();
     }
 
     private static String parseString(String input) {
 
         if (Objects.isNull(input)) {
-            throw new IllegalArgumentException("Could not parse null-String.");
+            throw new ConfigValidationException("Could not parse null-String.");
         }
 
         return input;
@@ -133,61 +154,74 @@ public class MapConfig extends ConfigFile {
     private static Mode parseMode(String input) {
 
         if (Objects.isNull(input)) {
-            throw new IllegalArgumentException("Could not parse null-Mode.");
+            throw new ConfigValidationException("Could not parse null-Mode.");
         }
 
         return Mode.valueOf(input.toUpperCase());
     }
 
-    private static Set<Location> parseLocationSet(List<String> input) {
+    private static Set<Location> parseLocationSet(List<String> input) throws ConfigValidationException {
 
         if (Objects.isNull(input)) {
-            throw new IllegalArgumentException("Could not parse null-List of locations.");
+            throw new ConfigValidationException("Could not parse null-List of locations.");
         }
 
         if (input.isEmpty()) {
-            throw new IllegalArgumentException("Could not parse empty List of locations.");
+            throw new ConfigValidationException("Could not parse empty List of locations.");
         }
 
         return input.stream().map(MapConfig::parseLocation).collect(Collectors.toSet());
     }
 
-    private static Location parseLocation(String input) throws IllegalArgumentException {
+    private static Location parseLocation(String input) throws ConfigValidationException {
 
         if (Objects.isNull(input)) {
-            throw new IllegalArgumentException("Could not parse null-Location.");
+            throw new ConfigValidationException("Could not parse null-Location.");
         }
 
-        Pattern pattern = Pattern.compile("(-?\\d+),(-?\\d+),(-?\\d+)");
+        Pattern pattern = Pattern.compile("(-?\\d+),(-?\\d+),(-?\\d+)(?:;(-?\\d+)(?:,(-?\\d+))?)?");
         Matcher matcher = pattern.matcher(input);
 
         if (!matcher.matches()) {
-            throw new IllegalArgumentException(
+            throw new ConfigValidationException(
                     "Location '" + input + "' could not be parsed. Make sure, location entries are formatted " +
-                            "like this: '0,42,-3'"
+                            "like '0,42,-3', '0,42,-3;180' or '0,42,-3;180,-90' (x,y,z[;yaw[,pitch]])"
             );
         }
 
-        if (matcher.groupCount() != 3) {
-            throw new IllegalArgumentException(
-                    "Location '" + input + "' could not be parsed. Invalid number of regex groups found."
-            );
-        }
-
-        int x, y, z;
+        Location location;
 
         try {
-            x = Integer.parseInt(matcher.group(1));
-            y = Integer.parseInt(matcher.group(2));
-            z = Integer.parseInt(matcher.group(3));
+            int x = Integer.parseInt(matcher.group(1));
+            int y = Integer.parseInt(matcher.group(2));
+            int z = Integer.parseInt(matcher.group(3));
+
+            if (Objects.nonNull(matcher.group(4))) {
+
+                int yaw = Integer.parseInt(matcher.group(4));
+                yaw = (yaw % 360 + 360) % 360;
+
+                int pitch = 0;
+
+                if (Objects.nonNull(matcher.group(5))) {
+                    pitch = Integer.parseInt(matcher.group(5));
+                    pitch = Math.max(-90, Math.min(pitch, 90));
+                }
+
+                location = new Location(null, x, y, z, yaw, pitch);
+
+            } else {
+
+                location = new Location(null, x, y, z);
+            }
 
         } catch (NumberFormatException e) {
-            throw new IllegalArgumentException(
-                    "Location '" + input + "' could not be parsed. At least one coordinate is not a number."
+            throw new ConfigValidationException(
+                    "Location '" + input + "' could not be parsed. At least one coordinate is not a valid number."
             );
         }
 
-        return new Location(null, x, y, z);
+        return location;
     }
 
     public Location getTeamSpawn(TeamColor teamColor) {
@@ -268,19 +302,19 @@ public class MapConfig extends ConfigFile {
         private Set<Location> colorIndicatorLocations;
 
 
-        private TeamConfig(MapConfig mapConfig, TeamColor teamColor) throws IllegalArgumentException {
+        private TeamConfig(YamlDocument yamlContent, TeamColor teamColor) throws ConfigValidationException {
 
             this.teamColor = teamColor;
 
-            this.parseAndValidateConfig(mapConfig.yamlContent);
+            this.parseAndValidateConfig(yamlContent);
         }
 
-        private void parseAndValidateConfig(YamlDocument config) throws IllegalArgumentException {
+        private void parseAndValidateConfig(YamlDocument config) throws ConfigValidationException {
 
             Section teamSection = config.getSection("locations.teams." + this.teamColor.name().toLowerCase());
 
             if (Objects.isNull(teamSection)) {
-                throw new IllegalArgumentException(
+                throw new ConfigValidationException(
                         "Could not parse team '" + this.teamColor.name() + "'. Configuration section is missing."
                 );
             }
@@ -292,14 +326,14 @@ public class MapConfig extends ConfigFile {
             Vector bedDistance = this.bedHeadLocation.toVector().subtract(this.bedFootLocation.toVector());
 
             if (bedDistance.length() != 1) {
-                throw new IllegalArgumentException(
+                throw new ConfigValidationException(
                         "Could not parse bed location of team '" + this.teamColor.name() + "'. The two " +
                                 "locations are either equal or more than one block apart."
                 );
             }
 
             if (bedDistance.getY() != 0) {
-                throw new IllegalArgumentException(
+                throw new ConfigValidationException(
                         "Could not parse bed location of team '" + this.teamColor.name() + "'. The two " +
                                 "locations are laid out vertically."
                 );
@@ -334,6 +368,20 @@ public class MapConfig extends ConfigFile {
                     this.upgradesNPCLocations,
                     this.colorIndicatorLocations
             ).forEach(set -> set.forEach(location -> location.setWorld(arenaWorld)));
+        }
+
+        private void offsetEntityLocations() {
+
+            Stream.of(
+                    this.spawn
+            ).forEach(MapConfig::offsetEntityLocation);
+
+            Stream.of(
+                    this.summonerLocations,
+                    this.itemNPCLocations,
+                    this.upgradesNPCLocations,
+                    this.colorIndicatorLocations
+            ).forEach(set -> set.forEach(MapConfig::offsetEntityLocation));
         }
 
         public TeamColor getTeamColor() {
