@@ -10,6 +10,9 @@ import java.util.List;
 
 public class Config {
 
+    // TODO: convert this to a ConfigFile subclass
+    // TODO: instantiate this in OpenHiveBedwars (on enable)
+
     private OpenHiveBedwars plugin;
     private FileConfiguration config;
 
