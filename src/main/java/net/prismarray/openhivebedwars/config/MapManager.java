@@ -28,18 +28,18 @@ public class MapManager {
 
         File[] mapConfigFiles = getYMLFilesInDirectory(mapsDirectory);
 
-        String configFiles = Arrays.stream(mapConfigFiles).map(File::getName).collect(Collectors.joining(", "));
-        this.plugin.getLogger().info(
-                "Found the following map config files in directory '" + mapsDirectory.getPath() + "': " +
-                        configFiles
-        );
-
         if (Objects.isNull(mapConfigFiles) || mapConfigFiles.length < 1) {
             this.plugin.getLogger().warning(
                     "Could not find any map configuration files in '" + mapsDirectory.getPath() + "'."
             );
             return;
         }
+
+        String configFiles = Arrays.stream(mapConfigFiles).map(File::getName).collect(Collectors.joining(", "));
+        this.plugin.getLogger().info(
+                "Found the following map config files in directory '" + mapsDirectory.getPath() + "': " +
+                        configFiles
+        );
 
         for (File configFile : mapConfigFiles) {
 
@@ -99,17 +99,29 @@ public class MapManager {
                     "Maps directory '" + mapsDirectory.getPath() + "' does not exist. " +
                             "Creating a new one with an example config..."
             );
-            mapsDirectory.mkdirs();
+
+            try {
+                if (!mapsDirectory.mkdirs()) {
+                    this.plugin.getLogger().warning("Directory creation failed.");
+                }
+            } catch (SecurityException e) {
+                this.plugin.getLogger().warning("Directory creation failed due t omissing permissions:");
+                this.plugin.getLogger().warning(e.getMessage());
+            }
 
             try {
                 File sampleConfigFile = new File(mapsDirectory, "sample_map.yml");
-                sampleConfigFile.createNewFile();
+
+                if (!sampleConfigFile.createNewFile()) {
+                    this.plugin.getLogger().warning("Creation of sample config file failed.");
+                }
 
                 Scanner scanner = new Scanner(this.plugin.getResource("sample_map.yml"));
                 StringBuilder strb = new StringBuilder();
 
                 while (scanner.hasNext()) {
-                    strb.append(scanner.nextLine() + "\n");
+                    strb.append(scanner.nextLine());
+                    strb.append("\n");
                 }
 
                 FileWriter writer = new FileWriter(sampleConfigFile);
