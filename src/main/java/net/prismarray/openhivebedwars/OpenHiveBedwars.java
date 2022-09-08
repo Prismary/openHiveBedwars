@@ -31,15 +31,6 @@ public final class OpenHiveBedwars extends JavaPlugin {
         registerEvents();
 
         game = new Game(this, config.getMode());
-
-        // TEMPORARY
-        new WorldCreator("hive_bw_lobby").createWorld();
-        WorldCopy.copyWorld(getServer().getWorld("hive_bw_lobby"), "lobby");
-        WorldCopy.unloadWorld(getServer().getWorld("hive_bw_lobby"));
-
-        new WorldCreator("duos_sandstorm").createWorld();
-        WorldCopy.copyWorld(getServer().getWorld("duos_sandstorm"), "arena");
-        WorldCopy.unloadWorld(getServer().getWorld("duos_sandstorm"));
     }
 
     @Override
