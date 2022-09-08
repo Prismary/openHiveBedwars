@@ -18,8 +18,6 @@ public class ActionBar {
     }
 
     public static void sendToAll(String message) {
-        for (Player p : Bukkit.getOnlinePlayers()) {
-            send(p, message);
-        }
+        Bukkit.getOnlinePlayers().forEach(player -> send(player, message));
     }
 }

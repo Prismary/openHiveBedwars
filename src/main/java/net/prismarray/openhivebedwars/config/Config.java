@@ -54,6 +54,14 @@ public class Config {
         return config.getString("prefix");
     }
 
+    public String getLobbyName() {
+        return config.getString("lobby_name");
+    }
+
+    public String getArenaName() {
+        return config.getString("arena_name");
+    }
+
     public List<Material> getBreakables() {
         List<String> strBreakables =  config.getStringList("breakables");
 

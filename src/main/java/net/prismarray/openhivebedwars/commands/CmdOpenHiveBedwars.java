@@ -33,6 +33,9 @@ public class CmdOpenHiveBedwars extends CommandBase {
             case "test":
                 ActionBar.send(GSU.getPlayer(sender.getName()), "amogus");
                 return true;
+            case "startgame":
+                plugin.game.ingame();
+                return true;
             case "nik":
                 sender.sendMessage(":skull:");
                 return true;

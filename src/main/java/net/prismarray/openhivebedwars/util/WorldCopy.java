@@ -10,6 +10,10 @@ import java.util.Arrays;
 
 public class WorldCopy {
 
+    public static void copyMapToContainer(String originalName, String newName, File location) {
+        copyFileStructure(new File(location + File.separator + originalName), new File(Bukkit.getWorldContainer() + File.separator + newName));
+    }
+
     // METHODS BELOW ARE COURTESY OF SPIGOTMC USER IPat
     // https://www.spigotmc.org/members/ipat.181124/
     // https://www.spigotmc.org/threads/world-copy.37932/
@@ -51,6 +55,10 @@ public class WorldCopy {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private static void deleteAFileStructure(File target) {
+
     }
 
 }
