@@ -23,18 +23,8 @@ public final class OpenHiveBedwars extends JavaPlugin {
     @Override
     public void onEnable() {
 
-        // Initialize config
-        config = new Config(this.getLogger(), new File(this.getDataFolder(), "config.yml"));
-        try {
-            config.loadConfig();
-        } catch (IOException e) {
-            this.getLogger().warning("Failed to load config.yml");
-            this.getLogger().warning("Error message: " + e.getMessage());
-        }
-
-        // Initialize MapManager
-        mapManager = new MapManager(this);
-        mapManager.loadMaps();
+        initializeConfig();
+        initializeMapManager();
 
         registerCommands();
         registerEvents();
@@ -47,6 +37,25 @@ public final class OpenHiveBedwars extends JavaPlugin {
         HandlerList.unregisterAll(this);
     }
 
+
+    private void initializeConfig() {
+
+        //TODO: write sample config file, if it does not exist (maybe directly in ConfigFile?)
+
+        config = new Config(this.getLogger(), new File(this.getDataFolder(), "config.yml"));
+        try {
+            config.loadConfig(getResource("config.yml"));
+        } catch (IOException e) {
+            this.getLogger().warning("Failed to load config.yml");
+            this.getLogger().warning("Error message: " + e.getMessage());
+        }
+    }
+
+    private void initializeMapManager() {
+
+        mapManager = new MapManager(this);
+        mapManager.loadMaps();
+    }
 
     private void registerCommands() {
         getCommand("openhivebedwars").setExecutor(new CmdOpenHiveBedwars(this));
