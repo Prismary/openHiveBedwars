@@ -25,6 +25,7 @@ public final class OpenHiveBedwars extends JavaPlugin {
     public void onEnable() {
 
         initializeConfig();
+        initializeLobbyConfig();
         initializeMapManager();
 
         registerCommands();
@@ -50,6 +51,21 @@ public final class OpenHiveBedwars extends JavaPlugin {
 
         } catch (ConfigValidationException | IOException e) {
             this.getLogger().warning("Failed to load config.yml. Using default values instead...");
+            this.getLogger().warning("Error message: " + e.getMessage());
+        }
+    }
+
+    private void initializeLobbyConfig() {
+
+        this.getLogger().info("Attempting to load lobby.yml...");
+
+        config = new Config(this.getLogger(), new File(this.getDataFolder(), "lobby.yml"));
+        try {
+            config.loadConfig(getResource("lobby.yml"));
+            this.getLogger().info("Successfully loaded lobby.yml");
+
+        } catch (ConfigValidationException | IOException e) {
+            this.getLogger().warning("Failed to load lobby.yml. Using default values instead...");
             this.getLogger().warning("Error message: " + e.getMessage());
         }
     }
