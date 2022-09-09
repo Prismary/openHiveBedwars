@@ -5,6 +5,7 @@ import net.prismarray.openhivebedwars.commands.CmdOpenHiveBedwars;
 import net.prismarray.openhivebedwars.commands.CmdTeam;
 import net.prismarray.openhivebedwars.config.Config;
 import net.prismarray.openhivebedwars.config.ConfigValidationException;
+import net.prismarray.openhivebedwars.config.LobbyConfig;
 import net.prismarray.openhivebedwars.config.MapManager;
 import net.prismarray.openhivebedwars.events.*;
 import net.prismarray.openhivebedwars.util.WorldCopy;
@@ -18,6 +19,7 @@ import java.io.IOException;
 public final class OpenHiveBedwars extends JavaPlugin {
 
     public Config config;
+    public LobbyConfig lobbyConfig;
     public MapManager mapManager;
     public Game game;
 
@@ -59,9 +61,9 @@ public final class OpenHiveBedwars extends JavaPlugin {
 
         this.getLogger().info("Attempting to load lobby.yml...");
 
-        config = new Config(this.getLogger(), new File(this.getDataFolder(), "lobby.yml"));
+        lobbyConfig = new LobbyConfig(this.getLogger(), new File(this.getDataFolder(), "lobby.yml"));
         try {
-            config.loadConfig(getResource("lobby.yml"));
+            lobbyConfig.loadConfig(getResource("lobby.yml"));
             this.getLogger().info("Successfully loaded lobby.yml");
 
         } catch (ConfigValidationException | IOException e) {
