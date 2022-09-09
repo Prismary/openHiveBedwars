@@ -19,7 +19,7 @@ arena_name: "arena"
 # GAMEPLAY OPTIONS #
 
 # Merge 2-player teams in Teams mode
-merge-teams: true
+merge_teams: true
 
 # Breakable arena blocks
 breakables:
