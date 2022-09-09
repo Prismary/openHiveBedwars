@@ -4,6 +4,7 @@ import net.prismarray.openhivebedwars.bedwars.Game;
 import net.prismarray.openhivebedwars.commands.CmdOpenHiveBedwars;
 import net.prismarray.openhivebedwars.commands.CmdTeam;
 import net.prismarray.openhivebedwars.config.Config;
+import net.prismarray.openhivebedwars.config.ConfigValidationException;
 import net.prismarray.openhivebedwars.config.MapManager;
 import net.prismarray.openhivebedwars.events.*;
 import net.prismarray.openhivebedwars.util.WorldCopy;
@@ -40,13 +41,15 @@ public final class OpenHiveBedwars extends JavaPlugin {
 
     private void initializeConfig() {
 
-        //TODO: write sample config file, if it does not exist (maybe directly in ConfigFile?)
+        this.getLogger().info("Attempting to load config.yml...");
 
         config = new Config(this.getLogger(), new File(this.getDataFolder(), "config.yml"));
         try {
             config.loadConfig(getResource("config.yml"));
-        } catch (IOException e) {
-            this.getLogger().warning("Failed to load config.yml");
+            this.getLogger().info("Successfully loaded config.yml");
+
+        } catch (ConfigValidationException | IOException e) {
+            this.getLogger().warning("Failed to load config.yml. Using default values instead...");
             this.getLogger().warning("Error message: " + e.getMessage());
         }
     }
