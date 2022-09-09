@@ -11,6 +11,9 @@ import org.bukkit.WorldCreator;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
+import java.io.IOException;
+
 public final class OpenHiveBedwars extends JavaPlugin {
 
     public Config config;
@@ -21,7 +24,13 @@ public final class OpenHiveBedwars extends JavaPlugin {
     public void onEnable() {
 
         // Initialize config
-        config = new Config(this);
+        config = new Config(this.getLogger(), new File(this.getDataFolder(), "config.yml"));
+        try {
+            config.loadConfig();
+        } catch (IOException e) {
+            this.getLogger().warning("Failed to load config.yml");
+            this.getLogger().warning("Error message: " + e.getMessage());
+        }
 
         // Initialize MapManager
         mapManager = new MapManager(this);

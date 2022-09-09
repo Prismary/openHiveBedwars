@@ -1,71 +1,56 @@
 package net.prismarray.openhivebedwars.config;
 
+import dev.dejvokep.boostedyaml.YamlDocument;
 import net.prismarray.openhivebedwars.OpenHiveBedwars;
 import net.prismarray.openhivebedwars.util.Mode;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.logging.Logger;
 
-public class Config {
+public class Config extends ConfigFile {
 
-    // TODO: convert this to a ConfigFile subclass
-    // TODO: instantiate this in OpenHiveBedwars (on enable)
+    private Mode mode;
 
-    private OpenHiveBedwars plugin;
-    private FileConfiguration config;
+    private boolean mergeTeams;
 
-    public Config(OpenHiveBedwars plugin) {
-        this.plugin = plugin;
+    private String prefix;
+    private String lobbyName;
+    private String arenaName;
 
-        restoreConfig();
+    private Set<Material> breakables;
 
-        readConfig();
+
+    public Config(Logger logger, File configFile) {
+        super(logger, configFile);
     }
 
-    public void restoreConfig() {
-        plugin.saveDefaultConfig();
-        plugin.getConfig().options().copyDefaults(true);
-    }
-
-    public void readConfig() {
-        config = plugin.getConfig();
-    }
-
-
-    // Get config values
     public Mode getMode() {
-        switch (config.getString("mode")) {
-            case "solo":
-                return Mode.SOLO;
-            case "duos":
-                return Mode.DUOS;
-            case "teams":
-                return Mode.TEAMS;
-        }
-        // TODO: throw error
-
-        return Mode.TEAMS;
+        return this.mode;
     }
 
     public boolean mergeTeams() {
-        return config.getBoolean("merge-teams");
+        return this.mergeTeams;
     }
 
     public String getPrefix() {
-        return config.getString("prefix");
+        return this.prefix;
     }
 
     public String getLobbyName() {
-        return config.getString("lobby_name");
+        return this.lobbyName;
     }
 
     public String getArenaName() {
-        return config.getString("arena_name");
+        return this.arenaName;
     }
 
-    public List<Material> getBreakables() {
+    public Set<Material> getBreakables() {
+        /*
         List<String> strBreakables =  config.getStringList("breakables");
 
         List<Material> matBreakables = new ArrayList<Material>();
@@ -76,5 +61,12 @@ public class Config {
         }
 
         return matBreakables;
+         */
+        return this.breakables;
+    }
+
+    @Override
+    protected void parseAndValidateConfig(YamlDocument yamlContent) throws ConfigValidationException {
+        // TODO: implement parser and validation
     }
 }
