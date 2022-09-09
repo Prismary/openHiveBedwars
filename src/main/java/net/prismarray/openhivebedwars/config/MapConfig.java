@@ -12,9 +12,6 @@ import org.bukkit.util.Vector;
 import java.io.File;
 import java.util.*;
 import java.util.logging.Logger;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class MapConfig extends ConfigFile {
@@ -140,88 +137,6 @@ public class MapConfig extends ConfigFile {
         }
 
         this.offsetEntityLocations();
-    }
-
-    private static String parseString(String input) {
-
-        if (Objects.isNull(input)) {
-            throw new ConfigValidationException("Could not parse null-String.");
-        }
-
-        return input;
-    }
-
-    private static Mode parseMode(String input) {
-
-        if (Objects.isNull(input)) {
-            throw new ConfigValidationException("Could not parse null-Mode.");
-        }
-
-        return Mode.valueOf(input.toUpperCase());
-    }
-
-    private static Set<Location> parseLocationSet(List<String> input) throws ConfigValidationException {
-
-        if (Objects.isNull(input)) {
-            throw new ConfigValidationException("Could not parse null-List of locations.");
-        }
-
-        if (input.isEmpty()) {
-            throw new ConfigValidationException("Could not parse empty List of locations.");
-        }
-
-        return input.stream().map(MapConfig::parseLocation).collect(Collectors.toSet());
-    }
-
-    private static Location parseLocation(String input) throws ConfigValidationException {
-
-        if (Objects.isNull(input)) {
-            throw new ConfigValidationException("Could not parse null-Location.");
-        }
-
-        Pattern pattern = Pattern.compile("(-?\\d+),(-?\\d+),(-?\\d+)(?:;(-?\\d+)(?:,(-?\\d+))?)?");
-        Matcher matcher = pattern.matcher(input);
-
-        if (!matcher.matches()) {
-            throw new ConfigValidationException(
-                    "Location '" + input + "' could not be parsed. Make sure, location entries are formatted " +
-                            "like '0,42,-3', '0,42,-3;180' or '0,42,-3;180,-90' (x,y,z[;yaw[,pitch]])"
-            );
-        }
-
-        Location location;
-
-        try {
-            int x = Integer.parseInt(matcher.group(1));
-            int y = Integer.parseInt(matcher.group(2));
-            int z = Integer.parseInt(matcher.group(3));
-
-            if (Objects.nonNull(matcher.group(4))) {
-
-                int yaw = Integer.parseInt(matcher.group(4));
-                yaw = (yaw % 360 + 360) % 360;
-
-                int pitch = 0;
-
-                if (Objects.nonNull(matcher.group(5))) {
-                    pitch = Integer.parseInt(matcher.group(5));
-                    pitch = Math.max(-90, Math.min(pitch, 90));
-                }
-
-                location = new Location(null, x, y, z, yaw, pitch);
-
-            } else {
-
-                location = new Location(null, x, y, z);
-            }
-
-        } catch (NumberFormatException e) {
-            throw new ConfigValidationException(
-                    "Location '" + input + "' could not be parsed. At least one coordinate is not a valid number."
-            );
-        }
-
-        return location;
     }
 
     public Location getTeamSpawn(TeamColor teamColor) {

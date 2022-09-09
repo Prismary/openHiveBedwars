@@ -1,11 +1,20 @@
 package net.prismarray.openhivebedwars.config;
 
 import dev.dejvokep.boostedyaml.YamlDocument;
+import net.prismarray.openhivebedwars.util.Mode;
+import org.bukkit.Location;
+import org.bukkit.Material;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public abstract class ConfigFile {
 
@@ -59,4 +68,98 @@ public abstract class ConfigFile {
      * can not be compensated by omissions or default values.
      */
     protected abstract void parseAndValidateConfig(YamlDocument yamlContent) throws ConfigValidationException;
+
+
+    public static String parseString(String input) {
+
+        if (Objects.isNull(input)) {
+            throw new ConfigValidationException("Could not parse null-String.");
+        }
+
+        return input;
+    }
+
+    public static Mode parseMode(String input) {
+
+        if (Objects.isNull(input)) {
+            throw new ConfigValidationException("Could not parse null-Mode.");
+        }
+
+        return Mode.valueOf(input.toUpperCase());
+    }
+
+    public static Set<Location> parseLocationSet(List<String> input) throws ConfigValidationException {
+
+        if (Objects.isNull(input)) {
+            throw new ConfigValidationException("Could not parse null-List of locations.");
+        }
+
+        if (input.isEmpty()) {
+            throw new ConfigValidationException("Could not parse empty List of locations.");
+        }
+
+        return input.stream().map(ConfigFile::parseLocation).collect(Collectors.toSet());
+    }
+
+    public static Location parseLocation(String input) throws ConfigValidationException {
+
+        if (Objects.isNull(input)) {
+            throw new ConfigValidationException("Could not parse null-Location.");
+        }
+
+        Pattern pattern = Pattern.compile("(-?\\d+),(-?\\d+),(-?\\d+)(?:;(-?\\d+)(?:,(-?\\d+))?)?");
+        Matcher matcher = pattern.matcher(input);
+
+        if (!matcher.matches()) {
+            throw new ConfigValidationException(
+                    "Location '" + input + "' could not be parsed. Make sure, location entries are formatted " +
+                            "like '0,42,-3', '0,42,-3;180' or '0,42,-3;180,-90' (x,y,z[;yaw[,pitch]])"
+            );
+        }
+
+        Location location;
+
+        try {
+            int x = Integer.parseInt(matcher.group(1));
+            int y = Integer.parseInt(matcher.group(2));
+            int z = Integer.parseInt(matcher.group(3));
+
+            if (Objects.nonNull(matcher.group(4))) {
+
+                int yaw = Integer.parseInt(matcher.group(4));
+                yaw = (yaw % 360 + 360) % 360;
+
+                int pitch = 0;
+
+                if (Objects.nonNull(matcher.group(5))) {
+                    pitch = Integer.parseInt(matcher.group(5));
+                    pitch = Math.max(-90, Math.min(pitch, 90));
+                }
+
+                location = new Location(null, x, y, z, yaw, pitch);
+
+            } else {
+
+                location = new Location(null, x, y, z);
+            }
+
+        } catch (NumberFormatException e) {
+            throw new ConfigValidationException(
+                    "Location '" + input + "' could not be parsed. At least one coordinate is not a valid number."
+            );
+        }
+
+        return location;
+    }
+
+    public static Material parseMaterial(String input) throws ConfigValidationException {
+
+        Material material = Material.getMaterial(input.toUpperCase());
+
+        if (Objects.isNull(material)) {
+            throw new ConfigValidationException("Could not parse material '" + input + "'.");
+        }
+
+        return material;
+    }
 }
