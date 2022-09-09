@@ -162,4 +162,13 @@ public abstract class ConfigFile {
 
         return material;
     }
+
+    public static Set<Material> parseMaterialSet(List<String> input) throws ConfigValidationException {
+
+        if (Objects.isNull(input)) {
+            throw new ConfigValidationException("Could not parse null-list of Materials.");
+        }
+
+        return input.stream().map(ConfigFile::parseMaterial).collect(Collectors.toSet());
+    }
 }
