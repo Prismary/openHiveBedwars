@@ -57,9 +57,8 @@ public class Config extends ConfigFile {
         this.lobbyName = parseString(yamlContent.getString("lobby_name"));
         this.arenaName = parseString(yamlContent.getString("arena_name"));
 
-        //this.mergeTeams = parseBoolean(yamlContent.getBoolean("merge_teams"));
-        // TODO: implement parseBoolean() in ConfigFile
+        this.mergeTeams = yamlContent.getBoolean("merge_teams");
 
-        // TODO: implement parser and validation
+        this.breakables = parseMaterialSet(yamlContent.getStringList("breakables"));
     }
 }
