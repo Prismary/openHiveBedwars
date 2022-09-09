@@ -53,6 +53,13 @@ public class Config extends ConfigFile {
     protected void parseAndValidateConfig(YamlDocument yamlContent) throws ConfigValidationException {
 
         this.mode = parseMode(yamlContent.getString("mode"));
+        this.prefix = parseString(yamlContent.getString("prefix"));
+        this.lobbyName = parseString(yamlContent.getString("lobby_name"));
+        this.arenaName = parseString(yamlContent.getString("arena_name"));
+
+        //this.mergeTeams = parseBoolean(yamlContent.getBoolean("merge_teams"));
+        // TODO: implement parseBoolean() in ConfigFile
+
         // TODO: implement parser and validation
     }
 }
