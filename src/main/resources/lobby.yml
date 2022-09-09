@@ -2,4 +2,11 @@
 #       LOBBY CONFIGURATION       #
 # ------------------------------- #
 
-world_name: "hive_bw_lobby"
+locations:
+  lobby_player_spawn: "0,1,2;34,42"
+  results_player_spawn: "0,1,2;34,56"
+  scoreboard: "0,1,2"
+  podium:
+    gold: "0,1,2;34,42"
+    silver: "0,1,2;34,42"
+    bronze: "0,1,2;34,42"
