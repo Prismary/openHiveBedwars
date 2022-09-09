@@ -1,15 +1,11 @@
 package net.prismarray.openhivebedwars.config;
 
 import dev.dejvokep.boostedyaml.YamlDocument;
-import net.prismarray.openhivebedwars.OpenHiveBedwars;
 import net.prismarray.openhivebedwars.util.Mode;
 import org.bukkit.Material;
-import org.bukkit.configuration.file.FileConfiguration;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.logging.Logger;
 
 public class Config extends ConfigFile {
@@ -50,23 +46,13 @@ public class Config extends ConfigFile {
     }
 
     public Set<Material> getBreakables() {
-        /*
-        List<String> strBreakables =  config.getStringList("breakables");
-
-        List<Material> matBreakables = new ArrayList<Material>();
-
-        // copy and convert to material type
-        for (int i = 0; i < strBreakables.size(); i++) {
-            matBreakables.add(Material.getMaterial(strBreakables.get(i)));
-        }
-
-        return matBreakables;
-         */
         return this.breakables;
     }
 
     @Override
     protected void parseAndValidateConfig(YamlDocument yamlContent) throws ConfigValidationException {
+
+        this.mode = parseMode(yamlContent.getString("mode"));
         // TODO: implement parser and validation
     }
 }
