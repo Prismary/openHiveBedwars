@@ -89,7 +89,7 @@ public class MapConfig extends ConfigFile {
 
     private static void offsetEntityLocation(Location location) {
         location.setX(location.getX() + 0.5 * Math.signum(location.getX()));
-        location.setX(location.getZ() + 0.5 * Math.signum(location.getZ()));
+        location.setZ(location.getZ() + 0.5 * Math.signum(location.getZ()));
     }
 
     @Override
