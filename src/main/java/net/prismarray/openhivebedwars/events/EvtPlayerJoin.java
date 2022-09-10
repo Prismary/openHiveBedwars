@@ -13,9 +13,6 @@ public class EvtPlayerJoin extends EventBase {
 
     @EventHandler
     public void playerJoin(PlayerJoinEvent event) {
-        // Update lobby counter
-        plugin.game.getLobbyTimer().update();
-
         Player player = event.getPlayer();
 
         switch (plugin.game.getStatus()) {

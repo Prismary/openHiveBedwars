@@ -44,7 +44,7 @@ public class Game {
 
     public void lobby() {
         status = Status.LOBBY;
-        lobbyTimer.enable();
+        lobbyTimer.start();
     }
 
     public void confirmation() {
@@ -71,7 +71,7 @@ public class Game {
     public void warmup() {
         status = Status.WARMUP;
 
-        lobbyTimer.disable();
+        lobbyTimer = null;
 
         // Initiate game start
         spawnAllPlayers();
@@ -86,18 +86,19 @@ public class Game {
     public void spawnAllPlayers() {
         for (Team team : teamHandler.getTeams()) {
             for (Player player : team.getPlayers()) {
+                fullPlayerClear(player);
                 spawnPlayer(player);
             }
         }
     }
 
     public void spawnPlayer(Player player) {
-        //fullPlayerClear(player);
-        Location location = mapConfig.getTeamSpawn(teamHandler.getPlayerTeam(player).getColor());
-        location.setWorld(Bukkit.getWorld("arena"));
-        player.teleport(location);
+        player.teleport(mapConfig.getTeamSpawn(teamHandler.getPlayerTeam(player).getColor()));
     }
 
+    public void respawnPlayer() {
+
+    }
 
 
     public TeamHandler getTeamHandler() {
