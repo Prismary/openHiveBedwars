@@ -3,8 +3,8 @@ package net.prismarray.openhivebedwars.commands;
 import net.prismarray.openhivebedwars.OpenHiveBedwars;
 import net.prismarray.openhivebedwars.util.ActionBar;
 import net.prismarray.openhivebedwars.util.Format;
-import net.prismarray.openhivebedwars.util.GSU;
 import net.prismarray.openhivebedwars.util.Status;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
@@ -31,7 +31,7 @@ public class CmdOpenHiveBedwars extends CommandBase {
             case "status":
                 return status(sender, command, label, args);
             case "test":
-                ActionBar.send(GSU.getPlayer(sender.getName()), "amogus");
+                ActionBar.send(Bukkit.getPlayer(sender.getName()), "amogus");
                 return true;
             case "startgame":
                 plugin.game.ingame();

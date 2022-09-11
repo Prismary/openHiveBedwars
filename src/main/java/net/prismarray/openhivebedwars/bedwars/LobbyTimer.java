@@ -54,6 +54,7 @@ public class LobbyTimer extends Countdown {
 
     @Override
     public void onCompletion() {
+        game.arenaSetup();
         game.warmup();
     }
 }

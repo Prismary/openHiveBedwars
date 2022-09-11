@@ -24,3 +24,12 @@ merge_teams: true
 # Breakable arena blocks
 breakables:
   - DEAD_BUSH
+  - DOUBLE_PLANT
+  - LEAVES
+  - LEAVES_2
+  - LONG_GRASS
+  - SAPLING
+  - VINE
+  - WEB
+  - YELLOW_FLOWER
+  - RED_ROSE

@@ -1,13 +1,11 @@
 package net.prismarray.openhivebedwars.bedwars;
 
 import com.google.common.collect.ImmutableList;
-import net.prismarray.openhivebedwars.util.GSU;
 import net.prismarray.openhivebedwars.util.Mode;
 import net.prismarray.openhivebedwars.util.TeamColor;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 

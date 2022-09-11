@@ -35,9 +35,7 @@ public class Game {
         teamHandler = new TeamHandler(this);
         lobbyTimer = new LobbyTimer(this);
 
-        // Set up lobby world: todo load from cfg
-        WorldCopy.copyMapToContainer("hive_bw_lobby", plugin.config.getLobbyName(), Bukkit.getWorldContainer());
-        new WorldCreator(plugin.config.getLobbyName()).createWorld();
+        lobbySetup();
 
         lobby();
     }
@@ -56,19 +54,11 @@ public class Game {
 
         // load map config: todo map voting
         mapConfig = plugin.mapManager.getMapConfig("d_castle");
-
-        // try to copy world: todo proper error handling
-        try {
-            WorldCopy.copyMapToContainer(mapConfig.getMapID(), plugin.config.getArenaName(), new File(plugin.getDataFolder() + File.separator + "maps"));
-            new WorldCreator(plugin.config.getArenaName()).createWorld();
-        } catch (Exception e) {
-            Bukkit.shutdown();
-        }
-
-        mapConfig.updateWorld(Bukkit.getWorld(plugin.config.getArenaName()));
     }
 
     public void warmup() {
+        // Arena setup already called by LobbyTimer!
+
         status = Status.WARMUP;
 
         lobbyTimer = null;
@@ -83,6 +73,30 @@ public class Game {
 
 
 
+    public void lobbySetup() {
+        // try to copy world: todo proper error handling
+        try {
+            WorldCopy.copyMapToContainer("lobby", plugin.config.getLobbyName(), plugin.getDataFolder());
+            new WorldCreator(plugin.config.getLobbyName()).createWorld();
+        } catch (Exception e) {
+            Bukkit.shutdown();
+        }
+        setWorldGamerules(Bukkit.getWorld(plugin.config.getLobbyName()));
+        plugin.lobbyConfig.updateWorld(Bukkit.getWorld(plugin.config.getLobbyName()));
+    }
+
+    public void arenaSetup() {
+        // try to copy world: todo proper error handling
+        try {
+            WorldCopy.copyMapToContainer(mapConfig.getMapID(), plugin.config.getArenaName(), new File(plugin.getDataFolder() + File.separator + "maps"));
+            new WorldCreator(plugin.config.getArenaName()).createWorld();
+        } catch (Exception e) {
+            Bukkit.shutdown();
+        }
+        setWorldGamerules(Bukkit.getWorld(plugin.config.getArenaName()));
+        mapConfig.updateWorld(Bukkit.getWorld(plugin.config.getArenaName()));
+    }
+
     public void spawnAllPlayers() {
         for (Team team : teamHandler.getTeams()) {
             for (Player player : team.getPlayers()) {
@@ -93,20 +107,20 @@ public class Game {
     }
 
     public void spawnPlayer(Player player) {
+        player.setGameMode(GameMode.SURVIVAL);
         player.teleport(mapConfig.getTeamSpawn(teamHandler.getPlayerTeam(player).getColor()));
     }
 
-    public void respawnPlayer() {
+    public void respawnPlayer(Player player) {
+        player.setGameMode(GameMode.SPECTATOR);
+        player.teleport(mapConfig.getSpectatorSpawn());
 
+        new RespawnTimer(this, player).start();
     }
 
 
     public TeamHandler getTeamHandler() {
         return teamHandler;
-    }
-
-    public LobbyTimer getLobbyTimer() {
-        return lobbyTimer;
     }
 
     public MapConfig getMapConfig() {
@@ -116,6 +130,7 @@ public class Game {
     public Status getStatus() {
         return status;
     }
+
     public void setStatus(Status status) {
         this.status = status;
     }
@@ -123,7 +138,7 @@ public class Game {
 
     public void setLobbyPlayer(Player player) {
         player.setFallDistance(0);
-        player.teleport(new Location(plugin.getServer().getWorld(plugin.config.getLobbyName()), 3.5, 54, -0.5, 0, 0));
+        player.teleport(plugin.lobbyConfig.getLobbyPlayerSpawnLocation());
     }
 
     public void setSpectatorPlayer(Player player) {
@@ -132,13 +147,9 @@ public class Game {
 
     public void setResultsPlayer(Player player) {
         player.setFallDistance(0);
-        player.teleport(new Location(plugin.getServer().getWorld(plugin.config.getLobbyName()), 51.5, 54, 15.5, -90, 0));
+        player.teleport(plugin.lobbyConfig.getResultsPlayerSpawnLocation());
     }
 
-
-    public void respawnPlayer(Player player) {
-        spawnPlayer(player);
-    }
     public void fullPlayerClear(Player player) {
         player.setFallDistance(0);
         player.getInventory().clear();
@@ -146,5 +157,21 @@ public class Game {
         player.setFlying(false);
     }
 
-
+    public void setWorldGamerules(World world) {
+        // Set all gamerules for a world used in openHiveBedwars
+        world.setGameRuleValue("doDaylightCycle", "false");
+        world.setGameRuleValue("doEntityDrops", "false");
+        world.setGameRuleValue("doFireTick", "false");
+        world.setGameRuleValue("doMobLoot", "false");
+        world.setGameRuleValue("doMobSpawning", "false");
+        world.setGameRuleValue("doTileDrops", "true");
+        world.setGameRuleValue("keepInventory", "true");
+        world.setGameRuleValue("logAdminCommands", "true");
+        world.setGameRuleValue("mobGriefing", "false");
+        world.setGameRuleValue("naturalRegeneration", "true");
+        world.setGameRuleValue("randomTickSpeed", "3");
+        world.setGameRuleValue("reducedDebugInfo", "false");
+        world.setGameRuleValue("sendCommandFeedback", "true");
+        world.setGameRuleValue("showDeathMessages", "false");
+    }
 }
