@@ -2,11 +2,15 @@ package net.prismarray.openhivebedwars.config;
 
 import dev.dejvokep.boostedyaml.YamlDocument;
 import org.bukkit.Location;
+import org.bukkit.World;
 
 import java.io.File;
 import java.util.logging.Logger;
+import java.util.stream.Stream;
 
 public class LobbyConfig extends ConfigFile {
+
+    private World lobbyWorld;
 
     private Location lobbyPlayerSpawnLocation;
     private Location resultsPlayerSpawnLocation;
@@ -21,6 +25,42 @@ public class LobbyConfig extends ConfigFile {
         super(logger, configFile);
     }
 
+    public void updateWorld(World lobbyWorld) {
+
+        this.lobbyWorld = lobbyWorld;
+
+        updateLocationWorld();
+    }
+
+    private void updateLocationWorld() {
+
+        Stream.of(
+                this.lobbyPlayerSpawnLocation,
+                this.resultsPlayerSpawnLocation,
+                this.scoreboardLocation,
+                this.podiumGoldLocation,
+                this.podiumSilverLocation,
+                this.podiumBronzeLocation
+        ).forEach(location -> location.setWorld(this.lobbyWorld));
+    }
+
+    private void offsetEntityLocations() {
+
+        Stream.of(
+                this.lobbyPlayerSpawnLocation,
+                this.resultsPlayerSpawnLocation,
+                this.scoreboardLocation,
+                this.podiumGoldLocation,
+                this.podiumSilverLocation,
+                this.podiumBronzeLocation
+        ).forEach(LobbyConfig::offsetEntityLocation);
+    }
+
+    private static void offsetEntityLocation(Location location) {
+        location.setX(location.getX() + 0.5 * Math.signum(location.getX()));
+        location.setZ(location.getZ() + 0.5 * Math.signum(location.getZ()));
+    }
+
     @Override
     protected void parseAndValidateConfig(YamlDocument yamlContent) throws ConfigValidationException {
 
@@ -31,6 +71,8 @@ public class LobbyConfig extends ConfigFile {
         this.podiumGoldLocation = parseLocation(yamlContent.getString("locations.podium.gold"));
         this.podiumSilverLocation = parseLocation(yamlContent.getString("locations.podium.silver"));
         this.podiumBronzeLocation = parseLocation(yamlContent.getString("locations.podium.bronze"));
+
+        this.offsetEntityLocations();
     }
 
     public Location getLobbyPlayerSpawnLocation() {
