@@ -63,7 +63,7 @@ public class EvtEntityDamage extends EventBase {
             if (!((player).getHealth() - event.getFinalDamage() > 0)) {
                 event.setCancelled(true); // Prevent player death
                 player.setHealth(20);
-                plugin.game.spawnPlayer(player);
+                plugin.game.respawnPlayer(player);
             }
         }
     }

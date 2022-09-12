@@ -5,8 +5,8 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitScheduler;
 
 public class Countdown {
-    private BukkitScheduler scheduler;
-    private Plugin plugin;
+    BukkitScheduler scheduler;
+    Plugin plugin;
 
     private int start;
     private int stop;
@@ -24,6 +24,14 @@ public class Countdown {
         stopped = true;
         killTask = false;
         reset();
+    }
+
+    public void onDecrement() { // To be overridden
+
+    }
+
+    public void onCompletion() { // To be overridden
+
     }
 
     public boolean start() {
@@ -49,12 +57,18 @@ public class Countdown {
         return count;
     }
 
+    public void setCount(int value) {
+        count = value;
+    }
+
     private void decrement() {
         if (count - 1 <= stop) {
             count = stop;
             stop();
+            onCompletion();
         } else {
             count--;
+            onDecrement();
         }
     }
 
