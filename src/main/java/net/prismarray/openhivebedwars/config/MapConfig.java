@@ -288,7 +288,9 @@ public class MapConfig extends ConfigFile {
         private void offsetEntityLocations() {
 
             Stream.of(
-                    this.spawn
+                    this.spawn,
+                    this.bedFootLocation,
+                    this.bedHeadLocation
             ).forEach(MapConfig::offsetEntityLocation);
 
             Stream.of(

@@ -75,6 +75,10 @@ public class LobbyConfig extends ConfigFile {
         this.offsetEntityLocations();
     }
 
+    public World getLobbyWorld() {
+        return lobbyWorld;
+    }
+
     public Location getLobbyPlayerSpawnLocation() {
         return lobbyPlayerSpawnLocation;
     }
