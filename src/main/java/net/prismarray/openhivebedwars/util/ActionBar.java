@@ -14,7 +14,7 @@ public class ActionBar {
         PacketPlayOutChat ppoc = new PacketPlayOutChat(cbc, (byte)2);
         craftPlayer.getHandle().playerConnection.sendPacket(ppoc);
 
-        // thanks to MisterFantasy on spigotmc.org!
+        // Thanks to MisterFantasy on spigotmc.org!
     }
 
     public static void sendToAll(String message) {

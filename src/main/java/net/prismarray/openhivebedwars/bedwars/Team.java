@@ -10,12 +10,15 @@ public class Team {
     TeamColor color;
     int size;
     ArrayList<Player> players;
+    boolean bedIntact;
 
     public Team(int size) {
         this.color = null;
         this.size = size;
 
         players = new ArrayList<>();
+
+        bedIntact = true;
     }
 
     public TeamColor getColor() {
@@ -54,5 +57,14 @@ public class Team {
 
     public boolean removePlayer(Player player) {
         return players.remove(player);
+    }
+
+
+    public boolean hasBed() {
+        return bedIntact;
+    }
+
+    public void breakBed() {
+        bedIntact = false;
     }
 }

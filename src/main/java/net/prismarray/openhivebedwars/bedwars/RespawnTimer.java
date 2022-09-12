@@ -1,5 +1,7 @@
 package net.prismarray.openhivebedwars.bedwars;
 
+import net.prismarray.openhivebedwars.util.Format;
+import net.prismarray.openhivebedwars.util.Title;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 
@@ -17,7 +19,7 @@ public class RespawnTimer extends Countdown {
 
     @Override
     public void onDecrement() {
-        player.sendMessage("§9Respawn: " + String.valueOf(getCount()));
+        Title.send(player, "", Format.getRoundNumeral(getCount()) + " §7seconds until respawn...", 0, 30, 0);
     }
 
     @Override

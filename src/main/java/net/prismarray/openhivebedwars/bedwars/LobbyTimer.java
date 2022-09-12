@@ -37,7 +37,7 @@ public class LobbyTimer extends Countdown {
     @Override
     public void onDecrement() {
         if (Bukkit.getOnlinePlayers().size() < requiredPlayerCount) {
-            setCount(61);
+            setCount(11);
         }
 
         if (getCount() == 5) {

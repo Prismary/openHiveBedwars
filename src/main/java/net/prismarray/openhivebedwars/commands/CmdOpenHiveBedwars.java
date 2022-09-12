@@ -4,6 +4,7 @@ import net.prismarray.openhivebedwars.OpenHiveBedwars;
 import net.prismarray.openhivebedwars.util.ActionBar;
 import net.prismarray.openhivebedwars.util.Format;
 import net.prismarray.openhivebedwars.util.Status;
+import net.prismarray.openhivebedwars.util.Title;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -30,8 +31,8 @@ public class CmdOpenHiveBedwars extends CommandBase {
                 return reload(sender, command, label, args);
             case "status":
                 return status(sender, command, label, args);
-            case "test":
-                ActionBar.send(Bukkit.getPlayer(sender.getName()), "amogus");
+            case "title":
+                Title.send(Bukkit.getPlayer(sender.getName()), "", Format.getRoundNumeral(2) + " §7seconds until respawn...");
                 return true;
             case "startgame":
                 plugin.game.ingame();
