@@ -2,6 +2,7 @@ package net.prismarray.openhivebedwars.commands;
 
 import net.prismarray.openhivebedwars.OpenHiveBedwars;
 import net.prismarray.openhivebedwars.bedwars.Team;
+import net.prismarray.openhivebedwars.util.Broadcast;
 import net.prismarray.openhivebedwars.util.Status;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -89,7 +90,7 @@ public class CmdTeam extends CommandBase {
         } else {
             sender.sendMessage("§cYou are not currently in a team.");
         }
-        plugin.game.getTeamHandler().broadcastPlayerLeave(team, sender.getName());
+        Broadcast.broadcastPlayerLeave(team, sender.getName());
         plugin.game.getTeamHandler().tryDissolution(team);
         return true;
     }
@@ -116,7 +117,7 @@ public class CmdTeam extends CommandBase {
 
         // send join message
         if (plugin.game.getTeamHandler().isInTeam(Bukkit.getPlayer(args[nameArgPos]))) {
-            plugin.game.getTeamHandler().broadcastPlayerJoin(plugin.game.getTeamHandler().getPlayerTeam(Bukkit.getPlayer(args[nameArgPos])), sender.getName());
+            Broadcast.broadcastPlayerJoin(plugin.game.getTeamHandler().getPlayerTeam(Bukkit.getPlayer(args[nameArgPos])), sender.getName());
         } else {
             Bukkit.getPlayer(args[nameArgPos]).sendMessage("§2" + sender.getName() + " §ajoined your team!");
         }

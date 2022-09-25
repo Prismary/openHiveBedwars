@@ -31,12 +31,6 @@ public class CmdOpenHiveBedwars extends CommandBase {
                 return reload(sender, command, label, args);
             case "status":
                 return status(sender, command, label, args);
-            case "title":
-                Title.send(Bukkit.getPlayer(sender.getName()), "", Format.getRoundNumeral(2) + " §7seconds until respawn...");
-                return true;
-            case "startgame":
-                plugin.game.ingame();
-                return true;
             case "nik":
                 sender.sendMessage(":skull:");
                 return true;
@@ -70,6 +64,9 @@ public class CmdOpenHiveBedwars extends CommandBase {
                 break;
             case "lobby":
                 plugin.game.setStatus(Status.LOBBY);
+                break;
+            case "confirmation":
+                plugin.game.setStatus(Status.CONFIRMATION);
                 break;
             case "warmup":
                 plugin.game.setStatus(Status.WARMUP);

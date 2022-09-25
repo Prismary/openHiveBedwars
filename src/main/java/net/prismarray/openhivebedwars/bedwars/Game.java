@@ -12,9 +12,9 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.block.BlockState;
 import org.bukkit.entity.Player;
 import org.bukkit.material.Bed;
-import org.bukkit.material.MaterialData;
 
 import java.io.File;
+import java.util.ArrayList;
 
 public class Game {
     OpenHiveBedwars plugin;
@@ -23,9 +23,11 @@ public class Game {
     TeamHandler teamHandler;
     LobbyTimer lobbyTimer;
     MapConfig mapConfig;
+    ArrayList<Player> hiddenPlayers;
 
     public Game(OpenHiveBedwars plugin, Mode mode) {
         this.plugin = plugin;
+        hiddenPlayers = new ArrayList<>();
         startup(mode);
     }
 
@@ -102,10 +104,21 @@ public class Game {
         mapConfig.updateWorld(arena);
 
         // spawn beds
-        clearAllBeds();
-        for (Team team : teamHandler.getTeams()) {
-            spawnBed(team.getColor());
+        //clearAllBeds();
+        //for (Team team : teamHandler.getTeams()) {
+        //    spawnBed(team.getColor());
+        //}
+
+        // TEMPORARY FOR TESTING
+        for (TeamColor color : TeamColor.getDuosModeColours()) {
+            spawnBed(color);
         }
+        //clearAllBeds();
+    }
+
+    public void clearBed(TeamColor color) {
+        mapConfig.getArenaWorld().getBlockAt(mapConfig.getTeamBedHeadLocation(color)).setType(Material.DIAMOND_BLOCK);
+        mapConfig.getArenaWorld().getBlockAt(mapConfig.getTeamBedFootLocation(color)).setType(Material.GOLD_BLOCK);
     }
 
     public void clearAllBeds() {
@@ -122,8 +135,7 @@ public class Game {
         }
 
         for (TeamColor color : colors) {
-            mapConfig.getArenaWorld().getBlockAt(mapConfig.getTeamBedFootLocation(color)).setType(Material.AIR);
-            mapConfig.getArenaWorld().getBlockAt(mapConfig.getTeamBedHeadLocation(color)).setType(Material.AIR);
+            clearBed(color);
         }
     }
 
@@ -184,17 +196,43 @@ public class Game {
     }
 
     public void spawnPlayer(Player player) {
-        player.setGameMode(GameMode.SURVIVAL);
+        player.setAllowFlight(false);
+        player.setFlying(false);
+        showPlayer(player);
+        player.setFallDistance(0);
         player.teleport(mapConfig.getTeamSpawn(teamHandler.getPlayerTeam(player).getColor()));
     }
 
     public void respawnPlayer(Player player) {
-        player.setGameMode(GameMode.SPECTATOR);
+        player.setAllowFlight(true);
+        player.setFlying(true);
+        hidePlayer(player);
         player.teleport(mapConfig.getSpectatorSpawn());
 
         new RespawnTimer(this, player).start();
     }
 
+    public void hidePlayer(Player player) {
+        hiddenPlayers.add(player);
+
+        for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
+            onlinePlayer.hidePlayer(player);
+        }
+    }
+
+    public void showPlayer(Player player) {
+        hiddenPlayers.remove(player);
+
+        for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
+            onlinePlayer.showPlayer(player);
+        }
+    }
+
+    public void hideHiddenPlayers(Player player) {
+        for (Player hiddenPlayer : hiddenPlayers) {
+            player.hidePlayer(hiddenPlayer);
+        }
+    }
 
     public TeamHandler getTeamHandler() {
         return teamHandler;
@@ -219,6 +257,9 @@ public class Game {
     }
 
     public void setSpectatorPlayer(Player player) {
+        player.setAllowFlight(true);
+        player.setFlying(true);
+        hidePlayer(player);
         player.teleport(mapConfig.getSpectatorSpawn());
     }
 

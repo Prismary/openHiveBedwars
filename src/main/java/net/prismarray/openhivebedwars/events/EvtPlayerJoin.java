@@ -15,6 +15,8 @@ public class EvtPlayerJoin extends EventBase {
     public void playerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
+        plugin.game.hideHiddenPlayers(player);
+
         switch (plugin.game.getStatus()) {
             case LOBBY:
                 plugin.game.setLobbyPlayer(player);

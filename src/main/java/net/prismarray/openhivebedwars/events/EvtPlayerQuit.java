@@ -17,12 +17,7 @@ public class EvtPlayerQuit extends EventBase {
     public void playerQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
 
-        // Remove player from team
-        if (plugin.game.getTeamHandler().isInTeam(player)) {
-            Team team = plugin.game.getTeamHandler().getPlayerTeam(player);
-            plugin.game.getTeamHandler().broadcastPlayerLeave(team, player.getName());
-            plugin.game.getTeamHandler().removePlayer(player);
-            plugin.game.getTeamHandler().tryDissolution(team);
-        }
+        // Notify TeamHandler
+        plugin.game.getTeamHandler().playerDisconnect(player);
     }
 }

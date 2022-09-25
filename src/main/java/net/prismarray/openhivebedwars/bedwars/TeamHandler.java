@@ -1,7 +1,9 @@
 package net.prismarray.openhivebedwars.bedwars;
 
 import com.google.common.collect.ImmutableList;
+import net.prismarray.openhivebedwars.util.Broadcast;
 import net.prismarray.openhivebedwars.util.Mode;
+import net.prismarray.openhivebedwars.util.Status;
 import net.prismarray.openhivebedwars.util.TeamColor;
 import org.bukkit.entity.Player;
 
@@ -195,9 +197,37 @@ public class TeamHandler {
         }
     }
 
+    public void playerDisconnect(Player player) {
+        Team team = getPlayerTeam(player);
+        if (team == null) {
+            return;
+        }
+
+        switch (game.status) {
+            case LOBBY:
+                Broadcast.broadcastPlayerLeave(team, player.getName());
+                removePlayer(player);
+                tryDissolution(team);
+                break;
+            case WARMUP:
+            case INGAME:
+                Broadcast.broadcastPlayerLeave(team, player.getName());
+                removePlayer(player);
+                if (team.getPlayerCount() == 0) {
+                    killTeam(team);
+                }
+        }
+    }
+
+    public void killTeam(Team team) {
+        Broadcast.broadcast(team.getColor().name() + "has been eliminated!");
+        game.clearBed(team.getColor());
+        teams.remove(team);
+    }
+
     public void tryDissolution(Team team) {
         if (team.getPlayerCount() <= 1) {
-            broadcastToTeam(team, "§cYour team has been dissolved.");
+            Broadcast.broadcastToTeam(team, "§cYour team has been dissolved.");
             teams.remove(team);
         }
     }
@@ -218,21 +248,5 @@ public class TeamHandler {
             }
         }
         return teams;
-    }
-
-    public void broadcastToTeam(Team team, String message) {
-        if (team != null) {
-            for (int i = 0; i < team.getPlayerCount(); i++) {
-                team.getPlayer(i).sendMessage(message);
-            }
-        }
-    }
-
-    public void broadcastPlayerJoin(Team team, String username) {
-        broadcastToTeam(team, "§2" + username + " §ahas joined your team.");
-    }
-
-    public void broadcastPlayerLeave(Team team, String username) {
-        broadcastToTeam(team, "§4" + username + " §chas left your team.");
     }
 }

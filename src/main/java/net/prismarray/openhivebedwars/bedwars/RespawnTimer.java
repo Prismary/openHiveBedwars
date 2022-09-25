@@ -25,7 +25,6 @@ public class RespawnTimer extends Countdown {
     @Override
     public void onCompletion() {
         player.sendMessage("§1Respawned!");
-        player.setGameMode(GameMode.SURVIVAL);
-        player.teleport(game.mapConfig.getTeamSpawn(game.teamHandler.getPlayerTeam(player).getColor()));
+        game.spawnPlayer(player);
     }
 }
