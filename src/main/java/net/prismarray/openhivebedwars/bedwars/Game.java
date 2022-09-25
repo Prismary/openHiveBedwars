@@ -12,6 +12,7 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.block.BlockState;
 import org.bukkit.entity.Player;
 import org.bukkit.material.Bed;
+import org.bukkit.util.Vector;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -104,21 +105,15 @@ public class Game {
         mapConfig.updateWorld(arena);
 
         // spawn beds
-        //clearAllBeds();
-        //for (Team team : teamHandler.getTeams()) {
-        //    spawnBed(team.getColor());
-        //}
-
-        // TEMPORARY FOR TESTING
-        for (TeamColor color : TeamColor.getDuosModeColours()) {
-            spawnBed(color);
+        clearAllBeds();
+        for (Team team : teamHandler.getTeams()) {
+            spawnBed(team.getColor());
         }
-        //clearAllBeds();
     }
 
     public void clearBed(TeamColor color) {
-        mapConfig.getArenaWorld().getBlockAt(mapConfig.getTeamBedHeadLocation(color)).setType(Material.DIAMOND_BLOCK);
-        mapConfig.getArenaWorld().getBlockAt(mapConfig.getTeamBedFootLocation(color)).setType(Material.GOLD_BLOCK);
+        mapConfig.getArenaWorld().getBlockAt(mapConfig.getTeamBedHeadLocation(color)).setType(Material.AIR);
+        mapConfig.getArenaWorld().getBlockAt(mapConfig.getTeamBedFootLocation(color)).setType(Material.AIR);
     }
 
     public void clearAllBeds() {
@@ -143,11 +138,11 @@ public class Game {
         Block bedFootBlock = mapConfig.getArenaWorld().getBlockAt(mapConfig.getTeamBedFootLocation(color));
         Block bedHeadBlock = mapConfig.getArenaWorld().getBlockAt(mapConfig.getTeamBedHeadLocation(color));
 
-        Location locationDiff = mapConfig.getTeamBedFootLocation(color).subtract(mapConfig.getTeamBedHeadLocation(color));
+        Vector diff = bedFootBlock.getLocation().toVector().subtract(bedHeadBlock.getLocation().toVector());
 
         BlockFace facing = null;
 
-        switch ((int) Math.round(locationDiff.getX())) {
+        switch ((int) Math.round(diff.getX())) {
             case 1:
                 facing = BlockFace.WEST;
                 break;
@@ -156,7 +151,7 @@ public class Game {
                 break;
         }
 
-        switch ((int) Math.round(locationDiff.getZ())) {
+        switch ((int) Math.round(diff.getZ())) {
             case 1:
                 facing = BlockFace.NORTH;
                 break;
@@ -164,15 +159,6 @@ public class Game {
                 facing = BlockFace.SOUTH;
                 break;
         }
-
-        // Create Bed Foot Block
-        BlockState bedFootState = bedFootBlock.getState();
-        bedFootState.setType(Material.BED_BLOCK);
-        Bed bedFootData = new Bed(Material.BED_BLOCK);
-        bedFootData.setHeadOfBed(false);
-        bedFootData.setFacingDirection(facing);
-        bedFootState.setData(bedFootData);
-        bedFootState.update(true);
 
         // Create Bed Head Block
         BlockState bedHeadState = bedHeadBlock.getState();
@@ -182,6 +168,15 @@ public class Game {
         bedHeadData.setFacingDirection(facing);
         bedHeadState.setData(bedHeadData);
         bedHeadState.update(true);
+
+        // Create Bed Foot Block
+        BlockState bedFootState = bedFootBlock.getState();
+        bedFootState.setType(Material.BED_BLOCK);
+        Bed bedFootData = new Bed(Material.BED_BLOCK);
+        bedFootData.setHeadOfBed(false);
+        bedFootData.setFacingDirection(facing);
+        bedFootState.setData(bedFootData);
+        bedFootState.update(true);
 
         // Thanks to val59000 on spigotmc.org!
     }
