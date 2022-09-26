@@ -3,7 +3,6 @@ package net.prismarray.openhivebedwars.bedwars;
 import com.google.common.collect.ImmutableList;
 import net.prismarray.openhivebedwars.util.Broadcast;
 import net.prismarray.openhivebedwars.util.Mode;
-import net.prismarray.openhivebedwars.util.Status;
 import net.prismarray.openhivebedwars.util.TeamColor;
 import org.bukkit.entity.Player;
 
@@ -205,17 +204,22 @@ public class TeamHandler {
 
         switch (game.status) {
             case LOBBY:
-                Broadcast.broadcastPlayerLeave(team, player.getName());
+                Broadcast.playerLeave(team, player.getName());
                 removePlayer(player);
                 tryDissolution(team);
                 break;
             case WARMUP:
             case INGAME:
-                Broadcast.broadcastPlayerLeave(team, player.getName());
-                removePlayer(player);
-                if (team.getPlayerCount() == 0) {
-                    killTeam(team);
-                }
+                Broadcast.playerLeave(team, player.getName());
+                finalKill(player);
+                break;
+        }
+    }
+
+    public void finalKill(Player player) {
+        removePlayer(player);
+        if (getPlayerTeam(player).getPlayerCount() == 0) {
+            killTeam(getPlayerTeam(player));
         }
     }
 
@@ -237,6 +241,12 @@ public class TeamHandler {
             if (teams.get(i).getPlayerCount() <= 1) {
                 teams.remove(teams.get(i));
             }
+        }
+    }
+
+    public void tryGameEnd() {
+        if (teams.size() == 1) {
+            game.concluded(teams.get(0).getColor());
         }
     }
 

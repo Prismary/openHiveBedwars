@@ -2,10 +2,7 @@ package net.prismarray.openhivebedwars.bedwars;
 
 import net.prismarray.openhivebedwars.OpenHiveBedwars;
 import net.prismarray.openhivebedwars.config.MapConfig;
-import net.prismarray.openhivebedwars.util.Mode;
-import net.prismarray.openhivebedwars.util.Status;
-import net.prismarray.openhivebedwars.util.TeamColor;
-import net.prismarray.openhivebedwars.util.WorldCopy;
+import net.prismarray.openhivebedwars.util.*;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -37,6 +34,7 @@ public class Game {
     // GAME PHASE PROGRESSION
     public void startup(Mode mode) {
         status = Status.STARTUP;
+        Broadcast.prefix = plugin.config.getPrefix();
 
         this.mode = mode;
         teamHandler = new TeamHandler(this);
@@ -77,6 +75,13 @@ public class Game {
     public void ingame() {
         status = Status.INGAME;
     }
+
+    public void concluded(TeamColor winner) {
+        status = Status.CONCLUDED;
+
+        Title.sendToAll("§c§lGame. OVER!", winner.chatColor + winner.chatName + " §7won the game");
+    }
+
 
 
 

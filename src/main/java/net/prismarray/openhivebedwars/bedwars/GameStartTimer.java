@@ -37,17 +37,17 @@ public class GameStartTimer extends Countdown {
     }
 
     public void playFightAnimation() {
-        for (int frame = 0; frame < fightAnimation.length; frame++) {
+        for (int frame = 0; frame < fightAnimation.length-1; frame++) {
             scheduleAnimationFrame(frame);
         }
 
-        // Schedule final frame again with longer duration
+        // Schedule final frame with longer duration
         scheduler.scheduleSyncDelayedTask(plugin, new Runnable() {
             @Override
             public void run() {
                 Title.sendToAll(fightAnimation[14], "§7Protect your bed, destroy others!", 0, 40, 10);
             }
-        }, 15);
+        }, 14);
     }
 
     private void scheduleAnimationFrame(int frame) {

@@ -34,7 +34,7 @@ public class EvtBedBreak extends EventBase {
                 event.setCancelled(true);
                 team.breakBed();
                 plugin.game.clearBed(team.getColor());
-                Broadcast.broadcast(team.getColor().name() + " bed broken!");
+                Broadcast.bedBreak(team.getColor());
             }
         }
     }
