@@ -43,6 +43,13 @@ public class TeamHandler {
         return !(getPlayerTeam(player) == null);
     }
 
+    public boolean areTeammates(Player player1, Player player2) {
+        if (getPlayerTeam(player1).getColor() == getPlayerTeam(player2).getColor()) {
+            return true;
+        }
+        return false;
+    }
+
     public Team getPlayerTeam(Player player) {
         for (int i = 0; i < teams.size(); i++) {
             if (teams.get(i).getPlayers().contains(player)) {
@@ -217,21 +224,23 @@ public class TeamHandler {
     }
 
     public void finalKill(Player player) {
+        Team team = getPlayerTeam(player);
         removePlayer(player);
-        if (getPlayerTeam(player).getPlayerCount() == 0) {
-            killTeam(getPlayerTeam(player));
+        if (team.getPlayerCount() == 0) {
+            killTeam(team);
         }
     }
 
     public void killTeam(Team team) {
-        Broadcast.broadcast(team.getColor().name() + "has been eliminated!");
+        Broadcast.teamElimination(team.getColor());
         game.clearBed(team.getColor());
         teams.remove(team);
+        tryGameEnd();
     }
 
     public void tryDissolution(Team team) {
         if (team.getPlayerCount() <= 1) {
-            Broadcast.broadcastToTeam(team, "§cYour team has been dissolved.");
+            Broadcast.toTeam(team, "§cYour team has been dissolved.");
             teams.remove(team);
         }
     }

@@ -30,7 +30,12 @@ public class EvtBedBreak extends EventBase {
             Block bedHeadBlock = plugin.game.getMapConfig().getArenaWorld().getBlockAt(bedHeadLocation);
 
             if (event.getBlock().equals(bedFootBlock) || event.getBlock().equals(bedHeadBlock)) {
-                // Check whether bed head or foot block of team equals broken block
+                if (plugin.game.getTeamHandler().getPlayerTeam(event.getPlayer()).equals(team)) { // Check whether player belongs to team bed
+                    event.setCancelled(true);
+                    event.getPlayer().sendMessage("§c§lHey! §7You can't break your own bed!");
+                    return;
+                }
+
                 event.setCancelled(true);
                 team.breakBed();
                 plugin.game.clearBed(team.getColor());

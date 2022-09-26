@@ -17,7 +17,7 @@ public class Broadcast {
         raw(prefix + message);
     }
 
-    public static void broadcastToTeam(Team team, String message) {
+    public static void rawToTeam(Team team, String message) {
         if (team != null) {
             for (Player player : team.getPlayers()) {
                 player.sendMessage(message);
@@ -25,24 +25,32 @@ public class Broadcast {
         }
     }
 
+    public static void toTeam(Team team, String message) {
+        rawToTeam(team, prefix + message);
+    }
+
+    public static void toPlayer(Player player, String message) {
+        player.sendMessage(prefix + message);
+    }
+
     public static void playerJoin(Team team, String username) {
-        broadcastToTeam(team, "§2" + username + " §ahas joined your team.");
+        toTeam(team, "§2" + username + " §ahas joined your team.");
     }
 
     public static void playerLeave(Team team, String username) {
-        broadcastToTeam(team, "§4" + username + " §chas left your team.");
+        toTeam(team, "§4" + username + " §chas left your team.");
     }
 
     public static void kill(String killerName, TeamColor killerColor, String killedName, TeamColor killedColor) {
-        broadcast("§c✖ " + killedColor.chatColor + killedName + "§7was killed by " + killerColor.chatColor + killerName + "§7!");
+        broadcast("§c✖ " + killedColor.chatColor + killedName + " §7was killed by " + killerColor.chatColor + killerName + "§7!");
     }
 
     public static void finalKill(String killerName, TeamColor killerColor, String killedName, TeamColor killedColor) {
-        broadcast("§c✖ " + killedColor.chatColor + killedName + "§7was eliminated by " + killerColor.chatColor + killerName + "§7!");
+        broadcast("§c✖ " + killedColor.chatColor + killedName + " §7was eliminated by " + killerColor.chatColor + killerName + "§7!");
     }
 
     public static void death(String name, TeamColor color) {
-        broadcast("§c✖ " + color.chatColor + name + "§7died.");
+        broadcast("§c✖ " + color.chatColor + name + " §7died.");
     }
 
     public static void bedBreak(TeamColor color) {

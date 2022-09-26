@@ -13,15 +13,18 @@ import org.bukkit.util.Vector;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Map;
 
 public class Game {
     OpenHiveBedwars plugin;
     Mode mode;
     Status status;
     TeamHandler teamHandler;
+    CombatHandler combatHandler;
     LobbyTimer lobbyTimer;
     MapConfig mapConfig;
     ArrayList<Player> hiddenPlayers;
+
 
     public Game(OpenHiveBedwars plugin, Mode mode) {
         this.plugin = plugin;
@@ -38,6 +41,7 @@ public class Game {
 
         this.mode = mode;
         teamHandler = new TeamHandler(this);
+        combatHandler = new CombatHandler(this);
         lobbyTimer = new LobbyTimer(this);
 
         lobbySetup();
@@ -198,9 +202,9 @@ public class Game {
     public void spawnPlayer(Player player) {
         player.setAllowFlight(false);
         player.setFlying(false);
-        showPlayer(player);
         player.setFallDistance(0);
         player.teleport(mapConfig.getTeamSpawn(teamHandler.getPlayerTeam(player).getColor()));
+        showPlayer(player);
     }
 
     public void respawnPlayer(Player player) {
@@ -236,6 +240,9 @@ public class Game {
 
     public TeamHandler getTeamHandler() {
         return teamHandler;
+    }
+    public CombatHandler getCombatHandler() {
+        return combatHandler;
     }
 
     public MapConfig getMapConfig() {
