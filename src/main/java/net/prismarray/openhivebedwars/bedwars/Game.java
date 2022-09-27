@@ -212,6 +212,7 @@ public class Game {
         player.setFlying(true);
         hidePlayer(player);
         player.teleport(mapConfig.getSpectatorSpawn());
+        SoundHandler.playerSound(player, "mob.guardian.curse", 1f, 0.5f);
 
         new RespawnTimer(this, player).start();
     }

@@ -1,7 +1,9 @@
 package net.prismarray.openhivebedwars.bedwars;
 
 import net.prismarray.openhivebedwars.util.Format;
+import net.prismarray.openhivebedwars.util.SoundHandler;
 import net.prismarray.openhivebedwars.util.Title;
+import org.bukkit.Sound;
 
 public class GameStartTimer extends Countdown {
 
@@ -87,10 +89,15 @@ public class GameStartTimer extends Countdown {
                     numPrefix = "§c";
                     break;
                 case 3:
+                    SoundHandler.globalPlayerSound("random.orb", 1f, 0.5f);
+                    numPrefix = "§6";
+                    break;
                 case 2:
+                    SoundHandler.globalPlayerSound("random.orb", 1f, 0.75f);
                     numPrefix = "§6";
                     break;
                 case 1:
+                    SoundHandler.globalPlayerSound("random.orb", 1f, 1f);
                     numPrefix = "§e";
                     break;
                 default:
@@ -104,6 +111,7 @@ public class GameStartTimer extends Countdown {
 
     @Override
     public void onCompletion() {
+        SoundHandler.globalPlayerSound(Sound.ENDERDRAGON_GROWL);
         game.ingame();
         playFightAnimation();
     }
