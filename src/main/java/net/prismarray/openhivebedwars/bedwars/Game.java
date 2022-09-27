@@ -278,6 +278,7 @@ public class Game {
     public void fullPlayerClear(Player player) {
         player.setFallDistance(0);
         player.getInventory().clear();
+        player.getInventory().setArmorContents(null);
         player.setGameMode(GameMode.SURVIVAL);
         player.setFlying(false);
     }

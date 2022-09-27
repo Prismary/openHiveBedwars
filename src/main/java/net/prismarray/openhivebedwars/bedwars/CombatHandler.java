@@ -2,10 +2,13 @@ package net.prismarray.openhivebedwars.bedwars;
 
 import net.prismarray.openhivebedwars.util.Broadcast;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,7 +33,7 @@ public class CombatHandler {
         Player damager = (Player) ((EntityDamageByEntityEvent) event).getDamager();
         Player damaged = (Player) event.getEntity();
 
-        if (game.getTeamHandler().areTeammates(damager, damaged) || game.getTeamHandler().isInTeam(damager)) { // Cancel if players are teammates or player is spectator
+        if (game.getTeamHandler().areTeammates(damager, damaged) || !game.getTeamHandler().isInTeam(damager)) { // Cancel if players are teammates or player is spectator
             event.setCancelled(true);
             return;
         }
@@ -66,6 +69,7 @@ public class CombatHandler {
                         game.getTeamHandler().getPlayerTeam(player).getColor()
                 );
             }
+            dropInventory(player, false);
             game.respawnPlayer(player);
 
         } else { // In case of broken bed
@@ -83,8 +87,28 @@ public class CombatHandler {
                         game.getTeamHandler().getPlayerTeam(player).getColor()
                 );
             }
+            dropInventory(player, true);
             game.getTeamHandler().finalKill(player);
             game.setSpectatorPlayer(player);
+        }
+    }
+
+    public void dropInventory(Player player, boolean fullDrop) {
+        for (ItemStack itemStack : player.getInventory().getContents()) {
+            if (itemStack == null) {
+                continue;
+            }
+            player.getWorld().dropItem(player.getLocation(), itemStack).setVelocity(new Vector(0, 0, 0));
+            player.getInventory().remove(itemStack);
+        }
+        if (fullDrop) { // Also drop armor on full drop
+            for (ItemStack itemStack : player.getInventory().getArmorContents()) {
+                if (itemStack == null || itemStack.getData().getItemType() == Material.AIR) {
+                    continue;
+                }
+                player.getWorld().dropItem(player.getLocation(), itemStack).setVelocity(new Vector(0, 0, 0));
+            }
+            player.getInventory().setArmorContents(null);
         }
     }
 
