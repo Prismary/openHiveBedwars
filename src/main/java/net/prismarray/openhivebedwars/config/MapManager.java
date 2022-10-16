@@ -1,5 +1,6 @@
 package net.prismarray.openhivebedwars.config;
 
+import net.prismarray.openhivebedwars.util.Mode;
 import org.apache.commons.io.FilenameUtils;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -18,7 +19,7 @@ public class MapManager {
         this.plugin = plugin;
     }
 
-    public void loadMaps() {
+    public void loadMaps(Mode gameMode) {
 
         this.mapConfigs.clear();
 
@@ -52,11 +53,23 @@ public class MapManager {
             try {
                 MapConfig mapConfig = new MapConfig(this.plugin.getLogger(), configFile);
                 mapConfig.loadConfig();
-                mapConfigs.put(mapID, mapConfig);
 
-                this.plugin.getLogger().info(
-                        "Successfully loaded map '" + mapID + "' from file '" + configFile.getName() + "'."
-                );
+                if (gameMode == null || Objects.equals(mapConfig.getMode(), gameMode)) {
+
+                    mapConfigs.put(mapID, mapConfig);
+
+                    this.plugin.getLogger().info(
+                            "Successfully loaded map '" + mapID + "' from file '" + configFile.getName() + "'."
+                    );
+
+                } else {
+
+                    this.plugin.getLogger().info(
+                            "Skipping map '" + mapID + "' from file '" + configFile.getName() + "' due to Mode " +
+                                    "missmatch: Map has Mode '" + mapConfig.getMode() + "', " +
+                                    "expected Mode: '" + gameMode + "'"
+                    );
+                }
 
             } catch (ConfigValidationException | IOException e) {
                 this.plugin.getLogger().warning(
