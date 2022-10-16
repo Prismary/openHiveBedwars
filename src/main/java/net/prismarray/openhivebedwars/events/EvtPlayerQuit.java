@@ -16,6 +16,7 @@ public class EvtPlayerQuit extends EventBase {
     @EventHandler
     public void playerQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
+        event.setQuitMessage(null);
 
         // Notify TeamHandler
         plugin.game.getTeamHandler().playerDisconnect(player);

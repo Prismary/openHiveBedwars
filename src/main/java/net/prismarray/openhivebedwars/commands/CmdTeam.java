@@ -90,7 +90,7 @@ public class CmdTeam extends CommandBase {
         } else {
             sender.sendMessage("§cYou are not currently in a team.");
         }
-        Broadcast.playerLeave(team, sender.getName());
+        Broadcast.teamLeave(team, sender.getName());
         plugin.game.getTeamHandler().tryDissolution(team);
         return true;
     }
@@ -117,7 +117,7 @@ public class CmdTeam extends CommandBase {
 
         // send join message
         if (plugin.game.getTeamHandler().isInTeam(Bukkit.getPlayer(args[nameArgPos]))) {
-            Broadcast.playerJoin(plugin.game.getTeamHandler().getPlayerTeam(Bukkit.getPlayer(args[nameArgPos])), sender.getName());
+            Broadcast.teamJoin(plugin.game.getTeamHandler().getPlayerTeam(Bukkit.getPlayer(args[nameArgPos])), sender.getName());
         } else {
             Bukkit.getPlayer(args[nameArgPos]).sendMessage("§2" + sender.getName() + " §ajoined your team!");
         }

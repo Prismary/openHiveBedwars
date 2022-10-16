@@ -33,12 +33,12 @@ public class Broadcast {
         player.sendMessage(prefix + message);
     }
 
-    public static void playerJoin(Team team, String username) {
-        toTeam(team, "§2" + username + " §ahas joined your team.");
+    public static void teamJoin(Team team, String username) {
+        toTeam(team, "§9" + username + " §ajoined your team!");
     }
 
-    public static void playerLeave(Team team, String username) {
-        toTeam(team, "§4" + username + " §chas left your team.");
+    public static void teamLeave(Team team, String username) {
+        toTeam(team, "§9" + username + " §cleft your team §6=(");
     }
 
     public static void kill(String killerName, TeamColor killerColor, String killedName, TeamColor killedColor) {

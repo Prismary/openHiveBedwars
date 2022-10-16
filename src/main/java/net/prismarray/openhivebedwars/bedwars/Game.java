@@ -21,6 +21,7 @@ public class Game {
     Status status;
     TeamHandler teamHandler;
     CombatHandler combatHandler;
+    MapVoting mapVoting;
     LobbyTimer lobbyTimer;
     MapConfig mapConfig;
     ArrayList<Player> hiddenPlayers;
@@ -43,6 +44,7 @@ public class Game {
         teamHandler = new TeamHandler(this);
         combatHandler = new CombatHandler(this);
         lobbyTimer = new LobbyTimer(this);
+        mapVoting = new MapVoting(this);
 
         lobbySetup();
 
@@ -57,12 +59,12 @@ public class Game {
     public void confirmation() {
         status = Status.CONFIRMATION;
 
+        // end voting and set map
+        mapConfig = mapVoting.conclude();
+
         // finalize team composition
         teamHandler.assignAndMerge();
         teamHandler.colorize();
-
-        // load map config: todo map voting
-        mapConfig = plugin.mapManager.getMapConfig("d_castle");
     }
 
     public void warmup() {
@@ -244,6 +246,9 @@ public class Game {
     }
     public CombatHandler getCombatHandler() {
         return combatHandler;
+    }
+    public MapVoting getMapVoting() {
+        return mapVoting;
     }
 
     public MapConfig getMapConfig() {

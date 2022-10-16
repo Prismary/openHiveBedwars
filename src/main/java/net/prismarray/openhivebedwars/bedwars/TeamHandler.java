@@ -211,13 +211,13 @@ public class TeamHandler {
 
         switch (game.status) {
             case LOBBY:
-                Broadcast.playerLeave(team, player.getName());
+                Broadcast.teamLeave(team, player.getName());
                 removePlayer(player);
                 tryDissolution(team);
                 break;
             case WARMUP:
             case INGAME:
-                Broadcast.playerLeave(team, player.getName());
+                Broadcast.teamLeave(team, player.getName());
                 finalKill(player);
                 break;
         }

@@ -71,6 +71,10 @@ public class MapManager {
         return mapConfigs.get(mapID);
     }
 
+    public Map<String, MapConfig> getMapConfigs() {
+        return mapConfigs;
+    }
+
     public void clear() {
         mapConfigs.clear();
     }
