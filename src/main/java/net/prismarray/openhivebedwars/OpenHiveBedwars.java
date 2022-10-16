@@ -9,8 +9,6 @@ import net.prismarray.openhivebedwars.config.ConfigValidationException;
 import net.prismarray.openhivebedwars.config.LobbyConfig;
 import net.prismarray.openhivebedwars.config.MapManager;
 import net.prismarray.openhivebedwars.events.*;
-import net.prismarray.openhivebedwars.util.WorldCopy;
-import org.bukkit.WorldCreator;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -75,7 +73,7 @@ public final class OpenHiveBedwars extends JavaPlugin {
     private void initializeMapManager() {
 
         mapManager = new MapManager(this);
-        mapManager.loadMaps();
+        mapManager.loadMaps(config.getMode());
     }
 
     private void registerCommands() {
