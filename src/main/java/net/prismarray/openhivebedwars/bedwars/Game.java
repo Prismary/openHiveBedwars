@@ -9,6 +9,7 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.block.BlockState;
 import org.bukkit.entity.Player;
 import org.bukkit.material.Bed;
+import org.bukkit.scheduler.BukkitScheduler;
 import org.bukkit.util.Vector;
 
 import java.io.File;
@@ -65,10 +66,17 @@ public class Game {
         // finalize team composition
         teamHandler.assignAndMerge();
         teamHandler.colorize();
+
+        // start arena setup as task
+        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+            @Override
+            public void run() {
+                arenaSetup();
+            }
+        }, 0);
     }
 
     public void warmup() {
-        // Arena setup already called by LobbyTimer!
         status = Status.WARMUP;
 
         lobbyTimer = null;

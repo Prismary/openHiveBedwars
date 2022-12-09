@@ -11,8 +11,8 @@ public class MapVoting {
 
     Map<String, MapConfig> mapConfigs;
     ArrayList<String> pool;
-    Map<String, Integer> voteCounts;
-    Map<Player, String> playerVotes;
+    Map<String, Integer> voteCounts; // Tracks the vote count for each map
+    Map<UUID, String> playerVotes; // Tracks what player voted for which map
 
     public MapVoting(Game game) {
         this.game = game;
@@ -37,11 +37,23 @@ public class MapVoting {
             return;
         }
 
-        // Count vote
-        String mapID = pool.get(index - 1);
-        voteCounts.put(mapID, voteCounts.get(mapID) + 1);
+        String previousVote = playerVotes.get(player.getUniqueId()); // Get previous vote
 
-        if (!mapID.equals("_random")) {
+        // Check whether player has already voted for same map
+        if (previousVote != null && previousVote.equals(pool.get(index - 1))) {
+            Broadcast.toPlayer(player, "§cYou have already voted for this map!");
+            return;
+        }
+
+        String mapID = pool.get(index - 1);
+
+        if (previousVote != null) { // Remove previous vote if existent
+            voteCounts.put(previousVote, voteCounts.get(previousVote) - 1);
+        }
+        voteCounts.put(mapID, voteCounts.get(mapID) + 1); // Add new vote
+        playerVotes.put(player.getUniqueId(), mapID); // Update player vote record
+
+        if (!mapID.equals("_random")) { // Notify player
             Broadcast.toPlayer(player, "§aYou voted for §f" + mapConfigs.get(mapID).getMapDisplayName() + "§a! §7[" + voteCounts.get(mapID) + " Total]");
         } else {
             Broadcast.toPlayer(player, "§aYou voted for §fRandom Map§a! §7[" + voteCounts.get(mapID) + " Total]");
@@ -50,6 +62,11 @@ public class MapVoting {
 
     public MapConfig conclude() {
         String winnerID = getMostVoted();
+
+        if (winnerID.equals("_random")) {
+            winnerID = pickRandom();
+        }
+
         Broadcast.broadcast("§3Voting has ended! §bThe map §f" + game.plugin.mapManager.getMapConfig(winnerID).getMapDisplayName() + " §bhas won!");
         return game.plugin.mapManager.getMapConfig(winnerID);
     }
@@ -125,5 +142,12 @@ public class MapVoting {
         }
 
         return winner;
+    }
+
+    private String pickRandom() {
+        List<String> mapIDs = new ArrayList<>();
+        mapIDs.addAll(mapConfigs.keySet());
+        Collections.shuffle(mapIDs);
+        return mapIDs.get(0);
     }
 }
