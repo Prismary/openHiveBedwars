@@ -22,6 +22,8 @@ public class MapConfig extends ConfigFile {
 
     private World arenaWorld;
 
+    private int minBuildHeight;
+    private int maxBuildHeight;
     private Location spectatorSpawn;
     private Set<Location> emeraldSummonerLocations;
     private Set<Location> diamondSummonerLocations;
@@ -97,6 +99,13 @@ public class MapConfig extends ConfigFile {
 
         this.mapDisplayName = parseString(yamlContent.getString("settings.name"));
         this.mode = parseMode(yamlContent.getString("settings.mode"));
+
+        int[] buildHeights = parseBuildLimits(
+                yamlContent.getString("settings.min_build_height"),
+                yamlContent.getString("settings.max_build_height")
+        );
+        this.minBuildHeight = buildHeights[0];
+        this.maxBuildHeight = buildHeights[1];
 
         this.spectatorSpawn = parseLocation(yamlContent.getString("locations.general.spectator_spawn"));
 

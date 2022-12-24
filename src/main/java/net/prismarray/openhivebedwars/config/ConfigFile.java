@@ -171,4 +171,31 @@ public abstract class ConfigFile {
 
         return input.stream().map(ConfigFile::parseMaterial).collect(Collectors.toSet());
     }
+
+    public static int[] parseBuildLimits(String lower, String upper) throws ConfigValidationException {
+
+        int minBuildHeight, maxBuildHeight = -1;
+
+        try {
+            minBuildHeight = Integer.parseInt(lower);
+        } catch(NumberFormatException e) {
+            throw new ConfigValidationException(
+                    "Could not parse minBuildHeight setting: Specified value is not an integer."
+            );
+        }
+
+        try {
+            maxBuildHeight = Integer.parseInt(upper);
+        } catch(NumberFormatException e) {
+            throw new ConfigValidationException(
+                    "Could not parse maxBuildHeight setting: Specified value is not an integer."
+            );
+        }
+
+        if (maxBuildHeight < minBuildHeight) {
+            throw new ConfigValidationException("minBuildHeight must be smaller or equal to maxBuildHeight.");
+        }
+
+        return new int[]{minBuildHeight, maxBuildHeight};
+    }
 }
