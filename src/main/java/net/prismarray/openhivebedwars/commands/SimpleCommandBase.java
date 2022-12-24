@@ -1,13 +1,13 @@
 package net.prismarray.openhivebedwars.commands;
 
 import net.prismarray.openhivebedwars.OpenHiveBedwars;
-import org.bukkit.ChatColor;
 import org.bukkit.command.CommandExecutor;
 
-public abstract class CommandBase implements CommandExecutor {
+public abstract class SimpleCommandBase implements CommandExecutor {
+
     protected final OpenHiveBedwars plugin;
 
-    public CommandBase(OpenHiveBedwars plugin) {
+    public SimpleCommandBase(OpenHiveBedwars plugin) {
         this.plugin = plugin;
     }
 }
