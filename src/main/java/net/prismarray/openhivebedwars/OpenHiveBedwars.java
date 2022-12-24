@@ -87,14 +87,13 @@ public final class OpenHiveBedwars extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new EvtPlayerLogin(this), this);
         getServer().getPluginManager().registerEvents(new EvtBlockPhysics(this), this);
         getServer().getPluginManager().registerEvents(new EvtFoodLevelChange(this), this);
-        getServer().getPluginManager().registerEvents(new EvtCreatureSpawn(this), this);
-        getServer().getPluginManager().registerEvents(new EvtEntityDamage(this), this);
+        getServer().getPluginManager().registerEvents(new EvtNaturalMobSpawn(this), this);
+        getServer().getPluginManager().registerEvents(new EvtPlayerDamage(this), this);
         getServer().getPluginManager().registerEvents(new EvtWeatherChange(this), this);
         getServer().getPluginManager().registerEvents(new EvtBlockPlace(this), this);
         getServer().getPluginManager().registerEvents(new EvtBlockBreak(this), this);
         getServer().getPluginManager().registerEvents(new EvtFireExtinguish(this), this);
         getServer().getPluginManager().registerEvents(new EvtPlayerQuit(this), this);
-        getServer().getPluginManager().registerEvents(new EvtAsyncPlayerChat(this), this);
         getServer().getPluginManager().registerEvents(new EvtStructureGrow(this), this);
         getServer().getPluginManager().registerEvents(new EvtBedBreak(this), this);
         getServer().getPluginManager().registerEvents(new EvtBuildLimit(this), this);

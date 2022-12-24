@@ -4,8 +4,8 @@ import net.prismarray.openhivebedwars.OpenHiveBedwars;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 
-public class EvtCreatureSpawn extends EventBase {
-    public EvtCreatureSpawn(OpenHiveBedwars plugin) {
+public class EvtNaturalMobSpawn extends EventBase {
+    public EvtNaturalMobSpawn(OpenHiveBedwars plugin) {
         super(plugin);
     }
 

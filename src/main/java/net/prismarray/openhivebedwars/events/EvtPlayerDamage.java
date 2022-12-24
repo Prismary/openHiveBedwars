@@ -1,16 +1,15 @@
 package net.prismarray.openhivebedwars.events;
 
 import net.prismarray.openhivebedwars.OpenHiveBedwars;
-import net.prismarray.openhivebedwars.util.Broadcast;
 import net.prismarray.openhivebedwars.util.Status;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageEvent;
 
-public class EvtEntityDamage extends EventBase {
+public class EvtPlayerDamage extends EventBase {
 
-    public EvtEntityDamage(OpenHiveBedwars plugin) {
+    public EvtPlayerDamage(OpenHiveBedwars plugin) {
         super(plugin);
     }
 
