@@ -1,42 +1,24 @@
 package net.prismarray.openhivebedwars.commands;
 
 import net.prismarray.openhivebedwars.OpenHiveBedwars;
-import net.prismarray.openhivebedwars.util.ActionBar;
 import net.prismarray.openhivebedwars.util.Format;
 import net.prismarray.openhivebedwars.util.Status;
-import net.prismarray.openhivebedwars.util.Title;
-import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
-public class CmdOpenHiveBedwars extends CommandBase {
+public class CmdOpenHiveBedwars extends AdvancedCommandBase {
+
 
     public CmdOpenHiveBedwars(OpenHiveBedwars plugin) {
         super(plugin);
-    }
 
-    @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        addSubCommand("help", this::help);
+        addSubCommand("version", this::version);
+        addSubCommand("reload", this::reload);
+        addSubCommand("status", this::status);
+        addSubCommand("nik", this::nik);
 
-        if (args.length == 0) {
-            return version(sender, command, label, args);
-        }
-
-        switch (args[0]) {
-            case "help":
-                return help(sender, command, label, args);
-            case "version":
-                return version(sender, command, label, args);
-            case "reload":
-                return reload(sender, command, label, args);
-            case "status":
-                return status(sender, command, label, args);
-            case "nik":
-                sender.sendMessage(":skull:");
-                return true;
-            default:
-                return false;
-        }
+        setDefaultSubCommand("version");
     }
 
     private boolean help(CommandSender sender, Command command, String label, String[] args) {
@@ -88,4 +70,8 @@ public class CmdOpenHiveBedwars extends CommandBase {
         return true;
     }
 
+    private boolean nik(CommandSender sender, Command command, String label, String[] args) {
+        sender.sendMessage(":skull:");
+        return true;
+    }
 }
