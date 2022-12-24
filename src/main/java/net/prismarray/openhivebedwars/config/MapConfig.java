@@ -188,6 +188,14 @@ public class MapConfig extends ConfigFile {
         return mode;
     }
 
+    public int getMinBuildHeight() {
+        return minBuildHeight;
+    }
+
+    public int getMaxBuildHeight() {
+        return maxBuildHeight;
+    }
+
     public World getArenaWorld() {
         return arenaWorld;
     }
