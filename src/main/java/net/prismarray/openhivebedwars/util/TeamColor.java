@@ -6,25 +6,27 @@ import org.bukkit.DyeColor;
 import java.util.Arrays;
 
 public enum TeamColor {
-    RED         (ChatColor.RED,             DyeColor.PINK,          true,   false),
-    GOLD        (ChatColor.GOLD,            DyeColor.ORANGE,        true,   false),
-    AQUA        (ChatColor.AQUA,            DyeColor.LIGHT_BLUE,    true,   false),
-    GREEN       (ChatColor.GREEN,           DyeColor.LIME,          true,   true),
-    GRAY        (ChatColor.GRAY,            DyeColor.GRAY,          true,   false),
-    DARK_GREEN  (ChatColor.DARK_GREEN,      DyeColor.GREEN,         false,  false),
-    BLUE        (ChatColor.BLUE,            DyeColor.BLUE,          true,   true),
-    DARK_RED    (ChatColor.DARK_RED,        DyeColor.RED,           false,  true),
-    YELLOW      (ChatColor.YELLOW,          DyeColor.YELLOW,        true,   true),
-    MAGENTA     (ChatColor.LIGHT_PURPLE,    DyeColor.MAGENTA,       true,   false),
-    PURPLE      (ChatColor.DARK_PURPLE,     DyeColor.PURPLE,        false,  false),
-    DARK_AQUA   (ChatColor.DARK_AQUA,       DyeColor.CYAN,          false,  false);
+    RED         ("Red",         ChatColor.RED,             DyeColor.PINK,          true,   false),
+    GOLD        ("Gold",        ChatColor.GOLD,            DyeColor.ORANGE,        true,   false),
+    AQUA        ("Aqua",        ChatColor.AQUA,            DyeColor.LIGHT_BLUE,    true,   false),
+    GREEN       ("Green",       ChatColor.GREEN,           DyeColor.LIME,          true,   true),
+    GRAY        ("Gray",        ChatColor.GRAY,            DyeColor.GRAY,          true,   false),
+    DARK_GREEN  ("Dark Green",  ChatColor.DARK_GREEN,      DyeColor.GREEN,         false,  false),
+    BLUE        ("Blue",        ChatColor.BLUE,            DyeColor.BLUE,          true,   true),
+    DARK_RED    ("Dark Red",    ChatColor.DARK_RED,        DyeColor.RED,           false,  true),
+    YELLOW      ("Yellow",      ChatColor.YELLOW,          DyeColor.YELLOW,        true,   true),
+    MAGENTA     ("Magenta",     ChatColor.LIGHT_PURPLE,    DyeColor.MAGENTA,       true,   false),
+    PURPLE      ("Purple",      ChatColor.DARK_PURPLE,     DyeColor.PURPLE,        false,  false),
+    DARK_AQUA   ("Dark Aqua",   ChatColor.DARK_AQUA,       DyeColor.CYAN,          false,  false);
 
+    public final String chatName;
     public final ChatColor chatColor;
     public final DyeColor woolColor;
     public final boolean isDuosModeColor;
     public final boolean isTeamsModeColor;
 
-    TeamColor(ChatColor chatColor, DyeColor woolColor, boolean isDuosColor, boolean isTeamsColor) {
+    TeamColor(String chatName, ChatColor chatColor, DyeColor woolColor, boolean isDuosColor, boolean isTeamsColor) {
+        this.chatName = chatName;
         this.chatColor = chatColor;
         this.woolColor = woolColor;
         this.isDuosModeColor = isDuosColor;

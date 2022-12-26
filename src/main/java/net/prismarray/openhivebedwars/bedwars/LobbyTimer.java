@@ -16,7 +16,7 @@ public class LobbyTimer extends Countdown {
 
         this.game = game;
         useRedCount = false;
-        requiredPlayerCount = 2; // expected to be 12
+        requiredPlayerCount = 3; // expected to be 12
         actionBarContent = "";
     }
 
@@ -37,7 +37,7 @@ public class LobbyTimer extends Countdown {
     @Override
     public void onDecrement() {
         if (Bukkit.getOnlinePlayers().size() < requiredPlayerCount) {
-            setCount(11);
+            setCount(11); // expected to be 61
         }
 
         if (getCount() == 5) {
@@ -54,7 +54,6 @@ public class LobbyTimer extends Countdown {
 
     @Override
     public void onCompletion() {
-        game.arenaSetup();
         game.warmup();
     }
 }

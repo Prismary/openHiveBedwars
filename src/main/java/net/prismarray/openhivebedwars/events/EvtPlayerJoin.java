@@ -1,6 +1,7 @@
 package net.prismarray.openhivebedwars.events;
 
 import net.prismarray.openhivebedwars.OpenHiveBedwars;
+import net.prismarray.openhivebedwars.util.Broadcast;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -17,9 +18,13 @@ public class EvtPlayerJoin extends EventBase {
 
         plugin.game.hideHiddenPlayers(player);
 
+        event.setJoinMessage(null);
+
         switch (plugin.game.getStatus()) {
             case LOBBY:
                 plugin.game.setLobbyPlayer(player);
+                Broadcast.raw("§9" + player.getName() + " §7wants to protect their bed!");
+                plugin.game.getMapVoting().onPlayerJoin(player);
                 break;
             case WARMUP:
             case INGAME:

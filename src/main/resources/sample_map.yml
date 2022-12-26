@@ -1,6 +1,8 @@
 settings:
   name: "Your Cool Map"
   mode: "teams"
+  min_build_height: 0
+  max_build_height: 255
 
 locations:
   # coordinates in format 'x,y,z'

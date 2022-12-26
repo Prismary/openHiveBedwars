@@ -15,3 +15,7 @@ commands:
     usage: /team <player>
     description: team another player
     aliases: []
+  vote:
+    usage: /vote <index>
+    description: votes for a map in lobby phase
+    aliases: [ v ]

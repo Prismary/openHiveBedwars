@@ -9,7 +9,7 @@
 mode: "teams"
 
 # General chat prefix
-prefix: "&8&l│ &3&lBed&b&lWars &8┃ &7"
+prefix: "§8§l│ §3§lBed§b§lWars §8┃ §7"
 
 # World copy names
 lobby_name: "lobby"

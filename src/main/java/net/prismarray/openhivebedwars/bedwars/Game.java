@@ -2,29 +2,31 @@ package net.prismarray.openhivebedwars.bedwars;
 
 import net.prismarray.openhivebedwars.OpenHiveBedwars;
 import net.prismarray.openhivebedwars.config.MapConfig;
-import net.prismarray.openhivebedwars.util.Mode;
-import net.prismarray.openhivebedwars.util.Status;
-import net.prismarray.openhivebedwars.util.TeamColor;
-import net.prismarray.openhivebedwars.util.WorldCopy;
+import net.prismarray.openhivebedwars.util.*;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.BlockState;
 import org.bukkit.entity.Player;
 import org.bukkit.material.Bed;
+import org.bukkit.scheduler.BukkitScheduler;
 import org.bukkit.util.Vector;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Map;
 
 public class Game {
     OpenHiveBedwars plugin;
     Mode mode;
     Status status;
     TeamHandler teamHandler;
+    CombatHandler combatHandler;
+    MapVoting mapVoting;
     LobbyTimer lobbyTimer;
     MapConfig mapConfig;
     ArrayList<Player> hiddenPlayers;
+
 
     public Game(OpenHiveBedwars plugin, Mode mode) {
         this.plugin = plugin;
@@ -37,10 +39,13 @@ public class Game {
     // GAME PHASE PROGRESSION
     public void startup(Mode mode) {
         status = Status.STARTUP;
+        Broadcast.prefix = plugin.config.getPrefix();
 
         this.mode = mode;
         teamHandler = new TeamHandler(this);
+        combatHandler = new CombatHandler(this);
         lobbyTimer = new LobbyTimer(this);
+        mapVoting = new MapVoting(this);
 
         lobbySetup();
 
@@ -55,16 +60,23 @@ public class Game {
     public void confirmation() {
         status = Status.CONFIRMATION;
 
+        // end voting and set map
+        mapConfig = mapVoting.conclude();
+
         // finalize team composition
         teamHandler.assignAndMerge();
         teamHandler.colorize();
 
-        // load map config: todo map voting
-        mapConfig = plugin.mapManager.getMapConfig("d_castle");
+        // start arena setup as task
+        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+            @Override
+            public void run() {
+                arenaSetup();
+            }
+        }, 0);
     }
 
     public void warmup() {
-        // Arena setup already called by LobbyTimer!
         status = Status.WARMUP;
 
         lobbyTimer = null;
@@ -77,6 +89,13 @@ public class Game {
     public void ingame() {
         status = Status.INGAME;
     }
+
+    public void concluded(TeamColor winner) {
+        status = Status.CONCLUDED;
+
+        Title.sendToAll("§c§lGame. OVER!", winner.chatColor + winner.chatName + " §7won the game");
+    }
+
 
 
 
@@ -193,9 +212,9 @@ public class Game {
     public void spawnPlayer(Player player) {
         player.setAllowFlight(false);
         player.setFlying(false);
-        showPlayer(player);
         player.setFallDistance(0);
         player.teleport(mapConfig.getTeamSpawn(teamHandler.getPlayerTeam(player).getColor()));
+        showPlayer(player);
     }
 
     public void respawnPlayer(Player player) {
@@ -203,6 +222,7 @@ public class Game {
         player.setFlying(true);
         hidePlayer(player);
         player.teleport(mapConfig.getSpectatorSpawn());
+        SoundHandler.playerSound(player, "mob.guardian.curse", 1f, 0.5f);
 
         new RespawnTimer(this, player).start();
     }
@@ -231,6 +251,12 @@ public class Game {
 
     public TeamHandler getTeamHandler() {
         return teamHandler;
+    }
+    public CombatHandler getCombatHandler() {
+        return combatHandler;
+    }
+    public MapVoting getMapVoting() {
+        return mapVoting;
     }
 
     public MapConfig getMapConfig() {
@@ -266,6 +292,7 @@ public class Game {
     public void fullPlayerClear(Player player) {
         player.setFallDistance(0);
         player.getInventory().clear();
+        player.getInventory().setArmorContents(null);
         player.setGameMode(GameMode.SURVIVAL);
         player.setFlying(false);
     }
