@@ -3,7 +3,6 @@ package net.prismarray.openhivebedwars.bedwars;
 import net.prismarray.openhivebedwars.util.Broadcast;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -113,12 +112,7 @@ public class CombatHandler {
     }
 
     public boolean lastAttackerPresent(Player player) {
-        if (attackers.containsKey(player)) {
-            if (!attackers.get(player).isEmpty()) {
-                return true;
-            }
-        }
-        return false;
+        return attackers.containsKey(player) && !attackers.get(player).isEmpty();
     }
 
     public void sendEnemyHealth(Player recipient, Player enemy) {

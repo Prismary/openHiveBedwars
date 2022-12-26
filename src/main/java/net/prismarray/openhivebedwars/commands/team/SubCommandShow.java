@@ -25,8 +25,7 @@ public class SubCommandShow extends PluginBoundCommandExecutor {
         }
 
         sender.sendMessage("§9Your current team:");
-        teamHandler.getPlayerTeam(player).getPlayers().stream()
-                .forEach(p -> player.sendMessage("§7" + p.getDisplayName()));
+        teamHandler.getPlayerTeam(player).getPlayers().forEach(p -> player.sendMessage("§7" + p.getDisplayName()));
         return true;
     }
 }
