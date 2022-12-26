@@ -36,7 +36,7 @@ public class SubCommandLeave extends PluginBoundCommandExecutor {
         }
 
         player.sendMessage("§cYou have left your team.");
-        Broadcast.broadcastPlayerLeave(playerTeam, player);
+        Broadcast.teamLeave(playerTeam, player);
         plugin.game.getTeamHandler().tryDissolution(playerTeam);
 
         return true;

@@ -83,7 +83,7 @@ public class SubCommandAccept extends PluginBoundCommandExecutor {
         }
         teamHandler.removeInvite(inviter, invitee);
 
-        Broadcast.broadcastPlayerJoin(teamHandler.getPlayerTeam(inviter), invitee);
+        Broadcast.teamJoin(teamHandler.getPlayerTeam(inviter), invitee);
         invitee.sendMessage("§aJoined §2" + inviter.getDisplayName() + "§a's team!");
 
         return true;

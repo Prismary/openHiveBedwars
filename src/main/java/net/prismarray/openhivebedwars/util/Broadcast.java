@@ -43,7 +43,7 @@ public class Broadcast {
     }
 
     public static void toTeamExcept(Team team, String message, Player exempt) {
-        rawToTeam(team, prefix + message, exempt);
+        rawToTeamExcept(team, prefix + message, exempt);
     }
 
     public static void toPlayer(Player player, String message) {

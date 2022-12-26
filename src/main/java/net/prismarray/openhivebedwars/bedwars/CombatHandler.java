@@ -57,15 +57,15 @@ public class CombatHandler {
         if (game.getTeamHandler().getPlayerTeam(player).hasBed()) { // In case of intact bed
             if (lastAttackerPresent(player)) {
                 Broadcast.kill(
-                        attackers.get(player).get(0).getName(),
+                        attackers.get(player).get(0),
                         game.getTeamHandler().getPlayerTeam(attackers.get(player).get(0)).getColor(),
-                        player.getName(),
+                        player,
                         game.getTeamHandler().getPlayerTeam(player).getColor()
                 );
                 sendEnemyHealth(player, attackers.get(player).get(0));
             } else {
                 Broadcast.death(
-                        player.getName(),
+                        player,
                         game.getTeamHandler().getPlayerTeam(player).getColor()
                 );
             }
@@ -75,15 +75,15 @@ public class CombatHandler {
         } else { // In case of broken bed
             if (lastAttackerPresent(player)) {
                 Broadcast.finalKill(
-                        attackers.get(player).get(0).getName(),
+                        attackers.get(player).get(0),
                         game.getTeamHandler().getPlayerTeam(attackers.get(player).get(0)).getColor(),
-                        player.getName(),
+                        player,
                         game.getTeamHandler().getPlayerTeam(player).getColor()
                 );
                 sendEnemyHealth(player, attackers.get(player).get(0));
             } else {
                 Broadcast.death(
-                        player.getName(),
+                        player,
                         game.getTeamHandler().getPlayerTeam(player).getColor()
                 );
             }
