@@ -1,15 +1,13 @@
 package net.prismarray.openhivebedwars;
 
 import net.prismarray.openhivebedwars.bedwars.Game;
-import net.prismarray.openhivebedwars.commands.CmdOpenHiveBedwars;
-import net.prismarray.openhivebedwars.commands.CmdTeam;
+import net.prismarray.openhivebedwars.commands.openhivebedwars.CommandOpenHiveBedwars;
+import net.prismarray.openhivebedwars.commands.team.CommandTeam;
 import net.prismarray.openhivebedwars.config.Config;
 import net.prismarray.openhivebedwars.config.ConfigValidationException;
 import net.prismarray.openhivebedwars.config.LobbyConfig;
 import net.prismarray.openhivebedwars.config.MapManager;
 import net.prismarray.openhivebedwars.events.*;
-import net.prismarray.openhivebedwars.util.WorldCopy;
-import org.bukkit.WorldCreator;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -78,8 +76,8 @@ public final class OpenHiveBedwars extends JavaPlugin {
     }
 
     private void registerCommands() {
-        getCommand("openhivebedwars").setExecutor(new CmdOpenHiveBedwars(this));
-        getCommand("team").setExecutor(new CmdTeam(this));
+        getCommand("openhivebedwars").setExecutor(new CommandOpenHiveBedwars(this));
+        getCommand("team").setExecutor(new CommandTeam(this));
     }
     private void registerEvents() {
 
