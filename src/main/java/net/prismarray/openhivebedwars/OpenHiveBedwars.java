@@ -3,7 +3,7 @@ package net.prismarray.openhivebedwars;
 import net.prismarray.openhivebedwars.bedwars.Game;
 import net.prismarray.openhivebedwars.commands.openhivebedwars.CommandOpenHiveBedwars;
 import net.prismarray.openhivebedwars.commands.team.CommandTeam;
-import net.prismarray.openhivebedwars.commands.CmdVote;
+import net.prismarray.openhivebedwars.commands.vote.CommandVote;
 import net.prismarray.openhivebedwars.config.Config;
 import net.prismarray.openhivebedwars.config.ConfigValidationException;
 import net.prismarray.openhivebedwars.config.LobbyConfig;
@@ -79,7 +79,7 @@ public final class OpenHiveBedwars extends JavaPlugin {
     private void registerCommands() {
         getCommand("openhivebedwars").setExecutor(new CommandOpenHiveBedwars(this));
         getCommand("team").setExecutor(new CommandTeam(this));
-        getCommand("vote").setExecutor(new CmdVote(this));
+        getCommand("vote").setExecutor(new CommandVote(this));
     }
     private void registerEvents() {
 
