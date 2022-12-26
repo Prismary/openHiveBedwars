@@ -100,7 +100,7 @@ public class AdvancedCommandExecutor implements CommandExecutor {
 
         if (
                 Objects.nonNull(subCommandLabel)
-                        && (args.length == 0 || args[0].equalsIgnoreCase(subCommandLabel))
+                        && (args.length == 0 || !args[0].equalsIgnoreCase(subCommandLabel))
         ) {
             return false;
         }
@@ -127,5 +127,15 @@ public class AdvancedCommandExecutor implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         return executor.onCommand(sender, command, label, args);
+    }
+
+    @Override
+    public String toString() {
+        return "AdvancedCommandExecutor{" +
+                "executor=" + executor +
+                ", minimumArguments=" + minimumArguments +
+                ", maximumArguments=" + maximumArguments +
+                ", subCommandLabel='" + subCommandLabel + '\'' +
+                '}';
     }
 }
