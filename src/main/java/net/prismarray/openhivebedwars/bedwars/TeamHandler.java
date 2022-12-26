@@ -8,7 +8,9 @@ import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class TeamHandler {
 
@@ -130,6 +132,13 @@ public class TeamHandler {
         return invites.get(inviter).contains(invitee);
     }
 
+    public List<Player> getInvitingPlayers(Player invitee) {
+
+        return invites.keySet().stream()
+                .filter(p -> isInvitedBy(p, invitee))
+                .collect(Collectors.toList());
+    }
+
     public boolean removeInvite(Player inviter, Player invitee) {
         if (!invites.containsKey(inviter)) {
             return false;
@@ -170,7 +179,7 @@ public class TeamHandler {
 
         // Merge remaining two-player teams in teams mode
         if (game.plugin.config.mergeTeams() && game.mode == Mode.TEAMS) {
-            ArrayList<Team> mergeTeams = getTwoPlayerTeams();
+            List<Team> mergeTeams = getTwoPlayerTeams();
             while (mergeTeams.size() > 1) {
                 addToPlayer(mergeTeams.get(mergeTeams.size()-1).getPlayer(0), mergeTeams.get(0).getPlayer(0));
                 addToPlayer(mergeTeams.get(mergeTeams.size()-1).getPlayer(1), mergeTeams.get(0).getPlayer(0));
@@ -211,13 +220,13 @@ public class TeamHandler {
 
         switch (game.status) {
             case LOBBY:
-                Broadcast.teamLeave(team, player.getName());
+                Broadcast.teamLeave(team, player);
                 removePlayer(player);
                 tryDissolution(team);
                 break;
             case WARMUP:
             case INGAME:
-                Broadcast.teamLeave(team, player.getName());
+                Broadcast.teamLeave(team, player);
                 finalKill(player);
                 break;
         }
@@ -246,11 +255,11 @@ public class TeamHandler {
     }
 
     public void dissolveEmptyTeams() {
-        for (int i = 0; i < teams.size(); i++) {
-            if (teams.get(i).getPlayerCount() <= 1) {
-                teams.remove(teams.get(i));
-            }
-        }
+        teams.removeAll(
+                teams.stream()
+                        .filter(t -> t.getPlayerCount() <= 1)
+                        .collect(Collectors.toList())
+        );
     }
 
     public void tryGameEnd() {
@@ -259,13 +268,9 @@ public class TeamHandler {
         }
     }
 
-    public ArrayList<Team> getTwoPlayerTeams() {
-        ArrayList<Team> teams = new ArrayList<>();
-        for (int i = 0; i < teams.size(); i++) {
-            if (teams.get(i).getPlayerCount() == 2) {
-                teams.add(teams.get(i));
-            }
-        }
-        return teams;
+    public List<Team> getTwoPlayerTeams() {
+        return teams.stream()
+                .filter(t -> t.getPlayerCount() == 2)
+                .collect(Collectors.toList());
     }
 }

@@ -3,7 +3,6 @@ package net.prismarray.openhivebedwars.bedwars;
 import net.prismarray.openhivebedwars.util.Broadcast;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -57,15 +56,15 @@ public class CombatHandler {
         if (game.getTeamHandler().getPlayerTeam(player).hasBed()) { // In case of intact bed
             if (lastAttackerPresent(player)) {
                 Broadcast.kill(
-                        attackers.get(player).get(0).getName(),
+                        attackers.get(player).get(0),
                         game.getTeamHandler().getPlayerTeam(attackers.get(player).get(0)).getColor(),
-                        player.getName(),
+                        player,
                         game.getTeamHandler().getPlayerTeam(player).getColor()
                 );
                 sendEnemyHealth(player, attackers.get(player).get(0));
             } else {
                 Broadcast.death(
-                        player.getName(),
+                        player,
                         game.getTeamHandler().getPlayerTeam(player).getColor()
                 );
             }
@@ -75,15 +74,15 @@ public class CombatHandler {
         } else { // In case of broken bed
             if (lastAttackerPresent(player)) {
                 Broadcast.finalKill(
-                        attackers.get(player).get(0).getName(),
+                        attackers.get(player).get(0),
                         game.getTeamHandler().getPlayerTeam(attackers.get(player).get(0)).getColor(),
-                        player.getName(),
+                        player,
                         game.getTeamHandler().getPlayerTeam(player).getColor()
                 );
                 sendEnemyHealth(player, attackers.get(player).get(0));
             } else {
                 Broadcast.death(
-                        player.getName(),
+                        player,
                         game.getTeamHandler().getPlayerTeam(player).getColor()
                 );
             }
@@ -113,12 +112,7 @@ public class CombatHandler {
     }
 
     public boolean lastAttackerPresent(Player player) {
-        if (attackers.containsKey(player)) {
-            if (!attackers.get(player).isEmpty()) {
-                return true;
-            }
-        }
-        return false;
+        return attackers.containsKey(player) && !attackers.get(player).isEmpty();
     }
 
     public void sendEnemyHealth(Player recipient, Player enemy) {
