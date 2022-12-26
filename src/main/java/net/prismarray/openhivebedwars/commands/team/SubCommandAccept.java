@@ -44,13 +44,20 @@ public class SubCommandAccept extends PluginBoundCommandExecutor {
 
             inviter = inviters.get(0);
 
-        } else {
-            inviter = Bukkit.getPlayer(args[0]);
-        }
+            if (Objects.isNull(inviter)) {
+                invitee.sendMessage("§cThe inviting player is no longer in the lobby!");
+                return true;
+            }
 
-        if (Objects.isNull(inviter)) {
-            invitee.sendMessage("§cThe inviting player is no longer in the lobby!");
-            return true;
+        } else {
+
+            String inviterName = args[0];
+            inviter = Bukkit.getPlayer(inviterName);
+
+            if (Objects.isNull(inviter)) {
+                sender.sendMessage("§4" + inviterName + "§c is not in this lobby!");
+                return true;
+            }
         }
 
 
