@@ -104,4 +104,8 @@ public class InventoryGUIBase {
     public void open(Player player) {
         player.openInventory(this.inventory);
     }
+
+    public void addItem(InventoryGUIItem item) {
+        // TODO
+    }
 }
