@@ -19,3 +19,7 @@ commands:
     usage: /vote <index>
     description: votes for a map in lobby phase
     aliases: [ v ]
+  gui:
+    usage: /gui [size [title]]
+    description: test command for opening several GUI inventories
+    aliases: []
