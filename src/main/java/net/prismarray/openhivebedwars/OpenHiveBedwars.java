@@ -83,6 +83,7 @@ public final class OpenHiveBedwars extends JavaPlugin {
         getCommand("vote").setExecutor(new CommandVote(this));
         getCommand("gui").setExecutor(new CommandGUI());
     }
+
     private void registerEvents() {
 
         getServer().getPluginManager().registerEvents(new EvtPlayerJoin(this), this);
@@ -99,5 +100,6 @@ public final class OpenHiveBedwars extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new EvtStructureGrow(this), this);
         getServer().getPluginManager().registerEvents(new EvtBedBreak(this), this);
         getServer().getPluginManager().registerEvents(new EvtBuildLimit(this), this);
+        getServer().getPluginManager().registerEvents(new EvtInventoryGUI(this), this);
     }
 }
