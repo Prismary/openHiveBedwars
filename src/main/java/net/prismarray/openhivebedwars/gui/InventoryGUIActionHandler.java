@@ -1,22 +1,13 @@
 package net.prismarray.openhivebedwars.gui;
 
-import net.prismarray.openhivebedwars.gui.actions.InventoryGUIAction;
 
-public class InventoryGUIActionHandler<A extends InventoryGUIAction> {
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-    private final Class<A> actionType;
+@Target({ElementType.METHOD})
+@Retention(RetentionPolicy.RUNTIME)
+public @interface InventoryGUIActionHandler {
 
-    public InventoryGUIActionHandler(Class<A> actionToHandle) {
-        this.actionType = actionToHandle;
-    }
-
-    public static <T extends InventoryGUIAction> InventoryGUIActionHandler<T> of(Class<T> type) {
-        return new InventoryGUIActionHandler<T>(type);
-    }
-
-    public Class<A> getActionType() {
-        return actionType;
-    }
-
-    public void onAction(A action) {}
 }

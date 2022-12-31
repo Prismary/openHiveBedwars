@@ -11,14 +11,17 @@ import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.Nullable;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 public class InventoryGUIBase implements Inventory {
 
     private final Inventory inventory;
 
-    private final List<InventoryGUIActionHandler<? extends InventoryGUIAction>> actionHandlers = new ArrayList<>();
+    private final List<InventoryGUIActionListener> actionHandlers = new ArrayList<>();
 
     private boolean isLocked = true;
 
@@ -100,18 +103,32 @@ public class InventoryGUIBase implements Inventory {
         player.openInventory(inventory);
     }
 
-    public void addActionHandler(InventoryGUIActionHandler<? extends InventoryGUIAction> handler) {
+    public void addActionHandler(InventoryGUIActionListener handler) {
         actionHandlers.add(handler);
     }
 
     public void handleAction(InventoryGUIAction action) {
 
         // TODO: handle all top-level actions
-        actionHandlers.stream()
-                .filter(h -> Objects.equals(action.getClass(), h.getActionType()))
-                .forEach(h -> h.onAction(action));
+        actionHandlers.forEach(l -> getMatchingMethods(l, action).forEach(m -> invokeMethod(m, l, action)));
 
         // TODO: handle all item-level actions
+    }
+
+    private static List<Method> getMatchingMethods(InventoryGUIActionListener listener, InventoryGUIAction action) {
+
+        return Arrays.stream(listener.getClass().getDeclaredMethods())
+                .filter(m -> Arrays.stream(m.getAnnotations()).anyMatch(a -> a instanceof InventoryGUIActionHandler))
+                .filter(m -> m.getParameterTypes().length == 1 && Objects.equals(m.getParameterTypes()[0], action.getClass()))
+                .collect(Collectors.toList());
+    }
+
+    private static Object invokeMethod(Method method, Object obj, Object... args) {
+        try {
+            return method.invoke(obj, args);
+        } catch (IllegalAccessException | InvocationTargetException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void lock() {
