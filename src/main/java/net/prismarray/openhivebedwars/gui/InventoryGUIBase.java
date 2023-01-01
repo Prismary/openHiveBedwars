@@ -1,6 +1,7 @@
 package net.prismarray.openhivebedwars.gui;
 
 import net.prismarray.openhivebedwars.gui.actions.InventoryGUIAction;
+import net.prismarray.openhivebedwars.gui.actions.InventoryGUIClickAction;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
@@ -109,13 +110,25 @@ public class InventoryGUIBase implements Inventory {
 
     public void handleAction(InventoryGUIAction action) {
 
-        // TODO: handle all top-level actions
-        actionHandlers.forEach(l -> getMatchingMethods(l, action).forEach(m -> invokeMethod(m, l, action)));
+        // handle all actions on top-level
+        actionHandlers.forEach(l -> getMatchingHandlers(l, action).forEach(m -> invokeMethod(m, l, action)));
 
-        // TODO: handle all item-level actions
+        if (!(action instanceof InventoryGUIClickAction)) {
+            return;
+        }
+
+        InventoryGUIClickAction ica = (InventoryGUIClickAction) action;
+        ItemStack item = getItem(ica.getClickedSlot());
+
+        if (!(Objects.nonNull(item) && item instanceof InventoryGUIItem)) {
+            return;
+        }
+
+        // handle all click actions on item-level
+        ((InventoryGUIItem) item).handleClickAction(ica);
     }
 
-    private static List<Method> getMatchingMethods(InventoryGUIActionListener listener, InventoryGUIAction action) {
+    public static List<Method> getMatchingHandlers(InventoryGUIActionListener listener, InventoryGUIAction action) {
 
         return Arrays.stream(listener.getClass().getDeclaredMethods())
                 .filter(m -> Arrays.stream(m.getAnnotations()).anyMatch(a -> a instanceof InventoryGUIActionHandler))
@@ -123,7 +136,7 @@ public class InventoryGUIBase implements Inventory {
                 .collect(Collectors.toList());
     }
 
-    private static Object invokeMethod(Method method, Object obj, Object... args) {
+    public static Object invokeMethod(Method method, Object obj, Object... args) {
         try {
             return method.invoke(obj, args);
         } catch (IllegalAccessException | InvocationTargetException e) {
