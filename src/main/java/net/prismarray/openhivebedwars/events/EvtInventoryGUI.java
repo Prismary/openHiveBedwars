@@ -3,6 +3,7 @@ package net.prismarray.openhivebedwars.events;
 import net.prismarray.openhivebedwars.OpenHiveBedwars;
 import net.prismarray.openhivebedwars.gui.InventoryGUIActionManager;
 import net.prismarray.openhivebedwars.gui.InventoryGUIBase;
+import net.prismarray.openhivebedwars.gui.InventoryGUIItem;
 import net.prismarray.openhivebedwars.gui.actions.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -12,6 +13,7 @@ import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryInteractEvent;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,7 +64,12 @@ public class EvtInventoryGUI extends EventBase {
 
         InventoryClickEvent eClick = (InventoryClickEvent) e;
         int invSlot = eClick.getSlot();
+        ItemStack clickedItem = invGUI.getItem(invSlot);
 
+        if (Objects.nonNull(clickedItem) && clickedItem instanceof InventoryGUIItem && ((InventoryGUIItem) clickedItem).isLocked()) {
+            e.setCancelled(true);
+            e.setResult(Event.Result.DENY);
+        }
 
         List<InventoryGUIAction> actions = new ArrayList<>();
 
