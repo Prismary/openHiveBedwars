@@ -51,24 +51,23 @@ public class EvtPlayerDamage extends EventBase {
     public void voidRespawn(EntityDamageEvent event) {
         event.setCancelled(true);
 
-        switch (event.getCause()) {
-            case VOID:
-                Entity entity = event.getEntity();
+        if (event.getCause() == EntityDamageEvent.DamageCause.VOID) {
+            Entity entity = event.getEntity();
 
-                if (entity instanceof Player) {
-                    switch (plugin.game.getStatus()) {
-                        case LOBBY:
-                        case CONFIRMATION:
-                            plugin.game.setLobbyPlayer((Player) entity);
-                            break;
-                        case WARMUP:
-                            plugin.game.spawnPlayer((Player) entity);
-                            break;
-                        case RESULTS:
-                            plugin.game.setResultsPlayer((Player) entity);
-                            break;
-                    }
+            if (entity instanceof Player) {
+                switch (plugin.game.getStatus()) {
+                    case LOBBY:
+                    case CONFIRMATION:
+                        plugin.game.setLobbyPlayer((Player) entity);
+                        break;
+                    case WARMUP:
+                        plugin.game.spawnPlayer((Player) entity);
+                        break;
+                    case RESULTS:
+                        plugin.game.setResultsPlayer((Player) entity);
+                        break;
                 }
+            }
         }
     }
 }

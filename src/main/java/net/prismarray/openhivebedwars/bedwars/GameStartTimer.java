@@ -7,7 +7,7 @@ import org.bukkit.Sound;
 
 public class GameStartTimer extends Countdown {
 
-    Game game;
+    private final Game game;
 
     String[] fightAnimation;
 
@@ -44,21 +44,19 @@ public class GameStartTimer extends Countdown {
         }
 
         // Schedule final frame with longer duration
-        scheduler.scheduleSyncDelayedTask(plugin, new Runnable() {
-            @Override
-            public void run() {
-                Title.sendToAll(fightAnimation[14], "§7Protect your bed, destroy others!", 0, 40, 10);
-            }
-        }, 14);
+        scheduler.scheduleSyncDelayedTask(
+                plugin, () -> Title.sendToAll(
+                        fightAnimation[14], "§7Protect your bed, destroy others!", 0, 40, 10
+                ), 14
+        );
     }
 
     private void scheduleAnimationFrame(int frame) {
-        scheduler.scheduleSyncDelayedTask(plugin, new Runnable() {
-            @Override
-            public void run() {
-                Title.sendToAll(fightAnimation[frame], "§7Protect your bed, destroy others!", 0, 2, 0);
-            }
-        }, frame);
+        scheduler.scheduleSyncDelayedTask(
+                plugin, () -> Title.sendToAll(
+                        fightAnimation[frame], "§7Protect your bed, destroy others!", 0, 2, 0
+                ), frame
+        );
     }
 
 

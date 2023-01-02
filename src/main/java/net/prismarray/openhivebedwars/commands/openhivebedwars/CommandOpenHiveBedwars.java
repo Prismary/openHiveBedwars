@@ -3,10 +3,6 @@ package net.prismarray.openhivebedwars.commands.openhivebedwars;
 import net.prismarray.openhivebedwars.OpenHiveBedwars;
 import net.prismarray.openhivebedwars.commands.AdvancedCommandExecutor;
 import net.prismarray.openhivebedwars.commands.CommandBase;
-import net.prismarray.openhivebedwars.util.Format;
-import net.prismarray.openhivebedwars.util.Status;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
 
 public class CommandOpenHiveBedwars extends CommandBase {
 

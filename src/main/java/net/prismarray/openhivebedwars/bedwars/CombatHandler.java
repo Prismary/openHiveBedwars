@@ -15,8 +15,8 @@ import java.util.Map;
 
 public class CombatHandler {
 
-    Game game;
-    Map<Player, ArrayList<Player>> attackers;
+    private final Game game;
+    private final Map<Player, ArrayList<Player>> attackers;
 
     public CombatHandler(Game game) {
         this.game = game;
@@ -42,12 +42,10 @@ public class CombatHandler {
         }
         attackers.get(damaged).add(0, damager);
 
-        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(game.plugin, new Runnable() { // Schedule entry removal
-            @Override
-            public void run() {
-                attackers.get(damaged).remove(damager);
-            }
-        }, 200);
+        // Schedule entry removal
+        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(
+                game.plugin, () -> attackers.get(damaged).remove(damager), 200
+        );
     }
 
     public void playerDeath(EntityDamageEvent event) {

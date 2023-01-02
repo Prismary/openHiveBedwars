@@ -60,7 +60,7 @@ public abstract class ConfigFile {
      * This method needs to be implemented by all config classes and will be used to parse and validate the contents of
      * the content file after it has been read. Any subclass should utilize this method to  populate its data
      * attributes with configuration options from the BoostedYAML YamlDocument provided in parameter `yamlContent`.
-     *
+     * <p>
      * If the config options contained in `yamlContent` are invalid or insufficient, the implementation of this method
      * should throw a ConfigValidationException.
      *
@@ -174,7 +174,8 @@ public abstract class ConfigFile {
 
     public static int[] parseBuildLimits(String lower, String upper) throws ConfigValidationException {
 
-        int minBuildHeight, maxBuildHeight = -1;
+        int minBuildHeight;
+        int maxBuildHeight;
 
         try {
             minBuildHeight = Integer.parseInt(lower);

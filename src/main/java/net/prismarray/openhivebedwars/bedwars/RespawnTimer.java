@@ -2,13 +2,12 @@ package net.prismarray.openhivebedwars.bedwars;
 
 import net.prismarray.openhivebedwars.util.Format;
 import net.prismarray.openhivebedwars.util.Title;
-import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 
 public class RespawnTimer extends Countdown {
 
-    Game game;
-    Player player;
+    private final Game game;
+    private final Player player;
 
     public RespawnTimer(Game game, Player player) {
         super(game.plugin, 6, 0, 1);

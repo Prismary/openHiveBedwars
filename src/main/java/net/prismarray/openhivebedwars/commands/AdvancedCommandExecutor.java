@@ -8,10 +8,10 @@ import java.util.Objects;
 
 public class AdvancedCommandExecutor implements CommandExecutor {
 
-    private CommandExecutor executor;
-    private int minimumArguments;
-    private int maximumArguments;
-    private String subCommandLabel;
+    private final CommandExecutor executor;
+    private final int minimumArguments;
+    private final int maximumArguments;
+    private final String subCommandLabel;
 
 
     /**

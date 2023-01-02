@@ -5,12 +5,7 @@ import net.prismarray.openhivebedwars.commands.AdvancedCommandExecutor;
 import net.prismarray.openhivebedwars.commands.CommandBase;
 import net.prismarray.openhivebedwars.commands.checkers.GameStatusChecker;
 import net.prismarray.openhivebedwars.commands.checkers.PlayerOnlyChecker;
-import net.prismarray.openhivebedwars.util.Broadcast;
 import net.prismarray.openhivebedwars.util.Status;
-import org.bukkit.Bukkit;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 public class CommandVote extends CommandBase {
 
