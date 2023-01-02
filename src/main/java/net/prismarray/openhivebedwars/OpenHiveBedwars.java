@@ -18,13 +18,26 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Field;
+import java.util.Arrays;
+import java.util.List;
 
 public final class OpenHiveBedwars extends JavaPlugin {
+
+    private static OpenHiveBedwars instance;
 
     public Config config;
     public LobbyConfig lobbyConfig;
     public MapManager mapManager;
     public Game game;
+
+    public OpenHiveBedwars() {
+        instance = this;
+    }
+
+    public static JavaPlugin getInstance() {
+        return instance;
+    }
 
     @Override
     public void onEnable() {
