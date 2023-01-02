@@ -18,5 +18,6 @@ public class CommandOpenHiveBedwars extends CommandBase {
         addCommandExecutor(new AdvancedCommandExecutor(new SubCommandStatus(plugin), 1, 2, "status"));
         addCommandExecutor(new AdvancedCommandExecutor(new SubCommandVersion(plugin), 1, "version"));
         addCommandExecutor(new AdvancedCommandExecutor(new SubCommandVersion(plugin), 0));
+        addCommandExecutor(new AdvancedCommandExecutor(new SubCommandTest(plugin), 2, "test"));
     }
 }

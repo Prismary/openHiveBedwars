@@ -61,6 +61,11 @@ public class Countdown {
         count = value;
     }
 
+    public void changeStart(int diff) {
+        start = start + diff;
+        count = count + diff;
+    }
+
     private void decrement() {
         if (count - 1 <= stop) {
             count = stop;

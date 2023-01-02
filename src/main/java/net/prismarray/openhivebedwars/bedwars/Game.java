@@ -1,6 +1,7 @@
 package net.prismarray.openhivebedwars.bedwars;
 
 import net.prismarray.openhivebedwars.OpenHiveBedwars;
+import net.prismarray.openhivebedwars.bedwars.summoner.*;
 import net.prismarray.openhivebedwars.config.MapConfig;
 import net.prismarray.openhivebedwars.util.*;
 import org.bukkit.*;
@@ -17,20 +18,33 @@ import java.util.ArrayList;
 import java.util.Map;
 
 public class Game {
-    OpenHiveBedwars plugin;
+    public OpenHiveBedwars plugin;
     Mode mode;
     Status status;
+
     TeamHandler teamHandler;
     CombatHandler combatHandler;
-    MapVoting mapVoting;
+
     LobbyTimer lobbyTimer;
+    MapVoting mapVoting;
     MapConfig mapConfig;
+
     ArrayList<Player> hiddenPlayers;
+
+    public ArrayList<TeamSummoner> teamSummoners; // todo nicht public danke
+    ArrayList<DiamondSummoner> diamondSummoners;
+    ArrayList<EmeraldSummoner> emeraldSummoners;
 
 
     public Game(OpenHiveBedwars plugin, Mode mode) {
         this.plugin = plugin;
+
         hiddenPlayers = new ArrayList<>();
+        teamSummoners = new ArrayList<>();
+        diamondSummoners = new ArrayList<>();
+        emeraldSummoners = new ArrayList<>();
+
+
         startup(mode);
     }
 
@@ -123,11 +137,34 @@ public class Game {
         setWorldGamerules(arena);
         mapConfig.updateWorld(arena);
 
-        // spawn beds
+        // Spawn beds
         clearAllBeds();
-        for (Team team : teamHandler.getTeams()) {
-            spawnBed(team.getColor());
-        }
+        teamHandler.getTeams().forEach(team -> spawnBed(team.getColor()));
+
+        // Spawn team summoners
+        teamHandler.getTeams().forEach(team -> spawnTeamSummoners(team.getColor()));
+
+        // Spawn single item summoners
+        spawnDiamondSummoners();
+        spawnEmeraldSummoners();
+    }
+
+    public void spawnTeamSummoners(TeamColor teamColor) {
+        mapConfig.getTeamSummonerLocations(teamColor).stream()
+                .map(location -> new TeamSummoner(this, location, teamColor))
+                .forEach(teamSummoners::add);
+    }
+
+    public void spawnDiamondSummoners() {
+        mapConfig.getDiamondSummonerLocations().stream()
+                .map(location -> new DiamondSummoner(this, location))
+                .forEach(diamondSummoners::add);
+    }
+
+    public void spawnEmeraldSummoners() {
+        mapConfig.getEmeraldSummonerLocations().stream()
+                .map(location -> new EmeraldSummoner(this, location))
+                .forEach(emeraldSummoners::add);
     }
 
     public void clearBed(TeamColor color) {
