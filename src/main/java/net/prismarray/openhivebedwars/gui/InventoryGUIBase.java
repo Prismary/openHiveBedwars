@@ -22,9 +22,11 @@ public class InventoryGUIBase implements Inventory {
 
     private final Inventory inventory;
 
-    private final List<InventoryGUIActionListener> actionHandlers = new ArrayList<>();
+    private final List<InventoryGUIActionListener> globalActionHandlers = new ArrayList<>();
+    private final Map<Integer, List<InventoryGUIActionListener>> slotClickActionListeners = new HashMap<>();
 
-    private boolean isLocked = true;
+    private boolean isLocked = false;
+    private final Set<Integer> lockedSlots = new HashSet<>();
 
 
     public InventoryGUIBase() {
@@ -100,32 +102,53 @@ public class InventoryGUIBase implements Inventory {
         InventoryGUIActionManager.registerInventoryGUI(this);
     }
 
+    public Inventory getInventory() {
+        return inventory;
+    }
+
     public void open(Player player) {
         player.openInventory(inventory);
     }
 
     public void addActionHandler(InventoryGUIActionListener handler) {
-        actionHandlers.add(handler);
+        globalActionHandlers.add(handler);
+    }
+
+    public void addSlotClickActionHandler(int slot, InventoryGUIActionListener handler) {
+
+        if (slot < 0 || slot > getSize() - 1) {
+            throw new IllegalArgumentException("Slot must be between 0 and " + (getSize() - 1) + ".");
+        }
+
+        if (!slotClickActionListeners.containsKey(slot)) {
+            slotClickActionListeners.put(slot, new ArrayList<>());
+        }
+
+        slotClickActionListeners.get(slot).add(handler);
     }
 
     public void handleAction(InventoryGUIAction action) {
 
         // handle all actions on top-level
-        actionHandlers.forEach(l -> getMatchingHandlers(l, action).forEach(m -> invokeMethod(m, l, action)));
+        globalActionHandlers.forEach(l -> getMatchingHandlers(l, action).forEach(m -> invokeMethod(m, l, action)));
 
+        // handle all click actions on item-level
         if (!(action instanceof InventoryGUIClickAction)) {
             return;
         }
 
         InventoryGUIClickAction ica = (InventoryGUIClickAction) action;
-        ItemStack item = getItem(ica.getClickedSlot());
+        int clickedSlot = ica.getClickedSlot();
 
-        if (!(Objects.nonNull(item) && item instanceof InventoryGUIItem)) {
+        if (clickedSlot < 0 || clickedSlot > getSize() - 1) {
             return;
         }
 
-        // handle all click actions on item-level
-        ((InventoryGUIItem) item).handleClickAction(ica);
+        List<InventoryGUIActionListener> listeners = slotClickActionListeners.get(clickedSlot);
+
+        if (Objects.nonNull(listeners)) {
+            listeners.forEach(l -> getMatchingHandlers(l, action).forEach(m -> invokeMethod(m, l, action)));
+        }
     }
 
     public static List<Method> getMatchingHandlers(InventoryGUIActionListener listener, InventoryGUIAction action) {
@@ -154,6 +177,18 @@ public class InventoryGUIBase implements Inventory {
 
     public boolean isLocked() {
         return this.isLocked;
+    }
+
+    public void lockSlot(int slot) {
+        this.lockedSlots.add(slot);
+    }
+
+    public void unlockSlot(int slot) {
+        this.lockedSlots.remove(slot);
+    }
+
+    public boolean isSlotLocked(int slot) {
+        return isLocked || lockedSlots.contains(slot);
     }
 
     @Override
