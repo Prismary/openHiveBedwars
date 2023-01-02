@@ -35,7 +35,7 @@ public final class OpenHiveBedwars extends JavaPlugin {
         instance = this;
     }
 
-    public static JavaPlugin getInstance() {
+    public static OpenHiveBedwars getInstance() {
         return instance;
     }
 
@@ -49,7 +49,7 @@ public final class OpenHiveBedwars extends JavaPlugin {
         registerEvents();
         registerEnchantments();
 
-        game = new Game(this, config.getMode());
+        game = new Game(config.getMode());
     }
 
     @Override
@@ -120,6 +120,7 @@ public final class OpenHiveBedwars extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new EvtInventoryGUI(this), this);
     }
 
+    @SuppressWarnings({"deprecation", "unchecked"})
     private void registerEnchantments() {
 
         int nextID = Arrays.stream(Enchantment.values())

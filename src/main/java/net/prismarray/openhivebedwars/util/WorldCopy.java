@@ -9,6 +9,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Objects;
 
 public class WorldCopy {
 
@@ -38,10 +39,12 @@ public class WorldCopy {
                         if (!target.mkdirs())
                             throw new IOException("Couldn't create world directory!");
                     String[] files = source.list();
-                    for (String file : files) {
-                        File srcFile = new File(source, file);
-                        File destFile = new File(target, file);
-                        copyFileStructure(srcFile, destFile);
+                    if(Objects.nonNull(files)) {
+                        for (String file : files) {
+                            File srcFile = new File(source, file);
+                            File destFile = new File(target, file);
+                            copyFileStructure(srcFile, destFile);
+                        }
                     }
                 } else {
                     InputStream in = Files.newInputStream(source.toPath());
