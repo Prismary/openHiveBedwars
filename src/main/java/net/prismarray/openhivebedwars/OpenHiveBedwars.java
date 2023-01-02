@@ -9,7 +9,10 @@ import net.prismarray.openhivebedwars.config.Config;
 import net.prismarray.openhivebedwars.config.ConfigValidationException;
 import net.prismarray.openhivebedwars.config.LobbyConfig;
 import net.prismarray.openhivebedwars.config.MapManager;
+import net.prismarray.openhivebedwars.enchantments.InventoryGUIDummyEnchantment;
 import net.prismarray.openhivebedwars.events.*;
+import org.bukkit.command.defaults.EnchantCommand;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -31,6 +34,7 @@ public final class OpenHiveBedwars extends JavaPlugin {
 
         registerCommands();
         registerEvents();
+        registerEnchantments();
 
         game = new Game(this, config.getMode());
     }
@@ -101,5 +105,29 @@ public final class OpenHiveBedwars extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new EvtBedBreak(this), this);
         getServer().getPluginManager().registerEvents(new EvtBuildLimit(this), this);
         getServer().getPluginManager().registerEvents(new EvtInventoryGUI(this), this);
+    }
+
+    private void registerEnchantments() {
+
+        int nextID = Arrays.stream(Enchantment.values())
+                .mapToInt(e -> e.getId() + 1)
+                .max()
+                .orElse(0);
+
+        try {
+            Field acceptingNew = Enchantment.class.getDeclaredField("acceptingNew");
+            acceptingNew.setAccessible(true);
+            acceptingNew.set(null, true);
+            acceptingNew.setAccessible(false);
+
+            Field enchantmentNames = EnchantCommand.class.getDeclaredField("ENCHANTMENT_NAMES");
+            enchantmentNames.setAccessible(true);
+            ((List<String>) enchantmentNames.get(null)).clear();
+            enchantmentNames.setAccessible(false);
+        } catch (NoSuchFieldException | IllegalAccessException ignored) {}
+
+        Enchantment.registerEnchantment(new InventoryGUIDummyEnchantment(nextID++));
+
+        Enchantment.stopAcceptingRegistrations();
     }
 }
