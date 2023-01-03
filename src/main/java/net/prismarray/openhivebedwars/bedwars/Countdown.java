@@ -5,12 +5,12 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitScheduler;
 
 public class Countdown {
-    BukkitScheduler scheduler;
-    Plugin plugin;
+    protected final BukkitScheduler scheduler;
+    protected final Plugin plugin;
 
-    private int start;
-    private int stop;
-    private int delay;
+    private final int start;
+    private final int stop;
+    private final int delay;
     private int count;
     private boolean stopped;
     private boolean killTask;
@@ -78,19 +78,18 @@ public class Countdown {
     }
 
     private void countDown() {
-        scheduler.scheduleSyncDelayedTask(plugin, new Runnable() {
-            @Override
-            public void run() {
-                if (killTask) { // return early if task should end
-                    killTask = false;
-                    return;
-                }
 
-                if (!stopped) {
-                    decrement();
-                    countDown();
-                }
+        scheduler.scheduleSyncDelayedTask(plugin, () -> {
+
+            if (killTask) { // return early if task should end
+                killTask = false;
+                return;
             }
-        }, delay * 20);
+
+            if (!stopped) {
+                decrement();
+                countDown();
+            }
+        }, delay * 20L);
     }
 }

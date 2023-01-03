@@ -11,8 +11,8 @@ import java.util.Objects;
 
 public class CommandBase implements CommandExecutor {
 
-    List<AdvancedCommandExecutor> executors = new ArrayList<>();
-    List<CommandExecutor> globalCheckers = new ArrayList<>();
+    private final List<AdvancedCommandExecutor> executors = new ArrayList<>();
+    private final List<CommandExecutor> globalCheckers = new ArrayList<>();
 
 
     @Override

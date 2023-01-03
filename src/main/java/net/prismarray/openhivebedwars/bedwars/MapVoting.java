@@ -7,12 +7,12 @@ import org.bukkit.entity.Player;
 import java.util.*;
 
 public class MapVoting {
-    Game game;
+    private final Game game;
 
-    Map<String, MapConfig> mapConfigs;
-    ArrayList<String> pool;
-    Map<String, Integer> voteCounts; // Tracks the vote count for each map
-    Map<UUID, String> playerVotes; // Tracks what player voted for which map
+    private final Map<String, MapConfig> mapConfigs;
+    private final ArrayList<String> pool;
+    private final Map<String, Integer> voteCounts; // Tracks the vote count for each map
+    private final Map<UUID, String> playerVotes; // Tracks what player voted for which map
 
     public MapVoting(Game game) {
         this.game = game;
@@ -145,9 +145,7 @@ public class MapVoting {
     }
 
     private String pickRandom() {
-        List<String> mapIDs = new ArrayList<>();
-        mapIDs.addAll(mapConfigs.keySet());
-        Collections.shuffle(mapIDs);
-        return mapIDs.get(0);
+        int index = (new Random()).nextInt(mapConfigs.keySet().size());
+        return (String) mapConfigs.keySet().toArray()[index];
     }
 }

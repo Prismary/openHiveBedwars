@@ -10,35 +10,31 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.block.BlockState;
 import org.bukkit.entity.Player;
 import org.bukkit.material.Bed;
-import org.bukkit.scheduler.BukkitScheduler;
 import org.bukkit.util.Vector;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Map;
 
 public class Game {
-    public OpenHiveBedwars plugin;
-    Mode mode;
-    Status status;
 
-    TeamHandler teamHandler;
-    CombatHandler combatHandler;
+    private Mode mode;
+    private Status status;
 
-    LobbyTimer lobbyTimer;
-    MapVoting mapVoting;
-    MapConfig mapConfig;
+    private TeamHandler teamHandler;
+    private CombatHandler combatHandler;
 
-    ArrayList<Player> hiddenPlayers;
+    private LobbyTimer lobbyTimer;
+    private MapVoting mapVoting;
+    private MapConfig mapConfig;
 
-    public ArrayList<TeamSummoner> teamSummoners; // todo nicht public danke
-    ArrayList<DiamondSummoner> diamondSummoners;
-    ArrayList<EmeraldSummoner> emeraldSummoners;
+    private final ArrayList<Player> hiddenPlayers;
+
+    private final ArrayList<TeamSummoner> teamSummoners; // todo nicht public danke
+    private final ArrayList<DiamondSummoner> diamondSummoners;
+    private final ArrayList<EmeraldSummoner> emeraldSummoners;
 
 
-    public Game(OpenHiveBedwars plugin, Mode mode) {
-        this.plugin = plugin;
-
+    public Game(Mode mode) {
         hiddenPlayers = new ArrayList<>();
         teamSummoners = new ArrayList<>();
         diamondSummoners = new ArrayList<>();
@@ -53,7 +49,7 @@ public class Game {
     // GAME PHASE PROGRESSION
     public void startup(Mode mode) {
         status = Status.STARTUP;
-        Broadcast.prefix = plugin.config.getPrefix();
+        Broadcast.prefix = OpenHiveBedwars.getInstance().config.getPrefix();
 
         this.mode = mode;
         teamHandler = new TeamHandler(this);
@@ -82,12 +78,7 @@ public class Game {
         teamHandler.colorize();
 
         // start arena setup as task
-        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-            @Override
-            public void run() {
-                arenaSetup();
-            }
-        }, 0);
+        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(OpenHiveBedwars.getInstance(), this::arenaSetup, 0);
     }
 
     public void warmup() {
@@ -115,29 +106,33 @@ public class Game {
 
     public void lobbySetup() {
         // try to copy world: todo proper error handling
+        String lobbyName = null;
         try {
-            WorldCopy.copyMapToContainer("lobby", plugin.config.getLobbyName(), plugin.getDataFolder());
-            new WorldCreator(plugin.config.getLobbyName()).createWorld();
+            lobbyName = OpenHiveBedwars.getInstance().config.getLobbyName();
+            WorldCopy.copyMapToContainer("lobby", lobbyName, OpenHiveBedwars.getInstance().getDataFolder());
+            new WorldCreator(lobbyName).createWorld();
         } catch (Exception e) {
             Bukkit.shutdown();
         }
-        setWorldGamerules(Bukkit.getWorld(plugin.config.getLobbyName()));
-        plugin.lobbyConfig.updateWorld(Bukkit.getWorld(plugin.config.getLobbyName()));
+        setWorldGamerules(Bukkit.getWorld(lobbyName));
+        OpenHiveBedwars.getInstance().lobbyConfig.updateWorld(Bukkit.getWorld(lobbyName));
     }
 
     public void arenaSetup() {
         // try to copy world: todo proper error handling
+        String arenaName = null;
         try {
-            WorldCopy.copyMapToContainer(mapConfig.getMapID(), plugin.config.getArenaName(), new File(plugin.getDataFolder() + File.separator + "maps"));
-            new WorldCreator(plugin.config.getArenaName()).createWorld();
+            arenaName = OpenHiveBedwars.getInstance().config.getArenaName();
+            WorldCopy.copyMapToContainer(mapConfig.getMapID(), arenaName, new File(OpenHiveBedwars.getInstance().getDataFolder() + File.separator + "maps"));
+            new WorldCreator(arenaName).createWorld();
         } catch (Exception e) {
             Bukkit.shutdown();
         }
-        World arena = Bukkit.getWorld(plugin.config.getArenaName());
+        World arena = Bukkit.getWorld(arenaName);
         setWorldGamerules(arena);
         mapConfig.updateWorld(arena);
 
-        // Spawn beds
+        // spawn beds
         clearAllBeds();
         teamHandler.getTeams().forEach(team -> spawnBed(team.getColor()));
 
@@ -311,7 +306,7 @@ public class Game {
 
     public void setLobbyPlayer(Player player) {
         fullPlayerClear(player);
-        player.teleport(plugin.lobbyConfig.getLobbyPlayerSpawnLocation());
+        player.teleport(OpenHiveBedwars.getInstance().lobbyConfig.getLobbyPlayerSpawnLocation());
     }
 
     public void setSpectatorPlayer(Player player) {
@@ -323,7 +318,7 @@ public class Game {
 
     public void setResultsPlayer(Player player) {
         fullPlayerClear(player);
-        player.teleport(plugin.lobbyConfig.getResultsPlayerSpawnLocation());
+        player.teleport(OpenHiveBedwars.getInstance().lobbyConfig.getResultsPlayerSpawnLocation());
     }
 
     public void fullPlayerClear(Player player) {

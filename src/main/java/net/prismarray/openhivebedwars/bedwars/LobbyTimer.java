@@ -6,10 +6,10 @@ import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 
 public class LobbyTimer extends Countdown {
-    Game game;
-    boolean useRedCount;
-    int requiredPlayerCount;
-    String actionBarContent;
+    private final Game game;
+    private boolean useRedCount;
+    private final int requiredPlayerCount;
+    private String actionBarContent;
 
     public LobbyTimer(Game game) {
         super(game.plugin, 61, 0, 1);
@@ -23,12 +23,12 @@ public class LobbyTimer extends Countdown {
 
     private void updateActionBarText() {
         if (Bukkit.getOnlinePlayers().size() < requiredPlayerCount) { // Waiting for players
-            actionBarContent = "§e" + String.valueOf(requiredPlayerCount - Bukkit.getOnlinePlayers().size()) + " players needed to start...";
+            actionBarContent = "§e" + (requiredPlayerCount - Bukkit.getOnlinePlayers().size()) + " players needed to start...";
         } else {
             if (useRedCount) { // Red countdown
-                actionBarContent = "§aStarting game in §c§l" + String.valueOf(getCount());
+                actionBarContent = "§aStarting game in §c§l" + getCount();
             } else { // Regular countdown
-                actionBarContent = "§aStarting game in §a§l" + String.valueOf(getCount());
+                actionBarContent = "§aStarting game in §a§l" + getCount();
             }
         }
 

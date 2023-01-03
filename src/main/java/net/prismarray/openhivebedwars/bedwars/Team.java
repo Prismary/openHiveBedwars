@@ -7,10 +7,10 @@ import java.util.ArrayList;
 
 public class Team {
 
-    TeamColor color;
-    int size;
-    ArrayList<Player> players;
-    boolean bedIntact;
+    private TeamColor color;
+    private final int size;
+    private final ArrayList<Player> players;
+    private boolean bedIntact;
 
     public Team(int size) {
         this.color = null;

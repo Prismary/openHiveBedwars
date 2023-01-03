@@ -1,17 +1,32 @@
 package net.prismarray.openhivebedwars.gui;
 
+import net.prismarray.openhivebedwars.gui.actions.InventoryGUIAction;
+import net.prismarray.openhivebedwars.gui.actions.InventoryGUIClickAction;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
+import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Objects;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
-public class InventoryGUIBase {
+public class InventoryGUIBase implements Inventory {
 
     private final Inventory inventory;
+
+    private final List<InventoryGUIActionListener> globalActionHandlers = new ArrayList<>();
+    private final Map<Integer, List<InventoryGUIActionListener>> slotClickActionListeners = new HashMap<>();
+
+    private boolean isLocked = false;
+    private final Set<Integer> lockedSlots = new HashSet<>();
 
 
     public InventoryGUIBase() {
@@ -83,25 +98,320 @@ public class InventoryGUIBase {
                         String.format("InventoryType '%s' is currently not supported!", type)
                 );
         }
+
+        InventoryGUIActionManager.registerInventoryGUI(this);
     }
 
-    public InventoryHolder getHolder() {
-        return this.inventory.getHolder();
-    }
-
-    public String getTitle() {
-        return this.inventory.getTitle();
-    }
-
-    public InventoryType getType() {
-        return this.inventory.getType();
-    }
-
-    public int getSize() {
-        return this.inventory.getSize();
+    public Inventory getInventory() {
+        return inventory;
     }
 
     public void open(Player player) {
-        player.openInventory(this.inventory);
+        player.openInventory(inventory);
+    }
+
+    public void addActionHandler(InventoryGUIActionListener handler) {
+        globalActionHandlers.add(handler);
+    }
+
+    public void addSlotClickActionHandler(int slot, InventoryGUIActionListener handler) {
+
+        if (slot < 0 || slot > getSize() - 1) {
+            throw new IllegalArgumentException("Slot must be between 0 and " + (getSize() - 1) + ".");
+        }
+
+        if (!slotClickActionListeners.containsKey(slot)) {
+            slotClickActionListeners.put(slot, new ArrayList<>());
+        }
+
+        slotClickActionListeners.get(slot).add(handler);
+    }
+
+    public void handleAction(InventoryGUIAction action) {
+
+        // handle all actions on top-level
+        globalActionHandlers.forEach(l -> getMatchingHandlers(l, action).forEach(m -> invokeMethod(m, l, action)));
+
+        // handle all click actions on item-level
+        if (!(action instanceof InventoryGUIClickAction)) {
+            return;
+        }
+
+        InventoryGUIClickAction ica = (InventoryGUIClickAction) action;
+        int clickedSlot = ica.getClickedSlot();
+
+        if (clickedSlot < 0 || clickedSlot > getSize() - 1) {
+            return;
+        }
+
+        List<InventoryGUIActionListener> listeners = slotClickActionListeners.get(clickedSlot);
+
+        if (Objects.nonNull(listeners)) {
+            listeners.forEach(l -> getMatchingHandlers(l, action).forEach(m -> invokeMethod(m, l, action)));
+        }
+    }
+
+    public static List<Method> getMatchingHandlers(InventoryGUIActionListener listener, InventoryGUIAction action) {
+
+        return Arrays.stream(listener.getClass().getDeclaredMethods())
+                .filter(m -> Arrays.stream(m.getAnnotations()).anyMatch(a -> a instanceof InventoryGUIActionHandler))
+                .filter(m -> m.getParameterTypes().length == 1 && Objects.equals(m.getParameterTypes()[0], action.getClass()))
+                .collect(Collectors.toList());
+    }
+
+    public static Object invokeMethod(Method method, Object obj, Object... args) {
+        try {
+            return method.invoke(obj, args);
+        } catch (IllegalAccessException | InvocationTargetException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void lock() {
+        this.isLocked = true;
+    }
+
+    public void unlock() {
+        this.isLocked = false;
+    }
+
+    public boolean isLocked() {
+        return this.isLocked;
+    }
+
+    public void lockSlot(int slot) {
+        this.lockedSlots.add(slot);
+    }
+
+    public void unlockSlot(int slot) {
+        this.lockedSlots.remove(slot);
+    }
+
+    public boolean isSlotLocked(int slot) {
+        return isLocked || lockedSlots.contains(slot);
+    }
+
+    @Override
+    public int getSize() {
+        return inventory.getSize();
+    }
+
+    @Override
+    public int getMaxStackSize() {
+        return inventory.getMaxStackSize();
+    }
+
+    @Override
+    public void setMaxStackSize(int i) {
+        inventory.setMaxStackSize(i);
+    }
+
+    @Override
+    public String getName() {
+        return inventory.getName();
+    }
+
+    @Override
+    public ItemStack getItem(int i) {
+        return inventory.getItem(i);
+    }
+
+    @Override
+    public void setItem(int i, ItemStack itemStack) {
+
+        if (isLocked) {
+            return;
+        }
+        inventory.setItem(i, itemStack);
+    }
+
+    @Override
+    public HashMap<Integer, ItemStack> addItem(ItemStack... itemStacks) throws IllegalArgumentException {
+
+        if (isLocked) {
+            HashMap<Integer, ItemStack> notAdded = new HashMap<>();
+            AtomicInteger index = new AtomicInteger();
+
+            Arrays.stream(itemStacks).forEach(e -> notAdded.put(index.getAndIncrement(), e));
+            return notAdded;
+        }
+        return inventory.addItem(itemStacks);
+    }
+
+    @Override
+    public HashMap<Integer, ItemStack> removeItem(ItemStack... itemStacks) throws IllegalArgumentException {
+
+        if (isLocked) {
+            HashMap<Integer, ItemStack> notAdded = new HashMap<>();
+            AtomicInteger index = new AtomicInteger();
+
+            Arrays.stream(itemStacks).forEach(e -> notAdded.put(index.getAndIncrement(), e));
+            return notAdded;
+        }
+        return inventory.removeItem(itemStacks);
+    }
+
+    @Override
+    public ItemStack[] getContents() {
+        return inventory.getContents();
+    }
+
+    @Override
+    public void setContents(ItemStack[] itemStacks) throws IllegalArgumentException {
+
+        if (isLocked) {
+            return;
+        }
+        inventory.setContents(itemStacks);
+    }
+
+    @Deprecated
+    @Override
+    public boolean contains(int i) {
+        return inventory.contains(i);
+    }
+
+    @Override
+    public boolean contains(Material material) throws IllegalArgumentException {
+        return inventory.contains(material);
+    }
+
+    @Override
+    public boolean contains(ItemStack itemStack) {
+        return inventory.contains(itemStack);
+    }
+
+    @Deprecated
+    @Override
+    public boolean contains(int i, int i1) {
+        return inventory.contains(i, i1);
+    }
+
+    @Override
+    public boolean contains(Material material, int i) throws IllegalArgumentException {
+        return inventory.contains(material, i);
+    }
+
+    @Override
+    public boolean contains(ItemStack itemStack, int i) {
+        return inventory.contains(itemStack, i);
+    }
+
+    @Override
+    public boolean containsAtLeast(ItemStack itemStack, int i) {
+        return inventory.containsAtLeast(itemStack, i);
+    }
+
+    @Deprecated
+    @Override
+    public HashMap<Integer, ? extends ItemStack> all(int i) {
+        return inventory.all(i);
+    }
+
+    @Override
+    public HashMap<Integer, ? extends ItemStack> all(Material material) throws IllegalArgumentException {
+        return inventory.all(material);
+    }
+
+    @Override
+    public HashMap<Integer, ? extends ItemStack> all(ItemStack itemStack) {
+        return inventory.all(itemStack);
+    }
+
+    @Deprecated
+    @Override
+    public int first(int i) {
+        return inventory.first(i);
+    }
+
+    @Override
+    public int first(Material material) throws IllegalArgumentException {
+        return inventory.first(material);
+    }
+
+    @Override
+    public int first(ItemStack itemStack) {
+        return inventory.first(itemStack);
+    }
+
+    @Override
+    public int firstEmpty() {
+        return inventory.firstEmpty();
+    }
+
+    @Deprecated
+    @Override
+    public void remove(int i) {
+
+        if (isLocked) {
+            return;
+        }
+        inventory.remove(i);
+    }
+
+    @Override
+    public void remove(Material material) throws IllegalArgumentException {
+
+        if (isLocked) {
+            return;
+        }
+        inventory.remove(material);
+    }
+
+    @Override
+    public void remove(ItemStack itemStack) {
+
+        if (isLocked) {
+            return;
+        }
+        inventory.remove(itemStack);
+    }
+
+    @Override
+    public void clear(int i) {
+
+        if (isLocked) {
+            return;
+        }
+        inventory.clear(i);
+    }
+
+    @Override
+    public void clear() {
+
+        if (isLocked) {
+            return;
+        }
+        inventory.clear();
+    }
+
+    @Override
+    public List<HumanEntity> getViewers() {
+        return inventory.getViewers();
+    }
+
+    @Override
+    public String getTitle() {
+        return inventory.getTitle();
+    }
+
+    @Override
+    public InventoryType getType() {
+        return inventory.getType();
+    }
+
+    @Override
+    public InventoryHolder getHolder() {
+        return inventory.getHolder();
+    }
+
+    @Override
+    public ListIterator<ItemStack> iterator() {
+        return inventory.iterator();
+    }
+
+    @Override
+    public ListIterator<ItemStack> iterator(int i) {
+        return inventory.iterator(i);
     }
 }

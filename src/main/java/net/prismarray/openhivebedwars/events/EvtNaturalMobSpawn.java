@@ -11,10 +11,8 @@ public class EvtNaturalMobSpawn extends EventBase {
 
     @EventHandler
     public void creatureSpawn(CreatureSpawnEvent event) {
-        switch  (event.getSpawnReason()) {
-            case NATURAL:
-                event.setCancelled(true);
-                break;
+        if (event.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL) {
+            event.setCancelled(true);
         }
     }
 }

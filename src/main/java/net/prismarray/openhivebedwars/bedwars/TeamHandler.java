@@ -14,10 +14,10 @@ import java.util.stream.Collectors;
 
 public class TeamHandler {
 
-    Game game;
-    ArrayList<Team> teams;
-    Map<Player, ArrayList<Player>> invites;
-    int maxTeamCount;
+    private final Game game;
+    private final ArrayList<Team> teams;
+    private final Map<Player, ArrayList<Player>> invites;
+    private final int maxTeamCount;
 
     public TeamHandler(Game game) {
         this.game = game;
@@ -34,6 +34,9 @@ public class TeamHandler {
             case TEAMS:
                 maxTeamCount = 4;
                 break;
+            default:
+                maxTeamCount = 0;
+                break;
         }
     }
 
@@ -46,16 +49,13 @@ public class TeamHandler {
     }
 
     public boolean areTeammates(Player player1, Player player2) {
-        if (getPlayerTeam(player1).getColor() == getPlayerTeam(player2).getColor()) {
-            return true;
-        }
-        return false;
+        return getPlayerTeam(player1).getColor() == getPlayerTeam(player2).getColor();
     }
 
     public Team getPlayerTeam(Player player) {
-        for (int i = 0; i < teams.size(); i++) {
-            if (teams.get(i).getPlayers().contains(player)) {
-                return teams.get(i);
+        for (Team team : teams) {
+            if (team.getPlayers().contains(player)) {
+                return team;
             }
         }
         return null;

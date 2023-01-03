@@ -7,7 +7,7 @@ import java.util.Objects;
 
 public abstract class CommandChecker implements CommandExecutor {
 
-    String errorMessage;
+    private final String errorMessage;
 
     public CommandChecker() {
         this(null);
