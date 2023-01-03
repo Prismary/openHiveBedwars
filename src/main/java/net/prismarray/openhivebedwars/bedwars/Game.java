@@ -1,6 +1,7 @@
 package net.prismarray.openhivebedwars.bedwars;
 
 import net.prismarray.openhivebedwars.OpenHiveBedwars;
+import net.prismarray.openhivebedwars.bedwars.shop.ShopManager;
 import net.prismarray.openhivebedwars.bedwars.summoner.*;
 import net.prismarray.openhivebedwars.config.MapConfig;
 import net.prismarray.openhivebedwars.util.*;
@@ -40,7 +41,7 @@ public class Game {
         hiddenPlayers = new ArrayList<>();
         teamSummoners = new ArrayList<>();
         diamondSummoners = new ArrayList<>();
-        emeraldSummoners = new ArrayList<>();
+        emeraldSummoners = new ArrayList<>(); // todo move to summoner manager
     }
 
 
@@ -144,6 +145,9 @@ public class Game {
         // Spawn single item summoners
         spawnDiamondSummoners();
         spawnEmeraldSummoners();
+
+        // Spawn NPCs
+        ShopManager.getInstance().spawnNPCs();
     }
 
     public static void spawnTeamSummoners(TeamColor teamColor) {

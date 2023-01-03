@@ -10,12 +10,14 @@ import org.bukkit.event.entity.EntityDamageEvent;
 public class EvtPlayerDamage extends EventBase {
 
     @EventHandler
-    public void entityDamage(EntityDamageEvent event) {
+    public void playerDamage(EntityDamageEvent event) {
+        if (!(event.getEntity() instanceof Player)) { // Return early if entity is not player
+            return;
+        } // todo clean up methods to take player object directly instead of event and cast a million times
+
         switch (Game.getStatus()) {
             case INGAME:
-                if (event.getEntity() instanceof Player) {
-                    Game.getCombatHandler().playerDamage(event);
-                }
+                Game.getCombatHandler().playerDamage(event);
                 checkForDeath(event);
                 break;
             case LOBBY:
@@ -32,7 +34,7 @@ public class EvtPlayerDamage extends EventBase {
     public void checkForDeath(EntityDamageEvent event) {
         Entity entity = event.getEntity();
 
-        if (entity instanceof Player && Game.getStatus() == Status.INGAME) {
+        if (Game.getStatus() == Status.INGAME) {
             Player player = (Player) entity;
 
             if (!((player).getHealth() - event.getFinalDamage() > 0)) {
@@ -50,19 +52,17 @@ public class EvtPlayerDamage extends EventBase {
         if (event.getCause() == EntityDamageEvent.DamageCause.VOID) {
             Entity entity = event.getEntity();
 
-            if (entity instanceof Player) {
-                switch (Game.getStatus()) {
-                    case LOBBY:
-                    case CONFIRMATION:
-                        Game.setLobbyPlayer((Player) entity);
-                        break;
-                    case WARMUP:
-                        Game.spawnPlayer((Player) entity);
-                        break;
-                    case RESULTS:
-                        Game.setResultsPlayer((Player) entity);
-                        break;
-                }
+            switch (Game.getStatus()) {
+                case LOBBY:
+                case CONFIRMATION:
+                    Game.setLobbyPlayer((Player) entity);
+                    break;
+                case WARMUP:
+                    Game.spawnPlayer((Player) entity);
+                    break;
+                case RESULTS:
+                    Game.setResultsPlayer((Player) entity);
+                    break;
             }
         }
     }
