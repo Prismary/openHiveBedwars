@@ -1,6 +1,6 @@
 package net.prismarray.openhivebedwars.events;
 
-import net.prismarray.openhivebedwars.OpenHiveBedwars;
+import net.prismarray.openhivebedwars.bedwars.Game;
 import net.prismarray.openhivebedwars.bedwars.Team;
 import net.prismarray.openhivebedwars.util.Broadcast;
 import net.prismarray.openhivebedwars.util.SoundHandler;
@@ -14,25 +14,21 @@ import org.bukkit.event.block.BlockBreakEvent;
 
 public class EvtBedBreak extends EventBase {
 
-    public EvtBedBreak(OpenHiveBedwars plugin) {
-        super(plugin);
-    }
-
     @EventHandler
     public void blockBreak(BlockBreakEvent event) {
-        if (plugin.game.getStatus() != Status.INGAME || event.getBlock().getType() != Material.BED_BLOCK) {
+        if (Game.getStatus() != Status.INGAME || event.getBlock().getType() != Material.BED_BLOCK) {
             return;
         }
 
-        for (Team team : plugin.game.getTeamHandler().getTeams()) {
-            Location bedFootLocation = plugin.game.getMapConfig().getTeamBedFootLocation(team.getColor());
-            Block bedFootBlock = plugin.game.getMapConfig().getArenaWorld().getBlockAt(bedFootLocation);
+        for (Team team : Game.getTeamHandler().getTeams()) {
+            Location bedFootLocation = Game.getMapConfig().getTeamBedFootLocation(team.getColor());
+            Block bedFootBlock = Game.getMapConfig().getArenaWorld().getBlockAt(bedFootLocation);
 
-            Location bedHeadLocation = plugin.game.getMapConfig().getTeamBedHeadLocation(team.getColor());
-            Block bedHeadBlock = plugin.game.getMapConfig().getArenaWorld().getBlockAt(bedHeadLocation);
+            Location bedHeadLocation = Game.getMapConfig().getTeamBedHeadLocation(team.getColor());
+            Block bedHeadBlock = Game.getMapConfig().getArenaWorld().getBlockAt(bedHeadLocation);
 
             if (event.getBlock().equals(bedFootBlock) || event.getBlock().equals(bedHeadBlock)) {
-                if (plugin.game.getTeamHandler().getPlayerTeam(event.getPlayer()).equals(team)) { // Check whether player belongs to team bed
+                if (Game.getTeamHandler().getPlayerTeam(event.getPlayer()).equals(team)) { // Check whether player belongs to team bed
                     event.setCancelled(true);
                     event.getPlayer().sendMessage("§c§lHey! §7You can't break your own bed!");
                     SoundHandler.playerSound(event.getPlayer(), Sound.NOTE_BASS);
@@ -41,7 +37,7 @@ public class EvtBedBreak extends EventBase {
 
                 event.setCancelled(true);
                 team.breakBed();
-                plugin.game.clearBed(team.getColor());
+                Game.clearBed(team.getColor());
                 Broadcast.bedBreak(team.getColor());
             }
         }

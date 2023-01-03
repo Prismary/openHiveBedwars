@@ -1,5 +1,6 @@
 package net.prismarray.openhivebedwars.bedwars;
 
+import net.prismarray.openhivebedwars.OpenHiveBedwars;
 import net.prismarray.openhivebedwars.util.Format;
 import net.prismarray.openhivebedwars.util.SoundHandler;
 import net.prismarray.openhivebedwars.util.Title;
@@ -7,14 +8,10 @@ import org.bukkit.Sound;
 
 public class GameStartTimer extends Countdown {
 
-    private final Game game;
-
     String[] fightAnimation;
 
-    public GameStartTimer(Game game) {
-        super(game.plugin, 11, 0, 1);
-
-        this.game = game;
+    public GameStartTimer() {
+        super(11, 0, 1);
 
         setFightAnimation();
     }
@@ -45,7 +42,7 @@ public class GameStartTimer extends Countdown {
 
         // Schedule final frame with longer duration
         scheduler.scheduleSyncDelayedTask(
-                plugin, () -> Title.sendToAll(
+                OpenHiveBedwars.getInstance(), () -> Title.sendToAll(
                         fightAnimation[14], "§7Protect your bed, destroy others!", 0, 40, 10
                 ), 14
         );
@@ -53,7 +50,7 @@ public class GameStartTimer extends Countdown {
 
     private void scheduleAnimationFrame(int frame) {
         scheduler.scheduleSyncDelayedTask(
-                plugin, () -> Title.sendToAll(
+                OpenHiveBedwars.getInstance(), () -> Title.sendToAll(
                         fightAnimation[frame], "§7Protect your bed, destroy others!", 0, 2, 0
                 ), frame
         );
@@ -64,7 +61,7 @@ public class GameStartTimer extends Countdown {
     public void onDecrement() {
         if (getCount() == 9) {
             String modeName;
-            switch (game.mode) {
+            switch (Game.getMode()) {
                 case SOLO:
                     modeName = "Solo";
                     break;
@@ -110,7 +107,7 @@ public class GameStartTimer extends Countdown {
     @Override
     public void onCompletion() {
         SoundHandler.globalPlayerSound(Sound.ENDERDRAGON_GROWL);
-        game.ingame();
+        Game.ingame();
         playFightAnimation();
     }
 }

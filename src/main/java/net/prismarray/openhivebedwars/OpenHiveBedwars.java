@@ -26,10 +26,8 @@ public final class OpenHiveBedwars extends JavaPlugin {
 
     private static OpenHiveBedwars instance;
 
-    public Config config;
-    public LobbyConfig lobbyConfig;
-    public MapManager mapManager;
-    public Game game;
+    private Config config;
+    private LobbyConfig lobbyConfig;
 
     public OpenHiveBedwars() {
         instance = this;
@@ -49,7 +47,7 @@ public final class OpenHiveBedwars extends JavaPlugin {
         registerEvents();
         registerEnchantments();
 
-        game = new Game(config.getMode());
+        Game.startup(config.getMode());
     }
 
     @Override
@@ -90,34 +88,33 @@ public final class OpenHiveBedwars extends JavaPlugin {
 
     private void initializeMapManager() {
 
-        mapManager = new MapManager(this);
-        mapManager.loadMaps(config.getMode());
+        MapManager.loadMaps(config.getMode());
     }
 
     private void registerCommands() {
-        getCommand("openhivebedwars").setExecutor(new CommandOpenHiveBedwars(this));
-        getCommand("team").setExecutor(new CommandTeam(this));
-        getCommand("vote").setExecutor(new CommandVote(this));
+        getCommand("openhivebedwars").setExecutor(new CommandOpenHiveBedwars());
+        getCommand("team").setExecutor(new CommandTeam());
+        getCommand("vote").setExecutor(new CommandVote());
         getCommand("gui").setExecutor(new CommandGUI());
     }
 
     private void registerEvents() {
 
-        getServer().getPluginManager().registerEvents(new EvtPlayerJoin(this), this);
-        getServer().getPluginManager().registerEvents(new EvtPlayerLogin(this), this);
-        getServer().getPluginManager().registerEvents(new EvtBlockPhysics(this), this);
-        getServer().getPluginManager().registerEvents(new EvtFoodLevelChange(this), this);
-        getServer().getPluginManager().registerEvents(new EvtNaturalMobSpawn(this), this);
-        getServer().getPluginManager().registerEvents(new EvtPlayerDamage(this), this);
-        getServer().getPluginManager().registerEvents(new EvtWeatherChange(this), this);
-        getServer().getPluginManager().registerEvents(new EvtBlockPlace(this), this);
-        getServer().getPluginManager().registerEvents(new EvtBlockBreak(this), this);
-        getServer().getPluginManager().registerEvents(new EvtFireExtinguish(this), this);
-        getServer().getPluginManager().registerEvents(new EvtPlayerQuit(this), this);
-        getServer().getPluginManager().registerEvents(new EvtStructureGrow(this), this);
-        getServer().getPluginManager().registerEvents(new EvtBedBreak(this), this);
-        getServer().getPluginManager().registerEvents(new EvtBuildLimit(this), this);
-        getServer().getPluginManager().registerEvents(new EvtInventoryGUI(this), this);
+        getServer().getPluginManager().registerEvents(new EvtPlayerJoin(), this);
+        getServer().getPluginManager().registerEvents(new EvtPlayerLogin(), this);
+        getServer().getPluginManager().registerEvents(new EvtBlockPhysics(), this);
+        getServer().getPluginManager().registerEvents(new EvtFoodLevelChange(), this);
+        getServer().getPluginManager().registerEvents(new EvtNaturalMobSpawn(), this);
+        getServer().getPluginManager().registerEvents(new EvtPlayerDamage(), this);
+        getServer().getPluginManager().registerEvents(new EvtWeatherChange(), this);
+        getServer().getPluginManager().registerEvents(new EvtBlockPlace(), this);
+        getServer().getPluginManager().registerEvents(new EvtBlockBreak(), this);
+        getServer().getPluginManager().registerEvents(new EvtFireExtinguish(), this);
+        getServer().getPluginManager().registerEvents(new EvtPlayerQuit(), this);
+        getServer().getPluginManager().registerEvents(new EvtStructureGrow(), this);
+        getServer().getPluginManager().registerEvents(new EvtBedBreak(), this);
+        getServer().getPluginManager().registerEvents(new EvtBuildLimit(), this);
+        getServer().getPluginManager().registerEvents(new EvtInventoryGUI(), this);
     }
 
     @SuppressWarnings({"deprecation", "unchecked"})
@@ -143,5 +140,13 @@ public final class OpenHiveBedwars extends JavaPlugin {
         Enchantment.registerEnchantment(new InventoryGUIDummyEnchantment(nextID++));
 
         Enchantment.stopAcceptingRegistrations();
+    }
+
+    public static Config getBWConfig() {
+        return instance.config;
+    }
+
+    public static LobbyConfig getLobbyConfig() {
+        return instance.lobbyConfig;
     }
 }

@@ -1,6 +1,5 @@
 package net.prismarray.openhivebedwars.events;
 
-import net.prismarray.openhivebedwars.OpenHiveBedwars;
 import net.prismarray.openhivebedwars.gui.InventoryGUIActionManager;
 import net.prismarray.openhivebedwars.gui.InventoryGUIBase;
 import net.prismarray.openhivebedwars.gui.actions.*;
@@ -13,10 +12,6 @@ import org.bukkit.event.inventory.*;
 import java.util.*;
 
 public class EvtInventoryGUI extends EventBase {
-
-    public EvtInventoryGUI(OpenHiveBedwars plugin) {
-        super(plugin);
-    }
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onInventoryClose(InventoryCloseEvent e) {

@@ -1,7 +1,6 @@
 package net.prismarray.openhivebedwars.bedwars.summoner;
 
 import net.minecraft.server.v1_8_R3.EnumParticle;
-import net.prismarray.openhivebedwars.bedwars.Game;
 import net.prismarray.openhivebedwars.util.Format;
 import net.prismarray.openhivebedwars.util.TeamColor;
 import org.bukkit.Location;
@@ -9,12 +8,12 @@ import org.bukkit.Material;
 
 public class TeamSummoner extends Summoner {
 
-    TeamColor teamColor;
+    private final TeamColor teamColor;
 
-    int[] summonLevels;
+    private final int[] summonLevels;
 
-    public TeamSummoner(Game game, Location location, TeamColor teamColor) {
-        super(game, location);
+    public TeamSummoner(Location location, TeamColor teamColor) {
+        super(location);
 
         this.teamColor = teamColor;
 

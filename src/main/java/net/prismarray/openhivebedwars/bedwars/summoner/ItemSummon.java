@@ -2,7 +2,6 @@ package net.prismarray.openhivebedwars.bedwars.summoner;
 
 import net.minecraft.server.v1_8_R3.EnumParticle;
 import net.prismarray.openhivebedwars.bedwars.Countdown;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -10,15 +9,15 @@ import org.bukkit.util.Vector;
 
 public class ItemSummon extends Countdown {
 
-    private Summoner summoner;
+    private final Summoner summoner;
     private boolean active;
 
-    private Material item;
-    private EnumParticle particleEffect;
+    private final Material item;
+    private final EnumParticle particleEffect;
 
 
     public ItemSummon(Summoner summoner, Material item, EnumParticle particleEffect, int maxCount, int delay) {
-        super(summoner.game.plugin, maxCount, 0, delay);
+        super(maxCount, 0, delay);
 
         this.summoner = summoner;
         this.item = item;

@@ -1,19 +1,15 @@
 package net.prismarray.openhivebedwars.events;
 
-import net.prismarray.openhivebedwars.OpenHiveBedwars;
+import net.prismarray.openhivebedwars.bedwars.Game;
 import net.prismarray.openhivebedwars.util.Format;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerLoginEvent;
 
 public class EvtPlayerLogin extends EventBase {
 
-    public EvtPlayerLogin(OpenHiveBedwars plugin) {
-        super(plugin);
-    }
-
     @EventHandler
     public void playerLogin(PlayerLoginEvent event) {
-        switch (plugin.game.getStatus()) {
+        switch (Game.getStatus()) {
             case STARTUP:
                 disallow(event, "Server is starting up.");
                 break;

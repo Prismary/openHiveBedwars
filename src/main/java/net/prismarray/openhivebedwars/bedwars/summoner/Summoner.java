@@ -1,26 +1,21 @@
 package net.prismarray.openhivebedwars.bedwars.summoner;
 
-import net.minecraft.server.v1_8_R3.EnumParticle;
 import net.prismarray.openhivebedwars.bedwars.Countdown;
-import net.prismarray.openhivebedwars.bedwars.Game;
 import net.prismarray.openhivebedwars.bedwars.Hologram;
 import org.bukkit.Location;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public abstract class Summoner {
 
-    protected Game game;
-    private Location location;
+    private final Location location;
 
-    private ArrayList<ItemSummon> summons;
+    private final ArrayList<ItemSummon> summons;
 
-    private Hologram title;
-    private Hologram subtitle;
+    private final Hologram title;
+    private final Hologram subtitle;
 
-    public Summoner(Game game, Location location) {
-        this.game = game;
+    public Summoner(Location location) {
         this.location = location;
 
         summons = new ArrayList<>();

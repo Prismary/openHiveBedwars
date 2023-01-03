@@ -6,15 +6,14 @@ import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 
 public class LobbyTimer extends Countdown {
-    private final Game game;
+
     private boolean useRedCount;
     private final int requiredPlayerCount;
     private String actionBarContent;
 
-    public LobbyTimer(Game game) {
-        super(game.plugin, 61, 0, 1);
+    public LobbyTimer() {
+        super(61, 0, 1);
 
-        this.game = game;
         useRedCount = false;
         requiredPlayerCount = 3; // expected to be 12
         actionBarContent = "";
@@ -42,7 +41,7 @@ public class LobbyTimer extends Countdown {
 
         if (getCount() == 5) {
             useRedCount = true;
-            game.confirmation();
+            Game.confirmation();
         }
 
         updateActionBarText();
@@ -54,6 +53,6 @@ public class LobbyTimer extends Countdown {
 
     @Override
     public void onCompletion() {
-        game.warmup();
+        Game.warmup();
     }
 }

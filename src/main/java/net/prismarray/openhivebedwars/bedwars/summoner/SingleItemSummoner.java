@@ -1,17 +1,15 @@
 package net.prismarray.openhivebedwars.bedwars.summoner;
 
-import net.prismarray.openhivebedwars.bedwars.Game;
-import net.prismarray.openhivebedwars.util.Format;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 
 public abstract class SingleItemSummoner extends Summoner {
 
-    ChatColor barColor;
-    int barPointer;
+    private final ChatColor barColor;
+    private int barPointer;
 
-    public SingleItemSummoner(Game game, Location location, ChatColor barColor) {
-        super(game, location);
+    public SingleItemSummoner(Location location, ChatColor barColor) {
+        super(location);
 
         this.barColor = barColor;
         barPointer = 0;

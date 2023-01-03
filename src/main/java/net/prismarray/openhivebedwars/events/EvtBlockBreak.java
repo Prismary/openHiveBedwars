@@ -1,22 +1,19 @@
 package net.prismarray.openhivebedwars.events;
 
 import net.prismarray.openhivebedwars.OpenHiveBedwars;
+import net.prismarray.openhivebedwars.bedwars.Game;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockBreakEvent;
 
 public class EvtBlockBreak extends EventBase {
 
-    public EvtBlockBreak(OpenHiveBedwars plugin) {
-        super(plugin);
-    }
-
     @EventHandler
     public void blockBreak(BlockBreakEvent event) {
-        switch (plugin.game.getStatus()) {
+        switch (Game.getStatus()) {
             case WARMUP:
             case INGAME:
                 if (event.getBlock().hasMetadata("placedBy") ||
-                        plugin.config.getBreakables().contains(event.getBlock().getType())) {
+                        OpenHiveBedwars.getBWConfig().getBreakables().contains(event.getBlock().getType())) {
                     break;
                 } // else fall through to default
             default:

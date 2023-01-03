@@ -7,7 +7,7 @@ import org.bukkit.entity.EntityType;
 
 public class Hologram {
 
-    private ArmorStand entity;
+    private final ArmorStand entity;
 
     public Hologram(Location location) {
         entity = (ArmorStand) location.getWorld().spawnEntity(location, EntityType.ARMOR_STAND);

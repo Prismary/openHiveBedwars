@@ -1,5 +1,6 @@
 package net.prismarray.openhivebedwars.bedwars;
 
+import net.prismarray.openhivebedwars.OpenHiveBedwars;
 import net.prismarray.openhivebedwars.util.Broadcast;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -15,11 +16,9 @@ import java.util.Map;
 
 public class CombatHandler {
 
-    private final Game game;
     private final Map<Player, ArrayList<Player>> attackers;
 
-    public CombatHandler(Game game) {
-        this.game = game;
+    public CombatHandler() {
         attackers = new HashMap<>();
     }
 
@@ -32,7 +31,7 @@ public class CombatHandler {
         Player damager = (Player) ((EntityDamageByEntityEvent) event).getDamager();
         Player damaged = (Player) event.getEntity();
 
-        if (game.getTeamHandler().areTeammates(damager, damaged) || !game.getTeamHandler().isInTeam(damager)) { // Cancel if players are teammates or player is spectator
+        if (Game.getTeamHandler().areTeammates(damager, damaged) || !Game.getTeamHandler().isInTeam(damager)) { // Cancel if players are teammates or player is spectator
             event.setCancelled(true);
             return;
         }
@@ -44,49 +43,49 @@ public class CombatHandler {
 
         // Schedule entry removal
         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(
-                game.plugin, () -> attackers.get(damaged).remove(damager), 200
+                OpenHiveBedwars.getInstance(), () -> attackers.get(damaged).remove(damager), 200
         );
     }
 
     public void playerDeath(EntityDamageEvent event) {
         Player player = (Player) event.getEntity();
 
-        if (game.getTeamHandler().getPlayerTeam(player).hasBed()) { // In case of intact bed
+        if (Game.getTeamHandler().getPlayerTeam(player).hasBed()) { // In case of intact bed
             if (lastAttackerPresent(player)) {
                 Broadcast.kill(
                         attackers.get(player).get(0),
-                        game.getTeamHandler().getPlayerTeam(attackers.get(player).get(0)).getColor(),
+                        Game.getTeamHandler().getPlayerTeam(attackers.get(player).get(0)).getColor(),
                         player,
-                        game.getTeamHandler().getPlayerTeam(player).getColor()
+                        Game.getTeamHandler().getPlayerTeam(player).getColor()
                 );
                 sendEnemyHealth(player, attackers.get(player).get(0));
             } else {
                 Broadcast.death(
                         player,
-                        game.getTeamHandler().getPlayerTeam(player).getColor()
+                        Game.getTeamHandler().getPlayerTeam(player).getColor()
                 );
             }
             dropInventory(player, false);
-            game.respawnPlayer(player);
+            Game.respawnPlayer(player);
 
         } else { // In case of broken bed
             if (lastAttackerPresent(player)) {
                 Broadcast.finalKill(
                         attackers.get(player).get(0),
-                        game.getTeamHandler().getPlayerTeam(attackers.get(player).get(0)).getColor(),
+                        Game.getTeamHandler().getPlayerTeam(attackers.get(player).get(0)).getColor(),
                         player,
-                        game.getTeamHandler().getPlayerTeam(player).getColor()
+                        Game.getTeamHandler().getPlayerTeam(player).getColor()
                 );
                 sendEnemyHealth(player, attackers.get(player).get(0));
             } else {
                 Broadcast.death(
                         player,
-                        game.getTeamHandler().getPlayerTeam(player).getColor()
+                        Game.getTeamHandler().getPlayerTeam(player).getColor()
                 );
             }
             dropInventory(player, true);
-            game.getTeamHandler().finalKill(player);
-            game.setSpectatorPlayer(player);
+            Game.getTeamHandler().finalKill(player);
+            Game.setSpectatorPlayer(player);
         }
     }
 

@@ -1,6 +1,6 @@
 package net.prismarray.openhivebedwars.events;
 
-import net.prismarray.openhivebedwars.OpenHiveBedwars;
+import net.prismarray.openhivebedwars.bedwars.Game;
 import net.prismarray.openhivebedwars.util.Status;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -9,16 +9,12 @@ import org.bukkit.event.entity.EntityDamageEvent;
 
 public class EvtPlayerDamage extends EventBase {
 
-    public EvtPlayerDamage(OpenHiveBedwars plugin) {
-        super(plugin);
-    }
-
     @EventHandler
     public void entityDamage(EntityDamageEvent event) {
-        switch (plugin.game.getStatus()) {
+        switch (Game.getStatus()) {
             case INGAME:
                 if (event.getEntity() instanceof Player) {
-                    plugin.game.getCombatHandler().playerDamage(event);
+                    Game.getCombatHandler().playerDamage(event);
                 }
                 checkForDeath(event);
                 break;
@@ -36,14 +32,14 @@ public class EvtPlayerDamage extends EventBase {
     public void checkForDeath(EntityDamageEvent event) {
         Entity entity = event.getEntity();
 
-        if (entity instanceof Player && plugin.game.getStatus() == Status.INGAME) {
+        if (entity instanceof Player && Game.getStatus() == Status.INGAME) {
             Player player = (Player) entity;
 
             if (!((player).getHealth() - event.getFinalDamage() > 0)) {
                 event.setCancelled(true); // Prevent player death
                 player.setHealth(20);
 
-                plugin.game.getCombatHandler().playerDeath(event);
+                Game.getCombatHandler().playerDeath(event);
             }
         }
     }
@@ -55,16 +51,16 @@ public class EvtPlayerDamage extends EventBase {
             Entity entity = event.getEntity();
 
             if (entity instanceof Player) {
-                switch (plugin.game.getStatus()) {
+                switch (Game.getStatus()) {
                     case LOBBY:
                     case CONFIRMATION:
-                        plugin.game.setLobbyPlayer((Player) entity);
+                        Game.setLobbyPlayer((Player) entity);
                         break;
                     case WARMUP:
-                        plugin.game.spawnPlayer((Player) entity);
+                        Game.spawnPlayer((Player) entity);
                         break;
                     case RESULTS:
-                        plugin.game.setResultsPlayer((Player) entity);
+                        Game.setResultsPlayer((Player) entity);
                         break;
                 }
             }

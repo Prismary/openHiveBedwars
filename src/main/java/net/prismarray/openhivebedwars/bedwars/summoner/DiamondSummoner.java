@@ -1,15 +1,14 @@
 package net.prismarray.openhivebedwars.bedwars.summoner;
 
 import net.minecraft.server.v1_8_R3.EnumParticle;
-import net.prismarray.openhivebedwars.bedwars.Game;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 
 public class DiamondSummoner extends SingleItemSummoner {
 
-    public DiamondSummoner(Game game, Location location) {
-        super(game, location, ChatColor.AQUA);
+    public DiamondSummoner(Location location) {
+        super(location, ChatColor.AQUA);
     }
 
     @Override

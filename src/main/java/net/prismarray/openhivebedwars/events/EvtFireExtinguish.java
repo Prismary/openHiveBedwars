@@ -1,6 +1,6 @@
 package net.prismarray.openhivebedwars.events;
 
-import net.prismarray.openhivebedwars.OpenHiveBedwars;
+import net.prismarray.openhivebedwars.bedwars.Game;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.Action;
@@ -10,14 +10,10 @@ import java.util.Set;
 
 public class EvtFireExtinguish extends EventBase {
 
-    public EvtFireExtinguish(OpenHiveBedwars plugin) {
-        super(plugin);
-    }
-
     // NOT YET WORKING :(
     @EventHandler
     public void fireExtinguish(PlayerInteractEvent event) {
-        switch (plugin.game.getStatus()) {
+        switch (Game.getStatus()) {
             case WARMUP:
             case INGAME:
                 break;

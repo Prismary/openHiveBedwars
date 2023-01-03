@@ -1,27 +1,23 @@
 package net.prismarray.openhivebedwars.commands.team;
 
-import net.prismarray.openhivebedwars.OpenHiveBedwars;
+import net.prismarray.openhivebedwars.bedwars.Game;
 import net.prismarray.openhivebedwars.bedwars.TeamHandler;
-import net.prismarray.openhivebedwars.commands.PluginBoundCommandExecutor;
 import net.prismarray.openhivebedwars.util.Broadcast;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.List;
 import java.util.Objects;
 
-public class SubCommandAccept extends PluginBoundCommandExecutor {
-
-    public SubCommandAccept(OpenHiveBedwars plugin) {
-        super(plugin);
-    }
+public class SubCommandAccept implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
-        TeamHandler teamHandler = plugin.game.getTeamHandler();
+        TeamHandler teamHandler = Game.getTeamHandler();
         Player invitee = (Player) sender; // guaranteed to be legal due to PlayerOnlyChecker
         Player inviter;
 
