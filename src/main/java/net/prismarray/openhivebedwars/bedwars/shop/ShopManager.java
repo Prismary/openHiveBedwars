@@ -38,7 +38,7 @@ public class ShopManager {
 
     public Shop getShop(Entity entity) {
         for (Shop shop : shops) {
-            if (shops.contains(shop.getEntity())) {
+            if (shop.getEntity() == entity) {
                 return shop;
             }
         }

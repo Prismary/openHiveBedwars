@@ -1,4 +1,4 @@
-package net.prismarray.openhivebedwars.bedwars.shop.gui;
+package net.prismarray.openhivebedwars.gui;
 
 import net.prismarray.openhivebedwars.OpenHiveBedwars;
 import net.prismarray.openhivebedwars.gui.*;
