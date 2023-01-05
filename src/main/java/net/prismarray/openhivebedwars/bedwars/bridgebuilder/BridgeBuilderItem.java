@@ -39,7 +39,7 @@ public class BridgeBuilderItem extends InventoryGUICustomHead {
                 return "http://textures.minecraft.net/texture/4de719b72909efa097815a63380f4456af9e4afebdd894e5b58b7c9e05675577";
             case BEDROCK:
                 return "http://textures.minecraft.net/texture/bf7a422db35d28cfb67e6c1615cdac4d73007247187740ba8653899a44b7b520";
-            default: // also Material.COMMAND; TODO: replace broken link or investigate
+            default: // also Material.COMMAND
                 return "http://textures.minecraft.net/texture/5f4c21d17ad636387ea3c736bff6ade897317e1374cd5d9b1c15e6e8953432";
         }
     }
