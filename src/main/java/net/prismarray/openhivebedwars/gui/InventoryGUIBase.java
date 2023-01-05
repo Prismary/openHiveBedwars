@@ -155,7 +155,7 @@ public class InventoryGUIBase implements Inventory {
 
         return Arrays.stream(listener.getClass().getDeclaredMethods())
                 .filter(m -> Arrays.stream(m.getAnnotations()).anyMatch(a -> a instanceof InventoryGUIActionHandler))
-                .filter(m -> m.getParameterTypes().length == 1 && Objects.equals(m.getParameterTypes()[0], action.getClass()))
+                .filter(m -> m.getParameterTypes().length == 1 && m.getParameterTypes()[0].isAssignableFrom(action.getClass()))
                 .collect(Collectors.toList());
     }
 
