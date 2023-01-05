@@ -103,7 +103,8 @@ public class InventoryGUIItem extends ItemStack {
                     ItemFlag.HIDE_DESTROYS,
                     ItemFlag.HIDE_PLACED_ON,
                     ItemFlag.HIDE_POTION_EFFECTS,
-                    ItemFlag.HIDE_UNBREAKABLE
+                    ItemFlag.HIDE_UNBREAKABLE,
+                    ItemFlag.HIDE_ATTRIBUTES
             );
         }
 

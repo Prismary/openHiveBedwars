@@ -4,9 +4,13 @@ import net.prismarray.openhivebedwars.gui.InventoryGUIBase;
 import net.prismarray.openhivebedwars.util.GUIBuilder;
 import org.bukkit.DyeColor;
 
-public class FramedFullRows extends InventoryGUIBase {
+import javax.annotation.Nullable;
+import java.util.Objects;
+import java.util.concurrent.Callable;
 
-    public FramedFullRows(String name, int rows, DyeColor color, boolean hasCancel, boolean hasPrevious) {
+public abstract class FramedFullRowsGUI extends InventoryGUIBase {
+
+    public FramedFullRowsGUI(String name, int rows, DyeColor color, boolean hasCancel, @Nullable Callable<? extends InventoryGUIBase> previousGUIFactory) {
         super(name, correctRowCount(rows) * 9);
         rows = correctRowCount(rows);
 
@@ -16,8 +20,8 @@ public class FramedFullRows extends InventoryGUIBase {
             GUIBuilder.setCancelButton(this, 9, rows);
         }
 
-        if (hasPrevious) {
-            // todo
+        if (Objects.nonNull(previousGUIFactory)) {
+            GUIBuilder.setPreviousButton(this, 9, rows, previousGUIFactory);
         }
     }
 

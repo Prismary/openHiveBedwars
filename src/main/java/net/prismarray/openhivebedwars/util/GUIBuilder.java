@@ -1,6 +1,7 @@
 package net.prismarray.openhivebedwars.util;
 
 import net.prismarray.openhivebedwars.OpenHiveBedwars;
+import net.prismarray.openhivebedwars.bedwars.shop.items.general.PreviousButton;
 import net.prismarray.openhivebedwars.gui.InventoryGUIActionHandler;
 import net.prismarray.openhivebedwars.gui.InventoryGUIActionListener;
 import net.prismarray.openhivebedwars.gui.InventoryGUIBase;
@@ -10,6 +11,9 @@ import net.prismarray.openhivebedwars.bedwars.shop.items.general.CancelButton;
 import net.prismarray.openhivebedwars.bedwars.shop.items.general.ColoredGlassFrame;
 import org.bukkit.Bukkit;
 import org.bukkit.DyeColor;
+
+import java.lang.reflect.InvocationTargetException;
+import java.util.concurrent.Callable;
 
 public class GUIBuilder {
 
@@ -21,6 +25,22 @@ public class GUIBuilder {
             @InventoryGUIActionHandler
             public void onClick(InventoryGUILeftClickAction a) {
                 Bukkit.getScheduler().runTask(OpenHiveBedwars.getInstance(), () -> a.getPlayer().closeInventory());
+            }
+        });
+    }
+
+    public static void setPreviousButton(InventoryGUIBase gui, int width, int height, Callable<? extends InventoryGUIBase> destinationGUIFactory) {
+        int slot = ((height - 1) * width + width / 2) - 1;
+        gui.setItem(slot, new PreviousButton());
+
+        gui.addSlotClickActionHandler(slot, new InventoryGUIActionListener() {
+            @InventoryGUIActionHandler
+            public void onClick(InventoryGUILeftClickAction a) {
+                try {
+                    destinationGUIFactory.call().open(a.getPlayer());
+                } catch (Exception e) {
+                    throw new RuntimeException();
+                }
             }
         });
     }
@@ -41,6 +61,4 @@ public class GUIBuilder {
 
         // this could probably be done much smarter
     }
-
-    // todo switch to inheritance system
 }

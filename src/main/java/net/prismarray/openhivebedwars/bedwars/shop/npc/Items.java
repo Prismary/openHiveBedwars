@@ -1,6 +1,6 @@
 package net.prismarray.openhivebedwars.bedwars.shop.npc;
 
-import net.prismarray.openhivebedwars.bedwars.shop.gui.npc_items.ItemsGUI;
+import net.prismarray.openhivebedwars.bedwars.shop.gui.npc_items.ItemsRootGUI;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
@@ -19,6 +19,6 @@ public class Items extends VillagerShop {
 
     @Override
     public void openShop(Player player) {
-        (new ItemsGUI()).open(player);
+        (new ItemsRootGUI()).open(player);
     }
 }
