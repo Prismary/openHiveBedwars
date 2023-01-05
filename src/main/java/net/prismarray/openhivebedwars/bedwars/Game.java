@@ -271,12 +271,12 @@ public class Game {
 
     public static void hidePlayer(Player player) {
         instance.hiddenPlayers.add(player);
-        Bukkit.getOnlinePlayers().forEach(Game::hidePlayer);
+        Bukkit.getOnlinePlayers().forEach(p -> p.hidePlayer(player));
     }
 
     public static void showPlayer(Player player) {
         instance.hiddenPlayers.remove(player);
-        Bukkit.getOnlinePlayers().forEach(Game::showPlayer);
+        Bukkit.getOnlinePlayers().forEach(p -> p.showPlayer(player));
     }
 
     public static void hideHiddenPlayers(Player player) {
