@@ -33,3 +33,8 @@ breakables:
   - WEB
   - YELLOW_FLOWER
   - RED_ROSE
+
+# Bridge builder settings
+bridge_builder:
+  use_optimized_placement: true
+  no_collisions_with_player_placed_blocks: true
