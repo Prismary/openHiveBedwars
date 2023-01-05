@@ -1,4 +1,4 @@
-package net.prismarray.openhivebedwars.bedwars.gui;
+package net.prismarray.openhivebedwars.bedwars.shop.gui;
 
 import net.prismarray.openhivebedwars.OpenHiveBedwars;
 import net.prismarray.openhivebedwars.gui.*;
@@ -10,9 +10,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
-public class ItemsGUI extends InventoryGUIBase {
+public class TestGUI extends InventoryGUIBase {
 
-    public ItemsGUI() {
+    public TestGUI() {
         super("Test Shop", 5);
 
         setItem(0, new InventoryGUIItem(Material.DIAMOND, 1, "§bShop Diaz!!1!elf"));

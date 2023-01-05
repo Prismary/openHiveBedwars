@@ -1,6 +1,6 @@
 package net.prismarray.openhivebedwars.bedwars.shop.npc;
 
-import net.prismarray.openhivebedwars.bedwars.gui.ItemsGUI;
+import net.prismarray.openhivebedwars.bedwars.shop.gui.npc_items.ItemsGUI;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
