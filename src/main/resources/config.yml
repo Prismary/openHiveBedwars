@@ -36,5 +36,16 @@ breakables:
 
 # Bridge builder settings
 bridge_builder:
+  # bridge builder's movement speed in blocks per second (does not necessarily equal the speed of block placement)
+  movement_speed: 5.0
   use_optimized_placement: true
   no_collisions_with_player_placed_blocks: true
+  replaceable_blocks:
+    - DEAD_BUSH
+    - DOUBLE_PLANT
+    - LONG_GRASS
+    - SAPLING
+    - VINE
+    - WEB
+    - YELLOW_FLOWER
+    - RED_ROSE

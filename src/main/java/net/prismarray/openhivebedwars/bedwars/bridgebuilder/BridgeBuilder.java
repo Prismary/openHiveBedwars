@@ -23,12 +23,7 @@ public class BridgeBuilder {
     /**
      * Speed of this BridgeBuilder in blocks per second
      */
-    private static final double SPEED = 5.0; // TODO: move to config variable
-    private static final List<Material> replaceableMaterials = Arrays.asList(
-            Material.DEAD_BUSH,
-            Material.LONG_GRASS
-    ); // TODO: move to config variable or somehow unify with breakable materials?
-
+    private final double speed;
     private final Material blockType;
     private final Location spawnLocation;
     private final Vector direction;
@@ -41,7 +36,12 @@ public class BridgeBuilder {
 
 
     public BridgeBuilder(Material blockType, int remainingBlocks, Location spawnLocation, Player owner) {
+        this(blockType, remainingBlocks, spawnLocation, owner, OpenHiveBedwars.getBWConfig().getBridgeBuilderMovementSpeed());
+    }
 
+    public BridgeBuilder(Material blockType, int remainingBlocks, Location spawnLocation, Player owner, double speed) {
+
+        this.speed = speed;
         this.blockType = blockType;
         this.spawnLocation = spawnLocation.clone();
         this.spawnLocation.setPitch(0);
@@ -66,7 +66,7 @@ public class BridgeBuilder {
         ((CraftWorld) spawnLocation.getWorld()).getHandle().addEntity(entity);
         BridgeBuilderManager.registerBridgeBuilder(this);
 
-        entity.getBukkitEntity().setVelocity(direction.clone().multiply(SPEED / 20));
+        entity.getBukkitEntity().setVelocity(direction.clone().multiply(speed / 20));
     }
 
 
@@ -114,7 +114,10 @@ public class BridgeBuilder {
             block = location.getBlock();
         }
 
-        if (!Objects.equals(block.getType(), Material.AIR) && !replaceableMaterials.contains(block.getType())) {
+        if (
+                !Objects.equals(block.getType(), Material.AIR)
+                        && !OpenHiveBedwars.getBWConfig().getBridgeBuilderReplaceableBlocks().contains(block.getType())
+        ) {
 
             if (
                     Objects.nonNull(lastPlacedLocation)
