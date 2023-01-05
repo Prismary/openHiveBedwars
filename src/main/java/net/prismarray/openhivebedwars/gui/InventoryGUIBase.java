@@ -155,12 +155,13 @@ public class InventoryGUIBase implements Inventory {
 
         return Arrays.stream(listener.getClass().getDeclaredMethods())
                 .filter(m -> Arrays.stream(m.getAnnotations()).anyMatch(a -> a instanceof InventoryGUIActionHandler))
-                .filter(m -> m.getParameterTypes().length == 1 && Objects.equals(m.getParameterTypes()[0], action.getClass()))
+                .filter(m -> m.getParameterTypes().length == 1 && m.getParameterTypes()[0].isAssignableFrom(action.getClass()))
                 .collect(Collectors.toList());
     }
 
     public static Object invokeMethod(Method method, Object obj, Object... args) {
         try {
+            method.setAccessible(true);
             return method.invoke(obj, args);
         } catch (IllegalAccessException | InvocationTargetException e) {
             throw new RuntimeException(e);
