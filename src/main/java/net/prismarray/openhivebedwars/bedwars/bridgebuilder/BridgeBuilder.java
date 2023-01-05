@@ -71,6 +71,9 @@ public class BridgeBuilder {
 
 
     public void destroy() {
+
+        //TODO: add particle effect (and possibly sound effect) on destruction
+
         ((CraftWorld) spawnLocation.getWorld()).getHandle().removeEntity(entity);
         entity = null;
 
@@ -129,6 +132,8 @@ public class BridgeBuilder {
         block.setType(blockType);
         block.setMetadata("placedBy", new FixedMetadataValue(OpenHiveBedwars.getInstance(), owner.getUniqueId()));
         remainingBlocks--;
+
+        // TODO: add particle effect (and possibly sound effect) on placement
 
         if (Objects.equals(block.getLocation(), lastPlacedLocation)) {
             return;
