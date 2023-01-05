@@ -20,6 +20,11 @@ public class Config extends ConfigFile {
 
     private Set<Material> breakables;
 
+    private boolean bridgeBuilderUseOptimizedPlacement;
+    private boolean bridgeBuilderNoCollisionsWithPlayerPlacedBlocks;
+    private double bridgeBuilderMovementSpeed;
+    private Set<Material> bridgeBuilderReplaceableBlocks;
+
 
     public Config(Logger logger, File configFile) {
         super(logger, configFile);
@@ -49,6 +54,22 @@ public class Config extends ConfigFile {
         return this.breakables;
     }
 
+    public boolean bridgeBuilderUseOptimizedPlacement() {
+        return bridgeBuilderUseOptimizedPlacement;
+    }
+
+    public boolean bridgeBuilderNoCollisionsWithPlayerPlacedBlocks() {
+        return bridgeBuilderNoCollisionsWithPlayerPlacedBlocks;
+    }
+
+    public double getBridgeBuilderMovementSpeed() {
+        return bridgeBuilderMovementSpeed;
+    }
+
+    public Set<Material> getBridgeBuilderReplaceableBlocks() {
+        return bridgeBuilderReplaceableBlocks;
+    }
+
     @Override
     protected void parseAndValidateConfig(YamlDocument yamlContent) throws ConfigValidationException {
 
@@ -60,5 +81,10 @@ public class Config extends ConfigFile {
         this.mergeTeams = yamlContent.getBoolean("merge_teams");
 
         this.breakables = parseMaterialSet(yamlContent.getStringList("breakables"));
+
+        this.bridgeBuilderUseOptimizedPlacement = yamlContent.getBoolean("bridge_builder.use_optimized_placement");
+        this.bridgeBuilderNoCollisionsWithPlayerPlacedBlocks = yamlContent.getBoolean("bridge_builder.no_collisions_with_player_placed_blocks");
+        this.bridgeBuilderMovementSpeed = yamlContent.getDouble("bridge_builder.movement_speed");
+        this.bridgeBuilderReplaceableBlocks = parseMaterialSet(yamlContent.getStringList("bridge_builder.replaceable_blocks"));
     }
 }

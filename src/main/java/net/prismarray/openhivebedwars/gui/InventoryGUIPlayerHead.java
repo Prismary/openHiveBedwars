@@ -4,7 +4,13 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.meta.SkullMeta;
 
+import java.util.Objects;
+
 public class InventoryGUIPlayerHead extends InventoryGUIItem {
+
+    public InventoryGUIPlayerHead() {
+        this(null);
+    }
 
     public InventoryGUIPlayerHead(String playerName) {
         this(playerName, 1);
@@ -36,6 +42,10 @@ public class InventoryGUIPlayerHead extends InventoryGUIItem {
     ) {
 
         super(Material.SKULL_ITEM, (short) 3, amount, name, lore, enchanted, flags);
+
+        if (Objects.isNull(playerName)) {
+            return;
+        }
 
         SkullMeta meta = (SkullMeta) getItemMeta();
         meta.setOwner(playerName);
