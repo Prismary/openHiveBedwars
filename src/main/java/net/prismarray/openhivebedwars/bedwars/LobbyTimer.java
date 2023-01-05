@@ -12,10 +12,10 @@ public class LobbyTimer extends Countdown {
     private String actionBarContent;
 
     public LobbyTimer() {
-        super(61, 0, 1);
+        super(4, 0, 1); // TODO: change start back to 61
 
         useRedCount = false;
-        requiredPlayerCount = 3; // expected to be 12
+        requiredPlayerCount = 1; // TODO: expected to be 12
         actionBarContent = "";
     }
 
