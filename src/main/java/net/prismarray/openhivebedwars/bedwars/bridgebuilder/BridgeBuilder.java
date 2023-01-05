@@ -101,30 +101,10 @@ public class BridgeBuilder {
             return;
         }
 
-        Location location = getLocation().clone();
-        location.setY(location.getY() + 1);
-        location.subtract(direction.clone().multiply(0.5));
+        Block block = getBlock();
 
-        Block block;
-        if (OpenHiveBedwars.getBWConfig().bridgeBuilderUseOptimizedPlacement()) {
-            block = projectToOptimizedPath(location).getBlock();
-        } else {
-            block = location.getBlock();
-        }
-
-        if (
-                !Objects.equals(block.getType(), Material.AIR)
-                        && !OpenHiveBedwars.getBWConfig().getBridgeBuilderReplaceableBlocks().contains(block.getType())
-        ) {
-
-            if (
-                    Objects.nonNull(lastPlacedLocation)
-                    && (
-                        (OpenHiveBedwars.getBWConfig().bridgeBuilderNoCollisionsWithPlayerPlacedBlocks()
-                                && !block.hasMetadata("placedBy"))
-                        || !OpenHiveBedwars.getBWConfig().bridgeBuilderNoCollisionsWithPlayerPlacedBlocks()
-                    )
-            ) {
+        if (!isReplaceable(block)) {
+            if (collidesWithExistingBlock(block)) {
                 destroy();
             }
             return;
@@ -133,17 +113,26 @@ public class BridgeBuilder {
         block.setType(blockType);
         block.setMetadata("placedBy", new FixedMetadataValue(OpenHiveBedwars.getInstance(), owner.getUniqueId()));
         remainingBlocks--;
+        lastPlacedLocation = block.getLocation();
 
         // TODO: add particle effect (and possibly sound effect) on placement
-
-        if (Objects.equals(block.getLocation(), lastPlacedLocation)) {
-            return;
-        }
-        lastPlacedLocation = block.getLocation();
     }
 
     public Location getLocation() {
         return Objects.isNull(entity) ? null : entity.getBukkitEntity().getLocation();
+    }
+
+    public Block getBlock() {
+
+        Location location = getLocation();
+        location.setY(location.getY() + 1);
+        location.subtract(direction.clone().multiply(0.5));
+
+        if (OpenHiveBedwars.getBWConfig().bridgeBuilderUseOptimizedPlacement()) {
+            return projectToOptimizedPath(location).getBlock();
+        } else {
+            return location.getBlock();
+        }
     }
 
     public Material getBlockType() {
@@ -160,16 +149,20 @@ public class BridgeBuilder {
 
     private Location projectToOptimizedPath(Location location) {
 
-        if (
-                Objects.nonNull(lastPlacedLocation)
-                && ((strictDirection.getZ() == 0 && location.getBlockX() == lastPlacedLocation.getBlockX())
-                    || (strictDirection.getX() == 0 && location.getBlockZ() == lastPlacedLocation.getBlockZ())
-                    || (
-                            Math.abs(strictDirection.getX()) == Math.abs(strictDirection.getZ())
-                                    && (!Objects.equals(location, lastPlacedLocation.clone().add(strictDirection)))
-                    )
-                )
-        ) {
+        if (Objects.isNull(lastPlacedLocation)) {
+            return location.clone();
+        }
+
+        if (strictDirection.getZ() == 0 && location.getBlockX() == lastPlacedLocation.getBlockX()) {
+            return lastPlacedLocation.clone();
+        }
+
+        if (strictDirection.getX() == 0 && location.getBlockZ() == lastPlacedLocation.getBlockZ()) {
+            return lastPlacedLocation.clone();
+        }
+
+        if (Math.abs(strictDirection.getX()) == Math.abs(strictDirection.getZ())
+                && !Objects.equals(location, lastPlacedLocation.clone().add(strictDirection))) {
             return lastPlacedLocation.clone();
         }
 
@@ -195,5 +188,27 @@ public class BridgeBuilder {
 
         // return the normalized input vector, if the x and z component are equal in their absolute value
         return temp;
+    }
+
+    private boolean isReplaceable(Block block) {
+        return Objects.equals(block.getType(), Material.AIR)
+                || OpenHiveBedwars.getBWConfig().getBridgeBuilderReplaceableBlocks().contains(block.getType());
+    }
+
+    private boolean collidesWithExistingBlock(Block block) {
+
+        if (isReplaceable(block)) {
+            return false;
+        }
+
+        if (!Objects.nonNull(lastPlacedLocation)) {
+            return false;
+        }
+
+        if (OpenHiveBedwars.getBWConfig().bridgeBuilderNoCollisionsWithPlayerPlacedBlocks() && !block.hasMetadata("placedBy")) {
+            return true;
+        }
+
+        return !OpenHiveBedwars.getBWConfig().bridgeBuilderNoCollisionsWithPlayerPlacedBlocks();
     }
 }
