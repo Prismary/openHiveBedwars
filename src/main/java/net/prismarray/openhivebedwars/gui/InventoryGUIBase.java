@@ -161,6 +161,7 @@ public class InventoryGUIBase implements Inventory {
 
     public static Object invokeMethod(Method method, Object obj, Object... args) {
         try {
+            method.setAccessible(true);
             return method.invoke(obj, args);
         } catch (IllegalAccessException | InvocationTargetException e) {
             throw new RuntimeException(e);
