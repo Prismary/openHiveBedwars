@@ -6,13 +6,11 @@ import org.bukkit.entity.Player;
 
 public class RespawnTimer extends Countdown {
 
-    private final Game game;
     private final Player player;
 
-    public RespawnTimer(Game game, Player player) {
-        super(game.plugin, 6, 0, 1);
+    public RespawnTimer(Player player) {
+        super(6, 0, 1);
 
-        this.game = game;
         this.player = player;
     }
 
@@ -24,6 +22,6 @@ public class RespawnTimer extends Countdown {
     @Override
     public void onCompletion() {
         player.sendMessage("§1Respawned!");
-        game.spawnPlayer(player);
+        Game.spawnPlayer(player);
     }
 }

@@ -1,22 +1,22 @@
 package net.prismarray.openhivebedwars.bedwars;
 
 import net.prismarray.openhivebedwars.config.MapConfig;
+import net.prismarray.openhivebedwars.config.MapManager;
 import net.prismarray.openhivebedwars.util.Broadcast;
 import org.bukkit.entity.Player;
 
 import java.util.*;
 
 public class MapVoting {
-    private final Game game;
 
     private final Map<String, MapConfig> mapConfigs;
     private final ArrayList<String> pool;
     private final Map<String, Integer> voteCounts; // Tracks the vote count for each map
     private final Map<UUID, String> playerVotes; // Tracks what player voted for which map
 
-    public MapVoting(Game game) {
-        this.game = game;
-        this.mapConfigs = game.plugin.mapManager.getMapConfigs();
+    public MapVoting() {
+
+        this.mapConfigs = MapManager.getMapConfigs();
         this.pool = new ArrayList<>();
         this.voteCounts = new HashMap<>();
         this.playerVotes = new HashMap<>();
@@ -67,8 +67,8 @@ public class MapVoting {
             winnerID = pickRandom();
         }
 
-        Broadcast.broadcast("§3Voting has ended! §bThe map §f" + game.plugin.mapManager.getMapConfig(winnerID).getMapDisplayName() + " §bhas won!");
-        return game.plugin.mapManager.getMapConfig(winnerID);
+        Broadcast.broadcast("§3Voting has ended! §bThe map §f" + MapManager.getMapConfig(winnerID).getMapDisplayName() + " §bhas won!");
+        return MapManager.getMapConfig(winnerID);
     }
 
 

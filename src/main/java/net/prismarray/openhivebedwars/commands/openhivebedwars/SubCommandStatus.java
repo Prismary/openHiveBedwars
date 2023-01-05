@@ -1,22 +1,18 @@
 package net.prismarray.openhivebedwars.commands.openhivebedwars;
 
-import net.prismarray.openhivebedwars.OpenHiveBedwars;
-import net.prismarray.openhivebedwars.commands.PluginBoundCommandExecutor;
+import net.prismarray.openhivebedwars.bedwars.Game;
 import net.prismarray.openhivebedwars.util.Status;
 import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
-public class SubCommandStatus extends PluginBoundCommandExecutor {
-
-    public SubCommandStatus(OpenHiveBedwars plugin) {
-        super(plugin);
-    }
+public class SubCommandStatus implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
         if (args.length == 0) {
-            sender.sendMessage("§aCurrent status: §2" + plugin.game.getStatus());
+            sender.sendMessage("§aCurrent status: §2" + Game.getStatus());
             return true;
         }
 
@@ -31,7 +27,7 @@ public class SubCommandStatus extends PluginBoundCommandExecutor {
             return true;
         }
 
-        plugin.game.setStatus(status);
+        Game.setStatus(status);
         sender.sendMessage("§aStatus set to §4" + status + "§a.");
 
         return true;

@@ -1,9 +1,11 @@
 package net.prismarray.openhivebedwars.bedwars;
 
 import com.google.common.collect.ImmutableList;
+import net.prismarray.openhivebedwars.OpenHiveBedwars;
 import net.prismarray.openhivebedwars.util.Broadcast;
 import net.prismarray.openhivebedwars.util.Mode;
 import net.prismarray.openhivebedwars.util.TeamColor;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -14,17 +16,15 @@ import java.util.stream.Collectors;
 
 public class TeamHandler {
 
-    private final Game game;
     private final ArrayList<Team> teams;
     private final Map<Player, ArrayList<Player>> invites;
     private final int maxTeamCount;
 
-    public TeamHandler(Game game) {
-        this.game = game;
+    public TeamHandler() {
         teams = new ArrayList<>();
         invites = new HashMap<>();
 
-        switch(game.mode) {
+        switch(Game.getMode()) {
             case SOLO:
                 maxTeamCount = 12;
                 break;
@@ -62,10 +62,10 @@ public class TeamHandler {
     }
 
     public ArrayList<Player> getTeamlessPlayers() {
-        ImmutableList<Player> currentPlayers =  ImmutableList.copyOf(game.plugin.getServer().getOnlinePlayers());
+        ImmutableList<Player> currentPlayers =  ImmutableList.copyOf(Bukkit.getServer().getOnlinePlayers());
         ArrayList<Player> teamlessPlayers = new ArrayList<>();
 
-        for (int i = 0; i < game.plugin.getServer().getOnlinePlayers().size(); i++) {
+        for (int i = 0; i < Bukkit.getServer().getOnlinePlayers().size(); i++) {
             if (!isInTeam(currentPlayers.get(i))) {
                 teamlessPlayers.add(currentPlayers.get(i));
             }
@@ -79,7 +79,7 @@ public class TeamHandler {
             return false;
         }
 
-        switch(game.mode) {
+        switch(Game.getMode()) {
             case SOLO:
                 teams.add(new Team(1));
                 break;
@@ -114,7 +114,7 @@ public class TeamHandler {
     }
 
     public boolean invitePlayer(Player inviter, Player invitee) {
-        if (inviter == null || invitee == null || game.mode == Mode.SOLO) {
+        if (inviter == null || invitee == null || Game.getMode() == Mode.SOLO) {
             return false;
         }
 
@@ -178,7 +178,7 @@ public class TeamHandler {
         }
 
         // Merge remaining two-player teams in teams mode
-        if (game.plugin.config.mergeTeams() && game.mode == Mode.TEAMS) {
+        if (OpenHiveBedwars.getBWConfig().mergeTeams() && Game.getMode() == Mode.TEAMS) {
             List<Team> mergeTeams = getTwoPlayerTeams();
             while (mergeTeams.size() > 1) {
                 addToPlayer(mergeTeams.get(mergeTeams.size()-1).getPlayer(0), mergeTeams.get(0).getPlayer(0));
@@ -193,7 +193,7 @@ public class TeamHandler {
     }
 
     public void colorize() {
-        switch (game.mode) {
+        switch (Game.getMode()) {
             case SOLO:
                 for (int i = 0; i < teams.size(); i++) {
                     teams.get(i).setColor(TeamColor.getSoloModeColours()[i]);
@@ -218,7 +218,7 @@ public class TeamHandler {
             return;
         }
 
-        switch (game.status) {
+        switch (Game.getStatus()) {
             case LOBBY:
                 Broadcast.teamLeave(team, player);
                 removePlayer(player);
@@ -242,7 +242,7 @@ public class TeamHandler {
 
     public void killTeam(Team team) {
         Broadcast.teamElimination(team.getColor());
-        game.clearBed(team.getColor());
+        Game.clearBed(team.getColor());
         teams.remove(team);
         tryGameEnd();
     }
@@ -264,7 +264,7 @@ public class TeamHandler {
 
     public void tryGameEnd() {
         if (teams.size() == 1) {
-            game.concluded(teams.get(0).getColor());
+            Game.concluded(teams.get(0).getColor());
         }
     }
 

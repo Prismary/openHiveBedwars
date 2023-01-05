@@ -1,26 +1,22 @@
 package net.prismarray.openhivebedwars.commands.team;
 
-import net.prismarray.openhivebedwars.OpenHiveBedwars;
+import net.prismarray.openhivebedwars.bedwars.Game;
 import net.prismarray.openhivebedwars.bedwars.Team;
 import net.prismarray.openhivebedwars.bedwars.TeamHandler;
-import net.prismarray.openhivebedwars.commands.PluginBoundCommandExecutor;
 import net.prismarray.openhivebedwars.util.Broadcast;
 import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.Objects;
 
-public class SubCommandLeave extends PluginBoundCommandExecutor {
-
-    public SubCommandLeave(OpenHiveBedwars plugin) {
-        super(plugin);
-    }
+public class SubCommandLeave implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
-        TeamHandler teamHandler = plugin.game.getTeamHandler();
+        TeamHandler teamHandler = Game.getTeamHandler();
 
         Player player = (Player) sender; // guaranteed to be legal due to PlayerOnlyChecker
         Team playerTeam = teamHandler.getPlayerTeam(player);
@@ -37,7 +33,7 @@ public class SubCommandLeave extends PluginBoundCommandExecutor {
 
         player.sendMessage("§cYou have left your team.");
         Broadcast.teamLeave(playerTeam, player);
-        plugin.game.getTeamHandler().tryDissolution(playerTeam);
+        Game.getTeamHandler().tryDissolution(playerTeam);
 
         return true;
     }

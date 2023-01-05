@@ -1,23 +1,21 @@
 package net.prismarray.openhivebedwars.bedwars;
 
+import net.prismarray.openhivebedwars.OpenHiveBedwars;
 import org.bukkit.Bukkit;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitScheduler;
 
 public class Countdown {
     protected final BukkitScheduler scheduler;
-    protected final Plugin plugin;
 
-    private final int start;
+    private int start;
     private final int stop;
     private final int delay;
     private int count;
     private boolean stopped;
     private boolean killTask;
 
-    public Countdown(Plugin plugin, int start, int stop, int delay) {
+    public Countdown(int start, int stop, int delay) {
         scheduler = Bukkit.getServer().getScheduler();
-        this.plugin = plugin;
         this.start = start;
         this.stop = stop;
         this.delay = delay;
@@ -61,6 +59,11 @@ public class Countdown {
         count = value;
     }
 
+    public void changeStart(int diff) {
+        start = start + diff;
+        count = count + diff;
+    }
+
     private void decrement() {
         if (count - 1 <= stop) {
             count = stop;
@@ -74,7 +77,7 @@ public class Countdown {
 
     private void countDown() {
 
-        scheduler.scheduleSyncDelayedTask(plugin, () -> {
+        scheduler.scheduleSyncDelayedTask(OpenHiveBedwars.getInstance(), () -> {
 
             if (killTask) { // return early if task should end
                 killTask = false;

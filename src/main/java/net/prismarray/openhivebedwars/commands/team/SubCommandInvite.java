@@ -1,26 +1,22 @@
 package net.prismarray.openhivebedwars.commands.team;
 
-import net.prismarray.openhivebedwars.OpenHiveBedwars;
+import net.prismarray.openhivebedwars.bedwars.Game;
 import net.prismarray.openhivebedwars.bedwars.Team;
 import net.prismarray.openhivebedwars.bedwars.TeamHandler;
-import net.prismarray.openhivebedwars.commands.PluginBoundCommandExecutor;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.Objects;
 
-public class SubCommandInvite extends PluginBoundCommandExecutor {
-
-    public SubCommandInvite(OpenHiveBedwars plugin) {
-        super(plugin);
-    }
+public class SubCommandInvite implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
-        TeamHandler teamHandler = plugin.game.getTeamHandler();
+        TeamHandler teamHandler = Game.getTeamHandler();
 
         String inviteeName = args[0]; // guaranteed to be legal due to AdvancedCommandExecutor argument limits
         Player inviter = (Player) sender; // guaranteed to be legal due to PlayerOnlyChecker
@@ -41,7 +37,7 @@ public class SubCommandInvite extends PluginBoundCommandExecutor {
 
         if (teamHandler.isInvitedBy(invitee, inviter)) {
             // refer execution to accept sub command in case of mutual invite
-            return (new SubCommandAccept(plugin)).onCommand(sender, command, label, new String[]{inviteeName});
+            return (new SubCommandAccept()).onCommand(sender, command, label, new String[]{inviteeName});
         }
 
         if (!teamHandler.invitePlayer(inviter, invitee)) {

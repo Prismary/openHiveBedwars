@@ -1,8 +1,8 @@
 package net.prismarray.openhivebedwars.config;
 
+import net.prismarray.openhivebedwars.OpenHiveBedwars;
 import net.prismarray.openhivebedwars.util.Mode;
 import org.apache.commons.io.FilenameUtils;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.*;
 import java.util.*;
@@ -10,34 +10,38 @@ import java.util.stream.Collectors;
 
 public class MapManager {
 
-    private final JavaPlugin plugin;
+    private static final MapManager instance = new MapManager();
+
     private final Map<String, MapConfig> mapConfigs;
 
-    public MapManager(JavaPlugin plugin) {
-
+    private MapManager() {
         this.mapConfigs = new HashMap<>();
-        this.plugin = plugin;
     }
 
-    public void loadMaps(Mode gameMode) {
+    public static MapManager getInstance() {
+        return instance;
+    }
 
-        this.mapConfigs.clear();
 
-        File mapsDirectory = new File(this.plugin.getDataFolder(), "maps");
+    public static void loadMaps(Mode gameMode) {
+
+        instance.mapConfigs.clear();
+
+        File mapsDirectory = new File(OpenHiveBedwars.getInstance().getDataFolder(), "maps");
 
         createMapsDirIfNonexistent(mapsDirectory);
 
         File[] mapConfigFiles = getYMLFilesInDirectory(mapsDirectory);
 
         if (Objects.isNull(mapConfigFiles) || mapConfigFiles.length < 1) {
-            this.plugin.getLogger().warning(
+            OpenHiveBedwars.getInstance().getLogger().warning(
                     "Could not find any map configuration files in '" + mapsDirectory.getPath() + "'."
             );
             return;
         }
 
         String configFiles = Arrays.stream(mapConfigFiles).map(File::getName).collect(Collectors.joining(", "));
-        this.plugin.getLogger().info(
+        OpenHiveBedwars.getInstance().getLogger().info(
                 "Found the following map config files in directory '" + mapsDirectory.getPath() + "': " +
                         configFiles
         );
@@ -46,25 +50,25 @@ public class MapManager {
 
             String mapID = FilenameUtils.removeExtension(configFile.getName());
 
-            this.plugin.getLogger().info(
+            OpenHiveBedwars.getInstance().getLogger().info(
                     "Attempting to load map '" + mapID + "' from file '" + configFile.getName() + "'..."
             );
 
             try {
-                MapConfig mapConfig = new MapConfig(this.plugin.getLogger(), configFile);
+                MapConfig mapConfig = new MapConfig(OpenHiveBedwars.getInstance().getLogger(), configFile);
                 mapConfig.loadConfig();
 
                 if (gameMode == null || Objects.equals(mapConfig.getMode(), gameMode)) {
 
-                    mapConfigs.put(mapID, mapConfig);
+                    instance.mapConfigs.put(mapID, mapConfig);
 
-                    this.plugin.getLogger().info(
+                    OpenHiveBedwars.getInstance().getLogger().info(
                             "Successfully loaded map '" + mapID + "' from file '" + configFile.getName() + "'."
                     );
 
                 } else {
 
-                    this.plugin.getLogger().info(
+                    OpenHiveBedwars.getInstance().getLogger().info(
                             "Skipping map '" + mapID + "' from file '" + configFile.getName() + "' due to Mode " +
                                     "missmatch: Map has Mode '" + mapConfig.getMode() + "', " +
                                     "expected Mode: '" + gameMode + "'"
@@ -72,24 +76,24 @@ public class MapManager {
                 }
 
             } catch (ConfigValidationException | IOException e) {
-                this.plugin.getLogger().warning(
+                OpenHiveBedwars.getInstance().getLogger().warning(
                         "Could not parse config file '" + configFile.getName() + "'. Skipping map..."
                 );
-                this.plugin.getLogger().warning("Error message: " + e.getMessage());
+                OpenHiveBedwars.getInstance().getLogger().warning("Error message: " + e.getMessage());
             }
         }
     }
 
-    public MapConfig getMapConfig(String mapID) {
-        return mapConfigs.get(mapID);
+    public static MapConfig getMapConfig(String mapID) {
+        return instance.mapConfigs.get(mapID);
     }
 
-    public Map<String, MapConfig> getMapConfigs() {
-        return mapConfigs;
+    public static Map<String, MapConfig> getMapConfigs() {
+        return instance.mapConfigs;
     }
 
-    public void clear() {
-        mapConfigs.clear();
+    public static void clear() {
+        instance.mapConfigs.clear();
     }
 
     private static File[] getYMLFilesInDirectory(File directory) {
@@ -103,32 +107,32 @@ public class MapManager {
         );
     }
 
-    private void createMapsDirIfNonexistent(File mapsDirectory) {
+    private static void createMapsDirIfNonexistent(File mapsDirectory) {
 
         if (!mapsDirectory.exists()) {
 
-            this.plugin.getLogger().info(
+            OpenHiveBedwars.getInstance().getLogger().info(
                     "Maps directory '" + mapsDirectory.getPath() + "' does not exist. " +
                             "Creating a new one with an example config..."
             );
 
             try {
                 if (!mapsDirectory.mkdirs()) {
-                    this.plugin.getLogger().warning("Directory creation failed.");
+                    OpenHiveBedwars.getInstance().getLogger().warning("Directory creation failed.");
                 }
             } catch (SecurityException e) {
-                this.plugin.getLogger().warning("Directory creation failed due to missing permissions:");
-                this.plugin.getLogger().warning(e.getMessage());
+                OpenHiveBedwars.getInstance().getLogger().warning("Directory creation failed due to missing permissions:");
+                OpenHiveBedwars.getInstance().getLogger().warning(e.getMessage());
             }
 
             try {
                 File sampleConfigFile = new File(mapsDirectory, "sample_map.yml");
 
                 if (!sampleConfigFile.createNewFile()) {
-                    this.plugin.getLogger().warning("Creation of sample config file failed.");
+                    OpenHiveBedwars.getInstance().getLogger().warning("Creation of sample config file failed.");
                 }
 
-                Scanner scanner = new Scanner(this.plugin.getResource("sample_map.yml"));
+                Scanner scanner = new Scanner(OpenHiveBedwars.getInstance().getResource("sample_map.yml"));
                 StringBuilder strb = new StringBuilder();
 
                 while (scanner.hasNext()) {
@@ -141,7 +145,7 @@ public class MapManager {
                 writer.close();
 
             } catch (IOException e) {
-                this.plugin.getLogger().warning(
+                OpenHiveBedwars.getInstance().getLogger().warning(
                         "Could not create sample config due to IOException: " + e.getMessage()
                 );
             }

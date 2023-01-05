@@ -1,20 +1,18 @@
 package net.prismarray.openhivebedwars.commands.openhivebedwars;
 
 import net.prismarray.openhivebedwars.OpenHiveBedwars;
-import net.prismarray.openhivebedwars.commands.PluginBoundCommandExecutor;
 import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.plugin.PluginDescriptionFile;
 
-public class SubCommandVersion extends PluginBoundCommandExecutor {
-
-    public SubCommandVersion(OpenHiveBedwars plugin) {
-        super(plugin);
-    }
+public class SubCommandVersion implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
-        sender.sendMessage(plugin.getDescription().getName() + " " + plugin.getDescription().getVersion());
+        PluginDescriptionFile description = OpenHiveBedwars.getInstance().getDescription();
+        sender.sendMessage(description.getName() + " " + description.getVersion());
         return true;
     }
 }
