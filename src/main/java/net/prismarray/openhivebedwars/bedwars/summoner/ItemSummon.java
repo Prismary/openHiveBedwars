@@ -1,28 +1,27 @@
 package net.prismarray.openhivebedwars.bedwars.summoner;
 
 import net.minecraft.server.v1_8_R3.EnumParticle;
-import net.prismarray.openhivebedwars.bedwars.Countdown;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
-public class ItemSummon extends Countdown {
+public class ItemSummon {
 
     private final Summoner summoner;
-    private boolean active;
-
     private final Material item;
     private final EnumParticle particleEffect;
 
+    private boolean active;
+    private int delay;
 
-    public ItemSummon(Summoner summoner, Material item, EnumParticle particleEffect, int maxCount, int delay) {
-        super(maxCount, 0, delay);
 
+    public ItemSummon(Summoner summoner, Material item, EnumParticle particleEffect, int delay) {
         this.summoner = summoner;
         this.item = item;
         this.particleEffect = particleEffect;
 
+        this.delay = delay;
         active = false;
     }
 
@@ -34,14 +33,25 @@ public class ItemSummon extends Countdown {
         active = false;
     }
 
-    public void summon() {
-        reset();
-        start();
+    public boolean isActive() {
+        return active;
+    }
 
-        if (!active) {
+    public void tick(int gameTime) {
+        if (!active) { // return early if summoner is inactive
             return;
         }
 
+        if (gameTime % delay == 0) {
+            summon();
+        }
+    }
+
+    public void changeDelay(int diff) {
+        delay += diff;
+    }
+
+    public void summon() {
         Location loc = new Location(
                 summoner.getLocation().getWorld(),
                 summoner.getLocation().getX(),
@@ -52,16 +62,5 @@ public class ItemSummon extends Countdown {
         // Drop item stack
         loc.getWorld().dropItem(loc, new ItemStack(item)).setVelocity(new Vector(0, 0, 0));
         // todo particle effect
-    }
-
-    @Override
-    public void onDecrement() {
-        summoner.tickProgressBar();
-    }
-
-    @Override
-    public void onCompletion() {
-        summon();
-        summoner.tickProgressBar();
     }
 }

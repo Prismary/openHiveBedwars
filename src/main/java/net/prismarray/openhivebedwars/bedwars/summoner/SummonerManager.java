@@ -23,6 +23,18 @@ public class SummonerManager {
         return instance;
     }
 
+    public static void tickSummoners(int gameTime) { // Called by game timer
+        instance.teamSummoners.forEach(teamSummoner -> teamSummoner.tickSummons(gameTime));
+        instance.diamondSummoners.forEach(diamondSummoner -> {
+            diamondSummoner.tickSummons(gameTime);
+            diamondSummoner.tickProgressBar();
+        });
+        instance.emeraldSummoners.forEach(emeraldSummoner -> {
+            emeraldSummoner.tickSummons(gameTime);
+            emeraldSummoner.tickProgressBar();
+        });
+    }
+
     public static void spawnAllSummoners() {
         // Spawn team summoners
         Game.getTeamHandler().getTeams().forEach(team -> spawnTeamSummoners(team.getColor()));
