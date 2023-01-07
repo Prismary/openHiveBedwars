@@ -1,5 +1,6 @@
 package net.prismarray.openhivebedwars.bedwars.shop.npc;
 
+import net.prismarray.openhivebedwars.bedwars.Game;
 import net.prismarray.openhivebedwars.bedwars.shop.gui.npc_items.ItemsRootGUI;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -19,6 +20,6 @@ public class Items extends VillagerShop {
 
     @Override
     public void openShop(Player player) {
-        (new ItemsRootGUI()).open(player);
+        (new ItemsRootGUI(Game.getTeamHandler().getPlayerTeam(player).getColor())).open(player);
     }
 }

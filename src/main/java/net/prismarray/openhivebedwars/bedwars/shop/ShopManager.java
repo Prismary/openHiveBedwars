@@ -2,10 +2,15 @@ package net.prismarray.openhivebedwars.bedwars.shop;
 
 import net.prismarray.openhivebedwars.bedwars.Game;
 import net.prismarray.openhivebedwars.bedwars.shop.npc.*;
+import net.prismarray.openhivebedwars.util.Broadcast;
+import net.prismarray.openhivebedwars.util.Currency;
 import net.prismarray.openhivebedwars.util.TeamColor;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class ShopManager {
 
@@ -42,6 +47,42 @@ public class ShopManager {
         }
 
         return null;
+    }
+
+    public static void purchase(Player player, String name, ItemStack item, Currency currency, int cost) {
+        int playerCurrency = countCurrency(player, currency);
+
+        if (playerCurrency < cost) {
+            Broadcast.toPlayer(player, String.format(
+                    "§cYou need %s%x %s §c(§7%x §cmore) for §7%s§c!",
+                    currency.color,
+                    cost,
+                    ((cost == 1) ? currency.chatName : Currency.getNamePlural(currency)),
+                    cost - playerCurrency,
+                    name
+            ));
+            return;
+        }
+
+        // Perform inventory edits
+        player.getInventory().removeItem(new ItemStack(currency.material, cost));
+        player.getInventory().addItem(item);
+
+        Broadcast.toPlayer(player, String.format(
+                "§aPurchased §f%s §afor %s%x %s.",
+                name,
+                currency.color,
+                cost,
+                ((cost == 1) ? currency.chatName : Currency.getNamePlural(currency))
+        ));
+    }
+
+    public static int countCurrency(Player player, Currency currency) {
+        AtomicInteger amount = new AtomicInteger();
+        player.getInventory().all(currency.material).forEach((integer, itemStack) -> {
+            amount.addAndGet(itemStack.getAmount());
+        });
+        return amount.get();
     }
 
     private void spawnItemNPCs(TeamColor teamColor) {
