@@ -3,8 +3,6 @@ package net.prismarray.openhivebedwars.bedwars.shop.items;
 import net.prismarray.openhivebedwars.gui.InventoryGUIItem;
 import org.bukkit.Material;
 
-import java.util.ArrayList;
-
 public abstract class CategorySelector extends InventoryGUIItem {
 
     public CategorySelector(Material material, short damage, String name, String[] lore) {
@@ -22,7 +20,7 @@ public abstract class CategorySelector extends InventoryGUIItem {
 
         fullLore[0] = "";
         fullLore[lore.length + 1] = "";
-        fullLore[lore.length + 2] = "§b> Click to view " + name; // todo use correct unicode arrow
+        fullLore[lore.length + 2] = "§b► Click to view " + name;
 
         System.arraycopy(lore, 0, fullLore, 1, lore.length);
 

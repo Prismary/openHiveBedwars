@@ -1,7 +1,6 @@
 package net.prismarray.openhivebedwars.bedwars.shop.items.general;
 
 import net.prismarray.openhivebedwars.gui.InventoryGUICustomHead;
-import net.prismarray.openhivebedwars.util.GUIBuilder;
 
 public class PreviousButton extends InventoryGUICustomHead {
 

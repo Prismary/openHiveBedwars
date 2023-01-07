@@ -3,9 +3,9 @@ package net.prismarray.openhivebedwars.bedwars.shop.items.npc_items.root;
 import net.prismarray.openhivebedwars.bedwars.shop.items.CategorySelector;
 import org.bukkit.Material;
 
-public class WeaponsTools extends CategorySelector {
+public class WeaponsAndTools extends CategorySelector {
 
-    public WeaponsTools() {
+    public WeaponsAndTools() {
         super(
                 Material.IRON_SWORD,
                 (short) 0,

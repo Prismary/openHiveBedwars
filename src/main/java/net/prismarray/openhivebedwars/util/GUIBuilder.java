@@ -6,13 +6,12 @@ import net.prismarray.openhivebedwars.gui.InventoryGUIActionHandler;
 import net.prismarray.openhivebedwars.gui.InventoryGUIActionListener;
 import net.prismarray.openhivebedwars.gui.InventoryGUIBase;
 import net.prismarray.openhivebedwars.gui.InventoryGUIItem;
-import net.prismarray.openhivebedwars.gui.actions.InventoryGUILeftClickAction;
+import net.prismarray.openhivebedwars.gui.actions.InventoryGUIClickAction;
 import net.prismarray.openhivebedwars.bedwars.shop.items.general.CancelButton;
 import net.prismarray.openhivebedwars.bedwars.shop.items.general.ColoredGlassFrame;
 import org.bukkit.Bukkit;
 import org.bukkit.DyeColor;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.concurrent.Callable;
 
 public class GUIBuilder {
@@ -23,7 +22,7 @@ public class GUIBuilder {
 
         gui.addSlotClickActionHandler(slot, new InventoryGUIActionListener() {
             @InventoryGUIActionHandler
-            public void onClick(InventoryGUILeftClickAction a) {
+            public void onClick(InventoryGUIClickAction a) {
                 Bukkit.getScheduler().runTask(OpenHiveBedwars.getInstance(), () -> a.getPlayer().closeInventory());
             }
         });
@@ -35,12 +34,15 @@ public class GUIBuilder {
 
         gui.addSlotClickActionHandler(slot, new InventoryGUIActionListener() {
             @InventoryGUIActionHandler
-            public void onClick(InventoryGUILeftClickAction a) {
-                try {
-                    destinationGUIFactory.call().open(a.getPlayer());
-                } catch (Exception e) {
-                    throw new RuntimeException();
-                }
+            public void onClick(InventoryGUIClickAction a) {
+                Bukkit.getScheduler().runTask(OpenHiveBedwars.getInstance(), () -> {
+                    try {
+                        destinationGUIFactory.call().open(a.getPlayer());
+                    } catch (Exception e) {
+                        throw new RuntimeException();
+                    }
+                });
+
             }
         });
     }

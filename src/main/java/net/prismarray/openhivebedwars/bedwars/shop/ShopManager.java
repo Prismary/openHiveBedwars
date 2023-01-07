@@ -2,10 +2,8 @@ package net.prismarray.openhivebedwars.bedwars.shop;
 
 import net.prismarray.openhivebedwars.bedwars.Game;
 import net.prismarray.openhivebedwars.bedwars.shop.npc.*;
-import net.prismarray.openhivebedwars.bedwars.summoner.TeamSummoner;
 import net.prismarray.openhivebedwars.util.TeamColor;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.Villager;
 
 import java.util.ArrayList;
 
