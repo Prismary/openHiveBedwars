@@ -17,24 +17,74 @@ public class InventoryGUICustomHead extends InventoryGUIItem {
         this(null);
     }
 
+    public InventoryGUICustomHead( InventoryGUIBase actionHandlingInventoryGUI, int slotInInventoryGUI) {
+        this(actionHandlingInventoryGUI, slotInInventoryGUI, null);
+    }
+
     public InventoryGUICustomHead(String url) {
         this(url, 1);
+    }
+
+    public InventoryGUICustomHead(InventoryGUIBase actionHandlingInventoryGUI, int slotInInventoryGUI, String url) {
+        this(actionHandlingInventoryGUI, slotInInventoryGUI, url, 1);
     }
 
     public InventoryGUICustomHead(String url, int amount) {
         this(url, amount, null);
     }
 
+    public InventoryGUICustomHead(
+            InventoryGUIBase actionHandlingInventoryGUI,
+            int slotInInventoryGUI,
+            String url,
+            int amount
+    ) {
+        this(actionHandlingInventoryGUI, slotInInventoryGUI, url, amount, null);
+    }
+
     public InventoryGUICustomHead(String url, int amount, String name) {
         this(url, amount, name, null);
+    }
+
+    public InventoryGUICustomHead(
+            InventoryGUIBase actionHandlingInventoryGUI,
+            int slotInInventoryGUI,
+            String url,
+            int amount,
+            String name
+    ) {
+        this(actionHandlingInventoryGUI, slotInInventoryGUI, url, amount, name, null);
     }
 
     public InventoryGUICustomHead(String url, int amount, String name, String[] lore) {
         this(url, amount, name, lore, false);
     }
 
+    public InventoryGUICustomHead(
+            InventoryGUIBase actionHandlingInventoryGUI,
+            int slotInInventoryGUI,
+            String url,
+            int amount,
+            String name,
+            String[] lore
+    ) {
+        this(actionHandlingInventoryGUI, slotInInventoryGUI, url, amount, name, lore, false);
+    }
+
     public InventoryGUICustomHead(String url, int amount, String name, String[] lore, boolean enchanted) {
         this(url, amount, name, lore, enchanted, null);
+    }
+
+    public InventoryGUICustomHead(
+            InventoryGUIBase actionHandlingInventoryGUI,
+            int slotInInventoryGUI,
+            String url,
+            int amount,
+            String name,
+            String[] lore,
+            boolean enchanted
+    ) {
+        this(actionHandlingInventoryGUI, slotInInventoryGUI, url, amount, name, lore, enchanted, null);
     }
 
     public InventoryGUICustomHead(
@@ -45,8 +95,21 @@ public class InventoryGUICustomHead extends InventoryGUIItem {
             boolean enchanted,
             ItemFlag[] flags
     ) {
+        this(null, -1, url, amount, name, lore, enchanted, flags);
+    }
 
-        super(Material.SKULL_ITEM, (short) 3, amount, name, lore, enchanted, flags);
+    public InventoryGUICustomHead(
+            InventoryGUIBase actionHandlingInventoryGUI,
+            int slotInInventoryGUI,
+            String url,
+            int amount,
+            String name,
+            String[] lore,
+            boolean enchanted,
+            ItemFlag[] flags
+    ) {
+
+        super(actionHandlingInventoryGUI, slotInInventoryGUI, Material.SKULL_ITEM, (short) 3, amount, name, lore, enchanted, flags);
 
         if (Objects.isNull(url)) {
             return;

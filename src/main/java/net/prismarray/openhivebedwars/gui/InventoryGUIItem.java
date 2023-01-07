@@ -20,15 +20,15 @@ public class InventoryGUIItem extends ItemStack {
     }
 
     public InventoryGUIItem(InventoryGUIBase actionHandlingInventoryGUI, int slotInInventoryGUI) {
-        this(null, actionHandlingInventoryGUI, slotInInventoryGUI);
+        this(actionHandlingInventoryGUI, slotInInventoryGUI, null);
     }
 
     public InventoryGUIItem(Material material) {
         this(material, 1);
     }
 
-    public InventoryGUIItem(Material material, InventoryGUIBase actionHandlingInventoryGUI, int slotInInventoryGUI) {
-        this(material, 1, actionHandlingInventoryGUI, slotInInventoryGUI);
+    public InventoryGUIItem(InventoryGUIBase actionHandlingInventoryGUI, int slotInInventoryGUI, Material material) {
+        this(actionHandlingInventoryGUI, slotInInventoryGUI, material, 1);
     }
 
     public InventoryGUIItem(Material material, short damage) {
@@ -36,12 +36,12 @@ public class InventoryGUIItem extends ItemStack {
     }
 
     public InventoryGUIItem(
-            Material material,
-            short damage,
             InventoryGUIBase actionHandlingInventoryGUI,
-            int slotInInventoryGUI
+            int slotInInventoryGUI,
+            Material material,
+            short damage
     ) {
-        this(material, damage, 1, actionHandlingInventoryGUI, slotInInventoryGUI);
+        this(actionHandlingInventoryGUI, slotInInventoryGUI, material, damage, 1);
     }
 
     public InventoryGUIItem(Material material, int amount) {
@@ -49,12 +49,12 @@ public class InventoryGUIItem extends ItemStack {
     }
 
     public InventoryGUIItem(
-            Material material,
-            int amount,
             InventoryGUIBase actionHandlingInventoryGUI,
-            int slotInInventoryGUI
+            int slotInInventoryGUI,
+            Material material,
+            int amount
     ) {
-        this(material, amount, null, actionHandlingInventoryGUI, slotInInventoryGUI);
+        this(actionHandlingInventoryGUI, slotInInventoryGUI, material, amount, null);
     }
 
     public InventoryGUIItem(Material material, short damage, int amount) {
@@ -62,13 +62,13 @@ public class InventoryGUIItem extends ItemStack {
     }
 
     public InventoryGUIItem(
+            InventoryGUIBase actionHandlingInventoryGUI,
+            int slotInInventoryGUI,
             Material material,
             short damage,
-            int amount,
-            InventoryGUIBase actionHandlingInventoryGUI,
-            int slotInInventoryGUI
+            int amount
     ) {
-        this(material, damage, amount, null, actionHandlingInventoryGUI, slotInInventoryGUI);
+        this(actionHandlingInventoryGUI, slotInInventoryGUI, material, damage, amount, null);
     }
 
     public InventoryGUIItem(Material material, int amount, String name) {
@@ -76,13 +76,13 @@ public class InventoryGUIItem extends ItemStack {
     }
 
     public InventoryGUIItem(
+            InventoryGUIBase actionHandlingInventoryGUI,
+            int slotInInventoryGUI,
             Material material,
             int amount,
-            String name,
-            InventoryGUIBase actionHandlingInventoryGUI,
-            int slotInInventoryGUI
+            String name
     ) {
-        this(material, amount, name, null, actionHandlingInventoryGUI, slotInInventoryGUI);
+        this(actionHandlingInventoryGUI, slotInInventoryGUI, material, amount, name, null);
     }
 
     public InventoryGUIItem(Material material, short damage, int amount, String name) {
@@ -90,14 +90,14 @@ public class InventoryGUIItem extends ItemStack {
     }
 
     public InventoryGUIItem(
+            InventoryGUIBase actionHandlingInventoryGUI,
+            int slotInInventoryGUI,
             Material material,
             short damage,
             int amount,
-            String name,
-            InventoryGUIBase actionHandlingInventoryGUI,
-            int slotInInventoryGUI
+            String name
     ) {
-        this(material, damage, amount, name, null, actionHandlingInventoryGUI, slotInInventoryGUI);
+        this(actionHandlingInventoryGUI, slotInInventoryGUI, material, damage, amount, name, null);
     }
 
     public InventoryGUIItem(Material material, int amount, String name, String[] lore) {
@@ -105,14 +105,14 @@ public class InventoryGUIItem extends ItemStack {
     }
 
     public InventoryGUIItem(
+            InventoryGUIBase actionHandlingInventoryGUI,
+            int slotInInventoryGUI,
             Material material,
             int amount,
             String name,
-            String[] lore,
-            InventoryGUIBase actionHandlingInventoryGUI,
-            int slotInInventoryGUI
+            String[] lore
     ) {
-        this(material, amount, name, lore, false, actionHandlingInventoryGUI, slotInInventoryGUI);
+        this(actionHandlingInventoryGUI, slotInInventoryGUI, material, amount, name, lore, false);
     }
 
     public InventoryGUIItem(Material material, short damage, int amount, String name, String[] lore) {
@@ -120,15 +120,15 @@ public class InventoryGUIItem extends ItemStack {
     }
 
     public InventoryGUIItem(
+            InventoryGUIBase actionHandlingInventoryGUI,
+            int slotInInventoryGUI,
             Material material,
             short damage,
             int amount,
             String name,
-            String[] lore,
-            InventoryGUIBase actionHandlingInventoryGUI,
-            int slotInInventoryGUI
+            String[] lore
     ) {
-        this(material, damage, amount, name, lore, false, actionHandlingInventoryGUI, slotInInventoryGUI);
+        this(actionHandlingInventoryGUI, slotInInventoryGUI, material, damage, amount, name, lore, false);
     }
 
     public InventoryGUIItem(Material material, int amount, String name, String[] lore, boolean enchanted) {
@@ -136,15 +136,15 @@ public class InventoryGUIItem extends ItemStack {
     }
 
     public InventoryGUIItem(
+            InventoryGUIBase actionHandlingInventoryGUI,
+            int slotInInventoryGUI,
             Material material,
             int amount,
             String name,
             String[] lore,
-            boolean enchanted,
-            InventoryGUIBase actionHandlingInventoryGUI,
-            int slotInInventoryGUI
+            boolean enchanted
     ) {
-        this(material, amount, name, lore, enchanted, null, actionHandlingInventoryGUI, slotInInventoryGUI);
+        this(actionHandlingInventoryGUI, slotInInventoryGUI, material, amount, name, lore, enchanted, null);
     }
 
     public InventoryGUIItem(Material material, short damage, int amount, String name, String[] lore, boolean enchanted) {
@@ -152,16 +152,16 @@ public class InventoryGUIItem extends ItemStack {
     }
 
     public InventoryGUIItem(
+            InventoryGUIBase actionHandlingInventoryGUI,
+            int slotInInventoryGUI,
             Material material,
             short damage,
             int amount,
             String name,
             String[] lore,
-            boolean enchanted,
-            InventoryGUIBase actionHandlingInventoryGUI,
-            int slotInInventoryGUI
+            boolean enchanted
     ) {
-        this(material, damage, amount, name, lore, enchanted, null, actionHandlingInventoryGUI, slotInInventoryGUI);
+        this(actionHandlingInventoryGUI, slotInInventoryGUI, material, damage, amount, name, lore, enchanted, null);
     }
 
     public InventoryGUIItem(Material material, int amount, String name, String[] lore, boolean enchanted, ItemFlag[] flags) {
@@ -169,16 +169,16 @@ public class InventoryGUIItem extends ItemStack {
     }
 
     public InventoryGUIItem(
+            InventoryGUIBase actionHandlingInventoryGUI,
+            int slotInInventoryGUI,
             Material material,
             int amount,
             String name,
             String[] lore,
             boolean enchanted,
-            ItemFlag[] flags,
-            InventoryGUIBase actionHandlingInventoryGUI,
-            int slotInInventoryGUI
+            ItemFlag[] flags
     ) {
-        this(material, (short) 0, amount, name, lore, enchanted, flags, actionHandlingInventoryGUI, slotInInventoryGUI);
+        this(actionHandlingInventoryGUI, slotInInventoryGUI, material, (short) 0, amount, name, lore, enchanted, flags);
     }
 
     public InventoryGUIItem(
@@ -190,19 +190,19 @@ public class InventoryGUIItem extends ItemStack {
             boolean enchanted,
             ItemFlag[] flags
     ) {
-        this(material, damage, amount, name, lore, enchanted, flags, null, -1);
+        this( null, -1, material, damage, amount, name, lore, enchanted, flags);
     }
 
     public InventoryGUIItem(
+            InventoryGUIBase actionHandlingInventoryGUI,
+            int slotInInventoryGUI,
             Material material,
             short damage,
             int amount,
             String name,
             String[] lore,
             boolean enchanted,
-            ItemFlag[] flags,
-            InventoryGUIBase actionHandlingInventoryGUI,
-            int slotInInventoryGUI
+            ItemFlag[] flags
     ) {
 
         super(
