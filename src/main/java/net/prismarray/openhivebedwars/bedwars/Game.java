@@ -31,18 +31,10 @@ public class Game {
 
     private final ArrayList<Player> hiddenPlayers;
 
-    private final ArrayList<TeamSummoner> teamSummoners;
-    private final ArrayList<DiamondSummoner> diamondSummoners;
-    private final ArrayList<EmeraldSummoner> emeraldSummoners;
-
 
     public Game() {
         hiddenPlayers = new ArrayList<>();
-        teamSummoners = new ArrayList<>();
-        diamondSummoners = new ArrayList<>();
-        emeraldSummoners = new ArrayList<>();
     }
-
 
     public static Game getInstance() {
         return instance;
@@ -138,30 +130,7 @@ public class Game {
         clearAllBeds();
         getTeamHandler().getTeams().forEach(team -> spawnBed(team.getColor()));
 
-        // Spawn team summoners
-        getTeamHandler().getTeams().forEach(team -> spawnTeamSummoners(team.getColor()));
-
-        // Spawn single item summoners
-        spawnDiamondSummoners();
-        spawnEmeraldSummoners();
-    }
-
-    public static void spawnTeamSummoners(TeamColor teamColor) {
-        instance.mapConfig.getTeamSummonerLocations(teamColor).stream()
-                .map(location -> new TeamSummoner(location, teamColor))
-                .forEach(instance.teamSummoners::add);
-    }
-
-    public static void spawnDiamondSummoners() {
-        instance.mapConfig.getDiamondSummonerLocations().stream()
-                .map(DiamondSummoner::new)
-                .forEach(instance.diamondSummoners::add);
-    }
-
-    public static void spawnEmeraldSummoners() {
-        instance.mapConfig.getEmeraldSummonerLocations().stream()
-                .map(EmeraldSummoner::new)
-                .forEach(instance.emeraldSummoners::add);
+        SummonerManager.spawnAllSummoners();
     }
 
     public static void clearBed(TeamColor color) {
