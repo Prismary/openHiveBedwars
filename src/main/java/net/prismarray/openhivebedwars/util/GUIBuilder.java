@@ -13,6 +13,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.DyeColor;
 
 import java.util.concurrent.Callable;
+import java.util.stream.IntStream;
 
 public class GUIBuilder {
 
@@ -52,15 +53,9 @@ public class GUIBuilder {
     }
 
     public static void frame(InventoryGUIBase gui, InventoryGUIItem item, int width, int height) {
-        for (int column = 0; column < width; column++) {
-            gui.setItem(column, item);
-            gui.setItem(column + width * (height - 1), item);
-        }
-        for (int row = 0; row < height; row++) {
-            gui.setItem(row * width, item);
-            gui.setItem(row * width + width - 1, item);
-        }
 
-        // this could probably be done much smarter
+        IntStream.range(0, width * height)
+                .filter(i -> i < width || i >= (height - 1) * width || i % width == 0 || i % width == height - 1)
+                .forEach(i -> gui.setItem(i, item));
     }
 }
