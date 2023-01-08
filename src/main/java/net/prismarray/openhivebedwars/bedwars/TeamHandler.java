@@ -61,6 +61,19 @@ public class TeamHandler {
         return null;
     }
 
+    public Team getTeamByColor(TeamColor teamColor) {
+        for (Team team : getTeams()) {
+            if (team.getColor() == teamColor) {
+                return team;
+            }
+        }
+        return null;
+    }
+
+    public TeamColor getPlayerTeamColor(Player player) {
+        return getPlayerTeam(player).getColor();
+    }
+
     public ArrayList<Player> getTeamlessPlayers() {
         ImmutableList<Player> currentPlayers =  ImmutableList.copyOf(Bukkit.getServer().getOnlinePlayers());
         ArrayList<Player> teamlessPlayers = new ArrayList<>();
