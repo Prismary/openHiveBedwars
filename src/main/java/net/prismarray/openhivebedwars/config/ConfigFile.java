@@ -4,6 +4,7 @@ import dev.dejvokep.boostedyaml.YamlDocument;
 import net.prismarray.openhivebedwars.util.Mode;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.entity.EntityType;
 
 import java.io.File;
 import java.io.IOException;
@@ -198,5 +199,27 @@ public abstract class ConfigFile {
         }
 
         return new int[]{minBuildHeight, maxBuildHeight};
+    }
+
+    public static Set<EntityType> parseEntityTypeSet(List<String> input) {
+
+        if (Objects.isNull(input)) {
+            throw new ConfigValidationException("Could not parse null-list of EntityTypes.");
+        }
+
+        return input.stream().map(ConfigFile::parseEntityType).collect(Collectors.toSet());
+    }
+
+    private static EntityType parseEntityType(String input) {
+
+        EntityType entityType;
+        try {
+            entityType = EntityType.valueOf(input.toUpperCase());
+
+        } catch (IllegalArgumentException e) {
+            throw new ConfigValidationException("Could not parse entity type '" + input + "'.");
+        }
+
+        return entityType;
     }
 }
