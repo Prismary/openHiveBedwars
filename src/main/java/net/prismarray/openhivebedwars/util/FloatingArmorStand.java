@@ -9,7 +9,9 @@ public class FloatingArmorStand extends EntityArmorStand {
     public FloatingArmorStand(World world) {
         super(((CraftWorld) world).getHandle());
         this.setGravity(true);
+
         this.noclip = true;
+        this.n(true); // make the armor stand a marker
     }
 
     @Override
