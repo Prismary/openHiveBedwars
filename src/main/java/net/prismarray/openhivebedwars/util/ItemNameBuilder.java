@@ -6,7 +6,7 @@ public class ItemNameBuilder {
 
     public static String getPurchasableName(String name, int amount) {
         return String.format(
-                "§f§l%xx §b§l%s",
+                "§f§l%sx §b§l%s",
                 amount,
                 name
         );
@@ -32,7 +32,7 @@ public class ItemNameBuilder {
 
         lore[bonusLore.length] = "§6§lCost";
         lore[1 + bonusLore.length] = String.format(
-                "  %s%x %s",
+                "  %s%s %s",
                 currency.color,
                 cost,
                 ((cost > 1) ? Currency.getNamePlural(currency) : currency.chatName)

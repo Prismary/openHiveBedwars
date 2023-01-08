@@ -54,7 +54,7 @@ public class ShopManager {
 
         if (playerCurrency < cost) {
             Broadcast.toPlayer(player, String.format(
-                    "§cYou need %s%x %s §c(§7%x §cmore) for §7%s§c!",
+                    "§cYou need %s%s %s §c(§7%s §cmore) for §7%s§c!",
                     currency.color,
                     cost,
                     ((cost == 1) ? currency.chatName : Currency.getNamePlural(currency)),
@@ -69,7 +69,7 @@ public class ShopManager {
         player.getInventory().addItem(item);
 
         Broadcast.toPlayer(player, String.format(
-                "§aPurchased §f%s §afor %s%x %s.",
+                "§aPurchased §f%s §afor %s%s %s.",
                 name,
                 currency.color,
                 cost,
