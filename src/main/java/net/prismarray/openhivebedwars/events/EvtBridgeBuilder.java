@@ -13,8 +13,13 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.Objects;
 
-public class EvtBridgeBuilderSpawn extends EventBase {
+public class EvtBridgeBuilder extends EventBase {
 
+    /**
+     * Spawn a bridge builder whenever a corresponding item is placed in the world.
+     *
+     * @param e BlockPlaceEvent to be caught
+     */
     @EventHandler
     public void onBlockPlace(BlockPlaceEvent e) {
 
