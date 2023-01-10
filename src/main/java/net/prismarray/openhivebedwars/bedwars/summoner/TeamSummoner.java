@@ -23,6 +23,16 @@ public class TeamSummoner extends Summoner {
         updateSubtitle();
     }
 
+    @Override
+    public void enable() {
+        getSummons().get(0).enable();
+    }
+
+    @Override
+    public void disable() {
+        getSummons().forEach(ItemSummon::disable);
+    }
+
     public void upgrade(int index) {
         if (summonLevels[index] >= 3) {
             return;
@@ -61,8 +71,6 @@ public class TeamSummoner extends Summoner {
                 EnumParticle.SPELL_MOB_AMBIENT,
                 5
         ));
-
-        getSummons().get(0).enable(); // Enable iron summon
     }
 
     protected void updateTitle() {

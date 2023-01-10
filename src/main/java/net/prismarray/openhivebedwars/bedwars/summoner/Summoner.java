@@ -44,6 +44,14 @@ public abstract class Summoner {
         return location;
     }
 
+    public abstract void enable();
+
+    public abstract void disable();
+
+    public void tickProgressBar() {
+        // optional method to be overridden by summoners featuring a progress bar
+    }
+
     protected ArrayList<ItemSummon> getSummons() {
         return summons;
     }

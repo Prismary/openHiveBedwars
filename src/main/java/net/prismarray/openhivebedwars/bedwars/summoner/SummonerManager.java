@@ -25,13 +25,16 @@ public class SummonerManager {
 
     public static void tickSummoners(int gameTime) { // Called by game timer
         instance.teamSummoners.forEach(teamSummoner -> teamSummoner.tickSummons(gameTime));
+
+        if (gameTime == 0) { // Do not tick single summon summoners on 0 tick
+            return;
+        }
+
         instance.diamondSummoners.forEach(diamondSummoner -> {
             diamondSummoner.tickSummons(gameTime);
-            diamondSummoner.tickProgressBar();
         });
         instance.emeraldSummoners.forEach(emeraldSummoner -> {
             emeraldSummoner.tickSummons(gameTime);
-            emeraldSummoner.tickProgressBar();
         });
     }
 
@@ -60,5 +63,35 @@ public class SummonerManager {
         Game.getMapConfig().getEmeraldSummonerLocations().stream()
                 .map(EmeraldSummoner::new)
                 .forEach(instance.emeraldSummoners::add);
+    }
+
+    public static void enableTeamSummoners() {
+        instance.teamSummoners.forEach(TeamSummoner::enable);
+    }
+
+    public static void enableDiamondSummoners() {
+        instance.diamondSummoners.forEach(DiamondSummoner::enable);
+    }
+
+    public static void enableEmeraldSummoners() {
+        instance.emeraldSummoners.forEach(EmeraldSummoner::enable);
+    }
+
+    public static void disableTeamSummoners() {
+        instance.teamSummoners.forEach(TeamSummoner::disable);
+    }
+
+    public static void disableDiamondSummoners() {
+        instance.diamondSummoners.forEach(DiamondSummoner::disable);
+    }
+
+    public static void disableEmeraldSummoners() {
+        instance.emeraldSummoners.forEach(EmeraldSummoner::disable);
+    }
+
+    public static void disableAllSummoners() {
+        disableTeamSummoners();
+        disableDiamondSummoners();
+        disableEmeraldSummoners();
     }
 }

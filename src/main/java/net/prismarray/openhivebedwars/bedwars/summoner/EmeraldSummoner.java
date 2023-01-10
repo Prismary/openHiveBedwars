@@ -17,10 +17,8 @@ public class EmeraldSummoner extends SingleItemSummoner {
                 this,
                 Material.EMERALD,
                 EnumParticle.VILLAGER_HAPPY,
-                10
+                30
         ));
-
-        getSummons().get(0).enable(); // todo enable 30s in
     }
 
     @Override

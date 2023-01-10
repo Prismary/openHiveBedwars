@@ -31,6 +31,10 @@ public class Stopwatch {
         startIncrementTask();
     }
 
+    public void set(int newCount) {
+        count = newCount;
+    }
+
     public void setStart(int newStart) {
         start = newStart;
     }
@@ -53,7 +57,7 @@ public class Stopwatch {
         return count;
     }
 
-    private void onIncrement() {
+    protected void onIncrement() {
         // To be overridden
     }
 
@@ -62,6 +66,7 @@ public class Stopwatch {
             if (killTask) {
                 return;
             }
+            count++;
             onIncrement();
             startIncrementTask();
         }, 20);

@@ -22,6 +22,7 @@ public class Game {
     private Mode mode;
     private Status status;
 
+    private GameTimer gameTimer;
     private TeamHandler teamHandler;
     private CombatHandler combatHandler;
 
@@ -47,6 +48,7 @@ public class Game {
         Broadcast.prefix = OpenHiveBedwars.getBWConfig().getPrefix();
 
         instance.mode = mode;
+        instance.gameTimer = new GameTimer();
         instance.teamHandler = new TeamHandler();
         instance.combatHandler = new CombatHandler();
         instance.lobbyTimer = new LobbyTimer();
@@ -80,7 +82,9 @@ public class Game {
         instance.status = Status.WARMUP;
 
         instance.lobbyTimer = null;
-        new GameStartTimer().start();
+        new WarmupTimer().start();
+
+        instance.gameTimer.start();
 
         // Initiate game start
         spawnAllPlayers();
@@ -88,6 +92,9 @@ public class Game {
 
     public static void ingame() {
         instance.status = Status.INGAME;
+
+        SummonerManager.enableTeamSummoners();
+        SummonerManager.enableDiamondSummoners();
     }
 
     public static void concluded(TeamColor winner) {

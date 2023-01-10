@@ -6,11 +6,11 @@ import net.prismarray.openhivebedwars.util.SoundHandler;
 import net.prismarray.openhivebedwars.util.Title;
 import org.bukkit.Sound;
 
-public class GameStartTimer extends Countdown {
+public class WarmupTimer extends Countdown {
 
     String[] fightAnimation;
 
-    public GameStartTimer() {
+    public WarmupTimer() {
         super(11, 0, 1);
 
         setFightAnimation();

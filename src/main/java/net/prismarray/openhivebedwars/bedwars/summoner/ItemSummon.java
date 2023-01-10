@@ -14,6 +14,7 @@ public class ItemSummon {
 
     private boolean active;
     private int delay;
+    private int progressBarTickDelay;
 
 
     public ItemSummon(Summoner summoner, Material item, EnumParticle particleEffect, int delay) {
@@ -23,6 +24,7 @@ public class ItemSummon {
 
         this.delay = delay;
         active = false;
+        progressBarTickDelay = ((delay / 10 == 0) ? 1 : (delay / 10));
     }
 
     public void enable() {
@@ -42,6 +44,10 @@ public class ItemSummon {
             return;
         }
 
+        if (gameTime != 0 && gameTime % progressBarTickDelay == 0) {
+            summoner.tickProgressBar();
+        }
+
         if (gameTime % delay == 0) {
             summon();
         }
@@ -49,6 +55,10 @@ public class ItemSummon {
 
     public void changeDelay(int diff) {
         delay += diff;
+    }
+
+    public int getDelay() {
+        return delay;
     }
 
     public void summon() {

@@ -17,10 +17,8 @@ public class DiamondSummoner extends SingleItemSummoner {
                 this,
                 Material.DIAMOND,
                 EnumParticle.SPELL_MOB_AMBIENT,
-                10
+                30
         ));
-
-        getSummons().get(0).enable();
     }
 
     @Override
