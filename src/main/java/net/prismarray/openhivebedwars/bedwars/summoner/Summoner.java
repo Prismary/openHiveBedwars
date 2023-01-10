@@ -1,6 +1,5 @@
 package net.prismarray.openhivebedwars.bedwars.summoner;
 
-import net.prismarray.openhivebedwars.bedwars.Countdown;
 import net.prismarray.openhivebedwars.bedwars.Hologram;
 import org.bukkit.Location;
 
@@ -37,17 +36,20 @@ public abstract class Summoner {
         summonSetup();
     }
 
-    public void summonStart() {
-        summons.forEach(Countdown::start);
+    public void tickSummons(int gameTime) {
+        summons.forEach(summon -> summon.tick(gameTime));
     }
 
     public Location getLocation() {
         return location;
     }
 
+    public abstract void enable();
+
+    public abstract void disable();
+
     public void tickProgressBar() {
-        // To be overridden by single item summoners
-        // Called on countdown decrement
+        // optional method to be overridden by summoners featuring a progress bar
     }
 
     protected ArrayList<ItemSummon> getSummons() {

@@ -1,7 +1,6 @@
 package net.prismarray.openhivebedwars.bedwars;
 
 import net.prismarray.openhivebedwars.OpenHiveBedwars;
-import net.prismarray.openhivebedwars.bedwars.shop.ShopManager;
 import net.prismarray.openhivebedwars.bedwars.summoner.*;
 import net.prismarray.openhivebedwars.config.MapConfig;
 import net.prismarray.openhivebedwars.util.*;
@@ -23,6 +22,7 @@ public class Game {
     private Mode mode;
     private Status status;
 
+    private GameTimer gameTimer;
     private TeamHandler teamHandler;
     private CombatHandler combatHandler;
 
@@ -32,16 +32,8 @@ public class Game {
 
     private final ArrayList<Player> hiddenPlayers;
 
-    private final ArrayList<TeamSummoner> teamSummoners;
-    private final ArrayList<DiamondSummoner> diamondSummoners;
-    private final ArrayList<EmeraldSummoner> emeraldSummoners;
-
-
     public Game() {
         hiddenPlayers = new ArrayList<>();
-        teamSummoners = new ArrayList<>();
-        diamondSummoners = new ArrayList<>();
-        emeraldSummoners = new ArrayList<>(); // todo move to summoner manager
     }
 
 
@@ -56,6 +48,7 @@ public class Game {
         Broadcast.prefix = OpenHiveBedwars.getBWConfig().getPrefix();
 
         instance.mode = mode;
+        instance.gameTimer = new GameTimer();
         instance.teamHandler = new TeamHandler();
         instance.combatHandler = new CombatHandler();
         instance.lobbyTimer = new LobbyTimer();
@@ -89,7 +82,9 @@ public class Game {
         instance.status = Status.WARMUP;
 
         instance.lobbyTimer = null;
-        new GameStartTimer().start();
+        new WarmupTimer().start();
+
+        instance.gameTimer.start();
 
         // Initiate game start
         spawnAllPlayers();
@@ -97,6 +92,9 @@ public class Game {
 
     public static void ingame() {
         instance.status = Status.INGAME;
+
+        SummonerManager.enableTeamSummoners();
+        SummonerManager.enableDiamondSummoners();
     }
 
     public static void concluded(TeamColor winner) {
@@ -139,33 +137,7 @@ public class Game {
         clearAllBeds();
         getTeamHandler().getTeams().forEach(team -> spawnBed(team.getColor()));
 
-        // Spawn team summoners
-        getTeamHandler().getTeams().forEach(team -> spawnTeamSummoners(team.getColor()));
-
-        // Spawn single item summoners
-        spawnDiamondSummoners();
-        spawnEmeraldSummoners();
-
-        // Spawn NPCs
-        ShopManager.getInstance().spawnNPCs();
-    }
-
-    public static void spawnTeamSummoners(TeamColor teamColor) {
-        instance.mapConfig.getTeamSummonerLocations(teamColor).stream()
-                .map(location -> new TeamSummoner(location, teamColor))
-                .forEach(instance.teamSummoners::add);
-    }
-
-    public static void spawnDiamondSummoners() {
-        instance.mapConfig.getDiamondSummonerLocations().stream()
-                .map(DiamondSummoner::new)
-                .forEach(instance.diamondSummoners::add);
-    }
-
-    public static void spawnEmeraldSummoners() {
-        instance.mapConfig.getEmeraldSummonerLocations().stream()
-                .map(EmeraldSummoner::new)
-                .forEach(instance.emeraldSummoners::add);
+        SummonerManager.spawnAllSummoners();
     }
 
     public static void clearBed(TeamColor color) {

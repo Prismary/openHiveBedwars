@@ -23,6 +23,16 @@ public class TeamSummoner extends Summoner {
         updateSubtitle();
     }
 
+    @Override
+    public void enable() {
+        getSummons().get(0).enable();
+    }
+
+    @Override
+    public void disable() {
+        getSummons().forEach(ItemSummon::disable);
+    }
+
     public void upgrade(int index) {
         if (summonLevels[index] >= 3) {
             return;
@@ -31,7 +41,7 @@ public class TeamSummoner extends Summoner {
         summonLevels[index]++;
 
         if (summonLevels[index] != 1) {
-            getSummons().get(index).changeStart(-2);
+            getSummons().get(index).changeDelay(-2);
         } else {
             getSummons().get(index).enable();
         }
@@ -45,29 +55,22 @@ public class TeamSummoner extends Summoner {
                 this,
                 Material.IRON_INGOT,
                 EnumParticle.SMOKE_NORMAL,
-                5,
-                1
+                5
         ));
 
         getSummons().add(new ItemSummon( // Gold summon
                 this,
                 Material.GOLD_INGOT,
                 EnumParticle.FLAME,
-                5,
-                1
+                5
         ));
 
         getSummons().add(new ItemSummon( // Diamond summon
                 this,
                 Material.DIAMOND,
                 EnumParticle.SPELL_MOB_AMBIENT,
-                5,
-                1
+                5
         ));
-
-        summonStart(); // Start all timers
-
-        getSummons().get(0).enable(); // Enable iron summon
     }
 
     protected void updateTitle() {

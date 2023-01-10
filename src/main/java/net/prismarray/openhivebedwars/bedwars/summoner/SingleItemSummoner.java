@@ -15,7 +15,7 @@ public abstract class SingleItemSummoner extends Summoner {
         barPointer = 0;
 
         updateTitle();
-        updateSubtitle();
+        disable();
     }
 
     @Override
@@ -24,6 +24,18 @@ public abstract class SingleItemSummoner extends Summoner {
         barPointer %= 10;
 
         updateSubtitle();
+    }
+
+    @Override
+    public void enable() {
+        getSummons().get(0).enable();
+        updateSubtitle();
+    }
+
+    @Override
+    public void disable() {
+        getSummons().get(0).disable();
+        setSubtitle("§c-- INACTIVE --");
     }
 
     @Override
