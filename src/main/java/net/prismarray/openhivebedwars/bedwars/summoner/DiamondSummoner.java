@@ -17,13 +17,10 @@ public class DiamondSummoner extends SingleItemSummoner {
                 this,
                 Material.DIAMOND,
                 EnumParticle.SPELL_MOB_AMBIENT,
-                10,
-                3
+                10
         ));
 
         getSummons().get(0).enable();
-
-        getSummons().get(0).start(); // todo start on ingame status
     }
 
     @Override

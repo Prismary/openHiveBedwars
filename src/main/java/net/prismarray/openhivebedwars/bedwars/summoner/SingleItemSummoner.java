@@ -18,8 +18,11 @@ public abstract class SingleItemSummoner extends Summoner {
         updateSubtitle();
     }
 
-    @Override
     public void tickProgressBar() {
+        if (!getSummons().get(0).isActive()) {
+            return;
+        }
+
         barPointer++;
         barPointer %= 10;
 
