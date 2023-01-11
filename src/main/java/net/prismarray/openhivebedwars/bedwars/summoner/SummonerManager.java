@@ -38,6 +38,15 @@ public class SummonerManager {
         });
     }
 
+    public static TeamSummoner getTeamSummoner(TeamColor teamColor) {
+        for (TeamSummoner teamSummoner : instance.teamSummoners) {
+            if (teamSummoner.getTeamColor() == teamColor) {
+                return teamSummoner;
+            }
+        }
+        return null;
+    }
+
     public static void spawnAllSummoners() {
         // Spawn team summoners
         Game.getTeamHandler().getTeams().forEach(team -> spawnTeamSummoners(team.getColor()));

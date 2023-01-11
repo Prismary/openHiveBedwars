@@ -50,6 +50,23 @@ public class ShopManager {
     }
 
     public static void purchase(Player player, String name, ItemStack item, Currency currency, int cost) {
+        if (!takePayment(player, currency, cost, name)) { // Attempt to take payment
+            return;
+        }
+
+        // Add purchased item
+        player.getInventory().addItem(item);
+
+        Broadcast.toPlayer(player, String.format(
+                "§aPurchased §f%s §afor %s%s %s.",
+                name,
+                currency.color,
+                cost,
+                ((cost == 1) ? currency.chatName : Currency.getNamePlural(currency))
+        ));
+    }
+
+    public static boolean takePayment(Player player, Currency currency, int cost, String name) {
         int playerCurrency = countCurrency(player, currency);
 
         if (playerCurrency < cost) {
@@ -61,20 +78,11 @@ public class ShopManager {
                     cost - playerCurrency,
                     name
             ));
-            return;
+            return false;
         }
 
-        // Perform inventory edits
         player.getInventory().removeItem(new ItemStack(currency.material, cost));
-        player.getInventory().addItem(item);
-
-        Broadcast.toPlayer(player, String.format(
-                "§aPurchased §f%s §afor %s%s %s.",
-                name,
-                currency.color,
-                cost,
-                ((cost == 1) ? currency.chatName : Currency.getNamePlural(currency))
-        ));
+        return true;
     }
 
     public static int countCurrency(Player player, Currency currency) {

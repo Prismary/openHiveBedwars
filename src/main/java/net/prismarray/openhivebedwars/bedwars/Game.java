@@ -1,6 +1,7 @@
 package net.prismarray.openhivebedwars.bedwars;
 
 import net.prismarray.openhivebedwars.OpenHiveBedwars;
+import net.prismarray.openhivebedwars.bedwars.shop.ShopManager;
 import net.prismarray.openhivebedwars.bedwars.summoner.*;
 import net.prismarray.openhivebedwars.config.MapConfig;
 import net.prismarray.openhivebedwars.util.*;
@@ -133,11 +134,15 @@ public class Game {
         setWorldGamerules(arena);
         getMapConfig().updateWorld(arena);
 
-        // spawn beds
+        // Spawn beds
         clearAllBeds();
         getTeamHandler().getTeams().forEach(team -> spawnBed(team.getColor()));
 
+        // Spawn summoners
         SummonerManager.spawnAllSummoners();
+
+        // Spawn NPCs
+        ShopManager.getInstance().spawnNPCs();
     }
 
     public static void clearBed(TeamColor color) {

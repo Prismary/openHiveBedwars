@@ -23,6 +23,14 @@ public class TeamSummoner extends Summoner {
         updateSubtitle();
     }
 
+    public TeamColor getTeamColor() {
+        return teamColor;
+    }
+
+    public int[] getSummonLevels() {
+        return summonLevels;
+    }
+
     @Override
     public void enable() {
         getSummons().get(0).enable();
