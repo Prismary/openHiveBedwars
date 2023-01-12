@@ -44,7 +44,13 @@ public class SummonerUpgrade extends InventoryGUIItem {
             addActionListenerToContainingInventory(new InventoryGUIActionListener() {
                 @InventoryGUIActionHandler
                 public void onClick(InventoryGUIClickAction a) {
-                    ShopManager.takePayment(a.getPlayer(), purchaseCurrency, cost, currency.chatName + " Team Summoner"); // TODO check whether this is the correct message
+
+                    String summonerName = currency.chatName + " Team Summoner"; // TODO check whether this is the correct message
+                    boolean isPaid = ShopManager.takePayment(a.getPlayer(), purchaseCurrency, cost, summonerName);
+
+                    if (!isPaid) {
+                        return;
+                    }
 
                     SummonerManager.getTeamSummoner(teamColor).upgrade(summonerIndex);
 
