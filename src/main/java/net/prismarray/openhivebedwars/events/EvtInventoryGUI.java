@@ -66,48 +66,33 @@ public class EvtInventoryGUI extends EventBase {
             e.setResult(Event.Result.DENY);
         }
 
-        List<InventoryGUIAction> actions;
+        InventoryGUIAction action;
 
         switch (e.getClick()) {
             case LEFT:
-                actions = Arrays.asList(
-                        new InventoryGUILeftOrShiftLeftClickAction(invGUI, player, invSlot),
-                        new InventoryGUILeftClickAction(invGUI, player, invSlot)
-                );
+                action = new InventoryGUILeftClickAction(invGUI, player, invSlot);
                 break;
 
             case SHIFT_LEFT:
-                actions = Arrays.asList(
-                        new InventoryGUILeftOrShiftLeftClickAction(invGUI, player, invSlot),
-                        new InventoryGUIShiftLeftClickAction(invGUI, player, invSlot)
-                );
+                action = new InventoryGUIShiftLeftClickAction(invGUI, player, invSlot);
                 break;
 
             case RIGHT:
-                actions = Arrays.asList(
-                        new InventoryGUIRightOrShiftRightClickAction(invGUI, player, invSlot),
-                        new InventoryGUIRightClickAction(invGUI, player, invSlot)
-                );
+                action = new InventoryGUIRightClickAction(invGUI, player, invSlot);
                 break;
 
             case SHIFT_RIGHT:
-                actions = Arrays.asList(
-                        new InventoryGUIRightOrShiftRightClickAction(invGUI, player, invSlot),
-                        new InventoryGUIShiftRightClickAction(invGUI, player, invSlot)
-                );
+                action = new InventoryGUIShiftRightClickAction(invGUI, player, invSlot);
                 break;
 
             case MIDDLE:
-                actions = Collections.singletonList(
-                        new InventoryGUIMiddleClickAction(invGUI, player, invSlot)
-                );
+                action = new InventoryGUIMiddleClickAction(invGUI, player, invSlot);
                 break;
 
             default:
-                actions = new ArrayList<>();
-                break;
+                return;
         }
 
-        actions.forEach(InventoryGUIActionManager::handleInventoryGUIAction);
+        InventoryGUIActionManager.handleInventoryGUIAction(action);
     }
 }

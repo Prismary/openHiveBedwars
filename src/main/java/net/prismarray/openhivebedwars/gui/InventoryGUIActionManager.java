@@ -1,6 +1,7 @@
 package net.prismarray.openhivebedwars.gui;
 
 import net.prismarray.openhivebedwars.gui.actions.InventoryGUIAction;
+import net.prismarray.openhivebedwars.util.Broadcast;
 import org.bukkit.inventory.Inventory;
 
 import java.util.*;
