@@ -11,7 +11,7 @@ public class StoneSword extends PurchasableItem {
         super(
                 gui,
                 slot,
-                Material.IRON_SWORD,
+                Material.STONE_SWORD,
                 (short) 0,
                 1,
                 false,
