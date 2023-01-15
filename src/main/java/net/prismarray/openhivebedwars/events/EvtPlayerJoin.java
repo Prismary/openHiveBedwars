@@ -1,6 +1,7 @@
 package net.prismarray.openhivebedwars.events;
 
 import net.prismarray.openhivebedwars.bedwars.Game;
+import net.prismarray.openhivebedwars.bedwars.scoreboard.ScoreboardManager;
 import net.prismarray.openhivebedwars.util.Broadcast;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -31,5 +32,7 @@ public class EvtPlayerJoin extends EventBase {
                 Game.setResultsPlayer(player);
                 break;
         }
+
+        ScoreboardManager.setScoreboard(player, true);
     }
 }

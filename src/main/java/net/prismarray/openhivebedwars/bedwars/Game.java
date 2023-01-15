@@ -1,6 +1,7 @@
 package net.prismarray.openhivebedwars.bedwars;
 
 import net.prismarray.openhivebedwars.OpenHiveBedwars;
+import net.prismarray.openhivebedwars.bedwars.scoreboard.ScoreboardManager;
 import net.prismarray.openhivebedwars.bedwars.shop.ShopManager;
 import net.prismarray.openhivebedwars.bedwars.summoner.*;
 import net.prismarray.openhivebedwars.config.MapConfig;
@@ -46,6 +47,7 @@ public class Game {
     // GAME PHASE PROGRESSION
     public static void startup(Mode mode) {
         instance.status = Status.STARTUP;
+
         Broadcast.prefix = OpenHiveBedwars.getBWConfig().getPrefix();
 
         instance.mode = mode;
@@ -63,6 +65,8 @@ public class Game {
     public static void lobby() {
         instance.status = Status.LOBBY;
         instance.lobbyTimer.start();
+
+        ScoreboardManager.resetScoreboards();
     }
 
     public static void confirmation() {
@@ -87,6 +91,8 @@ public class Game {
 
         instance.gameTimer.start();
 
+        ScoreboardManager.resetScoreboards();
+
         // Initiate game start
         spawnAllPlayers();
     }
@@ -104,6 +110,16 @@ public class Game {
         Title.sendToAll("§c§lGame. OVER!", winner.chatColor + winner.chatName + " §7won the game");
 
         // TODO: disable and or remove all summoners
+    }
+
+    public static void results() {
+        instance.status = Status.RESULTS;
+
+        ScoreboardManager.resetScoreboards();
+    }
+
+    public static void shutdown() {
+        instance.status = Status.SHUTDOWN;
     }
 
     public static void lobbySetup() {
@@ -311,6 +327,8 @@ public class Game {
         player.getInventory().setArmorContents(null);
         player.setGameMode(GameMode.SURVIVAL);
         player.setFlying(false);
+        player.resetMaxHealth();
+        player.setFoodLevel(20);
     }
 
     public static void setWorldGamerules(World world) {
