@@ -12,8 +12,8 @@ public class LobbyScoreboard extends PlayerScoreboard {
     public void update() {
         setLine(0, " ");
         setLine(1, "§a§lTokens");
-        setLine(2, " ");
-        setLine(3, "§ramogus");
+        setLine(2, "§7?");
+        setLine(3, "  ");
         setLine(4, "§e§lYour Stats");
         setLine(5, "§3Points: §b?");
         setLine(6, "§3Games Played: §b?");
@@ -22,8 +22,8 @@ public class LobbyScoreboard extends PlayerScoreboard {
         setLine(9, "§3Kills: §b?");
         setLine(10, "§3Deaths: §b?");
         setLine(11, "§3Beds Destroyed: §b?");
-        setLine(12, " ");
-        setLine(13, "§7-------");
+        setLine(12, "   ");
+        setLine(13, "§8§l§m          ");
         setLine(14, "§6play.§eHiveMC§6.com");
     }
 }
