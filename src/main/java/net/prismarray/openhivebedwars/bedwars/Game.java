@@ -12,6 +12,7 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.block.BlockState;
 import org.bukkit.entity.Player;
 import org.bukkit.material.Bed;
+import org.bukkit.scheduler.BukkitScheduler;
 import org.bukkit.util.Vector;
 
 import java.io.File;
@@ -90,6 +91,10 @@ public class Game {
         new WarmupTimer().start();
 
         instance.gameTimer.start();
+        Bukkit.getScheduler().scheduleSyncDelayedTask(OpenHiveBedwars.getInstance(), () -> {
+            ScoreboardManager.enableIngameScoreboards();
+            ScoreboardManager.updateAll();
+        }, 10);
 
         ScoreboardManager.resetScoreboards();
 

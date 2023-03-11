@@ -10,17 +10,18 @@ import java.util.ArrayList;
 public class ScoreboardManager {
 
     private static final ScoreboardManager instance = new ScoreboardManager();
-
-    private ArrayList<PlayerScoreboard> scoreboards;
-
-    private ScoreboardManager() {
-        scoreboards = new ArrayList<>();
-    }
-
     public ScoreboardManager getInstance() {
         return instance;
     }
 
+
+    private ArrayList<PlayerScoreboard> scoreboards;
+    private boolean ingameScoreboardsActive;
+
+    private ScoreboardManager() {
+        scoreboards = new ArrayList<>();
+        ingameScoreboardsActive = false;
+    }
 
     public static void updateAll() {
         instance.scoreboards.forEach(PlayerScoreboard::update);
@@ -85,5 +86,13 @@ public class ScoreboardManager {
 
     public static void hideScoreboards() {
         instance.scoreboards.forEach(ScoreboardSign::destroy);
+    }
+
+    public static void enableIngameScoreboards() {
+        instance.ingameScoreboardsActive = true;
+    }
+
+    public static boolean ingameScoreboardsEnabled() {
+        return instance.ingameScoreboardsActive;
     }
 }
