@@ -26,6 +26,9 @@ public class ScoreboardManager {
     public static void updateAll() {
         instance.scoreboards.forEach(PlayerScoreboard::update);
     }
+    public static void updateAllTitles() {
+        instance.scoreboards.forEach(PlayerScoreboard::updateTitle);
+    }
 
     public static void setScoreboard(Player player, boolean enable) {
         PlayerScoreboard scoreboard;
@@ -90,6 +93,8 @@ public class ScoreboardManager {
 
     public static void enableIngameScoreboards() {
         instance.ingameScoreboardsActive = true;
+        updateAllTitles();
+        updateAll();
     }
 
     public static boolean ingameScoreboardsEnabled() {

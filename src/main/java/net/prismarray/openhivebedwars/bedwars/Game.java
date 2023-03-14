@@ -91,10 +91,6 @@ public class Game {
         new WarmupTimer().start();
 
         instance.gameTimer.start();
-        Bukkit.getScheduler().scheduleSyncDelayedTask(OpenHiveBedwars.getInstance(), () -> {
-            ScoreboardManager.enableIngameScoreboards();
-            ScoreboardManager.updateAll();
-        }, 10);
 
         ScoreboardManager.resetScoreboards();
 
@@ -125,6 +121,21 @@ public class Game {
 
     public static void shutdown() {
         instance.status = Status.SHUTDOWN;
+    }
+
+    public static int getGameTime() {
+        return instance.gameTimer.getCount();
+    }
+
+    public static String getFormattedGameTime() {
+        int seconds = getGameTime() % 60;
+        int minutes = getGameTime() / 60;
+
+        return String.format(
+                "%s:%s",
+                (minutes > 9 ? minutes : "0" + minutes),
+                (seconds > 9 ? seconds : "0" + seconds)
+        );
     }
 
     public static void lobbySetup() {

@@ -15,19 +15,25 @@ public class GameTimer extends Stopwatch {
     protected void onIncrement() {
         if (Game.getStatus() == Status.INGAME) { // Regular increment loop
             SummonerManager.tickSummoners(getCount());
-            ScoreboardManager.updateAll();
 
             if (getCount() == 30) {
                 SummonerManager.enableEmeraldSummoners();
                 Broadcast.broadcast("§a§lEmerald §e§lSummoners are now ACTIVE!");
             }
-
-            return;
         }
 
-        // End of warmup reset
-        if (Game.getStatus() == Status.WARMUP && getCount() == 9) {
-            set(-1);
+        // Update scoreboard timer
+        ScoreboardManager.updateAllTitles();
+
+        // Warmup checks
+        if (Game.getStatus() == Status.WARMUP) {
+            if (getCount() == 0) {
+                ScoreboardManager.enableIngameScoreboards();
+            }
+
+            if (getCount() == 9) {
+                set(-1);
+            }
         }
     }
 }

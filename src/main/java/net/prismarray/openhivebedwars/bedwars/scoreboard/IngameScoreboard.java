@@ -27,8 +27,13 @@ public class IngameScoreboard extends PlayerScoreboard {
         setLine(10, String.format("§7Deaths: §r%s", getDeaths()));
         setLine(11, String.format("§7Beds: §r%s", getBeds()));
         setLine(12, "    ");
-        setLine(13, "§8§l§m          ");
+        setLine(13, "§8§l§m----------");
         setLine(14, "§6play.§eHiveMC§6.com");
+    }
+
+    @Override
+    public void updateTitle() {
+        setObjectiveName(String.format("§6§lBed§e§lWars §8- §3%s", Game.getFormattedGameTime()));
     }
 
     public String getRemainingTeams() {
@@ -38,7 +43,7 @@ public class IngameScoreboard extends PlayerScoreboard {
 
         String output = "";
         for (Team team : Game.getTeamHandler().getTeams()) {
-            output += team.getColor().chatColor + "█";
+            output += team.getColor().chatColor + "⬛";
         }
 
         return output;

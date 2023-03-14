@@ -17,4 +17,5 @@ public abstract class PlayerScoreboard extends ScoreboardSign {
     }
 
     public abstract void update();
+    public abstract void updateTitle();
 }

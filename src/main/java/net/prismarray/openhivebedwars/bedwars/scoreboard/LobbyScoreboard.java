@@ -23,7 +23,12 @@ public class LobbyScoreboard extends PlayerScoreboard {
         setLine(10, "§3Deaths: §b?");
         setLine(11, "§3Beds Destroyed: §b?");
         setLine(12, "   ");
-        setLine(13, "§8§l§m          ");
+        setLine(13, "§8§l§m----------");
         setLine(14, "§6play.§eHiveMC§6.com");
+    }
+
+    @Override
+    public void updateTitle() {
+        setObjectiveName("§6§lHive§e§lMC");
     }
 }
