@@ -2,6 +2,7 @@ package net.prismarray.openhivebedwars.events;
 
 import net.prismarray.openhivebedwars.bedwars.Game;
 import net.prismarray.openhivebedwars.bedwars.Team;
+import net.prismarray.openhivebedwars.bedwars.scoreboard.ScoreboardManager;
 import net.prismarray.openhivebedwars.util.Broadcast;
 import net.prismarray.openhivebedwars.util.SoundHandler;
 import net.prismarray.openhivebedwars.util.Status;
@@ -39,6 +40,9 @@ public class EvtBedBreak extends EventBase {
                 team.breakBed();
                 Game.clearBed(team.getColor());
                 Broadcast.bedBreak(team.getColor());
+
+                Game.getStatsManager().bedBreak(event.getPlayer());
+                ScoreboardManager.updateAll();
             }
         }
     }

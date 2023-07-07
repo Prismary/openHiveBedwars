@@ -3,6 +3,8 @@ package net.prismarray.openhivebedwars.bedwars;
 import net.prismarray.openhivebedwars.OpenHiveBedwars;
 import net.prismarray.openhivebedwars.bedwars.scoreboard.ScoreboardManager;
 import net.prismarray.openhivebedwars.bedwars.shop.ShopManager;
+import net.prismarray.openhivebedwars.bedwars.stats.SessionStatsManager;
+import net.prismarray.openhivebedwars.bedwars.stats.StatsManager;
 import net.prismarray.openhivebedwars.bedwars.summoner.*;
 import net.prismarray.openhivebedwars.config.MapConfig;
 import net.prismarray.openhivebedwars.util.*;
@@ -28,6 +30,7 @@ public class Game {
     private GameTimer gameTimer;
     private TeamHandler teamHandler;
     private CombatHandler combatHandler;
+    private StatsManager statsManager;
 
     private LobbyTimer lobbyTimer;
     private MapVoting mapVoting;
@@ -55,6 +58,7 @@ public class Game {
         instance.gameTimer = new GameTimer();
         instance.teamHandler = new TeamHandler();
         instance.combatHandler = new CombatHandler();
+        instance.statsManager = new SessionStatsManager();
         instance.lobbyTimer = new LobbyTimer();
         instance.mapVoting = new MapVoting();
 
@@ -297,6 +301,9 @@ public class Game {
     }
     public static CombatHandler getCombatHandler() {
         return instance.combatHandler;
+    }
+    public static StatsManager getStatsManager() {
+        return instance.statsManager;
     }
     public static MapVoting getMapVoting() {
         return instance.mapVoting;

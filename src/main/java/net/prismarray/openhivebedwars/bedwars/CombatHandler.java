@@ -1,6 +1,7 @@
 package net.prismarray.openhivebedwars.bedwars;
 
 import net.prismarray.openhivebedwars.OpenHiveBedwars;
+import net.prismarray.openhivebedwars.bedwars.scoreboard.ScoreboardManager;
 import net.prismarray.openhivebedwars.util.Broadcast;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -58,13 +59,20 @@ public class CombatHandler {
                         player,
                         Game.getTeamHandler().getPlayerTeam(player).getColor()
                 );
+
                 sendEnemyHealth(player, attackers.get(player).get(0));
+
+                Game.getStatsManager().kill(attackers.get(player).get(0), player);
             } else {
                 Broadcast.death(
                         player,
                         Game.getTeamHandler().getPlayerTeam(player).getColor()
                 );
+
+                Game.getStatsManager().addDeath(player);
             }
+            ScoreboardManager.updateAll();
+
             dropInventory(player, false);
             Game.respawnPlayer(player);
 

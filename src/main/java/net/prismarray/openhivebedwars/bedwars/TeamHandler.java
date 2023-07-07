@@ -2,6 +2,8 @@ package net.prismarray.openhivebedwars.bedwars;
 
 import com.google.common.collect.ImmutableList;
 import net.prismarray.openhivebedwars.OpenHiveBedwars;
+import net.prismarray.openhivebedwars.bedwars.scoreboard.ScoreboardManager;
+import net.prismarray.openhivebedwars.bedwars.summoner.SummonerManager;
 import net.prismarray.openhivebedwars.util.Broadcast;
 import net.prismarray.openhivebedwars.util.Mode;
 import net.prismarray.openhivebedwars.util.TeamColor;
@@ -249,6 +251,7 @@ public class TeamHandler {
         Team team = getPlayerTeam(player);
         removePlayer(player);
         if (team.getPlayerCount() == 0) {
+            Game.getStatsManager().addTeamEliminated(player);
             killTeam(team);
         }
     }
@@ -256,7 +259,10 @@ public class TeamHandler {
     public void killTeam(Team team) {
         Broadcast.teamElimination(team.getColor());
         Game.clearBed(team.getColor());
+        SummonerManager.disableTeamSummoner(team);
         teams.remove(team);
+        Broadcast.broadcast(String.format("%s%s has been eliminated!", team.getColor().chatColor, team.getColor().chatName));
+        ScoreboardManager.updateAll();
         tryGameEnd();
     }
 

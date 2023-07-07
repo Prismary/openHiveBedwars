@@ -1,6 +1,7 @@
 package net.prismarray.openhivebedwars.bedwars.summoner;
 
 import net.prismarray.openhivebedwars.bedwars.Game;
+import net.prismarray.openhivebedwars.bedwars.Team;
 import net.prismarray.openhivebedwars.util.TeamColor;
 
 import java.util.ArrayList;
@@ -102,5 +103,13 @@ public class SummonerManager {
         disableTeamSummoners();
         disableDiamondSummoners();
         disableEmeraldSummoners();
+    }
+
+    public static void disableTeamSummoner(Team team) {
+        for (TeamSummoner teamSummoner : getInstance().teamSummoners) {
+            if (teamSummoner.getTeamColor() == team.getColor()) {
+                teamSummoner.disable();
+            }
+        }
     }
 }

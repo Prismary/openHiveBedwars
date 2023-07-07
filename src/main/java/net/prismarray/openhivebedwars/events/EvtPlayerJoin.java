@@ -33,6 +33,8 @@ public class EvtPlayerJoin extends EventBase {
                 break;
         }
 
+        Game.getStatsManager().playerJoin(event.getPlayer());
+
         ScoreboardManager.setScoreboard(player, true);
     }
 }

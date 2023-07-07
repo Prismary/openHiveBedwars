@@ -43,7 +43,7 @@ public class IngameScoreboard extends PlayerScoreboard {
 
         String output = "";
         for (Team team : Game.getTeamHandler().getTeams()) {
-            output += team.getColor().chatColor + "⬛";
+            output += team.getColor().chatColor + (team.hasBed() ? "⬛" : "✖");
         }
 
         return output;
@@ -71,7 +71,7 @@ public class IngameScoreboard extends PlayerScoreboard {
             return "§8Waiting...";
         }
 
-        return "0"; // TODO get stats
+        return String.valueOf(Game.getStatsManager().getKills(player));
     }
 
     public String getDeaths() {
@@ -79,7 +79,7 @@ public class IngameScoreboard extends PlayerScoreboard {
             return "§8Waiting...";
         }
 
-        return "0"; // TODO get stats
+        return String.valueOf(Game.getStatsManager().getDeaths(player));
     }
 
     public String getBeds() {
@@ -87,6 +87,6 @@ public class IngameScoreboard extends PlayerScoreboard {
             return "§8Waiting...";
         }
 
-        return "0"; // TODO get stats
+        return String.valueOf(Game.getStatsManager().getBedsDestroyed(player));
     }
 }
