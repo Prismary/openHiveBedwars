@@ -1,5 +1,7 @@
 package net.prismarray.openhivebedwars.bedwars.stats;
 
+import net.prismarray.openhivebedwars.util.Broadcast;
+import net.prismarray.openhivebedwars.util.TeamColor;
 import org.bukkit.entity.Player;
 
 public interface StatsManager {
@@ -13,8 +15,9 @@ public interface StatsManager {
 
     void kill(Player killer, Player victim);
     void finalKill(Player killer, Player victim);
-    void bedBreak(Player breaker);
+    void bedBreak(TeamColor colorDestroyed, Player breaker);
     void unlockGenerator(Player purchaser);
+    void upgradeGenerator(Player purchaser);
 
     int getTokens(Player player);
     int getPoints(Player player);

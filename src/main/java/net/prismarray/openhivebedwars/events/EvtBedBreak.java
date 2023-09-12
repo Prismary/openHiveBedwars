@@ -41,7 +41,7 @@ public class EvtBedBreak extends EventBase {
                 Game.clearBed(team.getColor());
                 Broadcast.bedBreak(team.getColor());
 
-                Game.getStatsManager().bedBreak(event.getPlayer());
+                Game.getStatsManager().bedBreak(team.getColor(), event.getPlayer());
                 ScoreboardManager.updateAll();
             }
         }
