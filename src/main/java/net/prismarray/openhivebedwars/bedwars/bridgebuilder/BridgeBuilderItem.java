@@ -11,12 +11,13 @@ import java.util.regex.Pattern;
 public class BridgeBuilderItem extends InventoryGUICustomHead {
 
     private static final Pattern NAMING_PATTERN = Pattern.compile("(.+) Bridge Builder \\[(\\d+)]");
+    private static final String NAMING_FORMAT = "%s Bridge Builder [%d]";
 
     private final int remainingBlocks;
     private final Material blockType;
 
     public BridgeBuilderItem(Material blockType, int remainingBlocks) {
-        super(getURLForMaterial(blockType), 1, String.format("%s Bridge Builder [%d]", blockType.name(), remainingBlocks));
+        super(getURLForMaterial(blockType), 1, String.format(NAMING_FORMAT, blockType.name(), remainingBlocks));
         this.remainingBlocks = remainingBlocks;
         this.blockType = blockType;
     }
