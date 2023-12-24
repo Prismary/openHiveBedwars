@@ -40,6 +40,8 @@ bridge_builder:
   movement_speed: 5.0
   use_optimized_placement: true
   no_collisions_with_player_placed_blocks: true
+  no_head_collisions_with_blocks: false
+  no_head_collisions_with_entities: false
   replaceable_blocks:
     - DEAD_BUSH
     - DOUBLE_PLANT
@@ -49,3 +51,24 @@ bridge_builder:
     - WEB
     - YELLOW_FLOWER
     - RED_ROSE
+  non_colliding_entity_types:
+    # - AREA_EFFECT_CLOUD
+    - ARMOR_STAND
+    - BOAT
+    # - CHEST_BOAT
+    - DROPPED_ITEM
+    - EXPERIENCE_ORB
+    - ITEM_FRAME
+    # - GLOW_ITEM_FRAME
+    - LEASH_HITCH
+    # - MARKER
+    - MINECART
+    - MINECART_CHEST
+    - MINECART_COMMAND
+    - MINECART_FURNACE
+    - MINECART_HOPPER
+    - MINECART_MOB_SPAWNER
+    - MINECART_TNT
+    - PAINTING
+    - PRIMED_TNT
+    - UNKNOWN

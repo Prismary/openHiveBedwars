@@ -7,8 +7,11 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
+import org.bukkit.craftbukkit.v1_8_R3.entity.AbstractProjectile;
 import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.util.Vector;
@@ -72,6 +75,7 @@ public class BridgeBuilder {
 
         //TODO: add particle effect (and possibly sound effect) on destruction
 
+        boolean headCollidesWithEntity = headCollidesWithEntity();
         ((CraftWorld) spawnLocation.getWorld()).getHandle().removeEntity(entity);
         entity = null;
 
@@ -86,7 +90,12 @@ public class BridgeBuilder {
         Location location = owner.getLocation();
         notAdded.values().forEach(i -> location.getWorld().dropItemNaturally(location, i));
 
-        Broadcast.toPlayer(owner, "I'm silly and got stuck. Here's the rest of my blocks."); // TODO: display correct messagea
+        if (headCollidesWithEntity) {
+            Broadcast.toPlayer(owner, "I'm silly and got stuck on a fucking entity. Here's the rest of my blocks."); // TODO: display correct message
+
+        } else {
+            Broadcast.toPlayer(owner, "I'm silly and got stuck. Here's the rest of my blocks."); // TODO: display correct message
+        }
     }
 
 
@@ -103,8 +112,13 @@ public class BridgeBuilder {
 
         Block block = getBlock();
 
+        if (headCollidesWithEntity() || headCollidesWithExistingBlock()) {
+            destroy();
+            return;
+        }
+
         if (!isReplaceable(block)) {
-            if (collidesWithExistingBlock(block)) {
+            if (collidesWithExistingBlock()) {
                 destroy();
             }
             return;
@@ -124,15 +138,17 @@ public class BridgeBuilder {
 
     public Block getBlock() {
 
-        Location location = getLocation();
-        location.setY(location.getY() + 1);
-        location.subtract(direction.clone().multiply(0.5));
+        Location location = getLocation().subtract(direction.clone().multiply(0.5).setY(-1));
 
         if (OpenHiveBedwars.getBWConfig().bridgeBuilderUseOptimizedPlacement()) {
             return projectToOptimizedPath(location).getBlock();
         } else {
             return location.getBlock();
         }
+    }
+
+    public Block getHeadBlock() {
+        return getLocation().add(0, 2, 0).getBlock();
     }
 
     public Material getBlockType() {
@@ -190,12 +206,14 @@ public class BridgeBuilder {
         return temp;
     }
 
-    private boolean isReplaceable(Block block) {
+    private static boolean isReplaceable(Block block) {
         return Objects.equals(block.getType(), Material.AIR)
                 || OpenHiveBedwars.getBWConfig().getBridgeBuilderReplaceableBlocks().contains(block.getType());
     }
 
-    private boolean collidesWithExistingBlock(Block block) {
+    private boolean collidesWithExistingBlock() {
+
+        Block block = getBlock();
 
         if (isReplaceable(block)) {
             return false;
@@ -210,5 +228,47 @@ public class BridgeBuilder {
         }
 
         return !OpenHiveBedwars.getBWConfig().bridgeBuilderNoCollisionsWithPlayerPlacedBlocks();
+    }
+
+    private boolean headCollidesWithExistingBlock() {
+
+        if (OpenHiveBedwars.getBWConfig().bridgeBuilderNoHeadCollisionsWithBlocks()) {
+            return false;
+        }
+
+        Block headBlock = getHeadBlock();
+
+        if (isReplaceable(headBlock)) {
+            return false;
+        }
+
+        if (OpenHiveBedwars.getBWConfig().bridgeBuilderNoCollisionsWithPlayerPlacedBlocks() && !headBlock.hasMetadata("placedBy")) {
+            return true;
+        }
+
+        return !OpenHiveBedwars.getBWConfig().bridgeBuilderNoCollisionsWithPlayerPlacedBlocks();
+    }
+
+    private boolean headCollidesWithEntity() {
+
+        if (OpenHiveBedwars.getBWConfig().bridgeBuilderNoHeadCollisionsWithEntities()) {
+            return false;
+        }
+
+        Location blockCenterLocation = getHeadBlock().getLocation().add(0.5, 0.5, 0.5);
+        long numberOfEntities = blockCenterLocation.getWorld().getNearbyEntities(blockCenterLocation, 0.5, 0.5,0.5).stream()
+                .filter(this::isCollidingEntity)
+                .count();
+
+        return numberOfEntities > 0;
+    }
+
+    private boolean isCollidingEntity(Entity entity) {
+
+        if (OpenHiveBedwars.getBWConfig().getBridgeBuilderNonCollidingEntityTypes().contains(entity.getType())) {
+            return false;
+        }
+
+        return !(entity instanceof Projectile && ((AbstractProjectile) entity).getHandle().inBlock());
     }
 }

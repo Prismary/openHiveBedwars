@@ -2,6 +2,7 @@ package net.prismarray.openhivebedwars.bedwars.bridgebuilder;
 
 import net.prismarray.openhivebedwars.OpenHiveBedwars;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Entity;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -25,6 +26,19 @@ public class BridgeBuilderManager {
 
     public static void registerBridgeBuilder(BridgeBuilder builder) {
         instance.bridgeBuilders.add(builder);
+    }
+
+
+    public static boolean isRegisteredBridgeBuilder(Entity entity) {
+        return instance.bridgeBuilders.stream().anyMatch(b -> b.getEntity().getId() == entity.getEntityId());
+    }
+
+
+    public static BridgeBuilder getRegisteredBridgeBuilder(Entity entity) {
+        return instance.bridgeBuilders.stream()
+                .filter(b -> b.getEntity().getId() == entity.getEntityId())
+                .findFirst()
+                .orElse(null);
     }
 
 
