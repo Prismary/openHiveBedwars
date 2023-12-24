@@ -25,15 +25,21 @@ public class BridgeBuilderItem extends InventoryGUICustomHead {
 
     private static String getURLForMaterial(Material material) {
 
+        if (Objects.equals(material, Material.WOOL)) {
+
+            //ToDo: add links for other wool colors
+            return "http://textures.minecraft.net/texture/9b5dfe704b6cec405ad79138f61cd702305bebb88d20f78c65397d485d162cd5";
+        }
+
         switch (material) {
-            case WOOL:
-                return "http://textures.minecraft.net/texture/3faf4c29f1e7405f4680c5c2b03ef9384f1aecfe2986ad50138c605fefff2f15";
-            case ENDER_STONE:
-                return "http://textures.minecraft.net/texture/42813cf8c4fd013baf5bf55a8c93121c482da1cf6e1054c180ff3e81727b65dd";
             case WOOD:
-                return "http://textures.minecraft.net/texture/993993674424e62f0a461c6268f8854541e024c7d3b416a250b2b4d11b50179d";
+                return "http://textures.minecraft.net/texture/33be3b56c130d87f0e4657775e190139c2f24be530cf47f2e76ccddc35212af3";
             case STONE: // actually andesite, but who's counting...
-                return "http://textures.minecraft.net/texture/adb7bf059a62d27b1e1e2f34394f3f38ed8cda45471f6f4d5b47c3912d181135";
+                return "http://textures.minecraft.net/texture/d0b279e8b8a0c6eac838be33662dbbfd1ac71bfa9f96e3e80e886caf883da541";
+            case ENDER_STONE:
+                return "http://textures.minecraft.net/texture/3ae3591adaa2f3db578178cd8ca466a5d4ba4de98b214d6e5c94087598ec1522";
+
+            // ToDo: Update the following skins to include the commandblock buttons
             case PRISMARINE:
                 return "http://textures.minecraft.net/texture/97e56140686e476aef5520acbabc239535ff97e24b14d87f4982f13675c";
             case OBSIDIAN:
