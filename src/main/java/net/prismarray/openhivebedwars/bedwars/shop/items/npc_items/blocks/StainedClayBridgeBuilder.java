@@ -1,10 +1,10 @@
 package net.prismarray.openhivebedwars.bedwars.shop.items.npc_items.blocks;
 
+import net.prismarray.openhivebedwars.bedwars.bridgebuilder.BridgeBuilderItem;
 import net.prismarray.openhivebedwars.bedwars.shop.items.PurchasableCustomHead;
 import net.prismarray.openhivebedwars.gui.InventoryGUIBase;
 import net.prismarray.openhivebedwars.util.Currency;
 import org.bukkit.Material;
-import org.bukkit.inventory.ItemStack;
 
 public class StainedClayBridgeBuilder extends PurchasableCustomHead {
 
@@ -20,7 +20,7 @@ public class StainedClayBridgeBuilder extends PurchasableCustomHead {
                 Currency.DIAMOND,
                 false,
                 false,
-                new ItemStack(Material.STONE) // todo remove placeholder
+                new BridgeBuilderItem(Material.STAINED_CLAY, 32)
         );
     }
 }
