@@ -3,6 +3,7 @@ package net.prismarray.openhivebedwars.bedwars.bridgebuilder;
 import net.minecraft.server.v1_8_R3.NBTTagByte;
 import net.minecraft.server.v1_8_R3.NBTTagCompound;
 import net.prismarray.openhivebedwars.gui.InventoryGUICustomHead;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
 import org.bukkit.inventory.ItemStack;
@@ -11,11 +12,12 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class BridgeBuilderItem extends InventoryGUICustomHead {
 
-    private static final Pattern NAMING_PATTERN = Pattern.compile("(.+) Bridge Builder \\[(\\d+)]");
-    private static final String NAMING_FORMAT = "%s Bridge Builder [%d]";
+    private static final Pattern NAMING_PATTERN = Pattern.compile("§.§.(.+) §.Bridge Builder §.\\[§.(\\d+)§.]");
+    private static final String NAMING_FORMAT = ChatColor.DARK_GREEN + "" + ChatColor.BOLD + "%s " + ChatColor.GREEN + "Bridge Builder " + ChatColor.DARK_GRAY + "["  + ChatColor.YELLOW + "%d"  + ChatColor.DARK_GRAY + "]";
 
     private final int remainingBlocks;
     private final Material blockType;
@@ -25,7 +27,25 @@ public class BridgeBuilderItem extends InventoryGUICustomHead {
     }
 
     public BridgeBuilderItem(Material blockType, int remainingBlocks, byte blockTypeData) {
-        super(getURLForMaterial(blockType, blockTypeData), 1, String.format(NAMING_FORMAT, blockType.name(), remainingBlocks));
+        super(
+                getURLForMaterial(blockType, blockTypeData),
+                1,
+                String.format(NAMING_FORMAT, getBridgeBuilderNameFromMaterial(blockType, blockTypeData), remainingBlocks),
+                new String[]{
+                        "",
+                        ChatColor.GRAY + "Builds a bridge in the",
+                        ChatColor.GRAY + "direction you were looking.",
+                        "",
+                        ChatColor.GREEN + "" + ChatColor.BOLD + "How to use",
+                        ChatColor.GRAY + "Place the builder at the",
+                        ChatColor.GRAY + "end of a block in the",
+                        ChatColor.GRAY + "direction you'd like it to",
+                        ChatColor.GRAY + "build, then watch!",
+                        "",
+                        ChatColor.AQUA + "" + ChatColor.BOLD + "Blocks left",
+                        ChatColor.GRAY + String.valueOf(remainingBlocks)
+                }
+        );
 
         this.remainingBlocks = remainingBlocks;
         this.blockType = blockType;
@@ -145,6 +165,34 @@ public class BridgeBuilderItem extends InventoryGUICustomHead {
         }
     }
 
+    public static String getBridgeBuilderNameFromMaterial(Material material) {
+        return getBridgeBuilderNameFromMaterial(material, (byte) 0);
+    }
+
+    public static String getBridgeBuilderNameFromMaterial(Material material, byte data) {
+
+        if (Objects.equals(material, Material.STONE) && data == 5) {
+            return "Andesite";
+        }
+
+        String name = material.toString().replace("_", " ");
+        return name.toUpperCase().charAt(0) + name.toLowerCase().substring(1);
+    }
+
+    public static Material getMaterialFromBridgeBuilderName(String name) {
+
+        if (Objects.equals(name, "Andesite")) {
+            return Material.STONE;
+        }
+
+        Material material = null;
+        try {
+            material = Material.valueOf(name.replace(" ", "_").toUpperCase());
+        } catch (IllegalArgumentException ignored) {}
+
+        return material;
+    }
+
     public static BridgeBuilderItem fromItemStack(ItemStack item) {
 
         if (!Objects.equals(item.getType(), Material.SKULL_ITEM)) {
@@ -164,7 +212,10 @@ public class BridgeBuilderItem extends InventoryGUICustomHead {
         Material material;
         int remainingBlocks;
         try {
-            material = Material.valueOf(matcher.group(1));
+            material = getMaterialFromBridgeBuilderName(matcher.group(1));
+            if (Objects.isNull(material)) {
+                return null;
+            }
             remainingBlocks = Integer.parseInt(matcher.group(2));
 
         } catch(IllegalStateException | IndexOutOfBoundsException | IllegalArgumentException e) {
