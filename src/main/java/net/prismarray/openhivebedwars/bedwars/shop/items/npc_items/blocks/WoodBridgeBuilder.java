@@ -12,7 +12,7 @@ public class WoodBridgeBuilder extends PurchasableCustomHead {
         super(
                 gui,
                 slot,
-                "http://textures.minecraft.net/texture/2705fd94a0c431927fb4e639b0fcfb49717e412285a02b439e0112da22b2e2ec",
+                BridgeBuilderItem.getURLForMaterial(Material.WOOD),
                 1,
                 false,
                 "Wood Bridge Builder",

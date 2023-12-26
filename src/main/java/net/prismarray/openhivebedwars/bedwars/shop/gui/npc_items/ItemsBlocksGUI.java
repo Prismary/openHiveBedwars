@@ -22,7 +22,7 @@ public class ItemsBlocksGUI extends FramedFullRowsGUI {
         new WoodBridgeBuilder(this, 21);
         new AndesiteBridgeBuilder(this, 22);
         new EndStoneBridgeBuilder(this, 23);
-        new StainedClayBridgeBuilder(this, 24);
+        new StainedClayBridgeBuilder(this, 24, teamColor.woolColor);
 
         lock();
     }

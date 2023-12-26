@@ -13,7 +13,7 @@ public class WoolBridgeBuilder extends PurchasableCustomHead {
         super(
                 gui,
                 slot,
-                "http://textures.minecraft.net/texture/2705fd94a0c431927fb4e639b0fcfb49717e412285a02b439e0112da22b2e2ec",
+                BridgeBuilderItem.getURLForMaterial(Material.WOOL, color.getWoolData()), // ToDo: add config option to leave white wool for all teams (in shop)
                 1,
                 false,
                 "Wool Bridge Builder",
@@ -21,7 +21,7 @@ public class WoolBridgeBuilder extends PurchasableCustomHead {
                 Currency.IRON,
                 false,
                 false,
-                new BridgeBuilderItem(Material.WOOL, 32)
+                new BridgeBuilderItem(Material.WOOL, 32, color.getWoolData()) // ToDo: add config option to leave white wool for all teams (for all BBItems)
         );
     }
 }

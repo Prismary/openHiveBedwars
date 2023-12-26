@@ -12,7 +12,7 @@ public class EndStoneBridgeBuilder extends PurchasableCustomHead {
         super(
                 gui,
                 slot,
-                "http://textures.minecraft.net/texture/2705fd94a0c431927fb4e639b0fcfb49717e412285a02b439e0112da22b2e2ec",
+                BridgeBuilderItem.getURLForMaterial(Material.ENDER_STONE),
                 1,
                 false,
                 "End Stone Bridge Builder",

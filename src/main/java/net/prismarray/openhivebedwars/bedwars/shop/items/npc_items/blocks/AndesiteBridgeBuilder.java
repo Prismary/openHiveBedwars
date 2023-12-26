@@ -12,7 +12,7 @@ public class AndesiteBridgeBuilder extends PurchasableCustomHead {
         super(
                 gui,
                 slot,
-                "http://textures.minecraft.net/texture/2705fd94a0c431927fb4e639b0fcfb49717e412285a02b439e0112da22b2e2ec",
+                BridgeBuilderItem.getURLForMaterial(Material.STONE, (byte) 5),
                 1,
                 false,
                 "Andesite Bridge Builder",
@@ -20,7 +20,7 @@ public class AndesiteBridgeBuilder extends PurchasableCustomHead {
                 Currency.GOLD,
                 false,
                 false,
-                new BridgeBuilderItem(Material.STONE, 32)
+                new BridgeBuilderItem(Material.STONE, 32, (byte) 5)
         );
     }
 }
