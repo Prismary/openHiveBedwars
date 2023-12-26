@@ -26,6 +26,7 @@ public class BridgeBuilder {
      */
     private final double speed;
     private final Material blockType;
+    private final byte blockTypeData;
     private final Location spawnLocation;
     private final Vector direction;
     private final Vector strictDirection;
@@ -37,13 +38,18 @@ public class BridgeBuilder {
 
 
     public BridgeBuilder(Material blockType, int remainingBlocks, Location spawnLocation, Player owner) {
-        this(blockType, remainingBlocks, spawnLocation, owner, OpenHiveBedwars.getBWConfig().getBridgeBuilderMovementSpeed());
+        this(blockType, remainingBlocks, spawnLocation, owner, (byte) 0);
     }
 
-    public BridgeBuilder(Material blockType, int remainingBlocks, Location spawnLocation, Player owner, double speed) {
+    public BridgeBuilder(Material blockType, int remainingBlocks, Location spawnLocation, Player owner, byte blockTypeData) {
+        this(blockType, remainingBlocks, spawnLocation, owner, blockTypeData, OpenHiveBedwars.getBWConfig().getBridgeBuilderMovementSpeed());
+    }
+
+    public BridgeBuilder(Material blockType, int remainingBlocks, Location spawnLocation, Player owner, byte blockTypeData, double speed) {
 
         this.speed = speed;
         this.blockType = blockType;
+        this.blockTypeData = blockTypeData;
         this.spawnLocation = spawnLocation.clone();
         this.spawnLocation.setPitch(0);
         this.direction = spawnLocation.getDirection().setY(0.0).normalize();
@@ -61,7 +67,7 @@ public class BridgeBuilder {
         lastPlacedLocation = null;
         entity.setInvisible(true);
 
-        entity.setEquipment(4, CraftItemStack.asNMSCopy(new BridgeBuilderItem(blockType, 0)));
+        entity.setEquipment(4, CraftItemStack.asNMSCopy(new BridgeBuilderItem(blockType, 0, blockTypeData)));
         entity.setLocation(spawnLocation.getX(), spawnLocation.getY(), spawnLocation.getZ(), spawnLocation.getYaw(), spawnLocation.getPitch());
 
         ((CraftWorld) spawnLocation.getWorld()).getHandle().addEntity(entity);
@@ -84,7 +90,7 @@ public class BridgeBuilder {
             return;
         }
 
-        BridgeBuilderItem bbItem = new BridgeBuilderItem(blockType, remainingBlocks);
+        BridgeBuilderItem bbItem = new BridgeBuilderItem(blockType, remainingBlocks, blockTypeData);
         Map<Integer, ItemStack> notAdded = owner.getInventory().addItem(bbItem);
 
         Location location = owner.getLocation();
@@ -125,6 +131,7 @@ public class BridgeBuilder {
         }
 
         block.setType(blockType);
+        block.setData(blockTypeData); // ToDo: add config option to override wool and stained clay color based on the owner's team color
         block.setMetadata("placedBy", new FixedMetadataValue(OpenHiveBedwars.getInstance(), owner.getUniqueId()));
         remainingBlocks--;
         lastPlacedLocation = block.getLocation();
@@ -153,6 +160,9 @@ public class BridgeBuilder {
 
     public Material getBlockType() {
         return blockType;
+    }
+    public byte getBlockTypeData() {
+        return blockTypeData;
     }
 
     public int getRemainingBlocks() {

@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Map;
+import java.util.Objects;
 
 public class SubCommandTest implements CommandExecutor {
 
@@ -24,12 +25,18 @@ public class SubCommandTest implements CommandExecutor {
             } catch(IllegalArgumentException ignored) {}
         }
 
-        BridgeBuilderItem bbItem = new BridgeBuilderItem(material, 32);
-        bbItem.setAmount(64);
-        Map<Integer, ItemStack> notAdded = p.getInventory().addItem(bbItem);
+        for (byte i = 0; i < 16; i++) {
+            BridgeBuilderItem bbItem = new BridgeBuilderItem(material, 32, i);
+            bbItem.setAmount(8);
+            Map<Integer, ItemStack> notAdded = p.getInventory().addItem(bbItem);
 
-        if (!notAdded.isEmpty()) {
-            p.getLocation().getWorld().dropItemNaturally(p.getLocation(), bbItem);
+            if (!notAdded.isEmpty()) {
+                p.getLocation().getWorld().dropItemNaturally(p.getLocation(), bbItem);
+            }
+
+            if (!Objects.equals(material, Material.WOOL) && !Objects.equals(material, Material.STAINED_CLAY)) {
+                break;
+            }
         }
 
         return true;

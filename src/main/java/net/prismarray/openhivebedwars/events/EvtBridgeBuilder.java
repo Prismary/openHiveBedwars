@@ -49,7 +49,7 @@ public class EvtBridgeBuilder extends EventBase {
                 playerLocation.getPitch()
         );
 
-        BridgeBuilder bridgeBuilder = new BridgeBuilder(bbItem.getBlockType(), bbItem.getRemainingBlocks(), spawnLocation, player);
+        BridgeBuilder bridgeBuilder = new BridgeBuilder(bbItem.getBlockType(), bbItem.getRemainingBlocks(), spawnLocation, player, bbItem.getBlockTypeData());
         bridgeBuilder.spawn();
 
         ItemStack placedBuilder = e.getItemInHand();
