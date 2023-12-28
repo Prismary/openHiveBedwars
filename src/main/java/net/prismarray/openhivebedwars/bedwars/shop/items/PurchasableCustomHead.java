@@ -15,13 +15,36 @@ import javax.annotation.Nullable;
 
 public abstract class PurchasableCustomHead extends InventoryGUICustomHead {
 
-    public PurchasableCustomHead(InventoryGUIBase gui, int slot, String url, int amount, boolean enchanted, String name,
-                                 int cost, Currency currency, boolean showFavStatus, boolean isFavorite, ItemStack purchaseItem) {
+    public PurchasableCustomHead(
+            InventoryGUIBase gui,
+            int slot,
+            String url,
+            int amount,
+            boolean enchanted,
+            String name,
+            int cost,
+            Currency currency,
+            boolean showFavStatus,
+            boolean isFavorite,
+            ItemStack purchaseItem
+    ) {
         this(gui, slot, url, amount, enchanted, name, cost, currency, showFavStatus, isFavorite, null, purchaseItem);
     }
 
-    public PurchasableCustomHead(InventoryGUIBase gui, int slot, String url, int amount, boolean enchanted, String name,
-                                 int cost, Currency currency, boolean showFavStatus, boolean isFavorite, @Nullable String[] bonusLore, ItemStack purchaseItem) {
+    public PurchasableCustomHead(
+            InventoryGUIBase gui,
+            int slot,
+            String url,
+            int amount,
+            boolean enchanted,
+            String name,
+            int cost,
+            Currency currency,
+            boolean showFavStatus,
+            boolean isFavorite,
+            @Nullable String[] bonusLore,
+            ItemStack purchaseItem
+    ) {
         super(
                 gui,
                 slot,
