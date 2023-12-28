@@ -72,3 +72,13 @@ bridge_builder:
     - PAINTING
     - PRIMED_TNT
     - UNKNOWN
+  # by enabling any of these options, bridge builders will default to white wool/stained clay/... skins in the specified case
+  use_default_color:
+    placed_blocks: false
+    placeable_bridge_builders: false
+
+shop:
+  # by enabling any of these options, the plugin will default to white wool/stained clay/... blocks in the specified case
+  use_default_color:
+    purchasable_blocks: false
+    purchasable_bridge_builders: false

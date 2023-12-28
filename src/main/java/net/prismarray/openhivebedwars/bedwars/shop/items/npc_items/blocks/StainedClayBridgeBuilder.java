@@ -1,5 +1,6 @@
 package net.prismarray.openhivebedwars.bedwars.shop.items.npc_items.blocks;
 
+import net.prismarray.openhivebedwars.OpenHiveBedwars;
 import net.prismarray.openhivebedwars.bedwars.bridgebuilder.BridgeBuilderItem;
 import net.prismarray.openhivebedwars.bedwars.shop.items.PurchasableCustomHead;
 import net.prismarray.openhivebedwars.gui.InventoryGUIBase;
@@ -14,7 +15,11 @@ public class StainedClayBridgeBuilder extends PurchasableCustomHead {
         super(
                 gui,
                 slot,
-                BridgeBuilderItem.getURLForMaterial(Material.STAINED_CLAY, color.getWoolData()), // ToDo: add config option to leave white stained clay for all teams (in shop)
+                BridgeBuilderItem.getURLForMaterial(
+                        Material.STAINED_CLAY,
+                        (OpenHiveBedwars.getBWConfig().getShopUseDefaultColorForPurchasableBridgeBuilders()) ?
+                                DyeColor.WHITE.getWoolData() : color.getWoolData()
+                ),
                 1,
                 false,
                 "Stained Clay Bridge Builder",
@@ -22,7 +27,12 @@ public class StainedClayBridgeBuilder extends PurchasableCustomHead {
                 Currency.DIAMOND,
                 false,
                 false,
-                new BridgeBuilderItem(Material.STAINED_CLAY, 32, color.getWoolData()) // ToDo: add config option to leave white stained clay for all teams (for all BBItems)
+                new BridgeBuilderItem(
+                        Material.STAINED_CLAY,
+                        32,
+                        (OpenHiveBedwars.getBWConfig().getBridgeBuilderUseDefaultColorForPlaceableBridgeBuilders()) ?
+                                DyeColor.WHITE.getWoolData() : color.getWoolData()
+                )
         );
     }
 }

@@ -131,7 +131,9 @@ public class BridgeBuilder {
         }
 
         block.setType(blockType);
-        block.setData(blockTypeData); // ToDo: add config option to override wool and stained clay color based on the owner's team color
+        if (!OpenHiveBedwars.getBWConfig().getBridgeBuilderUseDefaultColorForPlacedBlocks()) {
+            block.setData(blockTypeData);
+        }
         block.setMetadata("placedBy", new FixedMetadataValue(OpenHiveBedwars.getInstance(), owner.getUniqueId()));
         remainingBlocks--;
         lastPlacedLocation = block.getLocation();

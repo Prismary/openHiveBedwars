@@ -28,6 +28,11 @@ public class Config extends ConfigFile {
     private double bridgeBuilderMovementSpeed;
     private Set<Material> bridgeBuilderReplaceableBlocks;
     private Set<EntityType> bridgeBuilderNonCollidingEntityTypes;
+    private boolean bridgeBuilderUseDefaultColorForPlacedBlocks;
+    private boolean bridgeBuilderUseDefaultColorForPlaceableBridgeBuilders;
+    private boolean shopUseDefaultColorForPurchasableBridgeBuilders;
+
+    private boolean shopUseDefaultColorsForPurchasableBlocks;
 
 
     public Config(Logger logger, File configFile) {
@@ -86,6 +91,20 @@ public class Config extends ConfigFile {
         return bridgeBuilderNonCollidingEntityTypes;
     }
 
+    public boolean getBridgeBuilderUseDefaultColorForPlacedBlocks() {
+        return this.bridgeBuilderUseDefaultColorForPlacedBlocks;
+    }
+    public boolean getBridgeBuilderUseDefaultColorForPlaceableBridgeBuilders() {
+        return this.bridgeBuilderUseDefaultColorForPlaceableBridgeBuilders;
+    }
+    public boolean getShopUseDefaultColorForPurchasableBridgeBuilders() {
+        return this.shopUseDefaultColorForPurchasableBridgeBuilders;
+    }
+
+    public boolean getShopUseDefaultColorsForPurchasableBlocks() {
+        return this.shopUseDefaultColorsForPurchasableBlocks;
+    }
+
     @Override
     protected void parseAndValidateConfig(YamlDocument yamlContent) throws ConfigValidationException {
 
@@ -105,5 +124,9 @@ public class Config extends ConfigFile {
         this.bridgeBuilderMovementSpeed = yamlContent.getDouble("bridge_builder.movement_speed");
         this.bridgeBuilderReplaceableBlocks = parseMaterialSet(yamlContent.getStringList("bridge_builder.replaceable_blocks"));
         this.bridgeBuilderNonCollidingEntityTypes = parseEntityTypeSet(yamlContent.getStringList("bridge_builder.non_colliding_entity_types"));
+        this.bridgeBuilderUseDefaultColorForPlacedBlocks = yamlContent.getBoolean("bridge_builder.use_default_color.placed_blocks");
+        this.bridgeBuilderUseDefaultColorForPlaceableBridgeBuilders = yamlContent.getBoolean("bridge_builder.use_default_color.placeable_bridge_builders");
+        this.shopUseDefaultColorForPurchasableBridgeBuilders = yamlContent.getBoolean("shop.use_default_color.purchasable_bridge_builders");
+        this.shopUseDefaultColorsForPurchasableBlocks = yamlContent.getBoolean("shop.use_default_color.purchasable_blocks");
     }
 }

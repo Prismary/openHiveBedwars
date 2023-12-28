@@ -1,5 +1,6 @@
 package net.prismarray.openhivebedwars.bedwars.shop.items.npc_items.blocks;
 
+import net.prismarray.openhivebedwars.OpenHiveBedwars;
 import net.prismarray.openhivebedwars.bedwars.bridgebuilder.BridgeBuilderItem;
 import net.prismarray.openhivebedwars.bedwars.shop.items.PurchasableCustomHead;
 import net.prismarray.openhivebedwars.gui.InventoryGUIBase;
@@ -13,7 +14,11 @@ public class WoolBridgeBuilder extends PurchasableCustomHead {
         super(
                 gui,
                 slot,
-                BridgeBuilderItem.getURLForMaterial(Material.WOOL, color.getWoolData()), // ToDo: add config option to leave white wool for all teams (in shop)
+                BridgeBuilderItem.getURLForMaterial(
+                        Material.WOOL,
+                        (OpenHiveBedwars.getBWConfig().getShopUseDefaultColorForPurchasableBridgeBuilders()) ?
+                                DyeColor.WHITE.getWoolData() : color.getWoolData()
+                ),
                 1,
                 false,
                 "Wool Bridge Builder",
@@ -21,7 +26,12 @@ public class WoolBridgeBuilder extends PurchasableCustomHead {
                 Currency.IRON,
                 false,
                 false,
-                new BridgeBuilderItem(Material.WOOL, 32, color.getWoolData()) // ToDo: add config option to leave white wool for all teams (for all BBItems)
+                new BridgeBuilderItem(
+                        Material.WOOL,
+                        32,
+                        (OpenHiveBedwars.getBWConfig().getBridgeBuilderUseDefaultColorForPlaceableBridgeBuilders()) ?
+                                DyeColor.WHITE.getWoolData() : color.getWoolData()
+                )
         );
     }
 }
