@@ -10,6 +10,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.inventory.*;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class EvtInventoryGUI extends EventBase {
 
@@ -39,8 +40,15 @@ public class EvtInventoryGUI extends EventBase {
         }
 
         InventoryGUIBase invGUI = InventoryGUIActionManager.getCorrespondingInventoryGUIBase(e.getInventory());
+        List<Integer> concernedSlots = e.getRawSlots().stream()
+                .filter(slot -> slot < e.getInventory().getSize())
+                .collect(Collectors.toList());
 
-        if (invGUI.isLocked() || e.getInventorySlots().stream().anyMatch(invGUI::isSlotLocked)) {
+        if (concernedSlots.size() == 0) {
+            return;
+        }
+
+        if (invGUI.isLocked() || concernedSlots.stream().anyMatch(invGUI::isSlotLocked)) {
             e.setCancelled(true);
             e.setResult(Event.Result.DENY);
         }
@@ -49,7 +57,7 @@ public class EvtInventoryGUI extends EventBase {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onInventoryInteraction(InventoryClickEvent e) {
 
-        if (!InventoryGUIActionManager.isRegistered(e.getClickedInventory())) {
+        if (!InventoryGUIActionManager.isRegistered(e.getInventory())) {
             return;
         }
 
@@ -57,7 +65,25 @@ public class EvtInventoryGUI extends EventBase {
             return;
         }
 
-        InventoryGUIBase invGUI = InventoryGUIActionManager.getCorrespondingInventoryGUIBase(e.getClickedInventory());
+        InventoryGUIBase invGUI = InventoryGUIActionManager.getCorrespondingInventoryGUIBase(e.getInventory());
+
+        if (!Objects.equals(e.getInventory(), e.getClickedInventory())) {
+
+            if (
+                    invGUI.isLocked()
+                            && e.getClick() != ClickType.LEFT
+                            && e.getClick() != ClickType.RIGHT
+                            && e.getClick() != ClickType.MIDDLE
+                            && e.getClick() != ClickType.DROP
+                            && e.getClick() != ClickType.CONTROL_DROP
+                            && e.getClick() != ClickType.NUMBER_KEY
+            ) {
+                e.setCancelled(true);
+                e.setResult(Event.Result.DENY);
+            }
+            return;
+        }
+
         Player player = (Player) e.getWhoClicked();
         int invSlot = e.getSlot();
 
