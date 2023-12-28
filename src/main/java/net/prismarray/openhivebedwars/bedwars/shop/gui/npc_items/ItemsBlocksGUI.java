@@ -15,7 +15,7 @@ public class ItemsBlocksGUI extends FramedFullRowsGUI {
         new Wood(this, 12);
         new Andesite(this, 13);
         new EndStone(this, 14);
-        new StainedClay(this, 15);
+        new StainedClay(this, 15, teamColor.woolColor);
         new Obsidian(this, 16);
 
         new WoolBridgeBuilder(this, 20, teamColor.woolColor);
