@@ -109,9 +109,10 @@ public class InventoryGUICustomHead extends InventoryGUIItem {
             ItemFlag[] flags
     ) {
 
-        super(actionHandlingInventoryGUI, slotInInventoryGUI, Material.SKULL_ITEM, (short) 3, amount, name, lore, enchanted, flags);
+        super(actionHandlingInventoryGUI, slotInInventoryGUI, Material.SKULL_ITEM, (short) 3, amount, name, lore, enchanted, flags, false);
 
         if (Objects.isNull(url)) {
+            addToContainingInventory(actionHandlingInventoryGUI, slotInInventoryGUI);
             return;
         }
 
@@ -132,5 +133,7 @@ public class InventoryGUICustomHead extends InventoryGUIItem {
         }
 
         setItemMeta(meta);
+
+        addToContainingInventory(actionHandlingInventoryGUI, slotInInventoryGUI);
     }
 }

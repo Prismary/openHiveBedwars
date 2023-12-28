@@ -190,7 +190,7 @@ public class InventoryGUIItem extends ItemStack {
             boolean enchanted,
             ItemFlag[] flags
     ) {
-        this( null, -1, material, damage, amount, name, lore, enchanted, flags);
+        this(null, -1, material, damage, amount, name, lore, enchanted, flags);
     }
 
     public InventoryGUIItem(
@@ -204,6 +204,36 @@ public class InventoryGUIItem extends ItemStack {
             boolean enchanted,
             ItemFlag[] flags
     ) {
+        this(actionHandlingInventoryGUI, slotInInventoryGUI, material, damage, amount, name, lore, enchanted, flags, true);
+    }
+
+    /**
+     * IMPORTANT: If this constructor is used by any subclass with autoAddToContainingInventory = False, the subclass
+     *            MUST call addToContainingInventory() in its constructor manually!
+     *
+     * @param actionHandlingInventoryGUI
+     * @param slotInInventoryGUI
+     * @param material
+     * @param damage
+     * @param amount
+     * @param name
+     * @param lore
+     * @param enchanted
+     * @param flags
+     * @param autoAddToContainingInventory
+     */
+    protected InventoryGUIItem(
+            InventoryGUIBase actionHandlingInventoryGUI,
+            int slotInInventoryGUI,
+            Material material,
+            short damage,
+            int amount,
+            String name,
+            String[] lore,
+            boolean enchanted,
+            ItemFlag[] flags,
+            boolean autoAddToContainingInventory
+    ) {
 
         super(
                 (Objects.isNull(material)) ? Material.AIR : material,
@@ -215,7 +245,7 @@ public class InventoryGUIItem extends ItemStack {
             return;
         }
 
-        ItemMeta meta = Bukkit.getItemFactory().getItemMeta(getType());
+        ItemMeta meta = getItemMeta();
 
         if (Objects.nonNull(name)) {
             meta.setDisplayName(name);
@@ -245,18 +275,13 @@ public class InventoryGUIItem extends ItemStack {
 
         setItemMeta(meta);
 
-        this.actionHandlingInventoryGUI = actionHandlingInventoryGUI;
-        this.slotInInventoryGUI = slotInInventoryGUI;
+        if (autoAddToContainingInventory) {
+            addToContainingInventory(actionHandlingInventoryGUI, slotInInventoryGUI);
 
-        if (Objects.isNull(actionHandlingInventoryGUI) || this.slotInInventoryGUI < 0
-                || this.slotInInventoryGUI >= this.actionHandlingInventoryGUI.getSize()) {
-
+        } else {
             this.actionHandlingInventoryGUI = null;
             this.slotInInventoryGUI = -1;
-            return;
         }
-
-        actionHandlingInventoryGUI.setItem(slotInInventoryGUI, this);
     }
 
     protected void addActionListenerToContainingInventory(InventoryGUIActionListener listener) {
@@ -270,5 +295,28 @@ public class InventoryGUIItem extends ItemStack {
         }
 
         actionHandlingInventoryGUI.addSlotClickActionHandler(slotInInventoryGUI, listener);
+    }
+
+    protected void addToContainingInventory(InventoryGUIBase containingInventory, int slot) {
+
+        if (Objects.nonNull(this.actionHandlingInventoryGUI)) {
+            throw new IllegalStateException(
+                    "This InventoryGUIItem is already associated to an existing InventoryGUIBase object. It is " +
+                            "impossible to add the same object to multiple GUIs. Please create a new instance for " +
+                            "each GUI."
+            );
+        }
+
+        if (Objects.isNull(containingInventory) || slot < 0 || slot >= containingInventory.getSize()) {
+
+            this.actionHandlingInventoryGUI = null;
+            this.slotInInventoryGUI = -1;
+            return;
+        }
+
+        this.actionHandlingInventoryGUI = containingInventory;
+        this.slotInInventoryGUI = slot;
+
+        actionHandlingInventoryGUI.setItem(slotInInventoryGUI, this);
     }
 }

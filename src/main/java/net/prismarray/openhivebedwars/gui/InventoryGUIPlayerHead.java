@@ -108,14 +108,17 @@ public class InventoryGUIPlayerHead extends InventoryGUIItem {
             ItemFlag[] flags
     ) {
 
-        super(actionHandlingInventoryGUI, slotInInventoryGUI, Material.SKULL_ITEM, (short) 3, amount, name, lore, enchanted, flags);
+        super(actionHandlingInventoryGUI, slotInInventoryGUI, Material.SKULL_ITEM, (short) 3, amount, name, lore, enchanted, flags, false);
 
         if (Objects.isNull(playerName)) {
+            addToContainingInventory(actionHandlingInventoryGUI, slotInInventoryGUI);
             return;
         }
 
         SkullMeta meta = (SkullMeta) getItemMeta();
         meta.setOwner(playerName);
         setItemMeta(meta);
+
+        addToContainingInventory(actionHandlingInventoryGUI, slotInInventoryGUI);
     }
 }

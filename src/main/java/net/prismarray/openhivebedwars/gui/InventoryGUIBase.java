@@ -108,6 +108,9 @@ public class InventoryGUIBase implements Inventory {
 
     public void open(Player player) {
         player.openInventory(inventory);
+
+        // ToDo: remove testing code
+        //player.updateInventory();
     }
 
     public void addActionHandler(InventoryGUIActionListener handler) {
