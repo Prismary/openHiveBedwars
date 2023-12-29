@@ -23,7 +23,7 @@ public class TeamChestManager {
 
     public void resetAllChests() {
         for (TeamColor teamColor : TeamColor.values()) {
-            this.teamInventories.put(teamColor, Bukkit.createInventory(null, 3*9, teamColor.chatColor + "Team Chest"));
+            this.teamInventories.put(teamColor, Bukkit.createInventory(null, 3*9, teamColor.chatColor + "Team Chest")); // ToDo: replace with the actual name
         }
     }
 
