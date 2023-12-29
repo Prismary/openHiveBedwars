@@ -283,10 +283,12 @@ public class Game {
             Giant entity = l.getWorld().spawn(l, Giant.class);
             entity.getEquipment().setItemInHand(new ItemStack(Material.WOOL, 1, color.woolColor.getWoolData()));
             entity.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 999));
+            entity.setRemoveWhenFarAway(false);
 
             ArmorStand armorStand = l.getWorld().spawn(l, ArmorStand.class);
             armorStand.setGravity(false);
             armorStand.setVisible(false);
+            armorStand.setRemoveWhenFarAway(false);
             armorStand.setPassenger(entity);
         }
 
