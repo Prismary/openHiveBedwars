@@ -10,10 +10,7 @@ import net.prismarray.openhivebedwars.util.TeamColor;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class TeamHandler {
@@ -73,7 +70,7 @@ public class TeamHandler {
     }
 
     public TeamColor getPlayerTeamColor(Player player) {
-        return getPlayerTeam(player).getColor();
+        return (Objects.nonNull(getPlayerTeam(player))) ? getPlayerTeam(player).getColor() : null;
     }
 
     public ArrayList<Player> getTeamlessPlayers() {
