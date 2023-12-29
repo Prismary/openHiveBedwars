@@ -1,6 +1,5 @@
-package net.prismarray.openhivebedwars.teamChest;
+package net.prismarray.openhivebedwars.bedwars;
 
-import net.prismarray.openhivebedwars.bedwars.Game;
 import net.prismarray.openhivebedwars.util.TeamColor;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -23,7 +22,7 @@ public class TeamChestManager {
 
     public void resetAllChests() {
         for (TeamColor teamColor : TeamColor.values()) {
-            this.teamInventories.put(teamColor, Bukkit.createInventory(null, 3*9, teamColor.chatColor + "Team Chest")); // ToDo: replace with the actual name
+            this.teamInventories.put(teamColor, Bukkit.createInventory(null, 6*9, teamColor.chatColor + "Team Chest")); // ToDo: replace with the actual name
         }
     }
 
