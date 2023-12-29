@@ -4,7 +4,10 @@ import net.prismarray.openhivebedwars.bedwars.Game;
 import net.prismarray.openhivebedwars.bedwars.Team;
 import net.prismarray.openhivebedwars.bedwars.TeamHandler;
 import net.prismarray.openhivebedwars.util.TeamColor;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+
+import java.util.Objects;
 
 public class IngameScoreboard extends PlayerScoreboard {
 
@@ -50,8 +53,8 @@ public class IngameScoreboard extends PlayerScoreboard {
     }
 
     public String getTeam() {
-        TeamColor color = Game.getTeamHandler().getPlayerTeam(getPlayer()).getColor();
-        return color.chatColor + color.chatName;
+        TeamColor color = Game.getTeamHandler().getPlayerTeamColor(getPlayer());
+        return (Objects.nonNull(color)) ? color.chatColor + color.chatName : ChatColor.DARK_GRAY + "None";
     }
 
     public String getBedStatus() {
