@@ -13,13 +13,18 @@ import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.BlockState;
+import org.bukkit.entity.ArmorStand;
+import org.bukkit.entity.Giant;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.Bed;
-import org.bukkit.scheduler.BukkitScheduler;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Set;
 
 public class Game {
 
@@ -183,6 +188,8 @@ public class Game {
 
         // Spawn NPCs
         ShopManager.getInstance().spawnNPCs();
+
+        spawnAllTeamIndicators();
     }
 
     public static void clearBed(TeamColor color) {
@@ -254,6 +261,35 @@ public class Game {
         bedFootState.update(true);
 
         // Thanks to val59000 on spigotmc.org!
+    }
+
+    public static void spawnAllTeamIndicators() {
+
+        for (Team team : getTeamHandler().getTeams()) {
+            spawnTeamIndicators(team.getColor());
+        }
+    }
+
+    public static void spawnTeamIndicators(TeamColor color) {
+
+        Set<Location> locations = getMapConfig().getTeamColorIndicatorLocations(color);
+
+        for (Location l : locations) {
+
+            l.setYaw(0);
+            l.setPitch(0);
+            l = l.add(new Vector(1.75, -10, -3.5));
+
+            Giant entity = l.getWorld().spawn(l, Giant.class);
+            entity.getEquipment().setItemInHand(new ItemStack(Material.WOOL, 1, color.woolColor.getWoolData()));
+            entity.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 999));
+
+            ArmorStand armorStand = l.getWorld().spawn(l, ArmorStand.class);
+            armorStand.setGravity(false);
+            armorStand.setVisible(false);
+            armorStand.setPassenger(entity);
+        }
+
     }
 
     public static void spawnAllPlayers() {
