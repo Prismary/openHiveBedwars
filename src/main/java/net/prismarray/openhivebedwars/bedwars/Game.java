@@ -7,6 +7,7 @@ import net.prismarray.openhivebedwars.bedwars.stats.SessionStatsManager;
 import net.prismarray.openhivebedwars.bedwars.stats.StatsManager;
 import net.prismarray.openhivebedwars.bedwars.summoner.*;
 import net.prismarray.openhivebedwars.config.MapConfig;
+import net.prismarray.openhivebedwars.teamChest.TeamChestManager;
 import net.prismarray.openhivebedwars.util.*;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -105,6 +106,8 @@ public class Game {
     public static void ingame() {
         instance.status = Status.INGAME;
 
+        TeamChestManager.instance.resetAllChests();
+
         SummonerManager.enableTeamSummoners();
         SummonerManager.enableDiamondSummoners();
     }
@@ -114,6 +117,7 @@ public class Game {
 
         Title.sendToAll("§c§lGame. OVER!", winner.chatColor + winner.chatName + " §7won the game");
 
+        TeamChestManager.instance.resetAllChests();
         // TODO: disable and or remove all summoners
     }
 
