@@ -7,7 +7,6 @@ import net.prismarray.openhivebedwars.bedwars.stats.SessionStatsManager;
 import net.prismarray.openhivebedwars.bedwars.stats.StatsManager;
 import net.prismarray.openhivebedwars.bedwars.summoner.*;
 import net.prismarray.openhivebedwars.config.MapConfig;
-import net.prismarray.openhivebedwars.teamChest.TeamChestManager;
 import net.prismarray.openhivebedwars.util.*;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -309,8 +308,13 @@ public class Game {
         player.setAllowFlight(false);
         player.setFlying(false);
         player.setFallDistance(0);
+
+        // todo: remove compass teleport item, if present
+        SpectatorCompass.removeAllFromInventory(player.getInventory());
+
         player.teleport(getMapConfig().getTeamSpawn(getTeamHandler().getPlayerTeam(player).getColor()));
         showPlayer(player);
+        PlayerStatusManager.registerPlayerRespawn(player);
     }
 
     public static void respawnPlayer(Player player) {
@@ -320,6 +324,10 @@ public class Game {
         hidePlayer(player);
         player.teleport(getMapConfig().getSpectatorSpawn());
         SoundHandler.playerSound(player, "mob.guardian.curse", 1f, 0.5f);
+        PlayerStatusManager.registerPlayerDeath(player, true);
+
+        // todo: add compass teleport item to player inv
+        player.getInventory().setItem(0, new SpectatorCompass());
 
         new RespawnTimer(player).start();
     }
@@ -378,6 +386,7 @@ public class Game {
         player.setFlying(true);
         hidePlayer(player);
         player.teleport(instance.mapConfig.getSpectatorSpawn());
+        PlayerStatusManager.registerPlayerDeath(player);
     }
 
     public static void setResultsPlayer(Player player) {

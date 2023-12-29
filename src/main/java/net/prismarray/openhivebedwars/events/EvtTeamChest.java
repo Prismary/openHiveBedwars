@@ -1,6 +1,9 @@
 package net.prismarray.openhivebedwars.events;
 
-import net.prismarray.openhivebedwars.teamChest.TeamChestManager;
+import net.prismarray.openhivebedwars.bedwars.Game;
+import net.prismarray.openhivebedwars.bedwars.PlayerStatusManager;
+import net.prismarray.openhivebedwars.bedwars.TeamChestManager;
+import net.prismarray.openhivebedwars.util.Status;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -12,17 +15,19 @@ public class EvtTeamChest extends EventBase {
     @EventHandler
     public void onInteraction(PlayerInteractEvent e) {
 
-        if (!e.hasBlock() || e.getClickedBlock().getType() != Material.ENDER_CHEST) {
+        if (!e.hasBlock() || e.getClickedBlock().getType() != Material.ENDER_CHEST
+                || e.getAction() != Action.RIGHT_CLICK_BLOCK) {
             return;
         }
 
-        if (e.getAction() != Action.RIGHT_CLICK_BLOCK) {
+        if (Game.getStatus() != Status.INGAME) {
+            e.setCancelled(true);
             return;
         }
 
         Player p = e.getPlayer();
 
-        if (p.getAllowFlight()) {
+        if (PlayerStatusManager.getPlayerStatus(p) != PlayerStatusManager.PlayerStatus.ALIVE) {
             e.setCancelled(true);
             return;
         }
