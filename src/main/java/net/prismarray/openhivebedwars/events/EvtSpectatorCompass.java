@@ -2,13 +2,18 @@ package net.prismarray.openhivebedwars.events;
 
 import net.prismarray.openhivebedwars.bedwars.PlayerStatusManager;
 import net.prismarray.openhivebedwars.bedwars.SpectatorCompass;
-import net.prismarray.openhivebedwars.gui.InventoryGUIBase;
+import net.prismarray.openhivebedwars.bedwars.spectator_compass.SpectatorCompassInventoryGUI;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class EvtSpectatorCompass extends EventBase {
 
@@ -37,6 +42,11 @@ public class EvtSpectatorCompass extends EventBase {
             return;
         }
 
-        (new InventoryGUIBase()).open(p); // todo: implement compass gui
+        List<Player> onlinePlayers = Bukkit.getOnlinePlayers().stream()
+                .map((player) -> (Player) player)
+                .filter((player) -> !Objects.equals(player, p))
+                .collect(Collectors.toList());
+
+        (new SpectatorCompassInventoryGUI(onlinePlayers)).open(p);
     }
 }
