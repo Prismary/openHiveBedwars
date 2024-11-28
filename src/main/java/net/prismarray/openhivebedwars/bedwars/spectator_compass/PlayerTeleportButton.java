@@ -19,7 +19,7 @@ public class PlayerTeleportButton extends InventoryGUIPlayerHead {
                 teleportTarget.getName(),
                 1,
                 teleportTarget.getDisplayName(),
-                new String[]{String.format("Teleportiert dich zu §2%s§r.", teleportTarget.getDisplayName())}
+                new String[]{String.format("Teleport yourself to §2%s§r.", teleportTarget.getDisplayName())}
         );
 
         addActionListenerToContainingInventory(new InventoryGUIActionListener() {
