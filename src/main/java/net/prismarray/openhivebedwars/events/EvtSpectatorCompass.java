@@ -47,6 +47,18 @@ public class EvtSpectatorCompass extends EventBase {
                 .filter((player) -> !Objects.equals(player, p))
                 .collect(Collectors.toList());
 
-        (new SpectatorCompassInventoryGUI(onlinePlayers, 0)).open(p);
+        /*
+        // ToDo: remove test code
+        onlinePlayers = new ArrayList<>();
+        Player content = Bukkit.getOnlinePlayers().stream()
+                .map((player) -> (Player) player)
+                .findFirst()
+                .orElse(p);
+        for (int i = 0; i < 9*7; i++) {
+            onlinePlayers.add(content);
+        }
+         */
+
+        (new SpectatorCompassInventoryGUI(onlinePlayers)).open(p);
     }
 }

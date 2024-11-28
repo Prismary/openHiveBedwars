@@ -43,6 +43,11 @@ public class SpectatorCompassInventoryGUI extends FramedFullRowsGUI {
                 i++
         ) {
             new PlayerTeleportButton(this, slot++, listedPlayers.get(i));
+
+            // Handle line-breaks
+            if (slot % 9 == 8) {
+                slot += 2;
+            }
         }
 
         this.lock();
