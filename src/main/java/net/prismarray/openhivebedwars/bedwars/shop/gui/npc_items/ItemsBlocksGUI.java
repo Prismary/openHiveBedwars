@@ -8,7 +8,7 @@ import org.bukkit.DyeColor;
 public class ItemsBlocksGUI extends FramedFullRowsGUI {
 
     public ItemsBlocksGUI(TeamColor teamColor) {
-        super("Blocks", 4, DyeColor.LIME, true, () -> new ItemsRootGUI(teamColor));
+        super("Blocks", 4, DyeColor.LIME, true, () -> new ItemsRootGUI(teamColor), null);
 
         new Glass(this, 10, teamColor.woolColor);
         new Wool(this, 11, teamColor.woolColor);

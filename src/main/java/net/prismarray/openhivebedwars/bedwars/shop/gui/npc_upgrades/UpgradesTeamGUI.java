@@ -7,7 +7,7 @@ import org.bukkit.DyeColor;
 public class UpgradesTeamGUI extends FramedFullRowsGUI {
 
     public UpgradesTeamGUI(TeamColor teamColor) {
-        super("Team Upgrades", 5, DyeColor.MAGENTA, true, () -> new UpgradesRootGUI(teamColor));
+        super("Team Upgrades", 5, DyeColor.MAGENTA, true, () -> new UpgradesRootGUI(teamColor), null);
         // todo get correct frame color
 
 

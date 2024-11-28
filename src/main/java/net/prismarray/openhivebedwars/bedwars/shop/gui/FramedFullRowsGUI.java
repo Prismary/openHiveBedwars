@@ -10,7 +10,7 @@ import java.util.concurrent.Callable;
 
 public abstract class FramedFullRowsGUI extends InventoryGUIBase {
 
-    public FramedFullRowsGUI(String name, int rows, DyeColor color, boolean hasCancel, @Nullable Callable<? extends InventoryGUIBase> previousGUIFactory) {
+    public FramedFullRowsGUI(String name, int rows, DyeColor color, boolean hasCancel, @Nullable Callable<? extends InventoryGUIBase> previousGUIFactory, @Nullable Callable<? extends InventoryGUIBase> nextGUIFactory) {
         super(name, correctRowCount(rows) * 9);
         rows = correctRowCount(rows);
 
@@ -22,6 +22,10 @@ public abstract class FramedFullRowsGUI extends InventoryGUIBase {
 
         if (Objects.nonNull(previousGUIFactory)) {
             GUIBuilder.setPreviousButton(this, 9, rows, previousGUIFactory);
+        }
+
+        if (Objects.nonNull(nextGUIFactory)) {
+            GUIBuilder.setNextButton(this, 9, rows, nextGUIFactory);
         }
     }
 

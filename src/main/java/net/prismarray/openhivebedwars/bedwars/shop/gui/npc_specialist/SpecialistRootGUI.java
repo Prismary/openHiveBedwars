@@ -7,7 +7,7 @@ import org.bukkit.DyeColor;
 public class SpecialistRootGUI extends FramedFullRowsGUI {
 
     public SpecialistRootGUI() {
-        super("The Specialist", 4, DyeColor.ORANGE, true, null);
+        super("The Specialist", 4, DyeColor.ORANGE, true, null, null);
 
         new PersonalDoggo(this, 11);
         new InstantTNT(this, 12);

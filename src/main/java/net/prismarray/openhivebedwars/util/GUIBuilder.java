@@ -1,5 +1,6 @@
 package net.prismarray.openhivebedwars.util;
 
+import net.prismarray.openhivebedwars.bedwars.shop.items.general.NextButton;
 import net.prismarray.openhivebedwars.bedwars.shop.items.general.PreviousButton;
 import net.prismarray.openhivebedwars.gui.InventoryGUIBase;
 import net.prismarray.openhivebedwars.gui.InventoryGUIItem;
@@ -20,6 +21,11 @@ public class GUIBuilder {
     public static void setPreviousButton(InventoryGUIBase gui, int width, int height, Callable<? extends InventoryGUIBase> destinationGUIFactory) {
         int slot = ((height - 1) * width + width / 2) - 1;
         new PreviousButton(gui, slot, destinationGUIFactory);
+    }
+
+    public static void setNextButton(InventoryGUIBase gui, int width, int height, Callable<? extends InventoryGUIBase> destinationGUIFactory) {
+        int slot = ((height - 1) * width + width / 2) + 1;
+        new NextButton(gui, slot, destinationGUIFactory);
     }
 
     public static void colorFrame(InventoryGUIBase gui, DyeColor color, int width, int height) {

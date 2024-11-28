@@ -9,7 +9,7 @@ import org.bukkit.DyeColor;
 public class UpgradesSummonerGUI extends FramedFullRowsGUI {
 
     public UpgradesSummonerGUI(TeamColor teamColor) {
-        super("Summoner Upgrades", 5, DyeColor.MAGENTA, true, () -> new UpgradesRootGUI(teamColor));
+        super("Summoner Upgrades", 5, DyeColor.MAGENTA, true, () -> new UpgradesRootGUI(teamColor), null);
 
         // Iron row
         new SummonerUpgrade(this, 11, teamColor, Currency.IRON, 1, Currency.IRON, 0, 0, () -> new UpgradesSummonerGUI(teamColor));

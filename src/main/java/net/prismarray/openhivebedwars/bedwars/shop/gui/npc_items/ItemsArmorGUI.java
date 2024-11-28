@@ -8,7 +8,7 @@ import org.bukkit.DyeColor;
 public class ItemsArmorGUI extends FramedFullRowsGUI {
 
     public ItemsArmorGUI(TeamColor teamColor) {
-        super("Armor", 6, DyeColor.RED, true, () -> new ItemsRootGUI(teamColor));
+        super("Armor", 6, DyeColor.RED, true, () -> new ItemsRootGUI(teamColor), null);
 
         new ChainHelmet(this, 10);
         new ChainChestplate(this, 19);

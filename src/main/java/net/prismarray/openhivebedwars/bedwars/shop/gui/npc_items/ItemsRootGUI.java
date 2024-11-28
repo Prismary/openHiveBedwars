@@ -11,7 +11,7 @@ import org.bukkit.DyeColor;
 public class ItemsRootGUI extends FramedFullRowsGUI {
 
     public ItemsRootGUI(TeamColor teamColor) {
-        super("Item Shop", 6, DyeColor.PURPLE, true, null);
+        super("Item Shop", 6, DyeColor.PURPLE, true, null, null);
 
 
         new Blocks(this, 19, () -> new ItemsBlocksGUI(teamColor));

@@ -8,7 +8,7 @@ import org.bukkit.DyeColor;
 public class ItemsWeaponsGUI extends FramedFullRowsGUI {
 
     public ItemsWeaponsGUI(TeamColor teamColor) {
-        super("Weapons & Tools", 6, DyeColor.BLUE, true, () -> new ItemsRootGUI(teamColor));
+        super("Weapons & Tools", 6, DyeColor.BLUE, true, () -> new ItemsRootGUI(teamColor), null);
 
         new StoneSword(this, 10);
         new StonePickaxe(this, 19);
