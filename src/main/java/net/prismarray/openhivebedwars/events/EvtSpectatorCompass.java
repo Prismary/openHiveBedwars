@@ -42,6 +42,7 @@ public class EvtSpectatorCompass extends EventBase {
             return;
         }
 
+        // ToDo: maybe filter or sort by player status (e.g. only display alive players?)
         List<Player> onlinePlayers = Bukkit.getOnlinePlayers().stream()
                 .map((player) -> (Player) player)
                 .filter((player) -> !Objects.equals(player, p))
