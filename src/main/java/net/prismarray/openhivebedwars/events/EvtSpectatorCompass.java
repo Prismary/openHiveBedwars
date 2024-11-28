@@ -47,6 +47,6 @@ public class EvtSpectatorCompass extends EventBase {
                 .filter((player) -> !Objects.equals(player, p))
                 .collect(Collectors.toList());
 
-        (new SpectatorCompassInventoryGUI(onlinePlayers)).open(p);
+        (new SpectatorCompassInventoryGUI(onlinePlayers, 0)).open(p);
     }
 }
