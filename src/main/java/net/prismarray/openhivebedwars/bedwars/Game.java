@@ -326,8 +326,8 @@ public class Game {
         SoundHandler.playerSound(player, "mob.guardian.curse", 1f, 0.5f);
         PlayerStatusManager.registerPlayerDeath(player, true);
 
-        // todo: add compass teleport item to player inv
-        player.getInventory().setItem(0, new SpectatorCompass());
+        // todo: possibly add spectator compass to player inv? (might enable cheating though...
+        //  Would also require adjusting multiple PlayerStatus checks for PlayerStatus.SPECTATOR in the process)
 
         new RespawnTimer(player).start();
     }
@@ -387,6 +387,8 @@ public class Game {
         hidePlayer(player);
         player.teleport(instance.mapConfig.getSpectatorSpawn());
         PlayerStatusManager.registerPlayerDeath(player);
+
+        player.getInventory().setItem(0, new SpectatorCompass());
     }
 
     public static void setResultsPlayer(Player player) {

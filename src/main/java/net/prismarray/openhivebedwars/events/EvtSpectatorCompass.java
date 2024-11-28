@@ -38,7 +38,7 @@ public class EvtSpectatorCompass extends EventBase {
             return;
         }
 
-        if (PlayerStatusManager.getPlayerStatus(p) == PlayerStatusManager.PlayerStatus.ALIVE) {
+        if (PlayerStatusManager.getPlayerStatus(p) != PlayerStatusManager.PlayerStatus.SPECTATOR) {
             return;
         }
 

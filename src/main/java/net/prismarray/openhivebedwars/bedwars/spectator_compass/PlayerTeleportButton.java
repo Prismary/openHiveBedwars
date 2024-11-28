@@ -1,6 +1,8 @@
 package net.prismarray.openhivebedwars.bedwars.spectator_compass;
 
 import net.prismarray.openhivebedwars.OpenHiveBedwars;
+import net.prismarray.openhivebedwars.bedwars.PlayerStatusManager;
+import net.prismarray.openhivebedwars.bedwars.PlayerStatusManager.PlayerStatus;
 import net.prismarray.openhivebedwars.gui.InventoryGUIActionHandler;
 import net.prismarray.openhivebedwars.gui.InventoryGUIActionListener;
 import net.prismarray.openhivebedwars.gui.InventoryGUIBase;
@@ -27,16 +29,18 @@ public class PlayerTeleportButton extends InventoryGUIPlayerHead {
             public void onClick(InventoryGUIClickAction a) {
                 Bukkit.getScheduler().runTask(OpenHiveBedwars.getInstance(), () -> {
                     try {
-                        // ToDo: remove debug messages
-                        Bukkit.broadcastMessage("Teleport event fired");
                         if (!teleportTarget.isOnline()) {
                             return;
                         }
-                        Bukkit.broadcastMessage("Target verified online");
-                        a.getPlayer().teleport(teleportTarget.getLocation());
-                        Bukkit.broadcastMessage("Player teleported to target");
+
                         a.getPlayer().closeInventory();
-                        Bukkit.broadcastMessage("Player inventory closed");
+
+                        if (PlayerStatusManager.getPlayerStatus(a.getPlayer()) != PlayerStatus.SPECTATOR) {
+                            return;
+                        }
+
+                        a.getPlayer().teleport(teleportTarget.getLocation());
+
                     } catch (Exception e) {
                         throw new RuntimeException();
                     }
