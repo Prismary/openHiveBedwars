@@ -3,15 +3,22 @@ package net.prismarray.openhivebedwars.bedwars.shop.gui.npc_upgrades;
 import net.prismarray.openhivebedwars.bedwars.shop.gui.FramedFullRowsGUI;
 import net.prismarray.openhivebedwars.bedwars.shop.items.npc_upgrades.root.SummonerUpgrades;
 import net.prismarray.openhivebedwars.bedwars.shop.items.npc_upgrades.root.TeamUpgrades;
-import net.prismarray.openhivebedwars.util.TeamColor;
+import net.prismarray.openhivebedwars.gui.InventoryGUIContext;
 
 public class UpgradesRootGUI extends FramedFullRowsGUI {
 
-    public UpgradesRootGUI(TeamColor teamColor) {
-        super(String.format("Team %s Upgrades", teamColor.chatName), 5, teamColor.woolColor, true, null, null);
+    public UpgradesRootGUI(InventoryGUIContext context) {
+        super(
+                String.format("Team %s Upgrades", context.getOpeningPlayerTeam().getColor().chatName),
+                5,
+                context.getOpeningPlayerTeam().getColor().woolColor,
+                true,
+                null,
+                null
+        );
 
-        new SummonerUpgrades(this, 20, () -> new UpgradesSummonerGUI(teamColor));
-        new TeamUpgrades(this, 22, () -> new UpgradesTeamGUI(teamColor));
+        new SummonerUpgrades(this, 20, () -> new UpgradesSummonerGUI(context));
+        new TeamUpgrades(this, 22, () -> new UpgradesTeamGUI(context));
 
         lock();
     }

@@ -2,13 +2,13 @@ package net.prismarray.openhivebedwars.bedwars.shop.gui.npc_items;
 
 import net.prismarray.openhivebedwars.bedwars.shop.gui.FramedFullRowsGUI;
 import net.prismarray.openhivebedwars.bedwars.shop.items.npc_items.armor.*;
-import net.prismarray.openhivebedwars.util.TeamColor;
+import net.prismarray.openhivebedwars.gui.InventoryGUIContext;
 import org.bukkit.DyeColor;
 
 public class ItemsArmorGUI extends FramedFullRowsGUI {
 
-    public ItemsArmorGUI(TeamColor teamColor) {
-        super("Armor", 6, DyeColor.RED, true, () -> new ItemsRootGUI(teamColor), null);
+    public ItemsArmorGUI(InventoryGUIContext context) {
+        super("Armor", 6, DyeColor.RED, true, () -> new ItemsRootGUI(context), null);
 
         new ChainHelmet(this, 10);
         new ChainChestplate(this, 19);
