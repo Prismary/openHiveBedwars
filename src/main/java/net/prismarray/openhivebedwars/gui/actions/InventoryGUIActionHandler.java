@@ -1,4 +1,4 @@
-package net.prismarray.openhivebedwars.gui;
+package net.prismarray.openhivebedwars.gui.actions;
 
 
 import java.lang.annotation.ElementType;

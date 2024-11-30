@@ -1,7 +1,6 @@
 package net.prismarray.openhivebedwars.gui;
 
-import net.prismarray.openhivebedwars.gui.actions.InventoryGUIAction;
-import net.prismarray.openhivebedwars.gui.actions.InventoryGUIClickAction;
+import net.prismarray.openhivebedwars.gui.actions.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;

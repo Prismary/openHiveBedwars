@@ -1,6 +1,6 @@
 package net.prismarray.openhivebedwars.events;
 
-import net.prismarray.openhivebedwars.gui.InventoryGUIActionManager;
+import net.prismarray.openhivebedwars.gui.actions.InventoryGUIActionManager;
 import net.prismarray.openhivebedwars.gui.InventoryGUIBase;
 import net.prismarray.openhivebedwars.gui.actions.*;
 import org.bukkit.entity.Player;

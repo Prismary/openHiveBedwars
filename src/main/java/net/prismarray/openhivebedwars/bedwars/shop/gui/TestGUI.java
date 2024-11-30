@@ -2,9 +2,7 @@ package net.prismarray.openhivebedwars.bedwars.shop.gui;
 
 import net.prismarray.openhivebedwars.OpenHiveBedwars;
 import net.prismarray.openhivebedwars.gui.*;
-import net.prismarray.openhivebedwars.gui.actions.InventoryGUILeftClickAction;
-import net.prismarray.openhivebedwars.gui.actions.InventoryGUILeftOrShiftLeftClickAction;
-import net.prismarray.openhivebedwars.gui.actions.InventoryGUIShiftLeftClickAction;
+import net.prismarray.openhivebedwars.gui.actions.*;
 import net.prismarray.openhivebedwars.util.Broadcast;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;

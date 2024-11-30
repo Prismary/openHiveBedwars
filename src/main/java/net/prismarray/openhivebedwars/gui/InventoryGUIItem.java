@@ -1,6 +1,6 @@
 package net.prismarray.openhivebedwars.gui;
 
-import org.bukkit.Bukkit;
+import net.prismarray.openhivebedwars.gui.actions.InventoryGUIActionListener;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;

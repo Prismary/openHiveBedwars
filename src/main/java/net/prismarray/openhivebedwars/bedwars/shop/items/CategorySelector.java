@@ -1,8 +1,8 @@
 package net.prismarray.openhivebedwars.bedwars.shop.items;
 
 import net.prismarray.openhivebedwars.OpenHiveBedwars;
-import net.prismarray.openhivebedwars.gui.InventoryGUIActionHandler;
-import net.prismarray.openhivebedwars.gui.InventoryGUIActionListener;
+import net.prismarray.openhivebedwars.gui.actions.InventoryGUIActionHandler;
+import net.prismarray.openhivebedwars.gui.actions.InventoryGUIActionListener;
 import net.prismarray.openhivebedwars.gui.InventoryGUIBase;
 import net.prismarray.openhivebedwars.gui.InventoryGUIItem;
 import net.prismarray.openhivebedwars.gui.actions.InventoryGUIClickAction;
