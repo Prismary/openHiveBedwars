@@ -1,6 +1,6 @@
 package net.prismarray.openhivebedwars.bedwars;
 
-import net.prismarray.openhivebedwars.gui.InventoryGUIItem;
+import net.prismarray.openhivebedwars.gui.components.InventoryGUIItem;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;

@@ -2,7 +2,7 @@ package net.prismarray.openhivebedwars.bedwars.bridgebuilder;
 
 import net.minecraft.server.v1_8_R3.NBTTagByte;
 import net.minecraft.server.v1_8_R3.NBTTagCompound;
-import net.prismarray.openhivebedwars.gui.InventoryGUICustomHead;
+import net.prismarray.openhivebedwars.gui.components.InventoryGUICustomHead;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
@@ -12,7 +12,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 public class BridgeBuilderItem extends InventoryGUICustomHead {
 

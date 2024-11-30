@@ -1,4 +1,4 @@
-package net.prismarray.openhivebedwars.gui;
+package net.prismarray.openhivebedwars.gui.components;
 
 import net.prismarray.openhivebedwars.gui.actions.InventoryGUIActionListener;
 import org.bukkit.Material;

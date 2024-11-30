@@ -1,6 +1,6 @@
 package net.prismarray.openhivebedwars.commands.gui;
 
-import net.prismarray.openhivebedwars.gui.InventoryGUIBase;
+import net.prismarray.openhivebedwars.gui.components.InventoryGUIBase;
 import net.prismarray.openhivebedwars.util.Broadcast;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

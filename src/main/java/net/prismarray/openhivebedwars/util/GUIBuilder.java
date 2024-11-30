@@ -2,8 +2,8 @@ package net.prismarray.openhivebedwars.util;
 
 import net.prismarray.openhivebedwars.bedwars.shop.items.general.NextButton;
 import net.prismarray.openhivebedwars.bedwars.shop.items.general.PreviousButton;
-import net.prismarray.openhivebedwars.gui.InventoryGUIBase;
-import net.prismarray.openhivebedwars.gui.InventoryGUIItem;
+import net.prismarray.openhivebedwars.gui.components.InventoryGUIBase;
+import net.prismarray.openhivebedwars.gui.components.InventoryGUIItem;
 import net.prismarray.openhivebedwars.bedwars.shop.items.general.CancelButton;
 import net.prismarray.openhivebedwars.bedwars.shop.items.general.ColoredGlassFrame;
 import org.bukkit.DyeColor;

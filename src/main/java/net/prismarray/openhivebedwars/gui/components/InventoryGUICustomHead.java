@@ -1,4 +1,4 @@
-package net.prismarray.openhivebedwars.gui;
+package net.prismarray.openhivebedwars.gui.components;
 
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;

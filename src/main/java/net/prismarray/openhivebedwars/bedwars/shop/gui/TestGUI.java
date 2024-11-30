@@ -1,8 +1,10 @@
 package net.prismarray.openhivebedwars.bedwars.shop.gui;
 
 import net.prismarray.openhivebedwars.OpenHiveBedwars;
-import net.prismarray.openhivebedwars.gui.*;
 import net.prismarray.openhivebedwars.gui.actions.*;
+import net.prismarray.openhivebedwars.gui.components.InventoryGUIBase;
+import net.prismarray.openhivebedwars.gui.components.InventoryGUIItem;
+import net.prismarray.openhivebedwars.gui.components.InventoryGUIPlayerHead;
 import net.prismarray.openhivebedwars.util.Broadcast;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;

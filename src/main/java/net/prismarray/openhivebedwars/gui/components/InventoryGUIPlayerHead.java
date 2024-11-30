@@ -1,4 +1,4 @@
-package net.prismarray.openhivebedwars.gui;
+package net.prismarray.openhivebedwars.gui.components;
 
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemFlag;

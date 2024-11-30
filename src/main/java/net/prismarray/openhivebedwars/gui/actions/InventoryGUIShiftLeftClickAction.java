@@ -1,6 +1,6 @@
 package net.prismarray.openhivebedwars.gui.actions;
 
-import net.prismarray.openhivebedwars.gui.InventoryGUIBase;
+import net.prismarray.openhivebedwars.gui.components.InventoryGUIBase;
 import org.bukkit.entity.Player;
 
 public class InventoryGUIShiftLeftClickAction extends InventoryGUILeftOrShiftLeftClickAction {

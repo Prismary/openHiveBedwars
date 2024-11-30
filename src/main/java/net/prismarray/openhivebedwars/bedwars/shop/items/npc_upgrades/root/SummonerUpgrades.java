@@ -1,7 +1,7 @@
 package net.prismarray.openhivebedwars.bedwars.shop.items.npc_upgrades.root;
 
 import net.prismarray.openhivebedwars.bedwars.shop.items.CategorySelector;
-import net.prismarray.openhivebedwars.gui.InventoryGUIBase;
+import net.prismarray.openhivebedwars.gui.components.InventoryGUIBase;
 import org.bukkit.Material;
 
 import java.util.concurrent.Callable;
