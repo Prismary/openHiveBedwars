@@ -7,6 +7,9 @@ import net.prismarray.openhivebedwars.bedwars.shop.gui.npc_items.ItemsRootGUI;
 import net.prismarray.openhivebedwars.bedwars.shop.gui.npc_items.ItemsWeaponsGUI;
 import net.prismarray.openhivebedwars.bedwars.shop.gui.npc_specialist.EnchanterRootGUI;
 import net.prismarray.openhivebedwars.bedwars.shop.gui.npc_specialist.SpecialistRootGUI;
+import net.prismarray.openhivebedwars.bedwars.shop.gui.npc_upgrades.UpgradesRootGUI;
+import net.prismarray.openhivebedwars.bedwars.shop.gui.npc_upgrades.UpgradesSummonerGUI;
+import net.prismarray.openhivebedwars.bedwars.shop.gui.npc_upgrades.UpgradesTeamGUI;
 import net.prismarray.openhivebedwars.commands.gui.CommandGUI;
 import net.prismarray.openhivebedwars.commands.openhivebedwars.CommandOpenHiveBedwars;
 import net.prismarray.openhivebedwars.commands.team.CommandTeam;
@@ -48,15 +51,14 @@ public final class OpenHiveBedwars extends JavaPlugin {
     public void onEnable() {
 
         initializeConfig();
-
-        registerEnchantments();
-        initializeInventoryGUIs();
-
         initializeLobbyConfig();
         initializeMapManager();
 
         registerCommands();
         registerEvents();
+        registerEnchantments();
+
+        initializeInventoryGUIs();
 
         Game.startup(config.getMode());
     }
@@ -119,9 +121,9 @@ public final class OpenHiveBedwars extends JavaPlugin {
         InventoryGUIManager.registerInventoryGUIFactory("npc-items-armor", ItemsArmorGUI::new);
         InventoryGUIManager.registerInventoryGUIFactory("npc-items-weapons", ItemsWeaponsGUI::new);
 
-        InventoryGUIManager.registerInventoryGUIFactory("npc-upgrades-root", EnchanterRootGUI::new);
-        InventoryGUIManager.registerInventoryGUIFactory("npc-upgrades-summoner", EnchanterRootGUI::new);
-        InventoryGUIManager.registerInventoryGUIFactory("npc-upgrades-team", EnchanterRootGUI::new);
+        InventoryGUIManager.registerInventoryGUIFactory("npc-upgrades-root", UpgradesRootGUI::new);
+        InventoryGUIManager.registerInventoryGUIFactory("npc-upgrades-summoner", UpgradesSummonerGUI::new);
+        InventoryGUIManager.registerInventoryGUIFactory("npc-upgrades-team", UpgradesTeamGUI::new);
 
         InventoryGUIManager.registerInventoryGUIFactory("npc-enchanter-root", EnchanterRootGUI::new);
 
