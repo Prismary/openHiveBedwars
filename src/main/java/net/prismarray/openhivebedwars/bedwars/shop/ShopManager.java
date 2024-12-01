@@ -106,6 +106,6 @@ public class ShopManager {
     }
 
     private void spawnSpecialistNPCs() {
-        Game.getMapConfig().getSpecialistNPCLocations().forEach(Items::new);
+        Game.getMapConfig().getSpecialistNPCLocations().forEach(Specialist::new);
     }
 }
