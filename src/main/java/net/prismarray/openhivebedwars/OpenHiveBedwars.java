@@ -1,6 +1,12 @@
 package net.prismarray.openhivebedwars;
 
 import net.prismarray.openhivebedwars.bedwars.Game;
+import net.prismarray.openhivebedwars.bedwars.shop.gui.npc_items.ItemsArmorGUI;
+import net.prismarray.openhivebedwars.bedwars.shop.gui.npc_items.ItemsBlocksGUI;
+import net.prismarray.openhivebedwars.bedwars.shop.gui.npc_items.ItemsRootGUI;
+import net.prismarray.openhivebedwars.bedwars.shop.gui.npc_items.ItemsWeaponsGUI;
+import net.prismarray.openhivebedwars.bedwars.shop.gui.npc_specialist.EnchanterRootGUI;
+import net.prismarray.openhivebedwars.bedwars.shop.gui.npc_specialist.SpecialistRootGUI;
 import net.prismarray.openhivebedwars.commands.gui.CommandGUI;
 import net.prismarray.openhivebedwars.commands.openhivebedwars.CommandOpenHiveBedwars;
 import net.prismarray.openhivebedwars.commands.team.CommandTeam;
@@ -11,6 +17,7 @@ import net.prismarray.openhivebedwars.config.LobbyConfig;
 import net.prismarray.openhivebedwars.config.MapManager;
 import net.prismarray.openhivebedwars.enchantments.InventoryGUIDummyEnchantment;
 import net.prismarray.openhivebedwars.events.*;
+import net.prismarray.openhivebedwars.gui.InventoryGUIManager;
 import org.bukkit.command.defaults.EnchantCommand;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.HandlerList;
@@ -39,13 +46,17 @@ public final class OpenHiveBedwars extends JavaPlugin {
 
     @Override
     public void onEnable() {
+
         initializeConfig();
+
+        registerEnchantments();
+        initializeInventoryGUIs();
+
         initializeLobbyConfig();
         initializeMapManager();
 
         registerCommands();
         registerEvents();
-        registerEnchantments();
 
         Game.startup(config.getMode());
     }
@@ -83,6 +94,47 @@ public final class OpenHiveBedwars extends JavaPlugin {
         } catch (ConfigValidationException | IOException e) {
             this.getLogger().warning("Failed to load lobby.yml. Using default values instead...");
             this.getLogger().warning("Error message: " + e.getMessage());
+        }
+    }
+
+    private void initializeInventoryGUIs() {
+
+        this.getLogger().info("Attempting to read configuration files in GUI directory...");
+
+        // ToDo: implement loading for YML-Files
+        /*
+        lobbyConfig = new LobbyConfig(this.getLogger(), new File(this.getDataFolder(), "lobby.yml"));
+        try {
+            lobbyConfig.loadConfig(getResource("lobby.yml"));
+            this.getLogger().info("Successfully loaded lobby.yml");
+
+        } catch (ConfigValidationException | IOException e) {
+            this.getLogger().warning("Failed to load lobby.yml. Using default values instead...");
+            this.getLogger().warning("Error message: " + e.getMessage());
+        }
+         */
+
+        InventoryGUIManager.registerInventoryGUIFactory("npc-items-root", ItemsRootGUI::new);
+        InventoryGUIManager.registerInventoryGUIFactory("npc-items-blocks", ItemsBlocksGUI::new);
+        InventoryGUIManager.registerInventoryGUIFactory("npc-items-armor", ItemsArmorGUI::new);
+        InventoryGUIManager.registerInventoryGUIFactory("npc-items-weapons", ItemsWeaponsGUI::new);
+
+        InventoryGUIManager.registerInventoryGUIFactory("npc-upgrades-root", EnchanterRootGUI::new);
+        InventoryGUIManager.registerInventoryGUIFactory("npc-upgrades-summoner", EnchanterRootGUI::new);
+        InventoryGUIManager.registerInventoryGUIFactory("npc-upgrades-team", EnchanterRootGUI::new);
+
+        InventoryGUIManager.registerInventoryGUIFactory("npc-enchanter-root", EnchanterRootGUI::new);
+
+        InventoryGUIManager.registerInventoryGUIFactory("npc-specialist-root", SpecialistRootGUI::new);
+
+
+        for (String key : new String[]{"npc-items-root", "npc-upgrades-root", "npc-enchanter-root", "npc-specialist-root"}) {
+            if (!InventoryGUIManager.hasInventoryGUI(key)) {
+                this.getLogger().warning(String.format(
+                        "InventoryGUIManager is missing an entry for key '%s' after initialization. This key is " +
+                                "required by most standard maps and should be provided.", key
+                ));
+            }
         }
     }
 

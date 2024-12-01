@@ -1,6 +1,6 @@
 package net.prismarray.openhivebedwars.bedwars.shop.npc;
 
-import net.prismarray.openhivebedwars.bedwars.shop.gui.npc_specialist.SpecialistRootGUI;
+import net.prismarray.openhivebedwars.gui.InventoryGUIManager;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
@@ -19,6 +19,6 @@ public class Specialist extends VillagerShop {
 
     @Override
     public void openShop(Player player) {
-        new SpecialistRootGUI().open(player);
+        InventoryGUIManager.openInventoryGUI("npc-specialist-root", player);
     }
 }
