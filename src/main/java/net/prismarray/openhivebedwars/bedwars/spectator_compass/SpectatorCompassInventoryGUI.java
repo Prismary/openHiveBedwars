@@ -23,12 +23,17 @@ public class SpectatorCompassInventoryGUI extends FramedFullRowsGUI {
                         - (Objects.nonNull(pageStart) ? pageStart : 0) * MAX_PAGE_SIZE) / 9) + 2,
                 DyeColor.BLACK,
                 true,
+                null,
+                null
+                // ToDo: revisit this in light of the new GUI architecture
+                /*,
                 (Objects.isNull(pageStart) || pageStart == 0)
                         ? null : () -> new SpectatorCompassInventoryGUI(listedPlayers, pageStart - 1),
                 (
                         Objects.isNull(listedPlayers) || listedPlayers.size() <=
                                 ((Objects.isNull(pageStart) ? 0 : pageStart) + 1) * MAX_PAGE_SIZE
                 ) ? null : () -> new SpectatorCompassInventoryGUI(listedPlayers, pageStart + 1)
+                */
         );
 
         int effPageStart = 0;
