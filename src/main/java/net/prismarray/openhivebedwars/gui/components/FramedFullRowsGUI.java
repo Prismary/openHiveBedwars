@@ -1,4 +1,4 @@
-package net.prismarray.openhivebedwars.bedwars.shop.gui;
+package net.prismarray.openhivebedwars.gui.components;
 
 import net.prismarray.openhivebedwars.gui.components.InventoryGUIBase;
 import net.prismarray.openhivebedwars.util.GUIBuilder;

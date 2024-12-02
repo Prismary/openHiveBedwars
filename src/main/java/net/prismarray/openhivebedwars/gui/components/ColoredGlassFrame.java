@@ -1,4 +1,4 @@
-package net.prismarray.openhivebedwars.bedwars.shop.items.general;
+package net.prismarray.openhivebedwars.gui.components;
 
 import net.prismarray.openhivebedwars.gui.components.InventoryGUIItem;
 import org.bukkit.DyeColor;

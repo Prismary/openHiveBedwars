@@ -1,4 +1,4 @@
-package net.prismarray.openhivebedwars.bedwars.shop.items.general;
+package net.prismarray.openhivebedwars.gui.components;
 
 import net.prismarray.openhivebedwars.OpenHiveBedwars;
 import net.prismarray.openhivebedwars.gui.InventoryGUIManager;
@@ -10,15 +10,15 @@ import net.prismarray.openhivebedwars.gui.actions.InventoryGUIClickAction;
 import org.bukkit.Bukkit;
 
 
-public class NextButton extends InventoryGUICustomHead {
+public class PreviousButton extends InventoryGUICustomHead {
 
-    public NextButton(InventoryGUIBase gui, int slot, String destinationGUI) {
+    public PreviousButton(InventoryGUIBase gui, int slot, String destinationGUI) {
         super(
                 gui,
                 slot,
-                "http://textures.minecraft.net/texture/141ff6bc67a481232d2e669e43c4f087f9d2306665b4f829fb86892d13b70ca",
+                "http://textures.minecraft.net/texture/49b2bee39b6ef47e182d6f1dca9dea842fcd68bda9bacc6a6d66a8dcdf3ec",
                 1,
-                "§6§lNext Page"
+                "§6§lPrevious Page"
         );
 
         addActionListenerToContainingInventory(new InventoryGUIActionListener() {
@@ -35,4 +35,3 @@ public class NextButton extends InventoryGUICustomHead {
         });
     }
 }
-

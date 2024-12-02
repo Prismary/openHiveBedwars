@@ -1,7 +1,7 @@
 package net.prismarray.openhivebedwars.bedwars.shop.items.npc_items.blocks;
 
 import net.prismarray.openhivebedwars.OpenHiveBedwars;
-import net.prismarray.openhivebedwars.bedwars.shop.items.PurchasableItem;
+import net.prismarray.openhivebedwars.gui.components.PurchasableItem;
 import net.prismarray.openhivebedwars.gui.components.InventoryGUIBase;
 import net.prismarray.openhivebedwars.util.Currency;
 import org.bukkit.DyeColor;

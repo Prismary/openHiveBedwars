@@ -1,6 +1,6 @@
 package net.prismarray.openhivebedwars.bedwars.shop.gui.npc_upgrades;
 
-import net.prismarray.openhivebedwars.bedwars.shop.gui.FramedFullRowsGUI;
+import net.prismarray.openhivebedwars.gui.components.FramedFullRowsGUI;
 import net.prismarray.openhivebedwars.bedwars.shop.items.npc_upgrades.summoner_upgrades.SummonerUpgrade;
 import net.prismarray.openhivebedwars.gui.InventoryGUIContext;
 import net.prismarray.openhivebedwars.util.Currency;

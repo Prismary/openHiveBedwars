@@ -1,6 +1,6 @@
 package net.prismarray.openhivebedwars.bedwars.spectator_compass;
 
-import net.prismarray.openhivebedwars.bedwars.shop.gui.FramedFullRowsGUI;
+import net.prismarray.openhivebedwars.gui.components.FramedFullRowsGUI;
 import org.bukkit.DyeColor;
 import org.bukkit.entity.Player;
 

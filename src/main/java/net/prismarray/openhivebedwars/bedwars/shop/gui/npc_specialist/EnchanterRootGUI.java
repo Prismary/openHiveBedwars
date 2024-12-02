@@ -1,11 +1,7 @@
 package net.prismarray.openhivebedwars.bedwars.shop.gui.npc_specialist;
 
-import net.prismarray.openhivebedwars.bedwars.shop.gui.FramedFullRowsGUI;
-import net.prismarray.openhivebedwars.bedwars.shop.items.npc_specialist.*;
 import net.prismarray.openhivebedwars.gui.InventoryGUIContext;
 import net.prismarray.openhivebedwars.gui.components.InventoryGUIBase;
-import org.bukkit.ChatColor;
-import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;

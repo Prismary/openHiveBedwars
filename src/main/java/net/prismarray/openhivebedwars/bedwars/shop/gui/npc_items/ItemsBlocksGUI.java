@@ -1,6 +1,6 @@
 package net.prismarray.openhivebedwars.bedwars.shop.gui.npc_items;
 
-import net.prismarray.openhivebedwars.bedwars.shop.gui.FramedFullRowsGUI;
+import net.prismarray.openhivebedwars.gui.components.FramedFullRowsGUI;
 import net.prismarray.openhivebedwars.bedwars.shop.items.npc_items.blocks.*;
 import net.prismarray.openhivebedwars.gui.InventoryGUIContext;
 import net.prismarray.openhivebedwars.util.TeamColor;

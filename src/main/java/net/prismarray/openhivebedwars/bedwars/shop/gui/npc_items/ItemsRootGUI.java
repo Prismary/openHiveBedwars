@@ -1,6 +1,6 @@
 package net.prismarray.openhivebedwars.bedwars.shop.gui.npc_items;
 
-import net.prismarray.openhivebedwars.bedwars.shop.gui.FramedFullRowsGUI;
+import net.prismarray.openhivebedwars.gui.components.FramedFullRowsGUI;
 import net.prismarray.openhivebedwars.bedwars.shop.items.npc_items.root.Armor;
 import net.prismarray.openhivebedwars.bedwars.shop.items.npc_items.root.Blocks;
 import net.prismarray.openhivebedwars.bedwars.shop.items.npc_items.root.DummyCustomSlot;
