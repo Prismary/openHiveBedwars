@@ -1,7 +1,7 @@
 package net.prismarray.openhivebedwars.bedwars;
 
 import net.prismarray.openhivebedwars.config.MapConfig;
-import net.prismarray.openhivebedwars.config.MapManager;
+import net.prismarray.openhivebedwars.maps.MapManager;
 import net.prismarray.openhivebedwars.util.Broadcast;
 import org.bukkit.entity.Player;
 

@@ -1,6 +1,8 @@
-package net.prismarray.openhivebedwars.config;
+package net.prismarray.openhivebedwars.maps;
 
 import net.prismarray.openhivebedwars.OpenHiveBedwars;
+import net.prismarray.openhivebedwars.config.ConfigValidationException;
+import net.prismarray.openhivebedwars.config.MapConfig;
 import net.prismarray.openhivebedwars.util.FileUtils;
 import net.prismarray.openhivebedwars.util.Mode;
 import org.apache.commons.io.FilenameUtils;

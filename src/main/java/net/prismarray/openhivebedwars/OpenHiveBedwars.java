@@ -17,7 +17,7 @@ import net.prismarray.openhivebedwars.commands.vote.CommandVote;
 import net.prismarray.openhivebedwars.config.Config;
 import net.prismarray.openhivebedwars.config.ConfigValidationException;
 import net.prismarray.openhivebedwars.config.LobbyConfig;
-import net.prismarray.openhivebedwars.config.MapManager;
+import net.prismarray.openhivebedwars.maps.MapManager;
 import net.prismarray.openhivebedwars.enchantments.InventoryGUIDummyEnchantment;
 import net.prismarray.openhivebedwars.events.*;
 import net.prismarray.openhivebedwars.gui.InventoryGUIManager;
