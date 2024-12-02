@@ -1,6 +1,7 @@
 package net.prismarray.openhivebedwars.bedwars.shop.items.general;
 
 import net.prismarray.openhivebedwars.OpenHiveBedwars;
+import net.prismarray.openhivebedwars.gui.InventoryGUIManager;
 import net.prismarray.openhivebedwars.gui.actions.InventoryGUIActionHandler;
 import net.prismarray.openhivebedwars.gui.actions.InventoryGUIActionListener;
 import net.prismarray.openhivebedwars.gui.components.InventoryGUIBase;
@@ -8,12 +9,10 @@ import net.prismarray.openhivebedwars.gui.components.InventoryGUICustomHead;
 import net.prismarray.openhivebedwars.gui.actions.InventoryGUIClickAction;
 import org.bukkit.Bukkit;
 
-import java.util.concurrent.Callable;
-
 
 public class NextButton extends InventoryGUICustomHead {
 
-    public NextButton(InventoryGUIBase gui, int slot, Callable<? extends InventoryGUIBase> destinationGUIFactory) {
+    public NextButton(InventoryGUIBase gui, int slot, String destinationGUI) {
         super(
                 gui,
                 slot,
@@ -27,7 +26,7 @@ public class NextButton extends InventoryGUICustomHead {
             public void onClick(InventoryGUIClickAction a) {
                 Bukkit.getScheduler().runTask(OpenHiveBedwars.getInstance(), () -> {
                     try {
-                        destinationGUIFactory.call().open(a.getPlayer());
+                        InventoryGUIManager.openInventoryGUI(destinationGUI, a.getPlayer());
                     } catch (Exception e) {
                         throw new RuntimeException();
                     }

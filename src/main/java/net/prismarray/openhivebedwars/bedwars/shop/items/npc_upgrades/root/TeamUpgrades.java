@@ -8,7 +8,7 @@ import java.util.concurrent.Callable;
 
 public class TeamUpgrades extends CategorySelector {
 
-    public TeamUpgrades(InventoryGUIBase gui, int slot, Callable<? extends InventoryGUIBase> destinationGUIFactory) {
+    public TeamUpgrades(InventoryGUIBase gui, int slot, String destinationGUI) {
         super(
                 gui,
                 slot,
@@ -16,7 +16,7 @@ public class TeamUpgrades extends CategorySelector {
                 (short) 3,
                 "§b§lTeam Upgrades",
                 new String[]{"§7Buy upgrades that apply to all", "§7members on your team!"},
-                destinationGUIFactory
+                destinationGUI
         );
     }
 }

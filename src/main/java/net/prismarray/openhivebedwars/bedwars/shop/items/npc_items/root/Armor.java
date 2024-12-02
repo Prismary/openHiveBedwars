@@ -4,11 +4,9 @@ import net.prismarray.openhivebedwars.bedwars.shop.items.CategorySelector;
 import net.prismarray.openhivebedwars.gui.components.InventoryGUIBase;
 import org.bukkit.Material;
 
-import java.util.concurrent.Callable;
-
 public class Armor extends CategorySelector {
 
-    public Armor(InventoryGUIBase gui, int slot, Callable<? extends InventoryGUIBase> destinationGUIFactory) {
+    public Armor(InventoryGUIBase gui, int slot, String destinationGUI) {
         super(
                 gui,
                 slot,
@@ -16,7 +14,7 @@ public class Armor extends CategorySelector {
                 (short) 0,
                 "§c§lArmor",
                 new String[]{"§7Be prepared when you encounter", "§7your evil enemies!"},
-                destinationGUIFactory
+                destinationGUI
         );
     }
 }

@@ -8,7 +8,7 @@ import java.util.concurrent.Callable;
 
 public class SummonerUpgrades extends CategorySelector {
 
-    public SummonerUpgrades(InventoryGUIBase gui, int slot, Callable<? extends InventoryGUIBase> destinationGUIFactory) {
+    public SummonerUpgrades(InventoryGUIBase gui, int slot, String destinationGUI) {
         super(
                 gui,
                 slot,
@@ -16,7 +16,7 @@ public class SummonerUpgrades extends CategorySelector {
                 (short) 0,
                 "§6§lSummoner Upgrades",
                 new String[]{"§7Upgrade your summoner for:", "§7 → §eMore Speed", "§7 → §aMore Currencies"},
-                destinationGUIFactory
+                destinationGUI
         );
     }
 }

@@ -14,9 +14,9 @@ public class ItemsRootGUI extends FramedFullRowsGUI {
         super("Item Shop", 6, DyeColor.PURPLE, true, null, null);
 
 
-        new Blocks(this, 19, () -> new ItemsBlocksGUI(context));
-        new Armor(this, 21, () -> new ItemsArmorGUI(context));
-        new WeaponsAndTools(this, 23, () -> new ItemsWeaponsGUI(context));
+        new Blocks(this, 19, "npc-items-blocks");
+        new Armor(this, 21, "npc-items-armor");
+        new WeaponsAndTools(this, 23, "npc-items-weapons");
         // TODO Traps
 
         // Dummy custom slots

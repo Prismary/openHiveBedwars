@@ -8,7 +8,7 @@ import org.bukkit.DyeColor;
 public class ItemsArmorGUI extends FramedFullRowsGUI {
 
     public ItemsArmorGUI(InventoryGUIContext context) {
-        super("Armor", 6, DyeColor.RED, true, () -> new ItemsRootGUI(context), null);
+        super("Armor", 6, DyeColor.RED, true, "npc-items-root", null);
 
         new ChainHelmet(this, 10);
         new ChainChestplate(this, 19);

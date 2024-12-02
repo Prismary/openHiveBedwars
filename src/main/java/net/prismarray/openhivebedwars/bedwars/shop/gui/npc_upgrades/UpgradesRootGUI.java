@@ -17,8 +17,8 @@ public class UpgradesRootGUI extends FramedFullRowsGUI {
                 null
         );
 
-        new SummonerUpgrades(this, 20, () -> new UpgradesSummonerGUI(context));
-        new TeamUpgrades(this, 22, () -> new UpgradesTeamGUI(context));
+        new SummonerUpgrades(this, 20, "npc-upgrades-summoner");
+        new TeamUpgrades(this, 22, "npc-upgrades-team");
 
         lock();
     }

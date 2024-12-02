@@ -4,6 +4,7 @@ import net.prismarray.openhivebedwars.OpenHiveBedwars;
 import net.prismarray.openhivebedwars.bedwars.Game;
 import net.prismarray.openhivebedwars.bedwars.shop.ShopManager;
 import net.prismarray.openhivebedwars.bedwars.summoner.SummonerManager;
+import net.prismarray.openhivebedwars.gui.InventoryGUIManager;
 import net.prismarray.openhivebedwars.gui.actions.InventoryGUIActionHandler;
 import net.prismarray.openhivebedwars.gui.actions.InventoryGUIActionListener;
 import net.prismarray.openhivebedwars.gui.components.InventoryGUIBase;
@@ -19,7 +20,7 @@ import java.util.concurrent.Callable;
 
 public class SummonerUpgrade extends InventoryGUIItem {
 
-    public SummonerUpgrade(InventoryGUIBase gui, int slot, TeamColor teamColor, Currency currency, int level, Currency purchaseCurrency, int cost, int summonerIndex, Callable<? extends InventoryGUIBase> reloadGUIFactory) {
+    public SummonerUpgrade(InventoryGUIBase gui, int slot, TeamColor teamColor, Currency currency, int level, Currency purchaseCurrency, int cost, int summonerIndex, String reloadGUI) {
         super(
                 gui,
                 slot,
@@ -56,7 +57,7 @@ public class SummonerUpgrade extends InventoryGUIItem {
 
                     Bukkit.getScheduler().runTask(OpenHiveBedwars.getInstance(), () -> { // re-open the upgrades inventory
                         try {
-                            reloadGUIFactory.call().open(a.getPlayer());
+                            InventoryGUIManager.openInventoryGUI(reloadGUI, a.getPlayer());
                         } catch (Exception e) {
                             throw new RuntimeException(e);
                         }

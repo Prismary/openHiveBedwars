@@ -9,7 +9,7 @@ import org.bukkit.DyeColor;
 public class ItemsBlocksGUI extends FramedFullRowsGUI {
 
     public ItemsBlocksGUI(InventoryGUIContext context) {
-        super("Blocks", 4, DyeColor.LIME, true, () -> new ItemsRootGUI(context), null);
+        super("Blocks", 4, DyeColor.LIME, true, "npc-items-root", null);
 
         TeamColor teamColor = context.getOpeningPlayerTeam().getColor();
 

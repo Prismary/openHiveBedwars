@@ -7,7 +7,7 @@ import org.bukkit.DyeColor;
 public class UpgradesTeamGUI extends FramedFullRowsGUI {
 
     public UpgradesTeamGUI(InventoryGUIContext context) {
-        super("Team Upgrades", 5, DyeColor.MAGENTA, true, () -> new UpgradesRootGUI(context), null);
+        super("Team Upgrades", 5, DyeColor.MAGENTA, true, "npc-upgrades-root", null);
         // todo get correct frame color
 
 

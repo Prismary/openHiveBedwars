@@ -8,7 +8,7 @@ import java.util.concurrent.Callable;
 
 public class WeaponsAndTools extends CategorySelector {
 
-    public WeaponsAndTools(InventoryGUIBase gui, int slot, Callable<? extends InventoryGUIBase> destinationGUIFactory) {
+    public WeaponsAndTools(InventoryGUIBase gui, int slot, String destinationGUI) {
         super(
                 gui,
                 slot,
@@ -16,7 +16,7 @@ public class WeaponsAndTools extends CategorySelector {
                 (short) 0,
                 "§b§lWeapons & Tools",
                 new String[]{"§7A choice of weapons and tools", "§7to use in your fights!"},
-                destinationGUIFactory
+                destinationGUI
         );
     }
 }

@@ -4,11 +4,9 @@ import net.prismarray.openhivebedwars.bedwars.shop.items.CategorySelector;
 import net.prismarray.openhivebedwars.gui.components.InventoryGUIBase;
 import org.bukkit.Material;
 
-import java.util.concurrent.Callable;
-
 public class Blocks extends CategorySelector {
 
-    public Blocks(InventoryGUIBase gui, int slot, Callable<? extends InventoryGUIBase> destinationGUIFactory) {
+    public Blocks(InventoryGUIBase gui, int slot, String destinationGUI) {
         super(
                 gui,
                 slot,
@@ -16,7 +14,7 @@ public class Blocks extends CategorySelector {
                 (short) 6,
                 "§a§lBlocks",
                 new String[]{"§7Buy blocks to bridge, build and", "§7protect your bed!"},
-                destinationGUIFactory
+                destinationGUI
         );
     }
 }

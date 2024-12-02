@@ -8,7 +8,6 @@ import net.prismarray.openhivebedwars.bedwars.shop.items.general.CancelButton;
 import net.prismarray.openhivebedwars.bedwars.shop.items.general.ColoredGlassFrame;
 import org.bukkit.DyeColor;
 
-import java.util.concurrent.Callable;
 import java.util.stream.IntStream;
 
 public class GUIBuilder {
@@ -18,14 +17,14 @@ public class GUIBuilder {
         new CancelButton(gui, slot);
     }
 
-    public static void setPreviousButton(InventoryGUIBase gui, int width, int height, Callable<? extends InventoryGUIBase> destinationGUIFactory) {
+    public static void setPreviousButton(InventoryGUIBase gui, int width, int height, String destinationGUI) {
         int slot = ((height - 1) * width + width / 2) - 1;
-        new PreviousButton(gui, slot, destinationGUIFactory);
+        new PreviousButton(gui, slot, destinationGUI);
     }
 
-    public static void setNextButton(InventoryGUIBase gui, int width, int height, Callable<? extends InventoryGUIBase> destinationGUIFactory) {
+    public static void setNextButton(InventoryGUIBase gui, int width, int height, String destinationGUI) {
         int slot = ((height - 1) * width + width / 2) + 1;
-        new NextButton(gui, slot, destinationGUIFactory);
+        new NextButton(gui, slot, destinationGUI);
     }
 
     public static void colorFrame(InventoryGUIBase gui, DyeColor color, int width, int height) {

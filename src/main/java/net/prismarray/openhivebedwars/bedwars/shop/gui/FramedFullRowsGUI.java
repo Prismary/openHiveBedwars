@@ -6,11 +6,10 @@ import org.bukkit.DyeColor;
 
 import javax.annotation.Nullable;
 import java.util.Objects;
-import java.util.concurrent.Callable;
 
 public abstract class FramedFullRowsGUI extends InventoryGUIBase {
 
-    public FramedFullRowsGUI(String name, int rows, DyeColor color, boolean hasCancel, @Nullable Callable<? extends InventoryGUIBase> previousGUIFactory, @Nullable Callable<? extends InventoryGUIBase> nextGUIFactory) {
+    public FramedFullRowsGUI(String name, int rows, DyeColor color, boolean hasCancel, @Nullable String previousGUI, @Nullable String nextGUI) {
         super(name, correctRowCount(rows) * 9);
         rows = correctRowCount(rows);
 
@@ -20,12 +19,12 @@ public abstract class FramedFullRowsGUI extends InventoryGUIBase {
             GUIBuilder.setCancelButton(this, 9, rows);
         }
 
-        if (Objects.nonNull(previousGUIFactory)) {
-            GUIBuilder.setPreviousButton(this, 9, rows, previousGUIFactory);
+        if (Objects.nonNull(previousGUI)) {
+            GUIBuilder.setPreviousButton(this, 9, rows, previousGUI);
         }
 
-        if (Objects.nonNull(nextGUIFactory)) {
-            GUIBuilder.setNextButton(this, 9, rows, nextGUIFactory);
+        if (Objects.nonNull(nextGUI)) {
+            GUIBuilder.setNextButton(this, 9, rows, nextGUI);
         }
     }
 
