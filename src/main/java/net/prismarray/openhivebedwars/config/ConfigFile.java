@@ -2,6 +2,7 @@ package net.prismarray.openhivebedwars.config;
 
 import dev.dejvokep.boostedyaml.YamlDocument;
 import net.prismarray.openhivebedwars.util.Mode;
+import org.bukkit.DyeColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
@@ -69,7 +70,6 @@ public abstract class ConfigFile {
      * can not be compensated by omissions or default values.
      */
     protected abstract void parseAndValidateConfig(YamlDocument yamlContent) throws ConfigValidationException;
-
 
     public static String parseString(String input) {
 
@@ -162,6 +162,18 @@ public abstract class ConfigFile {
         }
 
         return material;
+    }
+
+    public static DyeColor parseDyeColor(String input) throws ConfigValidationException {
+
+        DyeColor dyeColor;
+        try {
+            dyeColor = DyeColor.valueOf(input.toUpperCase());
+        } catch (IllegalArgumentException ignored) {
+            throw new ConfigValidationException("Could not parse material '" + input + "'.");
+        }
+
+        return dyeColor;
     }
 
     public static Set<Material> parseMaterialSet(List<String> input) throws ConfigValidationException {

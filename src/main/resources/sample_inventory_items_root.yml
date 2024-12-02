@@ -1,15 +1,19 @@
 baseclass: "InventoryGUIFramed"
 locked: true
+#locked_slots:
+#  - 0
+#  - 2
+#  - 42
 title: "Item Shop"
 size: 54
 frame_color: "PURPLE"
 cancel_button: true
-# previous_button_destination: ""
-# next_button_destination: ""
+#previous_button_destination: ""
+#next_button_destination: ""
 contents:
   19:
     baseclass: "CategorySelector"
-    destination: "npc-items-blocks"
+    destinationGUI: "npc-items-blocks"
     material: "STONE"
     damage: 6
     name: "§a§lBlocks"
@@ -18,18 +22,18 @@ contents:
       - "§7protect your bed!"
   21:
     baseclass: "CategorySelector"
-    destination: "npc-items-armor"
+    destinationGUI: "npc-items-armor"
     material: "IRON_CHESTPLATE"
-    # damage: 0
+    damage: 0
     name: "§c§lArmor"
     lore:
       - "§7Be prepared when you encounter"
       - "§7your evil enemies!"
   23:
     baseclass: "CategorySelector"
-    destination: "npc-items-weapons"
+    destinationGUI: "npc-items-weapons"
     material: "IRON_SWORD"
-    # damage: 0
+    damage: 0
     name: "§b§lWeapons & Tools"
     lore:
       - "§7A choice of weapons and tools"
