@@ -1,0 +1,42 @@
+baseclass: "InventoryGUIFramed"
+locked: true
+title: "Item Shop"
+size: 54
+frame_color: "PURPLE"
+cancel_button: true
+# previous_button_destination: ""
+# next_button_destination: ""
+contents:
+  19:
+    baseclass: "CategorySelector"
+    destination: "npc-items-blocks"
+    material: "STONE"
+    damage: 6
+    name: "§a§lBlocks"
+    lore:
+      - "§7Buy blocks to bridge, build and"
+      - "§7protect your bed!"
+  21:
+    baseclass: "CategorySelector"
+    destination: "npc-items-armor"
+    material: "IRON_CHESTPLATE"
+    # damage: 0
+    name: "§c§lArmor"
+    lore:
+      - "§7Be prepared when you encounter"
+      - "§7your evil enemies!"
+  23:
+    baseclass: "CategorySelector"
+    destination: "npc-items-weapons"
+    material: "IRON_SWORD"
+    # damage: 0
+    name: "§b§lWeapons & Tools"
+    lore:
+      - "§7A choice of weapons and tools"
+      - "§7to use in your fights!"
+  39:
+    baseclass: "DummyCustomSlot"
+  40:
+    baseclass: "DummyCustomSlot"
+  41:
+    baseclass: "DummyCustomSlot"
