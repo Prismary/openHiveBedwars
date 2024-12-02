@@ -1,6 +1,7 @@
 package net.prismarray.openhivebedwars.config;
 
 import net.prismarray.openhivebedwars.OpenHiveBedwars;
+import net.prismarray.openhivebedwars.util.FileUtils;
 import net.prismarray.openhivebedwars.util.Mode;
 import org.apache.commons.io.FilenameUtils;
 
@@ -29,9 +30,11 @@ public class MapManager {
 
         File mapsDirectory = new File(OpenHiveBedwars.getInstance().getDataFolder(), "maps");
 
-        createMapsDirIfNonexistent(mapsDirectory);
+        if (FileUtils.createDirIfNonexistent(mapsDirectory)) {
+            createSampleConfig(mapsDirectory);
+        }
 
-        File[] mapConfigFiles = getYMLFilesInDirectory(mapsDirectory);
+        File[] mapConfigFiles = FileUtils.getYMLFilesInDirectory(mapsDirectory);
 
         if (Objects.isNull(mapConfigFiles) || mapConfigFiles.length < 1) {
             OpenHiveBedwars.getInstance().getLogger().warning(
@@ -96,59 +99,30 @@ public class MapManager {
         instance.mapConfigs.clear();
     }
 
-    private static File[] getYMLFilesInDirectory(File directory) {
+    public static void createSampleConfig(File directory) {
+        try {
+            File sampleConfigFile = new File(directory, "sample_map.yml");
 
-        if (!directory.isDirectory()) {
-            return null;
-        }
+            if (!sampleConfigFile.createNewFile()) {
+                OpenHiveBedwars.getInstance().getLogger().warning("Creation of sample config file failed.");
+            }
 
-        return directory.listFiles(
-                (file) -> file.isFile() && file.getName().toLowerCase().endsWith(".yml")
-        );
-    }
+            Scanner scanner = new Scanner(OpenHiveBedwars.getInstance().getResource("sample_map.yml"));
+            StringBuilder strb = new StringBuilder();
 
-    private static void createMapsDirIfNonexistent(File mapsDirectory) {
+            while (scanner.hasNext()) {
+                strb.append(scanner.nextLine());
+                strb.append("\n");
+            }
 
-        if (!mapsDirectory.exists()) {
+            FileWriter writer = new FileWriter(sampleConfigFile);
+            writer.write(strb.toString());
+            writer.close();
 
-            OpenHiveBedwars.getInstance().getLogger().info(
-                    "Maps directory '" + mapsDirectory.getPath() + "' does not exist. " +
-                            "Creating a new one with an example config..."
+        } catch (IOException e) {
+            OpenHiveBedwars.getInstance().getLogger().warning(
+                    "Could not create sample config due to IOException: " + e.getMessage()
             );
-
-            try {
-                if (!mapsDirectory.mkdirs()) {
-                    OpenHiveBedwars.getInstance().getLogger().warning("Directory creation failed.");
-                }
-            } catch (SecurityException e) {
-                OpenHiveBedwars.getInstance().getLogger().warning("Directory creation failed due to missing permissions:");
-                OpenHiveBedwars.getInstance().getLogger().warning(e.getMessage());
-            }
-
-            try {
-                File sampleConfigFile = new File(mapsDirectory, "sample_map.yml");
-
-                if (!sampleConfigFile.createNewFile()) {
-                    OpenHiveBedwars.getInstance().getLogger().warning("Creation of sample config file failed.");
-                }
-
-                Scanner scanner = new Scanner(OpenHiveBedwars.getInstance().getResource("sample_map.yml"));
-                StringBuilder strb = new StringBuilder();
-
-                while (scanner.hasNext()) {
-                    strb.append(scanner.nextLine());
-                    strb.append("\n");
-                }
-
-                FileWriter writer = new FileWriter(sampleConfigFile);
-                writer.write(strb.toString());
-                writer.close();
-
-            } catch (IOException e) {
-                OpenHiveBedwars.getInstance().getLogger().warning(
-                        "Could not create sample config due to IOException: " + e.getMessage()
-                );
-            }
         }
     }
 }
