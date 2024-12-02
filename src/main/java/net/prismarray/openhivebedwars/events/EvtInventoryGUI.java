@@ -17,21 +17,23 @@ public class EvtInventoryGUI extends EventBase {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onInventoryClose(InventoryCloseEvent e) {
 
-        if (!InventoryGUIActionManager.isRegistered(e.getInventory())) {
+        Player player = (Player) e.getPlayer();
+        if (!InventoryGUIActionManager.isRegistered(player)) {
             return;
         }
 
-        InventoryGUIBase invGUI = InventoryGUIActionManager.getCorrespondingInventoryGUIBase(e.getInventory());
-        Player player = (Player) e.getPlayer();
+        InventoryGUIBase invGUI = InventoryGUIActionManager.getCorrespondingInventoryGUIBase(player);
 
         InventoryGUIActionManager.handleInventoryGUIAction(new InventoryGUICloseAction(invGUI, player));
-        InventoryGUIActionManager.unregisterInventoryGUI(invGUI);
+        InventoryGUIActionManager.unregisterInventoryGUI(player);
     }
 
     @EventHandler
     public void onInventoryDrag(InventoryDragEvent e) {
 
-        if (!InventoryGUIActionManager.isRegistered(e.getInventory())) {
+        Player player = (Player) e.getWhoClicked();
+
+        if (!InventoryGUIActionManager.isRegistered(player)) {
             return;
         }
 
@@ -39,7 +41,7 @@ public class EvtInventoryGUI extends EventBase {
             return;
         }
 
-        InventoryGUIBase invGUI = InventoryGUIActionManager.getCorrespondingInventoryGUIBase(e.getInventory());
+        InventoryGUIBase invGUI = InventoryGUIActionManager.getCorrespondingInventoryGUIBase(player);
         List<Integer> concernedSlots = e.getRawSlots().stream()
                 .filter(slot -> slot < e.getInventory().getSize())
                 .collect(Collectors.toList());
@@ -57,7 +59,9 @@ public class EvtInventoryGUI extends EventBase {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onInventoryInteraction(InventoryClickEvent e) {
 
-        if (!InventoryGUIActionManager.isRegistered(e.getInventory())) {
+        Player player = (Player) e.getWhoClicked();
+
+        if (!InventoryGUIActionManager.isRegistered(player)) {
             return;
         }
 
@@ -65,7 +69,7 @@ public class EvtInventoryGUI extends EventBase {
             return;
         }
 
-        InventoryGUIBase invGUI = InventoryGUIActionManager.getCorrespondingInventoryGUIBase(e.getInventory());
+        InventoryGUIBase invGUI = InventoryGUIActionManager.getCorrespondingInventoryGUIBase(player);
 
         if (!Objects.equals(e.getInventory(), e.getClickedInventory())) {
 
@@ -84,7 +88,6 @@ public class EvtInventoryGUI extends EventBase {
             return;
         }
 
-        Player player = (Player) e.getWhoClicked();
         int invSlot = e.getSlot();
 
         if (invGUI.isLocked() || invGUI.isSlotLocked(invSlot)) {

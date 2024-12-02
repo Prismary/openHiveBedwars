@@ -97,8 +97,6 @@ public class InventoryGUIBase implements Inventory {
                         String.format("InventoryType '%s' is currently not supported!", type)
                 );
         }
-
-        InventoryGUIActionManager.registerInventoryGUI(this);
     }
 
     public Inventory getInventory() {

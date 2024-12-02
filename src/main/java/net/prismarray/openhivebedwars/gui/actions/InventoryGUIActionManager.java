@@ -1,7 +1,7 @@
 package net.prismarray.openhivebedwars.gui.actions;
 
 import net.prismarray.openhivebedwars.gui.components.InventoryGUIBase;
-import org.bukkit.inventory.Inventory;
+import org.bukkit.entity.Player;
 
 import java.util.*;
 
@@ -9,7 +9,7 @@ public class InventoryGUIActionManager {
 
     private static final InventoryGUIActionManager instance = new InventoryGUIActionManager();
 
-    private final Map<Inventory, InventoryGUIBase> openInventoryGUIs = new HashMap<>();
+    private final Map<Player, InventoryGUIBase> openInventoryGUIs = new HashMap<>();
 
     private InventoryGUIActionManager() {}
 
@@ -17,27 +17,23 @@ public class InventoryGUIActionManager {
         return instance;
     }
 
-    public static void registerInventoryGUI(InventoryGUIBase invGUI) {
-        instance.openInventoryGUIs.put(invGUI.getInventory(), invGUI);
+    public static void registerInventoryGUI(Player player, InventoryGUIBase invGUI) {
+        instance.openInventoryGUIs.put(player, invGUI);
     }
 
-    public static boolean isRegistered(Inventory inventory) {
-        return instance.openInventoryGUIs.containsKey(inventory);
+    public static boolean isRegistered(Player player) {
+        return instance.openInventoryGUIs.containsKey(player);
     }
 
-    public static boolean isRegistered(InventoryGUIBase invGUI) {
-        return instance.openInventoryGUIs.containsKey(invGUI.getInventory());
+    public static boolean unregisterInventoryGUI(Player player) {
+        return Objects.nonNull(instance.openInventoryGUIs.remove(player));
     }
 
-    public static boolean unregisterInventoryGUI(InventoryGUIBase invGUI) {
-        return Objects.nonNull(instance.openInventoryGUIs.remove(invGUI.getInventory()));
-    }
-
-    public static InventoryGUIBase getCorrespondingInventoryGUIBase(Inventory inventory) {
-        return instance.openInventoryGUIs.get(inventory);
+    public static InventoryGUIBase getCorrespondingInventoryGUIBase(Player player) {
+        return instance.openInventoryGUIs.get(player);
     }
 
     public static void handleInventoryGUIAction(InventoryGUIAction action) {
-        instance.openInventoryGUIs.get(action.getInventoryGUI().getInventory()).handleAction(action);
+        instance.openInventoryGUIs.get(action.getPlayer()).handleAction(action);
     }
 }
