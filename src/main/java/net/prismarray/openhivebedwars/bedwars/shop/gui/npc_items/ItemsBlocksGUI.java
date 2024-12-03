@@ -1,12 +1,12 @@
 package net.prismarray.openhivebedwars.bedwars.shop.gui.npc_items;
 
-import net.prismarray.openhivebedwars.gui.components.FramedFullRowsGUI;
+import net.prismarray.openhivebedwars.gui.components.InventoryGUIFramed;
 import net.prismarray.openhivebedwars.bedwars.shop.items.npc_items.blocks.*;
 import net.prismarray.openhivebedwars.gui.InventoryGUIContext;
 import net.prismarray.openhivebedwars.util.TeamColor;
 import org.bukkit.DyeColor;
 
-public class ItemsBlocksGUI extends FramedFullRowsGUI {
+public class ItemsBlocksGUI extends InventoryGUIFramed {
 
     public ItemsBlocksGUI(InventoryGUIContext context) {
         super("Blocks", 4, DyeColor.LIME, true, "npc-items-root", null);

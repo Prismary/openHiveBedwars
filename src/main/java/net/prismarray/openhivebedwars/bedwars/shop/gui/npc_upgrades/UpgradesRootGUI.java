@@ -1,11 +1,11 @@
 package net.prismarray.openhivebedwars.bedwars.shop.gui.npc_upgrades;
 
-import net.prismarray.openhivebedwars.gui.components.FramedFullRowsGUI;
+import net.prismarray.openhivebedwars.gui.components.InventoryGUIFramed;
 import net.prismarray.openhivebedwars.bedwars.shop.items.npc_upgrades.root.SummonerUpgrades;
 import net.prismarray.openhivebedwars.bedwars.shop.items.npc_upgrades.root.TeamUpgrades;
 import net.prismarray.openhivebedwars.gui.InventoryGUIContext;
 
-public class UpgradesRootGUI extends FramedFullRowsGUI {
+public class UpgradesRootGUI extends InventoryGUIFramed {
 
     public UpgradesRootGUI(InventoryGUIContext context) {
         super(

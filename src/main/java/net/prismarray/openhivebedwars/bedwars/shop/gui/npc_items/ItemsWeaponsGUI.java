@@ -1,11 +1,11 @@
 package net.prismarray.openhivebedwars.bedwars.shop.gui.npc_items;
 
-import net.prismarray.openhivebedwars.gui.components.FramedFullRowsGUI;
+import net.prismarray.openhivebedwars.gui.components.InventoryGUIFramed;
 import net.prismarray.openhivebedwars.bedwars.shop.items.npc_items.weapons_and_tools.*;
 import net.prismarray.openhivebedwars.gui.InventoryGUIContext;
 import org.bukkit.DyeColor;
 
-public class ItemsWeaponsGUI extends FramedFullRowsGUI {
+public class ItemsWeaponsGUI extends InventoryGUIFramed {
 
     public ItemsWeaponsGUI(InventoryGUIContext context) {
         super("Weapons & Tools", 6, DyeColor.BLUE, true, "npc-items-root", null);

@@ -1,6 +1,6 @@
 package net.prismarray.openhivebedwars.bedwars.spectator_compass;
 
-import net.prismarray.openhivebedwars.gui.components.FramedFullRowsGUI;
+import net.prismarray.openhivebedwars.gui.components.InventoryGUIFramed;
 import org.bukkit.DyeColor;
 import org.bukkit.entity.Player;
 
@@ -8,7 +8,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Objects;
 
-public class SpectatorCompassInventoryGUI extends FramedFullRowsGUI {
+public class SpectatorCompassInventoryGUI extends InventoryGUIFramed {
 
     public static final int MAX_PAGE_SIZE = 4 * 7;
 

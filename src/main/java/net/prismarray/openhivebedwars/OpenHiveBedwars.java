@@ -16,11 +16,16 @@ import net.prismarray.openhivebedwars.commands.team.CommandTeam;
 import net.prismarray.openhivebedwars.commands.vote.CommandVote;
 import net.prismarray.openhivebedwars.config.Config;
 import net.prismarray.openhivebedwars.config.ConfigValidationException;
+import net.prismarray.openhivebedwars.config.InventoryGUIConfig;
 import net.prismarray.openhivebedwars.config.LobbyConfig;
+import net.prismarray.openhivebedwars.gui.InventoryGUIContext;
+import net.prismarray.openhivebedwars.gui.components.InventoryGUIBase;
 import net.prismarray.openhivebedwars.maps.MapManager;
 import net.prismarray.openhivebedwars.enchantments.InventoryGUIDummyEnchantment;
 import net.prismarray.openhivebedwars.events.*;
 import net.prismarray.openhivebedwars.gui.InventoryGUIManager;
+import net.prismarray.openhivebedwars.util.FileUtils;
+import org.apache.commons.io.FilenameUtils;
 import org.bukkit.command.defaults.EnchantCommand;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.HandlerList;
@@ -31,6 +36,10 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public final class OpenHiveBedwars extends JavaPlugin {
 
@@ -101,22 +110,7 @@ public final class OpenHiveBedwars extends JavaPlugin {
 
     private void initializeInventoryGUIs() {
 
-        this.getLogger().info("Attempting to read configuration files in GUI directory...");
-
-        // ToDo: implement loading for YML-Files
-        /*
-        lobbyConfig = new LobbyConfig(this.getLogger(), new File(this.getDataFolder(), "lobby.yml"));
-        try {
-            lobbyConfig.loadConfig(getResource("lobby.yml"));
-            this.getLogger().info("Successfully loaded lobby.yml");
-
-        } catch (ConfigValidationException | IOException e) {
-            this.getLogger().warning("Failed to load lobby.yml. Using default values instead...");
-            this.getLogger().warning("Error message: " + e.getMessage());
-        }
-         */
-
-        InventoryGUIManager.registerInventoryGUIFactory("npc-items-root", ItemsRootGUI::new);
+        // InventoryGUIManager.registerInventoryGUIFactory("npc-items-root", ItemsRootGUI::new);
         InventoryGUIManager.registerInventoryGUIFactory("npc-items-blocks", ItemsBlocksGUI::new);
         InventoryGUIManager.registerInventoryGUIFactory("npc-items-armor", ItemsArmorGUI::new);
         InventoryGUIManager.registerInventoryGUIFactory("npc-items-weapons", ItemsWeaponsGUI::new);
@@ -129,6 +123,35 @@ public final class OpenHiveBedwars extends JavaPlugin {
 
         InventoryGUIManager.registerInventoryGUIFactory("npc-specialist-root", SpecialistRootGUI::new);
 
+
+        this.getLogger().info("Attempting to read configuration files in GUI directory...");
+
+        File GUIDirectory = new File(OpenHiveBedwars.getInstance().getDataFolder(), "gui");
+
+        if (FileUtils.createDirIfNonexistent(GUIDirectory)) {
+            InventoryGUIManager.createSampleConfig(GUIDirectory);
+        }
+
+        File[] configFiles = FileUtils.getYMLFilesInDirectory(GUIDirectory);
+
+        if (Objects.nonNull(configFiles)) {
+            return;
+        }
+
+        List<InventoryGUIConfig> GUIconfigs = Arrays.stream(configFiles)
+                .map(f -> new InventoryGUIConfig(this.getLogger(), f))
+                .collect(Collectors.toList());
+
+        GUIconfigs.forEach(config -> {
+            try {
+                config.loadConfig();
+                InventoryGUIManager.registerInventoryGUIFactory(config.getGUIIdentifier(), config.getInventoryGUIFactroy());
+
+            } catch (IOException | ConfigValidationException e) {
+                this.getLogger().warning(String.format("Failed to load GUI config '%s'. Skipping...", config.getGUIIdentifier()));
+                this.getLogger().warning("Error message: " + e.getMessage());
+            }
+        });
 
         for (String key : new String[]{"npc-items-root", "npc-upgrades-root", "npc-enchanter-root", "npc-specialist-root"}) {
             if (!InventoryGUIManager.hasInventoryGUI(key)) {

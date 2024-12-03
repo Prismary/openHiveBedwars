@@ -1,11 +1,11 @@
 package net.prismarray.openhivebedwars.bedwars.shop.gui.npc_specialist;
 
-import net.prismarray.openhivebedwars.gui.components.FramedFullRowsGUI;
+import net.prismarray.openhivebedwars.gui.components.InventoryGUIFramed;
 import net.prismarray.openhivebedwars.bedwars.shop.items.npc_specialist.*;
 import net.prismarray.openhivebedwars.gui.InventoryGUIContext;
 import org.bukkit.DyeColor;
 
-public class SpecialistRootGUI extends FramedFullRowsGUI {
+public class SpecialistRootGUI extends InventoryGUIFramed {
 
     public SpecialistRootGUI(InventoryGUIContext context) {
         super("The Specialist", 4, DyeColor.ORANGE, true, null, null);

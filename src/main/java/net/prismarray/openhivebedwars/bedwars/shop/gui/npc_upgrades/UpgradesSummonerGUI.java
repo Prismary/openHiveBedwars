@@ -1,13 +1,13 @@
 package net.prismarray.openhivebedwars.bedwars.shop.gui.npc_upgrades;
 
-import net.prismarray.openhivebedwars.gui.components.FramedFullRowsGUI;
+import net.prismarray.openhivebedwars.gui.components.InventoryGUIFramed;
 import net.prismarray.openhivebedwars.bedwars.shop.items.npc_upgrades.summoner_upgrades.SummonerUpgrade;
 import net.prismarray.openhivebedwars.gui.InventoryGUIContext;
 import net.prismarray.openhivebedwars.util.Currency;
 import net.prismarray.openhivebedwars.util.TeamColor;
 import org.bukkit.DyeColor;
 
-public class UpgradesSummonerGUI extends FramedFullRowsGUI {
+public class UpgradesSummonerGUI extends InventoryGUIFramed {
 
     public UpgradesSummonerGUI(InventoryGUIContext context) {
         super("Summoner Upgrades", 5, DyeColor.MAGENTA, true, "npc-upgrades-root", null);

@@ -3,6 +3,8 @@ package net.prismarray.openhivebedwars.config;
 import dev.dejvokep.boostedyaml.YamlDocument;
 import net.prismarray.openhivebedwars.gui.InventoryGUIContext;
 import net.prismarray.openhivebedwars.gui.components.InventoryGUIBase;
+import net.prismarray.openhivebedwars.gui.components.InventoryGUIFramed;
+import org.apache.commons.io.FilenameUtils;
 import org.bukkit.DyeColor;
 
 import java.io.File;
@@ -11,6 +13,8 @@ import java.util.function.Function;
 import java.util.logging.Logger;
 
 public class InventoryGUIConfig extends ConfigFile {
+
+    private String GUIIdentifier;
 
     private String baseclass;
     private boolean locked;
@@ -26,6 +30,8 @@ public class InventoryGUIConfig extends ConfigFile {
 
     public InventoryGUIConfig(Logger logger, File configFile) {
         super(logger, configFile);
+
+        this.GUIIdentifier = FilenameUtils.getBaseName(configFile.getName());
     }
 
     @Override
@@ -45,15 +51,56 @@ public class InventoryGUIConfig extends ConfigFile {
 
         // ToDo: remove debug prints
         for (Object o : yamlContent.getSection("contents").getKeys()) {
-            System.out.println(o.toString());
+            logger.info(o.toString());
         }
 
         this.contents = new HashMap<>();
     }
 
+    public String getGUIIdentifier() {
+        return this.GUIIdentifier;
+    }
+
     public Function<InventoryGUIContext, ? extends InventoryGUIBase> getInventoryGUIFactroy() {
-        // ToDo
-        return null;
+        
+        if (Objects.equals(this.baseclass, "InventoryGUIFramed")) {
+            return (context) -> {
+                InventoryGUIFramed gui = new InventoryGUIFramed(
+                        title,
+                        (int) Math.ceil(size / 9.0),
+                        frameColor,
+                        hasCancelButton,
+                        Objects.equals(previousButtonDestination, "") ? null : previousButtonDestination,
+                        Objects.equals(nextButtonDestination, "") ? null : nextButtonDestination
+                );
+
+                // ToDo: add contents
+
+                applyLockStatus(gui);
+
+                return gui;
+            };
+
+        } else {
+            return (context) -> {
+                InventoryGUIBase gui = new InventoryGUIBase(title, size);
+
+                // ToDo: add contents
+
+                applyLockStatus(gui);
+
+                return gui;
+            };
+        }
+    }
+
+    public void applyLockStatus(InventoryGUIBase gui) {
+
+        lockedSlots.forEach(gui::lockSlot);
+
+        if (locked) {
+            gui.lock();
+        }
     }
 
     static class InventoryGUIItemConfig {

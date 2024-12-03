@@ -1,15 +1,24 @@
 package net.prismarray.openhivebedwars.gui;
 
+import net.prismarray.openhivebedwars.OpenHiveBedwars;
 import net.prismarray.openhivebedwars.gui.actions.InventoryGUIActionManager;
 import net.prismarray.openhivebedwars.gui.components.InventoryGUIBase;
 import org.bukkit.entity.Player;
 
 import javax.annotation.Nonnull;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Objects;
+import java.util.Scanner;
 import java.util.function.Function;
 
 public class InventoryGUIManager {
+
+    private static final String[] DEFAULT_GUI_CONFIG_FILENAMES = new String[]{
+            "npc-items-root.yml"
+    };
 
     private static final InventoryGUIManager instance = new InventoryGUIManager();
 
@@ -62,5 +71,35 @@ public class InventoryGUIManager {
 
         target.openInventory(inventoryGUI);
         InventoryGUIActionManager.registerInventoryGUI(target, inventoryGUI);
+    }
+
+    public static void createSampleConfig(File guiDirectory) {
+
+        for (String filename : DEFAULT_GUI_CONFIG_FILENAMES) {
+            try {
+                File sampleConfigFile = new File(guiDirectory, filename);
+
+                if (!sampleConfigFile.createNewFile()) {
+                    OpenHiveBedwars.getInstance().getLogger().warning("Creation of sample config file failed.");
+                }
+
+                Scanner scanner = new Scanner(OpenHiveBedwars.getInstance().getResource("sample_inventories/" + filename));
+                StringBuilder strb = new StringBuilder();
+
+                while (scanner.hasNext()) {
+                    strb.append(scanner.nextLine());
+                    strb.append("\n");
+                }
+
+                FileWriter writer = new FileWriter(sampleConfigFile);
+                writer.write(strb.toString());
+                writer.close();
+
+            } catch (IOException e) {
+                OpenHiveBedwars.getInstance().getLogger().warning(
+                        "Could not create sample config due to IOException: " + e.getMessage()
+                );
+            }
+        }
     }
 }
