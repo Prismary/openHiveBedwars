@@ -101,5 +101,19 @@
                 </plugins>
             </build>
         </profile>
+        <profile>
+            <id>p-bs-testserver</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-jar-plugin</artifactId>
+                        <configuration>
+                            <outputDirectory>R:\Desktop\Projects\Minecraft\Open Hive Bedwars\Testserver Paul\plugins</outputDirectory>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
     </profiles>
 </project>
