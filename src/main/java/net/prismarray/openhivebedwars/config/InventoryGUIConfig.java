@@ -96,7 +96,9 @@ public class InventoryGUIConfig extends ConfigFile {
 
     public void applyLockStatus(InventoryGUIBase gui) {
 
-        lockedSlots.forEach(gui::lockSlot);
+        if (Objects.nonNull(lockedSlots)) {
+            lockedSlots.forEach(gui::lockSlot);
+        }
 
         if (locked) {
             gui.lock();
