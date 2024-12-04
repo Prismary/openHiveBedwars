@@ -1,16 +1,23 @@
 package net.prismarray.openhivebedwars.config;
 
 import dev.dejvokep.boostedyaml.YamlDocument;
+import net.prismarray.openhivebedwars.OpenHiveBedwars;
 import net.prismarray.openhivebedwars.gui.InventoryGUIContext;
 import net.prismarray.openhivebedwars.gui.components.InventoryGUIBase;
 import net.prismarray.openhivebedwars.gui.components.InventoryGUIFramed;
+import net.prismarray.openhivebedwars.gui.components.InventoryGUIItem;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang.NotImplementedException;
 import org.bukkit.DyeColor;
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemFlag;
 
+import javax.annotation.Nonnull;
 import java.io.File;
 import java.util.*;
 import java.util.function.Function;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 public class InventoryGUIConfig extends ConfigFile {
 
@@ -49,12 +56,19 @@ public class InventoryGUIConfig extends ConfigFile {
         this.previousButtonDestination = parseString(yamlContent.getString("previous_button_destination", ""));
         this.nextButtonDestination = parseString(yamlContent.getString("previous_button_destination", ""));
 
-        // ToDo: remove debug prints
-        for (Object o : yamlContent.getSection("contents").getKeys()) {
-            logger.info(o.toString());
-        }
-
-        this.contents = new HashMap<>();
+        this.contents = yamlContent.getSection("contents").getKeys().stream()
+                .map(o -> {
+                    try {
+                        return Integer.parseInt((String) o);
+                    } catch (NumberFormatException | ClassCastException ignored) {
+                        return null;
+                    }
+                })
+                .filter(Objects::nonNull)
+                .collect(Collectors.toMap(
+                        Function.identity(),
+                        slot -> new InventoryGUIItemConfig(yamlContent, slot)
+                ));
     }
 
     public String getGUIIdentifier() {
@@ -74,8 +88,7 @@ public class InventoryGUIConfig extends ConfigFile {
                         Objects.equals(nextButtonDestination, "") ? null : nextButtonDestination
                 );
 
-                // ToDo: add contents
-
+                addContents(gui, context);
                 applyLockStatus(gui);
 
                 return gui;
@@ -85,8 +98,7 @@ public class InventoryGUIConfig extends ConfigFile {
             return (context) -> {
                 InventoryGUIBase gui = new InventoryGUIBase(title, size);
 
-                // ToDo: add contents
-
+                addContents(gui, context);
                 applyLockStatus(gui);
 
                 return gui;
@@ -105,14 +117,57 @@ public class InventoryGUIConfig extends ConfigFile {
         }
     }
 
+    public void addContents(InventoryGUIBase gui, InventoryGUIContext context) {
+
+        contents.forEach((slot, itemConfig) -> itemConfig.createGUIItem(gui, slot, context));
+    }
+
     static class InventoryGUIItemConfig {
 
-        private InventoryGUIItemConfig(YamlDocument yamlContent) throws ConfigValidationException {
-            this.parseAndValidateConfig(yamlContent);
+        private String baseclass;
+
+        private Material material;
+        private short damage;
+        private int amount;
+        private String name;
+        private String[] lore;
+        private boolean enchanted;
+        private ItemFlag[] itemFlags;
+
+        private String customHeadUrl;
+
+        // ToDo: add fields for all custom baseclasses
+
+        private InventoryGUIItemConfig(YamlDocument yamlContent, @Nonnull Integer slot) throws ConfigValidationException {
+            try {
+                this.parseAndValidateConfig(yamlContent, slot);
+
+            } catch (ConfigValidationException e) {
+
+                OpenHiveBedwars.getInstance().getLogger().warning(String.format("Could not parse item at slot %s. Using default placeholder...", slot));
+                OpenHiveBedwars.getInstance().getLogger().warning(String.format("Error message: %s", e.getMessage()));
+
+                baseclass = "InventoryGUICustomHead";
+                customHeadUrl = "http://textures.minecraft.net/texture/bf2f871936c65aef31d715cb189271ef9113aa2eea1d7063a47c55c4692f223";
+
+                material = Material.SKULL_ITEM;
+                damage = (short) 3;
+                amount = 1;
+                name = "missing item";
+                lore = new String[]{"could not parse item config"};
+                enchanted = false;
+                itemFlags = null;
+            }
         }
 
-        private void parseAndValidateConfig(YamlDocument config) throws ConfigValidationException {
+        private void parseAndValidateConfig(YamlDocument config, @Nonnull Integer slot) throws ConfigValidationException {
             // ToDo
+        }
+
+        public InventoryGUIItem createGUIItem(InventoryGUIBase gui, Integer slot, InventoryGUIContext context) {
+
+            // ToDo: implement all custom baseclasses
+            throw new NotImplementedException();
         }
     }
 }
