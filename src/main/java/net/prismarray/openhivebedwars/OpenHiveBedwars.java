@@ -134,9 +134,17 @@ public final class OpenHiveBedwars extends JavaPlugin {
 
         File[] configFiles = FileUtils.getYMLFilesInDirectory(GUIDirectory);
 
-        if (Objects.nonNull(configFiles)) {
+        if (Objects.isNull(configFiles) || configFiles.length < 1) {
+            getLogger().warning(
+                    "Could not find any GUI configuration files in '" + GUIDirectory.getPath() + "'."
+            );
             return;
         }
+
+        String files = Arrays.stream(configFiles).map(File::getName).collect(Collectors.joining(", "));
+        OpenHiveBedwars.getInstance().getLogger().info(
+                "Found the following GUI config files in directory '" + GUIDirectory.getPath() + "': " + files
+        );
 
         List<InventoryGUIConfig> GUIconfigs = Arrays.stream(configFiles)
                 .map(f -> new InventoryGUIConfig(this.getLogger(), f))
@@ -144,6 +152,9 @@ public final class OpenHiveBedwars extends JavaPlugin {
 
         GUIconfigs.forEach(config -> {
             try {
+                OpenHiveBedwars.getInstance().getLogger().info(
+                        "Attempting to load GUI '" + config.getGUIIdentifier() + "'..."
+                );
                 config.loadConfig();
                 InventoryGUIManager.registerInventoryGUIFactory(config.getGUIIdentifier(), config.getInventoryGUIFactroy());
 
