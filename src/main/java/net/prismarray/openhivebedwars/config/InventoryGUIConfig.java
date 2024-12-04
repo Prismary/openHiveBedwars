@@ -14,7 +14,7 @@ import java.util.logging.Logger;
 
 public class InventoryGUIConfig extends ConfigFile {
 
-    private String GUIIdentifier;
+    private final String GUIIdentifier;
 
     private String baseclass;
     private boolean locked;
