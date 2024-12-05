@@ -2,15 +2,17 @@ package net.prismarray.openhivebedwars.config;
 
 import dev.dejvokep.boostedyaml.YamlDocument;
 import net.prismarray.openhivebedwars.OpenHiveBedwars;
+import net.prismarray.openhivebedwars.bedwars.bridgebuilder.BridgeBuilderItem;
 import net.prismarray.openhivebedwars.gui.InventoryGUIContext;
-import net.prismarray.openhivebedwars.gui.components.InventoryGUIBase;
-import net.prismarray.openhivebedwars.gui.components.InventoryGUIFramed;
-import net.prismarray.openhivebedwars.gui.components.InventoryGUIItem;
+import net.prismarray.openhivebedwars.gui.components.*;
+import net.prismarray.openhivebedwars.util.Currency;
 import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.lang.NotImplementedException;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import javax.annotation.Nonnull;
 import java.io.File;
@@ -18,6 +20,7 @@ import java.util.*;
 import java.util.function.Function;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
+
 
 public class InventoryGUIConfig extends ConfigFile {
 
@@ -127,8 +130,9 @@ public class InventoryGUIConfig extends ConfigFile {
         private String baseclass;
 
         private Material material;
-        private short damage;
         private int amount;
+        private short damage;
+        private byte data;
         private String name;
         private String[] lore;
         private boolean enchanted;
@@ -136,7 +140,20 @@ public class InventoryGUIConfig extends ConfigFile {
 
         private String customHeadUrl;
 
-        // ToDo: add fields for all custom baseclasses
+        private int cost;
+        private Currency currency;
+        private boolean showFavStatus;
+        private Material purchasedMaterial;
+        private int purchasedAmount;
+        private short purchasedDamage;
+        private byte purchasedData;
+        private String purchasedName;
+        private List<String> purchasedLore;
+        private Map<Enchantment, Integer> purchasedEnchantments;
+        private List<ItemFlag> purchasedItemFlags;
+        private String purchasedCustomHeadUrl;
+
+        private String destinationGUI;
 
         private InventoryGUIItemConfig(YamlDocument yamlContent, @Nonnull Integer slot) throws ConfigValidationException {
             try {
@@ -166,8 +183,178 @@ public class InventoryGUIConfig extends ConfigFile {
 
         public InventoryGUIItem createGUIItem(InventoryGUIBase gui, Integer slot, InventoryGUIContext context) {
 
-            // ToDo: implement all custom baseclasses
-            throw new NotImplementedException();
+            if (Objects.equals(this.baseclass, "InventoryGUICustomHead")) {
+
+                return new InventoryGUICustomHead(
+                        gui,
+                        slot,
+                        customHeadUrl,
+                        amount,
+                        name,
+                        lore,
+                        enchanted,
+                        itemFlags
+                );
+
+            } else if (Objects.equals(this.baseclass, "PurchasableItem")) {
+
+                // ToDo: get the value of this variable via implementing the Favourites feature,
+                //  e.g. by combining inventory key and slot number or something similar -> data persistence?
+                boolean isFavourite = false;
+
+                return new PurchasableItem(
+                        gui,
+                        slot,
+                        material,
+                        damage,
+                        amount,
+                        enchanted,
+                        name,
+                        cost,
+                        currency,
+                        showFavStatus,
+                        isFavourite,
+                        lore,
+                        createItemStack(
+                                purchasedMaterial,
+                                purchasedDamage,
+                                purchasedData,
+                                purchasedAmount,
+                                purchasedName,
+                                purchasedLore,
+                                purchasedEnchantments,
+                                purchasedItemFlags
+                        )
+                );
+
+            } else if (Objects.equals(this.baseclass, "PurchasableCustomHead")) {
+
+                // ToDo: get the value of this variable via implementing the Favourites feature,
+                //  e.g. by combining inventory key and slot number or something similar -> data persistence?
+                boolean isFavourite = false;
+
+                return new PurchasableCustomHead(
+                        gui,
+                        slot,
+                        customHeadUrl,
+                        amount,
+                        enchanted,
+                        name,
+                        cost,
+                        currency,
+                        showFavStatus,
+                        isFavourite,
+                        lore,
+                        createCustomHead(
+                                purchasedCustomHeadUrl,
+                                purchasedAmount,
+                                purchasedName,
+                                purchasedLore,
+                                purchasedEnchantments,
+                                purchasedItemFlags
+                        )
+                );
+
+            } else if (Objects.equals(this.baseclass, "PurchasableBridgeBuilder")) {
+
+                // ToDo: get the value of this variable via implementing the Favourites feature,
+                //  e.g. by combining inventory key and slot number or something similar -> data persistence?
+                boolean isFavourite = false;
+
+                return new PurchasableCustomHead(
+                        gui,
+                        slot,
+                        BridgeBuilderItem.getURLForMaterial(material, data),
+                        amount,
+                        enchanted,
+                        name,
+                        cost,
+                        currency,
+                        showFavStatus,
+                        isFavourite,
+                        new BridgeBuilderItem(purchasedMaterial, purchasedAmount, purchasedData)
+                );
+
+            } else if (Objects.equals(this.baseclass, "CategorySelector")) {
+
+                return new CategorySelector(
+                        gui,
+                        slot,
+                        material,
+                        damage,
+                        name,
+                        lore,
+                        destinationGUI
+                );
+
+            } else {
+
+                return new InventoryGUIItem(
+                        gui,
+                        slot,
+                        material,
+                        damage,
+                        amount,
+                        name,
+                        lore,
+                        enchanted,
+                        itemFlags
+                );
+            }
         }
+    }
+
+    public static ItemStack createItemStack(
+            Material material,
+            short damage,
+            byte data,
+            int amount,
+            String name,
+            List<String> lore,
+            Map<Enchantment, Integer> enchantmentLevels,
+            List<ItemFlag> itemFlags) {
+
+        ItemStack item = new ItemStack(material, amount, damage, data);
+        ItemMeta meta = item.getItemMeta();
+
+        meta.setDisplayName(name);
+        meta.setLore(lore);
+
+        enchantmentLevels.forEach((enchantment, level) -> meta.addEnchant(enchantment, level, true));
+        itemFlags.forEach(meta::addItemFlags);
+
+        item.setItemMeta(meta);
+
+        return item;
+    }
+
+    public static ItemStack createCustomHead(
+            String url,
+            int amount,
+            String name,
+            List<String> lore,
+            Map<Enchantment, Integer> enchantmentLevels,
+            List<ItemFlag> itemFlags) {
+
+        ItemStack item = new InventoryGUICustomHead(
+                null,
+                -1,
+                url,
+                amount,
+                name,
+                null,
+                false,
+                null
+        );
+        ItemMeta meta = item.getItemMeta();
+
+        meta.setLore(lore);
+
+        enchantmentLevels.forEach((enchantment, level) -> meta.addEnchant(enchantment, level, true));
+        itemFlags.forEach(meta::addItemFlags);
+
+        item.setItemMeta(meta);
+
+        return item;
     }
 }
