@@ -144,7 +144,7 @@ public class InventoryGUIBase implements Inventory {
         List<InventoryGUIActionListener> listeners = slotClickActionListeners.get(clickedSlot);
 
         if (Objects.nonNull(listeners)) {
-            listeners.forEach(l -> getMatchingHandlers(l, action).forEach(m -> invokeMethod(m, l, action)));
+            listeners.forEach(listener -> getMatchingHandlers(listener, action).forEach(method -> invokeMethod(method, listener, action)));
         }
     }
 
