@@ -1,18 +1,19 @@
 package net.prismarray.openhivebedwars.config;
 
 import dev.dejvokep.boostedyaml.YamlDocument;
+import net.prismarray.openhivebedwars.util.Currency;
 import net.prismarray.openhivebedwars.util.Mode;
 import org.bukkit.DyeColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
+import org.bukkit.inventory.ItemFlag;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -233,5 +234,76 @@ public abstract class ConfigFile {
         }
 
         return entityType;
+    }
+
+    public static Set<ItemFlag> parseItemFlagSet(List<String> input) {
+
+        if (Objects.isNull(input)) {
+            return new HashSet<>();
+        }
+
+        return input.stream().map(ConfigFile::parseItemFlag).collect(Collectors.toSet());
+    }
+
+    private static ItemFlag parseItemFlag(String input) {
+
+        try {
+            return ItemFlag.valueOf(input);
+        } catch (IllegalArgumentException ignored) {
+            throw new ConfigValidationException("Could not parse item flag type '" + input + "'");
+        }
+    }
+
+    public static Currency parseCurrency(String input) {
+
+        try {
+            return Currency.valueOf(input);
+        } catch (IllegalArgumentException ignored) {
+            throw new ConfigValidationException("Could not parse currency type '" + input + "'");
+        }
+    }
+
+    public static Map<Enchantment, Integer> parseEnchantmentMap(List<String> input) {
+
+        if (Objects.isNull(input)) {
+            return new HashMap<>();
+        }
+
+        return input.stream().collect(Collectors.toMap(
+                s -> parseEnchantment(s.split(",")[0]),
+                s -> {
+                    try {
+                        return Integer.parseInt(s.split(",")[1]);
+                    } catch (ArrayIndexOutOfBoundsException ignored) {
+                        return 1;
+                    } catch (NumberFormatException ignored) {
+                        throw new ConfigValidationException("Could not parse enchantment level specifier '" + s.split(",")[1] + "'. Must be an integer.");
+                    }
+                }
+        ));
+    }
+
+    private static Enchantment parseEnchantment(String input) {
+
+        Enchantment enchantment = Enchantment.getByName(input);
+
+        if (Objects.isNull(enchantment)) {
+            throw new ConfigValidationException("Could not parse enchantment name '" + input + "'");
+        }
+
+        return enchantment;
+    }
+
+    public static String[] listToArray(List<String> input) {
+
+        if (Objects.isNull(input)) {
+            return null;
+        }
+
+        String[] result = new String[input.size()];
+        for (int i = 0; i < result.length; i++) {
+            result[i] = input.get(i);
+        }
+        return result;
     }
 }
