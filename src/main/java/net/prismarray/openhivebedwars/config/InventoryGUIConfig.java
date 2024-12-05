@@ -184,7 +184,7 @@ public class InventoryGUIConfig extends ConfigFile {
 
             this.baseclass = config.getString(String.join(".", baseRoute, "baseclass"), "InventoryGUIItem");
 
-            this.material = parseMaterial(config.getString(String.join(".", baseRoute, "material")));
+            this.material = parseMaterial(config.getString(String.join(".", baseRoute, "material"), "AIR"));
             this.amount = config.getInt(String.join(".", baseRoute, "amount"), 1);
             this.damage = config.getShort(String.join(".", baseRoute, "damage"), (short) 0);
             this.data = config.getByte(String.join(".", baseRoute, "data"), (byte) 0);
@@ -198,7 +198,7 @@ public class InventoryGUIConfig extends ConfigFile {
             this.cost = config.getInt(String.join(".", baseRoute, "cost"), 1);
             this.currency = parseCurrency(config.getString(String.join(".", baseRoute, "currency"), "IRON"));
             this.showFavStatus = config.getBoolean(String.join(".", baseRoute, "showFavStatus"), true);
-            this.purchasedMaterial = parseMaterial(config.getString(String.join(".", baseRoute, "purchasedItem", "material")));
+            this.purchasedMaterial = parseMaterial(config.getString(String.join(".", baseRoute, "purchasedItem", "material"), "AIR"));
             this.purchasedAmount = config.getInt(String.join(".", baseRoute, "purchasedItem", "amount"), 1);
             this.purchasedDamage = config.getShort(String.join(".", baseRoute, "purchasedItem", "damage"), (short) 0);
             this.purchasedData = config.getByte(String.join(".", baseRoute, "purchasedItem", "data"), (byte) 0);

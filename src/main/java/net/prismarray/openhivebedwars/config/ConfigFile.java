@@ -156,6 +156,10 @@ public abstract class ConfigFile {
 
     public static Material parseMaterial(String input) throws ConfigValidationException {
 
+        if (Objects.isNull(input)) {
+            throw new ConfigValidationException("Could not parse null input to material.");
+        }
+
         Material material = Material.getMaterial(input.toUpperCase());
 
         if (Objects.isNull(material)) {
@@ -166,6 +170,10 @@ public abstract class ConfigFile {
     }
 
     public static DyeColor parseDyeColor(String input) throws ConfigValidationException {
+
+        if (Objects.isNull(input)) {
+            throw new ConfigValidationException("Could not parse null input to dye color.");
+        }
 
         DyeColor dyeColor;
         try {
@@ -225,6 +233,10 @@ public abstract class ConfigFile {
 
     private static EntityType parseEntityType(String input) {
 
+        if (Objects.isNull(input)) {
+            throw new ConfigValidationException("Could not parse null input to entity type.");
+        }
+
         EntityType entityType;
         try {
             entityType = EntityType.valueOf(input.toUpperCase());
@@ -247,8 +259,12 @@ public abstract class ConfigFile {
 
     private static ItemFlag parseItemFlag(String input) {
 
+        if (Objects.isNull(input)) {
+            throw new ConfigValidationException("Could not parse null input to item flag.");
+        }
+
         try {
-            return ItemFlag.valueOf(input);
+            return ItemFlag.valueOf(input.toUpperCase());
         } catch (IllegalArgumentException ignored) {
             throw new ConfigValidationException("Could not parse item flag type '" + input + "'");
         }
@@ -256,8 +272,12 @@ public abstract class ConfigFile {
 
     public static Currency parseCurrency(String input) {
 
+        if (Objects.isNull(input)) {
+            throw new ConfigValidationException("Could not parse null input to currency.");
+        }
+
         try {
-            return Currency.valueOf(input);
+            return Currency.valueOf(input.toUpperCase());
         } catch (IllegalArgumentException ignored) {
             throw new ConfigValidationException("Could not parse currency type '" + input + "'");
         }
