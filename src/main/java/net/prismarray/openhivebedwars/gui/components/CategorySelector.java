@@ -4,13 +4,11 @@ import net.prismarray.openhivebedwars.OpenHiveBedwars;
 import net.prismarray.openhivebedwars.gui.InventoryGUIManager;
 import net.prismarray.openhivebedwars.gui.actions.InventoryGUIActionHandler;
 import net.prismarray.openhivebedwars.gui.actions.InventoryGUIActionListener;
-import net.prismarray.openhivebedwars.gui.components.InventoryGUIBase;
-import net.prismarray.openhivebedwars.gui.components.InventoryGUIItem;
 import net.prismarray.openhivebedwars.gui.actions.InventoryGUIClickAction;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 
-public abstract class CategorySelector extends InventoryGUIItem {
+public class CategorySelector extends InventoryGUIItem {
 
     public CategorySelector(InventoryGUIBase gui, int slot, Material material, short damage, String name, String[] lore, String destinationGUI) {
         super(

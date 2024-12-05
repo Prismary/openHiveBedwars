@@ -3,8 +3,6 @@ package net.prismarray.openhivebedwars.gui.components;
 import net.prismarray.openhivebedwars.bedwars.shop.ShopManager;
 import net.prismarray.openhivebedwars.gui.actions.InventoryGUIActionHandler;
 import net.prismarray.openhivebedwars.gui.actions.InventoryGUIActionListener;
-import net.prismarray.openhivebedwars.gui.components.InventoryGUIBase;
-import net.prismarray.openhivebedwars.gui.components.InventoryGUIItem;
 import net.prismarray.openhivebedwars.gui.actions.InventoryGUILeftOrShiftLeftClickAction;
 import net.prismarray.openhivebedwars.gui.actions.InventoryGUIRightOrShiftRightClickAction;
 import net.prismarray.openhivebedwars.util.Currency;
@@ -14,7 +12,7 @@ import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nullable;
 
-public abstract class PurchasableItem extends InventoryGUIItem {
+public class PurchasableItem extends InventoryGUIItem {
 
     public PurchasableItem(InventoryGUIBase gui, int slot, Material material, short damage, int amount, boolean enchanted, String name,
                            int cost, Currency currency, boolean showFavStatus, boolean isFavorite) {
