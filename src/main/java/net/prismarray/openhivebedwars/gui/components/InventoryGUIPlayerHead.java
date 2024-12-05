@@ -4,6 +4,7 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.meta.SkullMeta;
 
+import java.util.List;
 import java.util.Objects;
 
 public class InventoryGUIPlayerHead extends InventoryGUIItem {
@@ -92,7 +93,7 @@ public class InventoryGUIPlayerHead extends InventoryGUIItem {
             String name,
             String[] lore,
             boolean enchanted,
-            ItemFlag[] flags
+            List<ItemFlag> flags
     ) {
         this(null, -1, playerName, amount, name, lore, enchanted, flags);
     }
@@ -105,7 +106,7 @@ public class InventoryGUIPlayerHead extends InventoryGUIItem {
             String name,
             String[] lore,
             boolean enchanted,
-            ItemFlag[] flags
+            List<ItemFlag> flags
     ) {
 
         super(actionHandlingInventoryGUI, slotInInventoryGUI, Material.SKULL_ITEM, (short) 3, amount, name, lore, enchanted, flags, false);
