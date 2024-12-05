@@ -8,6 +8,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 public class InventoryGUIItem extends ItemStack {
@@ -164,7 +165,7 @@ public class InventoryGUIItem extends ItemStack {
         this(actionHandlingInventoryGUI, slotInInventoryGUI, material, damage, amount, name, lore, enchanted, null);
     }
 
-    public InventoryGUIItem(Material material, int amount, String name, String[] lore, boolean enchanted, ItemFlag[] flags) {
+    public InventoryGUIItem(Material material, int amount, String name, String[] lore, boolean enchanted, List<ItemFlag> flags) {
         this(material, (short) 0, amount, name, lore, enchanted, flags);
     }
 
@@ -176,7 +177,7 @@ public class InventoryGUIItem extends ItemStack {
             String name,
             String[] lore,
             boolean enchanted,
-            ItemFlag[] flags
+            List<ItemFlag> flags
     ) {
         this(actionHandlingInventoryGUI, slotInInventoryGUI, material, (short) 0, amount, name, lore, enchanted, flags);
     }
@@ -188,7 +189,7 @@ public class InventoryGUIItem extends ItemStack {
             String name,
             String[] lore,
             boolean enchanted,
-            ItemFlag[] flags
+            List<ItemFlag> flags
     ) {
         this(null, -1, material, damage, amount, name, lore, enchanted, flags);
     }
@@ -202,7 +203,7 @@ public class InventoryGUIItem extends ItemStack {
             String name,
             String[] lore,
             boolean enchanted,
-            ItemFlag[] flags
+            List<ItemFlag> flags
     ) {
         this(actionHandlingInventoryGUI, slotInInventoryGUI, material, damage, amount, name, lore, enchanted, flags, true);
     }
@@ -231,7 +232,7 @@ public class InventoryGUIItem extends ItemStack {
             String name,
             String[] lore,
             boolean enchanted,
-            ItemFlag[] flags,
+            List<ItemFlag> flags,
             boolean autoAddToContainingInventory
     ) {
 
@@ -260,7 +261,7 @@ public class InventoryGUIItem extends ItemStack {
         }
 
         if (Objects.nonNull(flags)) {
-            meta.addItemFlags(flags);
+            flags.forEach(meta::addItemFlags);
 
         } else {
             meta.addItemFlags(

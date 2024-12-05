@@ -8,6 +8,7 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.meta.SkullMeta;
 
 import java.lang.reflect.Field;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -93,7 +94,7 @@ public class InventoryGUICustomHead extends InventoryGUIItem {
             String name,
             String[] lore,
             boolean enchanted,
-            ItemFlag[] flags
+            List<ItemFlag> flags
     ) {
         this(null, -1, url, amount, name, lore, enchanted, flags);
     }
@@ -106,7 +107,7 @@ public class InventoryGUICustomHead extends InventoryGUIItem {
             String name,
             String[] lore,
             boolean enchanted,
-            ItemFlag[] flags
+            List<ItemFlag> flags
     ) {
 
         super(actionHandlingInventoryGUI, slotInInventoryGUI, Material.SKULL_ITEM, (short) 3, amount, name, lore, enchanted, flags, false);
