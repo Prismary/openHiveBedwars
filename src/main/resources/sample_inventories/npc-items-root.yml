@@ -39,8 +39,8 @@ contents:
       - "§7A choice of weapons and tools"
       - "§7to use in your fights!"
   39:
-    baseclass: "DummyCustomSlot"
+    baseclass: "FavouriteSlot"
   40:
-    baseclass: "DummyCustomSlot"
+    baseclass: "FavouriteSlot"
   41:
-    baseclass: "DummyCustomSlot"
+    baseclass: "FavouriteSlot"
