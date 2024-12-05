@@ -109,6 +109,15 @@ public class InventoryGUIConfig extends ConfigFile {
         }
     }
 
+    public void addContents(InventoryGUIBase gui, @Nonnull InventoryGUIContext context) {
+
+        contents.forEach(
+                (slot, config) -> config.getGUIItemFactory().apply(
+                        new InventoryGUIContext(context.getOpeningPlayer(), context.getOpeningPlayerTeam(), gui, slot)
+                )
+        );
+    }
+
     public void applyLockStatus(InventoryGUIBase gui) {
 
         if (Objects.nonNull(lockedSlots)) {
@@ -118,11 +127,6 @@ public class InventoryGUIConfig extends ConfigFile {
         if (locked) {
             gui.lock();
         }
-    }
-
-    public void addContents(InventoryGUIBase gui, InventoryGUIContext context) {
-
-        contents.forEach((slot, itemConfig) -> itemConfig.createGUIItem(gui, slot, context));
     }
 
     static class InventoryGUIItemConfig {
@@ -208,108 +212,114 @@ public class InventoryGUIConfig extends ConfigFile {
             this.purchasedItemFlags = parseItemFlagSet(config.getStringList(String.join(".", baseRoute, "purchasedItem", "itemFlags")));
             this.purchasedCustomHeadUrl = config.getString(String.join(".", baseRoute, "purchasedItem", "customHeadURL"));
 
-            this.destinationGUI = config.getString(String.join(".", baseRoute, "purchasedItem", "destinationGUI"));
+            this.destinationGUI = config.getString(String.join(".", baseRoute, "destinationGUI"));
         }
 
-        public InventoryGUIItem createGUIItem(InventoryGUIBase gui, Integer slot, InventoryGUIContext context) {
+        public Function<InventoryGUIContext, InventoryGUIItem> getGUIItemFactory() {
 
             if (Objects.equals(this.baseclass, "InventoryGUICustomHead")) {
 
-                return new InventoryGUICustomHead(
-                        gui,
-                        slot,
-                        customHeadUrl,
-                        amount,
-                        name,
-                        listToArray(lore),
-                        enchanted,
-                        new ArrayList<>(itemFlags)
+                return context -> new InventoryGUICustomHead(
+                            context.getContainingGUI(),
+                            context.getSlot(),
+                            customHeadUrl,
+                            amount,
+                            name,
+                            listToArray(lore),
+                            enchanted,
+                            new ArrayList<>(itemFlags)
                 );
 
             } else if (Objects.equals(this.baseclass, "PurchasableItem")) {
 
-                // ToDo: get the value of this variable via implementing the Favourites feature,
-                //  e.g. by combining inventory key and slot number or something similar -> data persistence?
-                boolean isFavourite = false;
+                return context -> {
+                    // ToDo: get the value of this variable via implementing the Favourites feature,
+                    //  e.g. by combining inventory key and slot number or something similar -> data persistence?
+                    boolean isFavourite = false;
 
-                return new PurchasableItem(
-                        gui,
-                        slot,
-                        material,
-                        damage,
-                        amount,
-                        enchanted,
-                        name,
-                        cost,
-                        currency,
-                        showFavStatus,
-                        isFavourite,
-                        listToArray(lore),
-                        createItemStack(
-                                purchasedMaterial,
-                                purchasedDamage,
-                                purchasedData,
-                                purchasedAmount,
-                                purchasedName,
-                                purchasedLore,
-                                purchasedEnchantments,
-                                new ArrayList<>(purchasedItemFlags)
-                        )
-                );
+                    return new PurchasableItem(
+                            context.getContainingGUI(),
+                            context.getSlot(),
+                            material,
+                            damage,
+                            amount,
+                            enchanted,
+                            name,
+                            cost,
+                            currency,
+                            showFavStatus,
+                            isFavourite,
+                            listToArray(lore),
+                            createItemStack(
+                                    purchasedMaterial,
+                                    purchasedDamage,
+                                    purchasedData,
+                                    purchasedAmount,
+                                    purchasedName,
+                                    purchasedLore,
+                                    purchasedEnchantments,
+                                    new ArrayList<>(purchasedItemFlags)
+                            )
+                    );
+                };
 
             } else if (Objects.equals(this.baseclass, "PurchasableCustomHead")) {
 
-                // ToDo: get the value of this variable via implementing the Favourites feature,
-                //  e.g. by combining inventory key and slot number or something similar -> data persistence?
-                boolean isFavourite = false;
+                return context -> {
+                    // ToDo: get the value of this variable via implementing the Favourites feature,
+                    //  e.g. by combining inventory key and slot number or something similar -> data persistence?
+                    boolean isFavourite = false;
 
-                return new PurchasableCustomHead(
-                        gui,
-                        slot,
-                        customHeadUrl,
-                        amount,
-                        enchanted,
-                        name,
-                        cost,
-                        currency,
-                        showFavStatus,
-                        isFavourite,
-                        listToArray(lore),
-                        createCustomHead(
-                                purchasedCustomHeadUrl,
-                                purchasedAmount,
-                                purchasedName,
-                                purchasedLore,
-                                purchasedEnchantments,
-                                new ArrayList<>(purchasedItemFlags)
-                        )
-                );
+                    return new PurchasableCustomHead(
+                            context.getContainingGUI(),
+                            context.getSlot(),
+                            customHeadUrl,
+                            amount,
+                            enchanted,
+                            name,
+                            cost,
+                            currency,
+                            showFavStatus,
+                            isFavourite,
+                            listToArray(lore),
+                            createCustomHead(
+                                    purchasedCustomHeadUrl,
+                                    purchasedAmount,
+                                    purchasedName,
+                                    purchasedLore,
+                                    purchasedEnchantments,
+                                    new ArrayList<>(purchasedItemFlags)
+                            )
+                    );
+                };
 
             } else if (Objects.equals(this.baseclass, "PurchasableBridgeBuilder")) {
 
-                // ToDo: get the value of this variable via implementing the Favourites feature,
-                //  e.g. by combining inventory key and slot number or something similar -> data persistence?
-                boolean isFavourite = false;
+                return context -> {
+                    // ToDo: get the value of this variable via implementing the Favourites feature,
+                    //  e.g. by combining inventory key and slot number or something similar -> data persistence?
+                    boolean isFavourite = false;
 
-                return new PurchasableCustomHead(
-                        gui,
-                        slot,
-                        BridgeBuilderItem.getURLForMaterial(material, data),
-                        amount,
-                        enchanted,
-                        name,
-                        cost,
-                        currency,
-                        showFavStatus,
-                        isFavourite,
-                        new BridgeBuilderItem(purchasedMaterial, purchasedAmount, purchasedData)
-                );
+                    return new PurchasableCustomHead(
+                            context.getContainingGUI(),
+                            context.getSlot(),
+                            BridgeBuilderItem.getURLForMaterial(material, data),
+                            amount,
+                            enchanted,
+                            name,
+                            cost,
+                            currency,
+                            showFavStatus,
+                            isFavourite,
+                            new BridgeBuilderItem(purchasedMaterial, purchasedAmount, purchasedData)
+                    );
+                };
 
             } else if (Objects.equals(this.baseclass, "CategorySelector")) {
 
-                return new CategorySelector(
-                        gui,
-                        slot,
+                return context -> new CategorySelector(
+                        context.getContainingGUI(),
+                        context.getSlot(),
                         material,
                         damage,
                         name,
@@ -317,11 +327,18 @@ public class InventoryGUIConfig extends ConfigFile {
                         destinationGUI
                 );
 
+            } else if (Objects.equals(this.baseclass, "FavouriteSlot")) {
+
+                return context -> new DummyCustomSlot(
+                        context.getContainingGUI(),
+                        context.getSlot()
+                );
+
             } else {
 
-                return new InventoryGUIItem(
-                        gui,
-                        slot,
+                return context -> new InventoryGUIItem(
+                        context.getContainingGUI(),
+                        context.getSlot(),
                         material,
                         damage,
                         amount,
