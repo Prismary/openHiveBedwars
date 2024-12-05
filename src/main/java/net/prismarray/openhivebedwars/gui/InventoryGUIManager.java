@@ -6,6 +6,7 @@ import net.prismarray.openhivebedwars.gui.components.InventoryGUIBase;
 import org.bukkit.entity.Player;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -50,7 +51,7 @@ public class InventoryGUIManager {
         return instance.registeredInventoryGUIs.containsKey(key);
     }
 
-    public static void openInventoryGUI(@Nonnull String key, @Nonnull Player target) {
+    public static void openInventoryGUI(@Nullable String key, @Nonnull Player target) {
 
         Function<InventoryGUIContext, ? extends InventoryGUIBase> factory = instance.registeredInventoryGUIs.get(key);
 

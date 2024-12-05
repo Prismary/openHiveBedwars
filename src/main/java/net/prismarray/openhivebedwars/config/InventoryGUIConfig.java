@@ -134,9 +134,9 @@ public class InventoryGUIConfig extends ConfigFile {
         private short damage;
         private byte data;
         private String name;
-        private String[] lore;
+        private List<String> lore;
         private boolean enchanted;
-        private ItemFlag[] itemFlags;
+        private Set<ItemFlag> itemFlags;
 
         private String customHeadUrl;
 
@@ -150,7 +150,7 @@ public class InventoryGUIConfig extends ConfigFile {
         private String purchasedName;
         private List<String> purchasedLore;
         private Map<Enchantment, Integer> purchasedEnchantments;
-        private List<ItemFlag> purchasedItemFlags;
+        private Set<ItemFlag> purchasedItemFlags;
         private String purchasedCustomHeadUrl;
 
         private String destinationGUI;
@@ -171,14 +171,44 @@ public class InventoryGUIConfig extends ConfigFile {
                 damage = (short) 3;
                 amount = 1;
                 name = "missing item";
-                lore = new String[]{"could not parse item config"};
+                lore = new ArrayList<>();
+                lore.add("could not parse item config");
                 enchanted = false;
                 itemFlags = null;
             }
         }
 
         private void parseAndValidateConfig(YamlDocument config, @Nonnull Integer slot) throws ConfigValidationException {
-            // ToDo
+
+            String baseRoute = String.join(".", "contents", String.valueOf(slot));
+
+            this.baseclass = config.getString(String.join(".", baseRoute, "baseclass"), "InventoryGUIItem");
+
+            this.material = parseMaterial(config.getString(String.join(".", baseRoute, "material")));
+            this.amount = config.getInt(String.join(".", baseRoute, "amount"), 1);
+            this.damage = config.getShort(String.join(".", baseRoute, "damage"), (short) 0);
+            this.data = config.getByte(String.join(".", baseRoute, "data"), (byte) 0);
+            this.name = config.getString(String.join(".", baseRoute, "name"));
+            this.lore = config.getStringList(String.join(".", baseRoute, "lore"));
+            this.enchanted = config.getBoolean(String.join(".", baseRoute, "enchanted"), false);
+            this.itemFlags = parseItemFlagSet(config.getStringList(String.join(".", baseRoute, "itemFlags")));
+
+            this.customHeadUrl = config.getString(String.join(".", baseRoute, "customHeadURL"));
+
+            this.cost = config.getInt(String.join(".", baseRoute, "cost"), 1);
+            this.currency = parseCurrency(config.getString(String.join(".", baseRoute, "currency"), "IRON"));
+            this.showFavStatus = config.getBoolean(String.join(".", baseRoute, "showFavStatus"), true);
+            this.purchasedMaterial = parseMaterial(config.getString(String.join(".", baseRoute, "purchasedItem", "material")));
+            this.purchasedAmount = config.getInt(String.join(".", baseRoute, "purchasedItem", "amount"), 1);
+            this.purchasedDamage = config.getShort(String.join(".", baseRoute, "purchasedItem", "damage"), (short) 0);
+            this.purchasedData = config.getByte(String.join(".", baseRoute, "purchasedItem", "data"), (byte) 0);
+            this.purchasedName = config.getString(String.join(".", baseRoute, "purchasedItem", "name"));
+            this.purchasedLore = config.getStringList(String.join(".", baseRoute, "purchasedItem", "lore"));
+            this.purchasedEnchantments = parseEnchantmentMap(config.getStringList(String.join(".", baseRoute, "purchasedItem", "enchantments")));
+            this.purchasedItemFlags = parseItemFlagSet(config.getStringList(String.join(".", baseRoute, "purchasedItem", "itemFlags")));
+            this.purchasedCustomHeadUrl = config.getString(String.join(".", baseRoute, "purchasedItem", "customHeadURL"));
+
+            this.destinationGUI = config.getString(String.join(".", baseRoute, "purchasedItem", "destinationGUI"));
         }
 
         public InventoryGUIItem createGUIItem(InventoryGUIBase gui, Integer slot, InventoryGUIContext context) {
@@ -191,9 +221,9 @@ public class InventoryGUIConfig extends ConfigFile {
                         customHeadUrl,
                         amount,
                         name,
-                        lore,
+                        listToArray(lore),
                         enchanted,
-                        itemFlags
+                        new ArrayList<>(itemFlags)
                 );
 
             } else if (Objects.equals(this.baseclass, "PurchasableItem")) {
@@ -214,7 +244,7 @@ public class InventoryGUIConfig extends ConfigFile {
                         currency,
                         showFavStatus,
                         isFavourite,
-                        lore,
+                        listToArray(lore),
                         createItemStack(
                                 purchasedMaterial,
                                 purchasedDamage,
@@ -223,7 +253,7 @@ public class InventoryGUIConfig extends ConfigFile {
                                 purchasedName,
                                 purchasedLore,
                                 purchasedEnchantments,
-                                purchasedItemFlags
+                                new ArrayList<>(purchasedItemFlags)
                         )
                 );
 
@@ -244,14 +274,14 @@ public class InventoryGUIConfig extends ConfigFile {
                         currency,
                         showFavStatus,
                         isFavourite,
-                        lore,
+                        listToArray(lore),
                         createCustomHead(
                                 purchasedCustomHeadUrl,
                                 purchasedAmount,
                                 purchasedName,
                                 purchasedLore,
                                 purchasedEnchantments,
-                                purchasedItemFlags
+                                new ArrayList<>(purchasedItemFlags)
                         )
                 );
 
@@ -283,7 +313,7 @@ public class InventoryGUIConfig extends ConfigFile {
                         material,
                         damage,
                         name,
-                        lore,
+                        listToArray(lore),
                         destinationGUI
                 );
 
@@ -296,9 +326,9 @@ public class InventoryGUIConfig extends ConfigFile {
                         damage,
                         amount,
                         name,
-                        lore,
+                        listToArray(lore),
                         enchanted,
-                        itemFlags
+                        new ArrayList<>(itemFlags)
                 );
             }
         }
