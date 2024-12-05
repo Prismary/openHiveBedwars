@@ -1,7 +1,5 @@
-package net.prismarray.openhivebedwars.bedwars.shop.items.npc_items.root;
+package net.prismarray.openhivebedwars.gui.components;
 
-import net.prismarray.openhivebedwars.gui.components.InventoryGUIBase;
-import net.prismarray.openhivebedwars.gui.components.InventoryGUIItem;
 import org.bukkit.Material;
 
 public class DummyCustomSlot extends InventoryGUIItem {

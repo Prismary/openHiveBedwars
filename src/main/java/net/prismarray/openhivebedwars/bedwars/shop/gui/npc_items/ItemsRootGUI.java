@@ -3,7 +3,7 @@ package net.prismarray.openhivebedwars.bedwars.shop.gui.npc_items;
 import net.prismarray.openhivebedwars.gui.components.InventoryGUIFramed;
 import net.prismarray.openhivebedwars.bedwars.shop.items.npc_items.root.Armor;
 import net.prismarray.openhivebedwars.bedwars.shop.items.npc_items.root.Blocks;
-import net.prismarray.openhivebedwars.bedwars.shop.items.npc_items.root.DummyCustomSlot;
+import net.prismarray.openhivebedwars.gui.components.DummyCustomSlot;
 import net.prismarray.openhivebedwars.bedwars.shop.items.npc_items.root.WeaponsAndTools;
 import net.prismarray.openhivebedwars.gui.InventoryGUIContext;
 import org.bukkit.DyeColor;
