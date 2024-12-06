@@ -202,15 +202,15 @@ public class InventoryGUIConfig extends ConfigFile {
             this.cost = config.getInt(String.join(".", baseRoute, "cost"), 1);
             this.currency = parseCurrency(config.getString(String.join(".", baseRoute, "currency"), "IRON"));
             this.showFavStatus = config.getBoolean(String.join(".", baseRoute, "showFavStatus"), true);
-            this.purchasedMaterial = parseMaterial(config.getString(String.join(".", baseRoute, "purchasedItem", "material"), "AIR"));
-            this.purchasedAmount = config.getInt(String.join(".", baseRoute, "purchasedItem", "amount"), 1);
-            this.purchasedDamage = config.getShort(String.join(".", baseRoute, "purchasedItem", "damage"), (short) 0);
-            this.purchasedData = config.getByte(String.join(".", baseRoute, "purchasedItem", "data"), (byte) 0);
+            this.purchasedMaterial = parseMaterial(config.getString(String.join(".", baseRoute, "purchasedItem", "material"), material.toString()));
+            this.purchasedAmount = config.getInt(String.join(".", baseRoute, "purchasedItem", "amount"), amount);
+            this.purchasedDamage = config.getShort(String.join(".", baseRoute, "purchasedItem", "damage"), damage);
+            this.purchasedData = config.getByte(String.join(".", baseRoute, "purchasedItem", "data"), data);
             this.purchasedName = config.getString(String.join(".", baseRoute, "purchasedItem", "name"));
             this.purchasedLore = config.getStringList(String.join(".", baseRoute, "purchasedItem", "lore"));
             this.purchasedEnchantments = parseEnchantmentMap(config.getStringList(String.join(".", baseRoute, "purchasedItem", "enchantments")));
             this.purchasedItemFlags = parseItemFlagSet(config.getStringList(String.join(".", baseRoute, "purchasedItem", "itemFlags")));
-            this.purchasedCustomHeadUrl = config.getString(String.join(".", baseRoute, "purchasedItem", "customHeadURL"));
+            this.purchasedCustomHeadUrl = config.getString(String.join(".", baseRoute, "purchasedItem", "customHeadURL"), customHeadUrl);
 
             this.destinationGUI = config.getString(String.join(".", baseRoute, "destinationGUI"));
         }
@@ -236,6 +236,13 @@ public class InventoryGUIConfig extends ConfigFile {
                     // ToDo: get the value of this variable via implementing the Favourites feature,
                     //  e.g. by combining inventory key and slot number or something similar -> data persistence?
                     boolean isFavourite = false;
+
+                    short damage = this.damage;
+                    short purchasedDamage = this.purchasedDamage;
+                    if (material == Material.WOOL || material == Material.STAINED_GLASS || material == Material.STAINED_CLAY) {
+                        damage = (OpenHiveBedwars.getBWConfig().getShopUseDefaultColorsForPurchasableBlocks()) ? DyeColor.WHITE.getWoolData() : context.getOpeningPlayerTeam().getColor().woolColor.getWoolData();
+                        purchasedDamage = (OpenHiveBedwars.getBWConfig().getShopUseDefaultColorsForPurchasableBlocks()) ? DyeColor.WHITE.getWoolData() : context.getOpeningPlayerTeam().getColor().woolColor.getWoolData();
+                    }
 
                     return new PurchasableItem(
                             context.getContainingGUI(),
@@ -299,6 +306,13 @@ public class InventoryGUIConfig extends ConfigFile {
                     // ToDo: get the value of this variable via implementing the Favourites feature,
                     //  e.g. by combining inventory key and slot number or something similar -> data persistence?
                     boolean isFavourite = false;
+
+                    byte data = this.data;
+                    byte purchasedData = this.purchasedData;
+                    if (material == Material.WOOL || material == Material.STAINED_GLASS || material == Material.STAINED_CLAY) {
+                        data = (OpenHiveBedwars.getBWConfig().getShopUseDefaultColorsForPurchasableBlocks()) ? DyeColor.WHITE.getWoolData() : context.getOpeningPlayerTeam().getColor().woolColor.getWoolData();
+                        purchasedData = (OpenHiveBedwars.getBWConfig().getShopUseDefaultColorsForPurchasableBlocks()) ? DyeColor.WHITE.getWoolData() : context.getOpeningPlayerTeam().getColor().woolColor.getWoolData();
+                    }
 
                     return new PurchasableCustomHead(
                             context.getContainingGUI(),
