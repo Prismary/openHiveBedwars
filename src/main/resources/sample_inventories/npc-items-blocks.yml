@@ -39,11 +39,14 @@ contents:
     amount: 32
     cost: 5
     currency: "GOLD"
+    purchasedItem:
+      damage: 5
   14:
+    # ToDo: find original price and title
     baseclass: "PurchasableItem"
     material: "ENDER_STONE"
     damage: 0
-    name: "End Stone Blocks §4(ToDo: find original price)"
+    name: "End Stone Blocks"
     amount: 32
     cost: 10
     currency: "GOLD"
@@ -56,10 +59,11 @@ contents:
     cost: 10
     currency: "DIAMOND"
   16:
+    # ToDo: verify, that the name is actually 'Obsidian' and not 'Obsidian Block(s)'
     baseclass: "PurchasableItem"
     material: "OBSIDIAN"
     damage: 0
-    name: "Obsidian Blocks"
+    name: "Obsidian"
     amount: 1
     cost: 1
     currency: "EMERALD"
@@ -87,8 +91,7 @@ contents:
   22:
     baseclass: "PurchasableBridgeBuilder"
     material: "STONE"
-    damage: 0
-    data: 5
+    damage: 5
     name: "Andesite Bridge Builder"
     amount: 1
     cost: 25
@@ -109,7 +112,7 @@ contents:
     baseclass: "PurchasableBridgeBuilder"
     material: "STAINED_CLAY"
     damage: 0
-    name: "End Stone Bridge Builder"
+    name: "Stained Clay Bridge Builder"
     amount: 1
     cost: 50
     currency: "DIAMOND"

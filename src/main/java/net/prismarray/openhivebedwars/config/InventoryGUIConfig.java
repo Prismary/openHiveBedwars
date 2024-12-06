@@ -156,6 +156,7 @@ public class InventoryGUIConfig extends ConfigFile {
         private Map<Enchantment, Integer> purchasedEnchantments;
         private Set<ItemFlag> purchasedItemFlags;
         private String purchasedCustomHeadUrl;
+        private int purchasedBridgeBuilderBlocks;
 
         private String destinationGUI;
 
@@ -211,6 +212,7 @@ public class InventoryGUIConfig extends ConfigFile {
             this.purchasedEnchantments = parseEnchantmentMap(config.getStringList(String.join(".", baseRoute, "purchasedItem", "enchantments")));
             this.purchasedItemFlags = parseItemFlagSet(config.getStringList(String.join(".", baseRoute, "purchasedItem", "itemFlags")));
             this.purchasedCustomHeadUrl = config.getString(String.join(".", baseRoute, "purchasedItem", "customHeadURL"), customHeadUrl);
+            this.purchasedBridgeBuilderBlocks = config.getInt(String.join(".", baseRoute, "purchasedItem", "bridgeBuilderBlocks"), 32);
 
             this.destinationGUI = config.getString(String.join(".", baseRoute, "destinationGUI"));
         }
@@ -237,12 +239,8 @@ public class InventoryGUIConfig extends ConfigFile {
                     //  e.g. by combining inventory key and slot number or something similar -> data persistence?
                     boolean isFavourite = false;
 
-                    short damage = this.damage;
-                    short purchasedDamage = this.purchasedDamage;
-                    if (material == Material.WOOL || material == Material.STAINED_GLASS || material == Material.STAINED_CLAY) {
-                        damage = (OpenHiveBedwars.getBWConfig().getShopUseDefaultColorsForPurchasableBlocks()) ? DyeColor.WHITE.getWoolData() : context.getOpeningPlayerTeam().getColor().woolColor.getWoolData();
-                        purchasedDamage = (OpenHiveBedwars.getBWConfig().getShopUseDefaultColorsForPurchasableBlocks()) ? DyeColor.WHITE.getWoolData() : context.getOpeningPlayerTeam().getColor().woolColor.getWoolData();
-                    }
+                    short damage = getTeamSpecificDamageValue(context, material, this.damage);
+                    short purchasedDamage = getTeamSpecificDamageValue(context, purchasedMaterial, this.purchasedDamage);
 
                     return new PurchasableItem(
                             context.getContainingGUI(),
@@ -307,17 +305,13 @@ public class InventoryGUIConfig extends ConfigFile {
                     //  e.g. by combining inventory key and slot number or something similar -> data persistence?
                     boolean isFavourite = false;
 
-                    byte data = this.data;
-                    byte purchasedData = this.purchasedData;
-                    if (material == Material.WOOL || material == Material.STAINED_GLASS || material == Material.STAINED_CLAY) {
-                        data = (OpenHiveBedwars.getBWConfig().getShopUseDefaultColorsForPurchasableBlocks()) ? DyeColor.WHITE.getWoolData() : context.getOpeningPlayerTeam().getColor().woolColor.getWoolData();
-                        purchasedData = (OpenHiveBedwars.getBWConfig().getShopUseDefaultColorsForPurchasableBlocks()) ? DyeColor.WHITE.getWoolData() : context.getOpeningPlayerTeam().getColor().woolColor.getWoolData();
-                    }
+                    short damage = getTeamSpecificDamageValue(context, material, this.damage);
+                    short purchasedDamage = getTeamSpecificDamageValue(context, purchasedMaterial, this.purchasedDamage);
 
                     return new PurchasableCustomHead(
                             context.getContainingGUI(),
                             context.getSlot(),
-                            BridgeBuilderItem.getURLForMaterial(material, data),
+                            BridgeBuilderItem.getURLForMaterial(material, (byte) damage),
                             amount,
                             enchanted,
                             name,
@@ -325,7 +319,7 @@ public class InventoryGUIConfig extends ConfigFile {
                             currency,
                             showFavStatus,
                             isFavourite,
-                            new BridgeBuilderItem(purchasedMaterial, purchasedAmount, purchasedData)
+                            new BridgeBuilderItem(purchasedMaterial, purchasedAmount, purchasedBridgeBuilderBlocks, (byte) purchasedDamage)
                     );
                 };
 
@@ -417,5 +411,23 @@ public class InventoryGUIConfig extends ConfigFile {
         item.setItemMeta(meta);
 
         return item;
+    }
+
+    public static short getTeamSpecificDamageValue(InventoryGUIContext context, Material configuredMaterial, short configuredValue) {
+
+        if (
+                configuredMaterial != Material.WOOL
+                        && configuredMaterial != Material.STAINED_GLASS
+                        && configuredMaterial != Material.STAINED_CLAY
+        ) {
+            return configuredValue;
+        }
+
+        if (OpenHiveBedwars.getBWConfig().getShopUseDefaultColorsForPurchasableBlocks()) {
+            return DyeColor.WHITE.getWoolData();
+
+        } else {
+            return context.getOpeningPlayerTeam().getColor().woolColor.getWoolData();
+        }
     }
 }
