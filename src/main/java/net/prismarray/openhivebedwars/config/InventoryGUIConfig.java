@@ -56,22 +56,27 @@ public class InventoryGUIConfig extends ConfigFile {
 
         this.frameColor = parseDyeColor(yamlContent.getString("frame_color", "WHITE"));
         this.hasCancelButton = yamlContent.getBoolean("cancel_button", false);
-        this.previousButtonDestination = parseString(yamlContent.getString("previous_button_destination", ""));
-        this.nextButtonDestination = parseString(yamlContent.getString("previous_button_destination", ""));
+        this.previousButtonDestination = yamlContent.getString("previous_button_destination");
+        this.nextButtonDestination = yamlContent.getString("next_button_destination");
 
-        this.contents = yamlContent.getSection("contents").getKeys().stream()
-                .map(o -> {
-                    try {
-                        return Integer.parseInt((String) o);
-                    } catch (NumberFormatException | ClassCastException ignored) {
-                        return null;
-                    }
-                })
-                .filter(Objects::nonNull)
-                .collect(Collectors.toMap(
-                        Function.identity(),
-                        slot -> new InventoryGUIItemConfig(yamlContent, slot)
-                ));
+        if (Objects.isNull(yamlContent.getSection("contents"))) {
+            this.contents = new HashMap<>();
+
+        } else {
+            this.contents = yamlContent.getSection("contents").getKeys().stream()
+                    .map(o -> {
+                        try {
+                            return Integer.parseInt((String) o);
+                        } catch (NumberFormatException | ClassCastException ignored) {
+                            return null;
+                        }
+                    })
+                    .filter(Objects::nonNull)
+                    .collect(Collectors.toMap(
+                            Function.identity(),
+                            slot -> new InventoryGUIItemConfig(yamlContent, slot)
+                    ));
+        }
     }
 
     public String getGUIIdentifier() {
@@ -241,6 +246,7 @@ public class InventoryGUIConfig extends ConfigFile {
 
                     short damage = getTeamSpecificDamageValue(context, material, this.damage);
                     short purchasedDamage = getTeamSpecificDamageValue(context, purchasedMaterial, this.purchasedDamage);
+                    byte purchasedData = (byte) purchasedDamage;
 
                     return new PurchasableItem(
                             context.getContainingGUI(),
@@ -319,7 +325,7 @@ public class InventoryGUIConfig extends ConfigFile {
                             currency,
                             showFavStatus,
                             isFavourite,
-                            new BridgeBuilderItem(purchasedMaterial, purchasedAmount, purchasedBridgeBuilderBlocks, (byte) purchasedDamage)
+                            new BridgeBuilderItem(purchasedMaterial, purchasedBridgeBuilderBlocks, (byte) purchasedDamage, purchasedAmount)
                     );
                 };
 
@@ -415,11 +421,11 @@ public class InventoryGUIConfig extends ConfigFile {
 
     public static short getTeamSpecificDamageValue(InventoryGUIContext context, Material configuredMaterial, short configuredValue) {
 
-        if (
-                configuredMaterial != Material.WOOL
-                        && configuredMaterial != Material.STAINED_GLASS
-                        && configuredMaterial != Material.STAINED_CLAY
-        ) {
+        if (!(
+                configuredMaterial == Material.WOOL
+                        || configuredMaterial == Material.STAINED_GLASS
+                        || configuredMaterial == Material.STAINED_CLAY
+        )) {
             return configuredValue;
         }
 
