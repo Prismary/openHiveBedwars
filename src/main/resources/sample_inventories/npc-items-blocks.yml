@@ -1,0 +1,117 @@
+baseclass: "InventoryGUIFramed"
+locked: true
+title: "Blocks"
+size: 36
+frame_color: "LIME"
+cancel_button: true
+previous_button_destination: "npc-items-root"
+#next_button_destination: ""
+contents:
+  10:
+    baseclass: "PurchasableItem"
+    material: "STAINED_GLASS"
+    # damage: 0
+    name: "Glass Blocks"
+    amount: 32
+    cost: 5
+    currency: "IRON"
+  11:
+    baseclass: "PurchasableItem"
+    material: "WOOL"
+    # damage: 0
+    name: "Wool Blocks"
+    amount: 32
+    cost: 5
+    currency: "IRON"
+  12:
+    baseclass: "PurchasableItem"
+    material: "WOOD"
+    damage: 0
+    name: "Wood Blocks"
+    amount: 32
+    cost: 6
+    currency: "IRON"
+  13:
+    baseclass: "PurchasableItem"
+    material: "STONE"
+    damage: 6
+    name: "Andesite Blocks"
+    amount: 32
+    cost: 5
+    currency: "GOLD"
+  14:
+    baseclass: "PurchasableItem"
+    material: "ENDER_STONE"
+    damage: 0
+    name: "End Stone Blocks §4(ToDo: find original price)"
+    amount: 32
+    cost: 10
+    currency: "GOLD"
+  15:
+    baseclass: "PurchasableItem"
+    material: "STAINED_CLAY"
+    # damage: 0
+    name: "Stained Clay Blocks"
+    amount: 32
+    cost: 10
+    currency: "DIAMOND"
+  16:
+    baseclass: "PurchasableItem"
+    material: "OBSIDIAN"
+    damage: 0
+    name: "Obsidian Blocks"
+    amount: 1
+    cost: 1
+    currency: "EMERALD"
+
+  20:
+    baseclass: "PurchasableBridgeBuilder"
+    material: "WOOL"
+    # damage: 0
+    name: "Wool Bridge Builder"
+    amount: 1
+    cost: 25
+    currency: "IRON"
+    purchasedItem:
+      bridgeBuilderBlocks: 32
+  21:
+    baseclass: "PurchasableBridgeBuilder"
+    material: "WOOD"
+    damage: 0
+    name: "Wood Bridge Builder"
+    amount: 1
+    cost: 30
+    currency: "IRON"
+    purchasedItem:
+      bridgeBuilderBlocks: 32
+  22:
+    baseclass: "PurchasableBridgeBuilder"
+    material: "STONE"
+    damage: 0
+    data: 5
+    name: "Andesite Bridge Builder"
+    amount: 1
+    cost: 25
+    currency: "GOLD"
+    purchasedItem:
+      bridgeBuilderBlocks: 32
+  23:
+    baseclass: "PurchasableBridgeBuilder"
+    material: "ENDER_STONE"
+    damage: 0
+    name: "End Stone Bridge Builder"
+    amount: 1
+    cost: 40
+    currency: "GOLD"
+    purchasedItem:
+      bridgeBuilderBlocks: 32
+  24:
+    baseclass: "PurchasableBridgeBuilder"
+    material: "STAINED_CLAY"
+    damage: 0
+    name: "End Stone Bridge Builder"
+    amount: 1
+    cost: 50
+    currency: "DIAMOND"
+    purchasedItem:
+      bridgeBuilderBlocks: 32

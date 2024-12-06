@@ -1,0 +1,9 @@
+baseclass: "InventoryGUIFramed"
+locked: true
+title: "Weapons & Tools"
+size: 54
+frame_color: "BLUE"
+cancel_button: true
+previous_button_destination: "npc-items-root"
+#next_button_destination: ""
+contents:

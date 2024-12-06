@@ -1,15 +1,7 @@
 package net.prismarray.openhivebedwars;
 
 import net.prismarray.openhivebedwars.bedwars.Game;
-import net.prismarray.openhivebedwars.bedwars.shop.gui.npc_items.ItemsArmorGUI;
-import net.prismarray.openhivebedwars.bedwars.shop.gui.npc_items.ItemsBlocksGUI;
-import net.prismarray.openhivebedwars.bedwars.shop.gui.npc_items.ItemsRootGUI;
-import net.prismarray.openhivebedwars.bedwars.shop.gui.npc_items.ItemsWeaponsGUI;
 import net.prismarray.openhivebedwars.bedwars.shop.gui.npc_specialist.EnchanterRootGUI;
-import net.prismarray.openhivebedwars.bedwars.shop.gui.npc_specialist.SpecialistRootGUI;
-import net.prismarray.openhivebedwars.bedwars.shop.gui.npc_upgrades.UpgradesRootGUI;
-import net.prismarray.openhivebedwars.bedwars.shop.gui.npc_upgrades.UpgradesSummonerGUI;
-import net.prismarray.openhivebedwars.bedwars.shop.gui.npc_upgrades.UpgradesTeamGUI;
 import net.prismarray.openhivebedwars.commands.gui.CommandGUI;
 import net.prismarray.openhivebedwars.commands.openhivebedwars.CommandOpenHiveBedwars;
 import net.prismarray.openhivebedwars.commands.team.CommandTeam;
@@ -18,14 +10,11 @@ import net.prismarray.openhivebedwars.config.Config;
 import net.prismarray.openhivebedwars.config.ConfigValidationException;
 import net.prismarray.openhivebedwars.config.InventoryGUIConfig;
 import net.prismarray.openhivebedwars.config.LobbyConfig;
-import net.prismarray.openhivebedwars.gui.InventoryGUIContext;
-import net.prismarray.openhivebedwars.gui.components.InventoryGUIBase;
 import net.prismarray.openhivebedwars.maps.MapManager;
 import net.prismarray.openhivebedwars.enchantments.InventoryGUIDummyEnchantment;
 import net.prismarray.openhivebedwars.events.*;
 import net.prismarray.openhivebedwars.gui.InventoryGUIManager;
 import net.prismarray.openhivebedwars.util.FileUtils;
-import org.apache.commons.io.FilenameUtils;
 import org.bukkit.command.defaults.EnchantCommand;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.HandlerList;
@@ -36,9 +25,7 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public final class OpenHiveBedwars extends JavaPlugin {
@@ -111,17 +98,17 @@ public final class OpenHiveBedwars extends JavaPlugin {
     private void initializeInventoryGUIs() {
 
         // InventoryGUIManager.registerInventoryGUIFactory("npc-items-root", ItemsRootGUI::new);
-        InventoryGUIManager.registerInventoryGUIFactory("npc-items-blocks", ItemsBlocksGUI::new);
-        InventoryGUIManager.registerInventoryGUIFactory("npc-items-armor", ItemsArmorGUI::new);
-        InventoryGUIManager.registerInventoryGUIFactory("npc-items-weapons", ItemsWeaponsGUI::new);
+        // InventoryGUIManager.registerInventoryGUIFactory("npc-items-blocks", ItemsBlocksGUI::new);
+        // InventoryGUIManager.registerInventoryGUIFactory("npc-items-armor", ItemsArmorGUI::new);
+        // InventoryGUIManager.registerInventoryGUIFactory("npc-items-weapons", ItemsWeaponsGUI::new);
 
-        InventoryGUIManager.registerInventoryGUIFactory("npc-upgrades-root", UpgradesRootGUI::new);
-        InventoryGUIManager.registerInventoryGUIFactory("npc-upgrades-summoner", UpgradesSummonerGUI::new);
-        InventoryGUIManager.registerInventoryGUIFactory("npc-upgrades-team", UpgradesTeamGUI::new);
+        //InventoryGUIManager.registerInventoryGUIFactory("npc-upgrades-root", UpgradesRootGUI::new);
+        //InventoryGUIManager.registerInventoryGUIFactory("npc-upgrades-summoner", UpgradesSummonerGUI::new);
+        //InventoryGUIManager.registerInventoryGUIFactory("npc-upgrades-team", UpgradesTeamGUI::new);
 
         InventoryGUIManager.registerInventoryGUIFactory("npc-enchanter-root", EnchanterRootGUI::new);
 
-        InventoryGUIManager.registerInventoryGUIFactory("npc-specialist-root", SpecialistRootGUI::new);
+        //InventoryGUIManager.registerInventoryGUIFactory("npc-specialist-root", SpecialistRootGUI::new);
 
 
         this.getLogger().info("Attempting to read configuration files in GUI directory...");

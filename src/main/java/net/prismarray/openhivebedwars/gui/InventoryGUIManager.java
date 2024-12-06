@@ -18,7 +18,15 @@ import java.util.function.Function;
 public class InventoryGUIManager {
 
     private static final String[] DEFAULT_GUI_CONFIG_FILENAMES = new String[]{
-            "npc-items-root.yml"
+            "npc-items-root.yml",
+            "npc-items-blocks.yml",
+            "npc-items-armor.yml",
+            "npc-items-weapons.yml",
+            "npc-items-traps.yml",
+            "npc-upgrades-root.yml",
+            "npc-upgrades-summoner.yml",
+            "npc-upgrades-team.yml",
+            "npc-specialist-root.yml",
     };
 
     private static final InventoryGUIManager instance = new InventoryGUIManager();

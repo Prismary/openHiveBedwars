@@ -38,6 +38,14 @@ contents:
     lore:
       - "§7A choice of weapons and tools"
       - "§7to use in your fights!"
+  25:
+    baseclass: "CategorySelector"
+    destinationGUI: "npc-items-traps"
+    material: "SKULL"
+    damage: 0
+    name: "§b§4ToDo: Traps title"
+    lore:
+      - "§7ToDo: traps lore"
   39:
     baseclass: "FavouriteSlot"
   40:

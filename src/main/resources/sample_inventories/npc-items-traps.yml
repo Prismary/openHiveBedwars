@@ -1,0 +1,9 @@
+baseclass: "InventoryGUIFramed"
+locked: true
+title: "Traps (ToDo)"
+size: 54
+frame_color: "BLACK"
+cancel_button: true
+previous_button_destination: "npc-items-root"
+#next_button_destination: ""
+contents:
