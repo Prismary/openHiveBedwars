@@ -22,14 +22,14 @@ public class BridgeBuilderItem extends InventoryGUICustomHead {
     private final Material blockType;
 
     public BridgeBuilderItem(Material blockType, int remainingBlocks) {
-        this(blockType, 1, remainingBlocks, (byte) 0);
+        this(blockType, remainingBlocks, (byte) 0, 1);
     }
 
-    public BridgeBuilderItem(Material blockType, int amount, int remainingBlocks) {
-        this(blockType, amount, remainingBlocks, (byte) 0);
+    public BridgeBuilderItem(Material blockType, int remainingBlocks, byte blockTypeData) {
+        this(blockType, remainingBlocks, blockTypeData, 1);
     }
 
-    public BridgeBuilderItem(Material blockType, int amount, int remainingBlocks, byte blockTypeData) {
+    public BridgeBuilderItem(Material blockType, int remainingBlocks, byte blockTypeData, int amount) {
         super(
                 getURLForMaterial(blockType, blockTypeData),
                 amount,
