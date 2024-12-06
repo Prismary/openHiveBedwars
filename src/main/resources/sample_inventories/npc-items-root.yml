@@ -41,11 +41,12 @@ contents:
   25:
     baseclass: "CategorySelector"
     destinationGUI: "npc-items-traps"
-    material: "SKULL"
+    material: "WOOD_PLATE"
     damage: 0
-    name: "§b§4ToDo: Traps title"
+    name: "§d§lTraps"
     lore:
-      - "§7ToDo: traps lore"
+      - "§7An arsenal of traps and gimmicks"
+      - "§7to trick your opponents!"
   39:
     baseclass: "FavouriteSlot"
   40:
