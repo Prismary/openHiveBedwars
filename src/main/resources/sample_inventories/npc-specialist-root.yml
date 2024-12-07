@@ -1,0 +1,8 @@
+baseclass: "InventoryGUIFramed"
+locked: true
+title: "The Specialist"
+size: 36
+frame_color: "ORANGE"
+cancel_button: true
+# ToDo: implement contents according to SpecialistRootGUI
+contents:

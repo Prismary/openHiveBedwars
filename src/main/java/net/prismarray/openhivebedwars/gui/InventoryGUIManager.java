@@ -26,7 +26,7 @@ public class InventoryGUIManager {
             "npc-upgrades-root.yml",
             "npc-upgrades-summoner.yml",
             "npc-upgrades-team.yml",
-            //"npc-specialist-root.yml",
+            "npc-specialist-root.yml",
     };
 
     private static final InventoryGUIManager instance = new InventoryGUIManager();
