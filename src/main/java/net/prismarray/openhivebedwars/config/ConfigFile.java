@@ -185,6 +185,14 @@ public abstract class ConfigFile {
         return dyeColor;
     }
 
+    public static DyeColor parseDyeColorOrDefault(String input, DyeColor def) {
+        try {
+            return parseDyeColor(input);
+        } catch (ConfigValidationException ignored) {
+            return def;
+        }
+    }
+
     public static Set<Material> parseMaterialSet(List<String> input) throws ConfigValidationException {
 
         if (Objects.isNull(input)) {
