@@ -34,7 +34,7 @@ public class InventoryGUIConfig extends ConfigFile {
     private int size;
     private Map<Integer, InventoryGUIItemConfig> contents;
 
-    private DyeColor frameColor;
+    private String frameColor;
     private boolean hasCancelButton;
     private String previousButtonDestination;
     private String nextButtonDestination;
@@ -55,7 +55,7 @@ public class InventoryGUIConfig extends ConfigFile {
         this.title = parseString(yamlContent.getString("title"));
         this.size = yamlContent.getInt("size");
 
-        this.frameColor = parseDyeColor(yamlContent.getString("frame_color", "WHITE"));
+        this.frameColor = yamlContent.getString("frame_color", "WHITE");
         this.hasCancelButton = yamlContent.getBoolean("cancel_button", false);
         this.previousButtonDestination = yamlContent.getString("previous_button_destination");
         this.nextButtonDestination = yamlContent.getString("next_button_destination");
@@ -89,12 +89,12 @@ public class InventoryGUIConfig extends ConfigFile {
         if (Objects.equals(this.baseclass, "InventoryGUIFramed")) {
             return (context) -> {
                 InventoryGUIFramed gui = new InventoryGUIFramed(
-                        title,
+                        context.parseStringPlaceholders(title),
                         (int) Math.ceil(size / 9.0),
-                        frameColor,
+                        parseDyeColorOrDefault(context.parseStringPlaceholders(frameColor), DyeColor.WHITE),
                         hasCancelButton,
-                        Objects.equals(previousButtonDestination, "") ? null : previousButtonDestination,
-                        Objects.equals(nextButtonDestination, "") ? null : nextButtonDestination
+                        previousButtonDestination,
+                        nextButtonDestination
                 );
 
                 addContents(gui, context);
@@ -105,7 +105,10 @@ public class InventoryGUIConfig extends ConfigFile {
 
         } else {
             return (context) -> {
-                InventoryGUIBase gui = new InventoryGUIBase(title, size);
+                InventoryGUIBase gui = new InventoryGUIBase(
+                        context.parseStringPlaceholders(title),
+                        size
+                );
 
                 addContents(gui, context);
                 applyLockStatus(gui);
@@ -238,8 +241,8 @@ public class InventoryGUIConfig extends ConfigFile {
                             context.getSlot(),
                             customHeadUrl,
                             amount,
-                            name,
-                            listToArray(lore),
+                            context.parseStringPlaceholders(name),
+                            listToArray(lore.stream().map(context::parseStringPlaceholders).collect(Collectors.toList())),
                             enchanted,
                             new ArrayList<>(itemFlags)
                 );
@@ -262,19 +265,19 @@ public class InventoryGUIConfig extends ConfigFile {
                             damage,
                             amount,
                             enchanted,
-                            name,
+                            context.parseStringPlaceholders(name),
                             cost,
                             currency,
                             showFavStatus,
                             isFavourite,
-                            listToArray(lore),
+                            listToArray(lore.stream().map(context::parseStringPlaceholders).collect(Collectors.toList())),
                             createItemStack(
                                     purchasedMaterial,
                                     purchasedDamage,
                                     purchasedData,
                                     purchasedAmount,
-                                    purchasedName,
-                                    purchasedLore,
+                                    context.parseStringPlaceholders(purchasedName),
+                                    purchasedLore.stream().map(context::parseStringPlaceholders).collect(Collectors.toList()),
                                     purchasedEnchantments,
                                     new ArrayList<>(purchasedItemFlags)
                             )
@@ -294,17 +297,17 @@ public class InventoryGUIConfig extends ConfigFile {
                             customHeadUrl,
                             amount,
                             enchanted,
-                            name,
+                            context.parseStringPlaceholders(name),
                             cost,
                             currency,
                             showFavStatus,
                             isFavourite,
-                            listToArray(lore),
+                            listToArray(lore.stream().map(context::parseStringPlaceholders).collect(Collectors.toList())),
                             createCustomHead(
                                     purchasedCustomHeadUrl,
                                     purchasedAmount,
-                                    purchasedName,
-                                    purchasedLore,
+                                    context.parseStringPlaceholders(purchasedName),
+                                    purchasedLore.stream().map(context::parseStringPlaceholders).collect(Collectors.toList()),
                                     purchasedEnchantments,
                                     new ArrayList<>(purchasedItemFlags)
                             )
@@ -327,11 +330,12 @@ public class InventoryGUIConfig extends ConfigFile {
                             BridgeBuilderItem.getURLForMaterial(material, (byte) damage),
                             amount,
                             enchanted,
-                            name,
+                            context.parseStringPlaceholders(name),
                             cost,
                             currency,
                             showFavStatus,
                             isFavourite,
+                            listToArray(lore.stream().map(context::parseStringPlaceholders).collect(Collectors.toList())),
                             new BridgeBuilderItem(purchasedMaterial, purchasedBridgeBuilderBlocks, (byte) purchasedDamage, purchasedAmount)
                     );
                 };
@@ -343,8 +347,8 @@ public class InventoryGUIConfig extends ConfigFile {
                         context.getSlot(),
                         material,
                         damage,
-                        name,
-                        listToArray(lore),
+                        context.parseStringPlaceholders(name),
+                        listToArray(lore.stream().map(context::parseStringPlaceholders).collect(Collectors.toList())),
                         destinationGUI
                 );
 
@@ -376,8 +380,8 @@ public class InventoryGUIConfig extends ConfigFile {
                         material,
                         damage,
                         amount,
-                        name,
-                        listToArray(lore),
+                        context.parseStringPlaceholders(name),
+                        listToArray(lore.stream().map(context::parseStringPlaceholders).collect(Collectors.toList())),
                         enchanted,
                         new ArrayList<>(itemFlags)
                 );
