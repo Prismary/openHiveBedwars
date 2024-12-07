@@ -3,6 +3,7 @@ package net.prismarray.openhivebedwars.config;
 import dev.dejvokep.boostedyaml.YamlDocument;
 import net.prismarray.openhivebedwars.OpenHiveBedwars;
 import net.prismarray.openhivebedwars.bedwars.bridgebuilder.BridgeBuilderItem;
+import net.prismarray.openhivebedwars.gui.components.SummonerUpgrade;
 import net.prismarray.openhivebedwars.gui.InventoryGUIContext;
 import net.prismarray.openhivebedwars.gui.components.*;
 import net.prismarray.openhivebedwars.util.Currency;
@@ -165,6 +166,9 @@ public class InventoryGUIConfig extends ConfigFile {
 
         private String destinationGUI;
 
+        private Currency summonerCurrency;
+        private int summonerUpgradeLevel;
+
         private InventoryGUIItemConfig(YamlDocument yamlContent, @Nonnull Integer slot) throws ConfigValidationException {
             try {
                 this.parseAndValidateConfig(yamlContent, slot);
@@ -220,6 +224,9 @@ public class InventoryGUIConfig extends ConfigFile {
             this.purchasedBridgeBuilderBlocks = config.getInt(String.join(".", baseRoute, "purchasedItem", "bridgeBuilderBlocks"), 32);
 
             this.destinationGUI = config.getString(String.join(".", baseRoute, "destinationGUI"));
+
+            this.summonerCurrency = parseCurrency(config.getString(String.join(".", baseRoute, "summonerCurrency"), "IRON"));
+            this.summonerUpgradeLevel = config.getInt(String.join(".", baseRoute, "summonerUpgradeLevel"), 1);
         }
 
         public Function<InventoryGUIContext, InventoryGUIItem> getGUIItemFactory() {
@@ -346,6 +353,19 @@ public class InventoryGUIConfig extends ConfigFile {
                 return context -> new DummyCustomSlot(
                         context.getContainingGUI(),
                         context.getSlot()
+                );
+
+            } else if (Objects.equals(this.baseclass, "SummonerUpgrade")) {
+
+                return context -> new SummonerUpgrade(
+                        context.getContainingGUI(),
+                        context.getSlot(),
+                        context.getOpeningPlayerTeam().getColor(),
+                        summonerCurrency,
+                        summonerUpgradeLevel,
+                        currency,
+                        cost,
+                        destinationGUI
                 );
 
             } else {

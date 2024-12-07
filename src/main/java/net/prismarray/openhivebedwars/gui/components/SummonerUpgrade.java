@@ -1,4 +1,4 @@
-package net.prismarray.openhivebedwars.bedwars.shop.items.npc_upgrades.summoner_upgrades;
+package net.prismarray.openhivebedwars.gui.components;
 
 import net.prismarray.openhivebedwars.OpenHiveBedwars;
 import net.prismarray.openhivebedwars.bedwars.Game;
@@ -7,8 +7,6 @@ import net.prismarray.openhivebedwars.bedwars.summoner.SummonerManager;
 import net.prismarray.openhivebedwars.gui.InventoryGUIManager;
 import net.prismarray.openhivebedwars.gui.actions.InventoryGUIActionHandler;
 import net.prismarray.openhivebedwars.gui.actions.InventoryGUIActionListener;
-import net.prismarray.openhivebedwars.gui.components.InventoryGUIBase;
-import net.prismarray.openhivebedwars.gui.components.InventoryGUIItem;
 import net.prismarray.openhivebedwars.gui.actions.InventoryGUIClickAction;
 import net.prismarray.openhivebedwars.util.Broadcast;
 import net.prismarray.openhivebedwars.util.Currency;
@@ -20,7 +18,7 @@ import java.util.concurrent.Callable;
 
 public class SummonerUpgrade extends InventoryGUIItem {
 
-    public SummonerUpgrade(InventoryGUIBase gui, int slot, TeamColor teamColor, Currency currency, int level, Currency purchaseCurrency, int cost, int summonerIndex, String reloadGUI) {
+    public SummonerUpgrade(InventoryGUIBase gui, int slot, TeamColor teamColor, Currency currency, int level, Currency purchaseCurrency, int cost, String reloadGUI) {
         super(
                 gui,
                 slot,
@@ -53,7 +51,7 @@ public class SummonerUpgrade extends InventoryGUIItem {
                         return;
                     }
 
-                    SummonerManager.getTeamSummoner(teamColor).upgrade(summonerIndex);
+                    SummonerManager.getTeamSummoner(teamColor).upgrade(getSummonerIndex(currency));
 
                     Bukkit.getScheduler().runTask(OpenHiveBedwars.getInstance(), () -> { // re-open the upgrades inventory
                         try {
@@ -104,17 +102,20 @@ public class SummonerUpgrade extends InventoryGUIItem {
     }
 
     public static boolean isOwned(TeamColor teamColor, Currency currency, int level) {
-        int[] summonLevels = SummonerManager.getTeamSummoner(teamColor).getSummonLevels();
 
+        int[] summonLevels = SummonerManager.getTeamSummoner(teamColor).getSummonLevels();
+        return (summonLevels[getSummonerIndex(currency)] >= level);
+    }
+
+    public static int getSummonerIndex(Currency currency) {
         switch (currency) {
             case IRON:
-                return (summonLevels[0] >= level);
+                return 0;
             case GOLD:
-                return (summonLevels[1] >= level);
+                return 1;
             case DIAMOND:
-                return (summonLevels[2] >= level);
+                return 2;
         }
-
-        return false;
+        return -1;
     }
 }
