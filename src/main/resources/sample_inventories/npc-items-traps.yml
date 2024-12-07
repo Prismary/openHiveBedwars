@@ -1,9 +1,10 @@
 baseclass: "InventoryGUIFramed"
 locked: true
-title: "Traps (ToDo)"
+# ToDo: Find actual title (and frame color)
+title: "Traps"
 size: 54
 frame_color: "PINK"
 cancel_button: true
 previous_button_destination: "npc-items-root"
-#next_button_destination: ""
+# ToDo: Find contents
 contents:

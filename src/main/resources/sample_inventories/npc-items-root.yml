@@ -1,15 +1,9 @@
 baseclass: "InventoryGUIFramed"
 locked: true
-#locked_slots:
-#  - 0
-#  - 2
-#  - 42
 title: "Item Shop"
 size: 54
 frame_color: "PURPLE"
 cancel_button: true
-#previous_button_destination: ""
-#next_button_destination: ""
 contents:
   19:
     baseclass: "CategorySelector"

@@ -5,5 +5,142 @@ size: 54
 frame_color: "BLUE"
 cancel_button: true
 previous_button_destination: "npc-items-root"
-#next_button_destination: ""
 contents:
+  10:
+    baseclass: "PurchasableItem"
+    material: "STONE_SWORD"
+    damage: 0
+    name: "Stone Sword"
+    amount: 1
+    cost: 5
+    currency: "IRON"
+  19:
+    baseclass: "PurchasableItem"
+    material: "STONE_PICKAXE"
+    damage: 0
+    name: "Stone Pickaxe"
+    amount: 1
+    # ToDo: find real price
+    cost: 5
+    currency: "IRON"
+  28:
+    baseclass: "PurchasableItem"
+    material: "STONE_AXE"
+    damage: 0
+    name: "Stone Axe"
+    amount: 1
+    cost: 10
+    currency: "IRON"
+  37:
+    baseclass: "PurchasableItem"
+    material: "STONE_SPADE"
+    damage: 0
+    name: "Stone Shovel"
+    amount: 1
+    # ToDo: find real price
+    cost: 5
+    currency: "IRON"
+
+  12:
+    baseclass: "PurchasableItem"
+    material: "IRON_SWORD"
+    damage: 0
+    name: "Iron Sword"
+    amount: 1
+    cost: 10
+    currency: "GOLD"
+  21:
+    baseclass: "PurchasableItem"
+    material: "IRON_PICKAXE"
+    damage: 0
+    name: "Iron Pickaxe"
+    amount: 1
+    cost: 10
+    currency: "GOLD"
+  30:
+    baseclass: "PurchasableItem"
+    material: "IRON_AXE"
+    damage: 0
+    name: "Iron Axe"
+    amount: 1
+    cost: 5
+    currency: "GOLD"
+  39:
+    baseclass: "PurchasableItem"
+    material: "IRON_SPADE"
+    damage: 0
+    name: "Iron Shovel"
+    amount: 1
+    # ToDo: find real price
+    cost: 5
+    currency: "GOLD"
+
+  14:
+    baseclass: "PurchasableItem"
+    material: "DIAMOND_SWORD"
+    damage: 0
+    name: "Diamond Sword"
+    amount: 1
+    cost: 5
+    currency: "EMERALD"
+  23:
+    baseclass: "PurchasableItem"
+    material: "DIAMOND_PICKAXE"
+    damage: 0
+    name: "Diamond Pickaxe"
+    amount: 1
+    cost: 2
+    currency: "EMERALD"
+  32:
+    baseclass: "PurchasableItem"
+    material: "DIAMOND_AXE"
+    damage: 0
+    name: "Diamond Axe"
+    amount: 1
+    cost: 15
+    currency: "DIAMOND"
+  41:
+    baseclass: "PurchasableItem"
+    material: "DIAMOND_SPADE"
+    damage: 0
+    name: "Diamond Shovel"
+    amount: 1
+    # ToDo: find real price
+    cost: 10
+    currency: "DIAMOND"
+
+  16:
+    baseclass: "PurchasableItem"
+    material: "COMPASS"
+    damage: 0
+    # ToDo: finalize title
+    name: "Compass (WIP)"
+    amount: 1
+    # ToDo: find real price
+    cost: 2
+    currency: "EMERALD"
+  25:
+    baseclass: "PurchasableItem"
+    material: "SHEARS"
+    damage: 0
+    name: "Shears"
+    amount: 1
+    # ToDo: find real price
+    cost: 1
+    currency: "EMERALD"
+  34:
+    baseclass: "PurchasableItem"
+    material: "BOW"
+    damage: 0
+    name: "Bow"
+    amount: 1
+    cost: 5
+    currency: "DIAMOND"
+  43:
+    baseclass: "PurchasableItem"
+    material: "ARROW"
+    damage: 0
+    name: "Arrow"
+    amount: 10
+    cost: 15
+    currency: "IRON"

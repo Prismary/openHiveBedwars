@@ -5,7 +5,6 @@ size: 36
 frame_color: "LIME"
 cancel_button: true
 previous_button_destination: "npc-items-root"
-#next_button_destination: ""
 contents:
   10:
     baseclass: "PurchasableItem"

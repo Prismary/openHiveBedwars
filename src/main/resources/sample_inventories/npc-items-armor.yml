@@ -5,5 +5,102 @@ size: 54
 frame_color: "RED"
 cancel_button: true
 previous_button_destination: "npc-items-root"
-#next_button_destination: ""
 contents:
+  10:
+    baseclass: "PurchasableItem"
+    material: "CHAINMAIL_HELMET"
+    damage: 0
+    name: "Chain Helmet"
+    amount: 1
+    cost: 10
+    currency: "IRON"
+  19:
+    baseclass: "PurchasableItem"
+    material: "CHAINMAIL_CHESTPLATE"
+    damage: 0
+    name: "Chain Chestplate"
+    amount: 1
+    cost: 10
+    currency: "GOLD"
+  28:
+    baseclass: "PurchasableItem"
+    material: "CHAINMAIL_LEGGINGS"
+    damage: 0
+    name: "Chain Leggings"
+    amount: 1
+    cost: 10
+    currency: "GOLD"
+  37:
+    baseclass: "PurchasableItem"
+    material: "CHAINMAIL_BOOTS"
+    damage: 0
+    name: "Chain Boots"
+    amount: 1
+    cost: 10
+    currency: "IRON"
+
+  13:
+    baseclass: "PurchasableItem"
+    material: "IRON_HELMET"
+    damage: 0
+    name: "Iron Helmet"
+    amount: 1
+    cost: 50
+    currency: "GOLD"
+  22:
+    baseclass: "PurchasableItem"
+    material: "IRON_CHESTPLATE"
+    damage: 0
+    name: "Iron Chestplate"
+    amount: 1
+    cost: 2
+    currency: "EMERALD"
+  31:
+    baseclass: "PurchasableItem"
+    material: "IRON_LEGGINGS"
+    damage: 0
+    name: "Iron Leggings"
+    amount: 1
+    cost: 20
+    currency: "DIAMOND"
+  40:
+    baseclass: "PurchasableItem"
+    material: "IRON_BOOTS"
+    damage: 0
+    name: "Iron Boots"
+    amount: 1
+    cost: 50
+    currency: "IRON"
+
+  16:
+    baseclass: "PurchasableItem"
+    material: "DIAMOND_HELMET"
+    damage: 0
+    name: "Diamond Helmet"
+    amount: 1
+    cost: 200
+    currency: "GOLD"
+  25:
+    baseclass: "PurchasableItem"
+    material: "DIAMOND_CHESTPLATE"
+    damage: 0
+    name: "Diamond Chestplate"
+    amount: 1
+    cost: 5
+    currency: "EMERALD"
+  34:
+    baseclass: "PurchasableItem"
+    material: "DIAMOND_LEGGINGS"
+    damage: 0
+    name: "Diamond Leggings"
+    amount: 1
+    cost: 50
+    currency: "DIAMOND"
+  43:
+    baseclass: "PurchasableItem"
+    material: "DIAMOND_BOOTS"
+    damage: 0
+    name: "Diamond Boots"
+    amount: 1
+    cost: 200
+    currency: "IRON"
