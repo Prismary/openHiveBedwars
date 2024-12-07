@@ -1,0 +1,73 @@
+baseclass: "InventoryGUIFramed"
+locked: true
+title: "Summoner Upgrades"
+size: 45
+frame_color: "MAGENTA"
+cancel_button: true
+previous_button_destination: "npc-upgrades-root"
+contents:
+  11:
+    baseclass: "SummonerUpgrade"
+    summonerCurrency: "IRON"
+    summonerUpgradeLevel: 1
+    cost: 0
+    currency: "IRON"
+    destinationGUI: "npc-upgrades-summoner"
+  20:
+    baseclass: "SummonerUpgrade"
+    summonerCurrency: "IRON"
+    summonerUpgradeLevel: 2
+    cost: 5
+    currency: "IRON"
+    destinationGUI: "npc-upgrades-summoner"
+  29:
+    baseclass: "SummonerUpgrade"
+    summonerCurrency: "IRON"
+    summonerUpgradeLevel: 3
+    cost: 10
+    currency: "IRON"
+    destinationGUI: "npc-upgrades-summoner"
+
+  13:
+    baseclass: "SummonerUpgrade"
+    summonerCurrency: "GOLD"
+    summonerUpgradeLevel: 1
+    cost: 1
+    currency: "DIAMOND"
+    destinationGUI: "npc-upgrades-summoner"
+  22:
+    baseclass: "SummonerUpgrade"
+    summonerCurrency: "GOLD"
+    summonerUpgradeLevel: 2
+    cost: 5
+    currency: "GOLD"
+    destinationGUI: "npc-upgrades-summoner"
+  31:
+    baseclass: "SummonerUpgrade"
+    summonerCurrency: "GOLD"
+    summonerUpgradeLevel: 3
+    cost: 10
+    currency: "GOLD"
+    destinationGUI: "npc-upgrades-summoner"
+
+  15:
+    baseclass: "SummonerUpgrade"
+    summonerCurrency: "DIAMOND"
+    summonerUpgradeLevel: 1
+    cost: 5
+    currency: "EMERALD"
+    destinationGUI: "npc-upgrades-summoner"
+  24:
+    baseclass: "SummonerUpgrade"
+    summonerCurrency: "DIAMOND"
+    summonerUpgradeLevel: 2
+    cost: 5
+    currency: "DIAMOND"
+    destinationGUI: "npc-upgrades-summoner"
+  33:
+    baseclass: "SummonerUpgrade"
+    summonerCurrency: "DIAMOND"
+    summonerUpgradeLevel: 3
+    cost: 10
+    currency: "DIAMOND"
+    destinationGUI: "npc-upgrades-summoner"

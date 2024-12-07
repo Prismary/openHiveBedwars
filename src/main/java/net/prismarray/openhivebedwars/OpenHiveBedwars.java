@@ -2,6 +2,7 @@ package net.prismarray.openhivebedwars;
 
 import net.prismarray.openhivebedwars.bedwars.Game;
 import net.prismarray.openhivebedwars.bedwars.shop.gui.npc_specialist.EnchanterRootGUI;
+import net.prismarray.openhivebedwars.bedwars.shop.gui.npc_specialist.SpecialistRootGUI;
 import net.prismarray.openhivebedwars.commands.gui.CommandGUI;
 import net.prismarray.openhivebedwars.commands.openhivebedwars.CommandOpenHiveBedwars;
 import net.prismarray.openhivebedwars.commands.team.CommandTeam;
@@ -97,18 +98,9 @@ public final class OpenHiveBedwars extends JavaPlugin {
 
     private void initializeInventoryGUIs() {
 
-        // InventoryGUIManager.registerInventoryGUIFactory("npc-items-root", ItemsRootGUI::new);
-        // InventoryGUIManager.registerInventoryGUIFactory("npc-items-blocks", ItemsBlocksGUI::new);
-        // InventoryGUIManager.registerInventoryGUIFactory("npc-items-armor", ItemsArmorGUI::new);
-        // InventoryGUIManager.registerInventoryGUIFactory("npc-items-weapons", ItemsWeaponsGUI::new);
-
-        //InventoryGUIManager.registerInventoryGUIFactory("npc-upgrades-root", UpgradesRootGUI::new);
-        //InventoryGUIManager.registerInventoryGUIFactory("npc-upgrades-summoner", UpgradesSummonerGUI::new);
-        //InventoryGUIManager.registerInventoryGUIFactory("npc-upgrades-team", UpgradesTeamGUI::new);
-
         InventoryGUIManager.registerInventoryGUIFactory("npc-enchanter-root", EnchanterRootGUI::new);
 
-        //InventoryGUIManager.registerInventoryGUIFactory("npc-specialist-root", SpecialistRootGUI::new);
+        InventoryGUIManager.registerInventoryGUIFactory("npc-specialist-root", SpecialistRootGUI::new);
 
 
         this.getLogger().info("Attempting to read configuration files in GUI directory...");

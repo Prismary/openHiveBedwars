@@ -1,0 +1,10 @@
+baseclass: "InventoryGUIFramed"
+locked: true
+title: "Team Upgrades"
+size: 45
+# ToDo: find actual frame color
+frame_color: "RED"
+cancel_button: true
+previous_button_destination: "npc-upgrades-root"
+# ToDo: find contents
+contents:

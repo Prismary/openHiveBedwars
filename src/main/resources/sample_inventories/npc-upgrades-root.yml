@@ -1,9 +1,35 @@
 baseclass: "InventoryGUIFramed"
 locked: true
-title: "Armor"
-size: 54
-frame_color: "RED"
+title: "Team %(team_color_chat_name) Upgrades"
+size: 45
+frame_color: "%(team_color_dye_name)"
 cancel_button: true
-previous_button_destination: "npc-items-root"
-#next_button_destination: ""
 contents:
+  20:
+    baseclass: "CategorySelector"
+    destinationGUI: "npc-upgrades-summoner"
+    material: "BLAZE_POWDER"
+    damage: 0
+    name: "§6§lSummoner Upgrades"
+    lore:
+      - "§7Upgrade your summoner for:"
+      - "§7 → §eMore Speed"
+      - "§7 → §aMore Currencies"
+  22:
+    baseclass: "CategorySelector"
+    destinationGUI: "npc-upgrades-team"
+    material: "SKULL_ITEM"
+    damage: 3
+    name: "§b§lTeam Upgrades"
+    lore:
+      - "§7Buy upgrades that apply to all"
+      - "§7members on your team!"
+  24:
+    baseclass: "CategorySelector"
+    destinationGUI: "npc-upgrades-root"
+    material: "REDSTONE"
+    damage: 0
+    # ToDo: find title, lore and contents of this menu section
+    name: "§4§l???"
+    lore:
+      - "§7This section has not been implemented yet"
