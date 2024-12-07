@@ -2,7 +2,6 @@ package net.prismarray.openhivebedwars;
 
 import net.prismarray.openhivebedwars.bedwars.Game;
 import net.prismarray.openhivebedwars.gui.custom.EnchanterRootGUI;
-import net.prismarray.openhivebedwars.gui.custom.SpecialistRootGUI;
 import net.prismarray.openhivebedwars.commands.gui.CommandGUI;
 import net.prismarray.openhivebedwars.commands.openhivebedwars.CommandOpenHiveBedwars;
 import net.prismarray.openhivebedwars.commands.team.CommandTeam;
@@ -98,10 +97,9 @@ public final class OpenHiveBedwars extends JavaPlugin {
 
     private void initializeInventoryGUIs() {
 
-        InventoryGUIManager.registerInventoryGUIFactory("npc-enchanter-root", EnchanterRootGUI::new);
+        this.getLogger().info("Registering custom inventory GUIs...");
 
-        // ToDo: replace with YML config file
-        InventoryGUIManager.registerInventoryGUIFactory("npc-specialist-root", SpecialistRootGUI::new);
+        InventoryGUIManager.registerInventoryGUIFactory("npc-enchanter-root", EnchanterRootGUI::new);
 
 
         this.getLogger().info("Attempting to read configuration files in GUI directory...");

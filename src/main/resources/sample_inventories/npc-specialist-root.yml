@@ -4,5 +4,77 @@ title: "The Specialist"
 size: 36
 frame_color: "ORANGE"
 cancel_button: true
-# ToDo: implement contents according to SpecialistRootGUI
 contents:
+  11:
+    baseclass: "PurchasableItem"
+    material: "MONSTER_EGG"
+    damage: 95
+    name: "Personal Doggo"
+    amount: 1
+    cost: 1
+    currency: "EMERALD"
+  12:
+    baseclass: "PurchasableItem"
+    material: "TNT"
+    damage: 0
+    name: "Instant TNT"
+    amount: 1
+    cost: 1
+    currency: "EMERALD"
+  13:
+    baseclass: "PurchasableItem"
+    material: "GOLDEN_APPLE"
+    damage: 0
+    name: "Golden Apple"
+    amount: 1
+    cost: 15
+    currency: "EMERALD"
+  14:
+    baseclass: "PurchasableItem"
+    material: "ENDER_PEARL"
+    damage: 0
+    name: "Enderpearl"
+    amount: 1
+    cost: 15
+    currency: "EMERALD"
+  15:
+    baseclass: "PurchasableItem"
+    material: "PUMPKIN"
+    damage: 0
+    name: "Team Golem"
+    amount: 1
+    cost: 64
+    currency: "DIAMOND"
+
+  20:
+    baseclass: "PurchasableItem"
+    material: "MAGMA_CREAM"
+    damage: 0
+    name: "Poison Cure"
+    amount: 1
+    cost: 5
+    currency: "DIAMOND"
+  21:
+    baseclass: "PurchasableItem"
+    material: "POTION"
+    damage: 16421
+    name: "Splash Healing Potion"
+    amount: 1
+    cost: 30
+    currency: "DIAMOND"
+  23:
+    baseclass: "PurchasableItem"
+    material: "POTION"
+    damage: 16428
+    name: "Splash Damage Potion"
+    amount: 1
+    cost: 40
+    currency: "DIAMOND"
+  24:
+    baseclass: "PurchasableItem"
+    material: "POTION"
+    damage: 16388
+    name: "Splash Poison Potion"
+    amount: 1
+    cost: 60
+    currency: "DIAMOND"
