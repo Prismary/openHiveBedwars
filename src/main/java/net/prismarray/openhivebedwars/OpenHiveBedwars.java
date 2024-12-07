@@ -100,6 +100,7 @@ public final class OpenHiveBedwars extends JavaPlugin {
 
         InventoryGUIManager.registerInventoryGUIFactory("npc-enchanter-root", EnchanterRootGUI::new);
 
+        // ToDo: replace with YML config file
         InventoryGUIManager.registerInventoryGUIFactory("npc-specialist-root", SpecialistRootGUI::new);
 
 
@@ -136,6 +137,10 @@ public final class OpenHiveBedwars extends JavaPlugin {
                 );
                 config.loadConfig();
                 InventoryGUIManager.registerInventoryGUIFactory(config.getGUIIdentifier(), config.getInventoryGUIFactroy());
+
+                OpenHiveBedwars.getInstance().getLogger().info(
+                        "Successfully loaded GUI '" + config.getGUIIdentifier() + "'..."
+                );
 
             } catch (IOException | ConfigValidationException e) {
                 this.getLogger().warning(String.format("Failed to load GUI config '%s'. Skipping...", config.getGUIIdentifier()));
