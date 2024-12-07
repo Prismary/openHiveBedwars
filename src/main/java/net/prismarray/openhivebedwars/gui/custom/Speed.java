@@ -1,10 +1,11 @@
-package net.prismarray.openhivebedwars.bedwars.shop.items.npc_upgrades.team_upgrades;
+package net.prismarray.openhivebedwars.gui.custom;
 
 import net.prismarray.openhivebedwars.gui.components.PurchasableItem;
 import net.prismarray.openhivebedwars.gui.components.InventoryGUIBase;
 import net.prismarray.openhivebedwars.util.Currency;
 import org.bukkit.Material;
 
+@Deprecated
 public class Speed extends PurchasableItem {
 
     public Speed(InventoryGUIBase gui, int slot, int level) {

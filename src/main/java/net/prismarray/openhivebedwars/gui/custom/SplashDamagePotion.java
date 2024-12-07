@@ -1,22 +1,23 @@
-package net.prismarray.openhivebedwars.bedwars.shop.items.npc_specialist;
+package net.prismarray.openhivebedwars.gui.custom;
 
 import net.prismarray.openhivebedwars.gui.components.PurchasableItem;
 import net.prismarray.openhivebedwars.gui.components.InventoryGUIBase;
 import net.prismarray.openhivebedwars.util.Currency;
 import org.bukkit.Material;
 
-public class TeamGolem extends PurchasableItem {
+@Deprecated
+public class SplashDamagePotion extends PurchasableItem {
 
-    public TeamGolem(InventoryGUIBase gui, int slot) {
+    public SplashDamagePotion(InventoryGUIBase gui, int slot) {
         super(
                 gui,
                 slot,
-                Material.PUMPKIN,
-                (short) 0,
+                Material.POTION,
+                (short) 16428,
                 1,
-                false,
-                "Team Golem",
-                64,
+                true,
+                "Splash Damage Potion",
+                40,
                 Currency.DIAMOND,
                 false,
                 false

@@ -1,22 +1,23 @@
-package net.prismarray.openhivebedwars.bedwars.shop.items.npc_specialist;
+package net.prismarray.openhivebedwars.gui.custom;
 
 import net.prismarray.openhivebedwars.gui.components.PurchasableItem;
 import net.prismarray.openhivebedwars.gui.components.InventoryGUIBase;
 import net.prismarray.openhivebedwars.util.Currency;
 import org.bukkit.Material;
 
-public class PoisonCure extends PurchasableItem {
+@Deprecated
+public class TeamGolem extends PurchasableItem {
 
-    public PoisonCure(InventoryGUIBase gui, int slot) {
+    public TeamGolem(InventoryGUIBase gui, int slot) {
         super(
                 gui,
                 slot,
-                Material.MAGMA_CREAM,
+                Material.PUMPKIN,
                 (short) 0,
                 1,
                 false,
-                "Poison Cure",
-                5,
+                "Team Golem",
+                64,
                 Currency.DIAMOND,
                 false,
                 false

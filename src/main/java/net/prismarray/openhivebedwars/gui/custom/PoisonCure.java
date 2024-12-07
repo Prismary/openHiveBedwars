@@ -1,23 +1,24 @@
-package net.prismarray.openhivebedwars.bedwars.shop.items.npc_specialist;
+package net.prismarray.openhivebedwars.gui.custom;
 
 import net.prismarray.openhivebedwars.gui.components.PurchasableItem;
 import net.prismarray.openhivebedwars.gui.components.InventoryGUIBase;
 import net.prismarray.openhivebedwars.util.Currency;
 import org.bukkit.Material;
 
-public class InstantTNT extends PurchasableItem {
+@Deprecated
+public class PoisonCure extends PurchasableItem {
 
-    public InstantTNT(InventoryGUIBase gui, int slot) {
+    public PoisonCure(InventoryGUIBase gui, int slot) {
         super(
                 gui,
                 slot,
-                Material.TNT,
+                Material.MAGMA_CREAM,
                 (short) 0,
                 1,
                 false,
-                "Instant TNT",
-                1,
-                Currency.EMERALD,
+                "Poison Cure",
+                5,
+                Currency.DIAMOND,
                 false,
                 false
         );

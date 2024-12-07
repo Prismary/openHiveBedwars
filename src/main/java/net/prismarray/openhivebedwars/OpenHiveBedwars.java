@@ -1,8 +1,8 @@
 package net.prismarray.openhivebedwars;
 
 import net.prismarray.openhivebedwars.bedwars.Game;
-import net.prismarray.openhivebedwars.bedwars.shop.gui.npc_specialist.EnchanterRootGUI;
-import net.prismarray.openhivebedwars.bedwars.shop.gui.npc_specialist.SpecialistRootGUI;
+import net.prismarray.openhivebedwars.gui.custom.EnchanterRootGUI;
+import net.prismarray.openhivebedwars.gui.custom.SpecialistRootGUI;
 import net.prismarray.openhivebedwars.commands.gui.CommandGUI;
 import net.prismarray.openhivebedwars.commands.openhivebedwars.CommandOpenHiveBedwars;
 import net.prismarray.openhivebedwars.commands.team.CommandTeam;

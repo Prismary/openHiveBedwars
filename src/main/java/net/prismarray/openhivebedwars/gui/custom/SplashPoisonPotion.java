@@ -1,22 +1,23 @@
-package net.prismarray.openhivebedwars.bedwars.shop.items.npc_specialist;
+package net.prismarray.openhivebedwars.gui.custom;
 
 import net.prismarray.openhivebedwars.gui.components.PurchasableItem;
 import net.prismarray.openhivebedwars.gui.components.InventoryGUIBase;
 import net.prismarray.openhivebedwars.util.Currency;
 import org.bukkit.Material;
 
-public class SplashDamagePotion extends PurchasableItem {
+@Deprecated
+public class SplashPoisonPotion extends PurchasableItem {
 
-    public SplashDamagePotion(InventoryGUIBase gui, int slot) {
+    public SplashPoisonPotion(InventoryGUIBase gui, int slot) {
         super(
                 gui,
                 slot,
                 Material.POTION,
-                (short) 16428,
+                (short) 16388,
                 1,
                 true,
-                "Splash Damage Potion",
-                40,
+                "Splash Poison Potion",
+                60,
                 Currency.DIAMOND,
                 false,
                 false

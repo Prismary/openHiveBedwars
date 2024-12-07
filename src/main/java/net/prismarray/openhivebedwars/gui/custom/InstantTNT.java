@@ -1,21 +1,22 @@
-package net.prismarray.openhivebedwars.bedwars.shop.items.npc_specialist;
+package net.prismarray.openhivebedwars.gui.custom;
 
 import net.prismarray.openhivebedwars.gui.components.PurchasableItem;
 import net.prismarray.openhivebedwars.gui.components.InventoryGUIBase;
 import net.prismarray.openhivebedwars.util.Currency;
 import org.bukkit.Material;
 
-public class PersonalDoggo extends PurchasableItem {
+@Deprecated
+public class InstantTNT extends PurchasableItem {
 
-    public PersonalDoggo(InventoryGUIBase gui, int slot) {
+    public InstantTNT(InventoryGUIBase gui, int slot) {
         super(
                 gui,
                 slot,
-                Material.MONSTER_EGG,
-                (short) 95,
+                Material.TNT,
+                (short) 0,
                 1,
                 false,
-                "Personal Doggo",
+                "Instant TNT",
                 1,
                 Currency.EMERALD,
                 false,

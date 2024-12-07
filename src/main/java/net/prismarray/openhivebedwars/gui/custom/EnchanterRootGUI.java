@@ -1,4 +1,4 @@
-package net.prismarray.openhivebedwars.bedwars.shop.gui.npc_specialist;
+package net.prismarray.openhivebedwars.gui.custom;
 
 import net.prismarray.openhivebedwars.gui.InventoryGUIContext;
 import net.prismarray.openhivebedwars.gui.components.InventoryGUIBase;
@@ -43,7 +43,7 @@ public class EnchanterRootGUI extends InventoryGUIBase {
             Material.WOOD_SPADE,
 
             Material.BOW,
-            // Material.SHEARS,
+            Material.SHEARS,
 
             Material.DIAMOND_HELMET,
             Material.GOLD_HELMET,
