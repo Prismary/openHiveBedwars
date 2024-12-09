@@ -2,16 +2,20 @@ package net.prismarray.openhivebedwars.config;
 
 import dev.dejvokep.boostedyaml.YamlDocument;
 import dev.dejvokep.boostedyaml.block.implementation.Section;
+import net.prismarray.openhivebedwars.bedwars.shop.npc.VillagerShop;
 import net.prismarray.openhivebedwars.util.Mode;
 import net.prismarray.openhivebedwars.util.TeamColor;
 import org.apache.commons.io.FilenameUtils;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.entity.Villager;
 import org.bukkit.util.Vector;
 
+import javax.annotation.Nonnull;
 import java.io.File;
 import java.util.*;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class MapConfig extends ConfigFile {
@@ -27,10 +31,9 @@ public class MapConfig extends ConfigFile {
     private Location spectatorSpawn;
     private Set<Location> emeraldSummonerLocations;
     private Set<Location> diamondSummonerLocations;
-    private Set<Location> enchanterNPCLocations;
-    private Set<Location> specialistNPCLocations;
 
     private final Map<TeamColor, TeamConfig> teamConfigs;
+    private List<VillagerShopConfig> villagerShopConfigs;
 
 
     public MapConfig(Logger logger, File configFile) {
@@ -44,6 +47,7 @@ public class MapConfig extends ConfigFile {
         this.mapID = FilenameUtils.removeExtension(configFile.getName());
         this.arenaWorld = arenaWorld;
         this.teamConfigs = new HashMap<>();
+        this.villagerShopConfigs = new ArrayList<>();
     }
 
     public void updateWorld(World arenaWorld) {
@@ -67,10 +71,10 @@ public class MapConfig extends ConfigFile {
 
         Stream.of(
                 this.emeraldSummonerLocations,
-                this.diamondSummonerLocations,
-                this.enchanterNPCLocations,
-                this.specialistNPCLocations
+                this.diamondSummonerLocations
         ).forEach(set -> set.forEach(location -> location.setWorld(this.arenaWorld)));
+
+        this.villagerShopConfigs.forEach(conf -> conf.location.setWorld(this.arenaWorld));
     }
 
     private void offsetEntityLocations() {
@@ -81,12 +85,12 @@ public class MapConfig extends ConfigFile {
 
         Stream.of(
                 this.emeraldSummonerLocations,
-                this.diamondSummonerLocations,
-                this.enchanterNPCLocations,
-                this.specialistNPCLocations
+                this.diamondSummonerLocations
         ).forEach(set -> set.forEach(MapConfig::offsetEntityLocation));
 
         teamConfigs.values().forEach(TeamConfig::offsetEntityLocations);
+
+        this.villagerShopConfigs.stream().map(conf -> conf.location).forEach(MapConfig::offsetEntityLocation);
     }
 
     private static void offsetEntityLocation(Location location) {
@@ -111,8 +115,16 @@ public class MapConfig extends ConfigFile {
 
         this.emeraldSummonerLocations = parseLocationSet(yamlContent.getStringList("locations.general.emerald_summoner_locations"));
         this.diamondSummonerLocations = parseLocationSet(yamlContent.getStringList("locations.general.diamond_summoner_locations"));
-        this.enchanterNPCLocations = parseLocationSet(yamlContent.getStringList("locations.general.enchanter_npc_locations"));
-        this.specialistNPCLocations = parseLocationSet(yamlContent.getStringList("locations.general.specialist_npc_locations"));
+
+        if (Objects.isNull(yamlContent.getSection("locations.general.npcs"))) {
+            this.villagerShopConfigs = new ArrayList<>();
+
+        } else {
+            this.villagerShopConfigs = yamlContent.getSection("locations.general.npcs").getKeys().stream()
+                    .filter(Objects::nonNull)
+                    .map(key -> new VillagerShopConfig(yamlContent, (String) key))
+                    .collect(Collectors.toList());
+        }
 
         switch (this.mode) {
 
@@ -148,6 +160,10 @@ public class MapConfig extends ConfigFile {
         this.offsetEntityLocations();
     }
 
+    public void spawnNPCs() {
+        this.villagerShopConfigs.forEach(VillagerShopConfig::spawnVillagerShop);
+    }
+
     public Location getTeamSpawn(TeamColor teamColor) {
         return this.teamConfigs.containsKey(teamColor) ? this.teamConfigs.get(teamColor).getSpawn() : null;
     }
@@ -162,14 +178,6 @@ public class MapConfig extends ConfigFile {
 
     public Set<Location> getTeamSummonerLocations(TeamColor teamColor) {
         return this.teamConfigs.containsKey(teamColor) ? this.teamConfigs.get(teamColor).getSummonerLocations() : null;
-    }
-
-    public Set<Location> getTeamItemNPCLocations(TeamColor teamColor) {
-        return this.teamConfigs.containsKey(teamColor) ? this.teamConfigs.get(teamColor).getItemNPCLocations() : null;
-    }
-
-    public Set<Location> getTeamUpgradesNPCLocations(TeamColor teamColor) {
-        return this.teamConfigs.containsKey(teamColor) ? this.teamConfigs.get(teamColor).getUpgradesNPCLocations() : null;
     }
 
     public Set<Location> getTeamColorIndicatorLocations(TeamColor teamColor) {
@@ -212,15 +220,7 @@ public class MapConfig extends ConfigFile {
         return diamondSummonerLocations;
     }
 
-    public Set<Location> getEnchanterNPCLocations() {
-        return enchanterNPCLocations;
-    }
-
-    public Set<Location> getSpecialistNPCLocations() {
-        return specialistNPCLocations;
-    }
-
-    static class TeamConfig {
+    public static class TeamConfig {
 
         private final TeamColor teamColor;
 
@@ -229,8 +229,6 @@ public class MapConfig extends ConfigFile {
         private Location bedHeadLocation;
 
         private Set<Location> summonerLocations;
-        private Set<Location> itemNPCLocations;
-        private Set<Location> upgradesNPCLocations;
         private Set<Location> colorIndicatorLocations;
 
 
@@ -272,8 +270,6 @@ public class MapConfig extends ConfigFile {
             }
 
             this.summonerLocations = parseLocationSet(teamSection.getStringList("summoner_locations"));
-            this.itemNPCLocations = parseLocationSet(teamSection.getStringList("item_npc_locations"));
-            this.upgradesNPCLocations = parseLocationSet(teamSection.getStringList("upgrades_npc_locations"));
             this.colorIndicatorLocations = parseLocationSet(teamSection.getStringList("color_indicator_locations"));
         }
 
@@ -296,8 +292,6 @@ public class MapConfig extends ConfigFile {
 
             Stream.of(
                     this.summonerLocations,
-                    this.itemNPCLocations,
-                    this.upgradesNPCLocations,
                     this.colorIndicatorLocations
             ).forEach(set -> set.forEach(location -> location.setWorld(arenaWorld)));
         }
@@ -310,8 +304,6 @@ public class MapConfig extends ConfigFile {
 
             Stream.of(
                     this.summonerLocations,
-                    this.itemNPCLocations,
-                    this.upgradesNPCLocations,
                     this.colorIndicatorLocations
             ).forEach(set -> set.forEach(MapConfig::offsetEntityLocation));
         }
@@ -336,16 +328,34 @@ public class MapConfig extends ConfigFile {
             return summonerLocations;
         }
 
-        public Set<Location> getItemNPCLocations() {
-            return itemNPCLocations;
-        }
-
-        public Set<Location> getUpgradesNPCLocations() {
-            return upgradesNPCLocations;
-        }
-
         public Set<Location> getColorIndicatorLocations() {
             return colorIndicatorLocations;
+        }
+    }
+
+    public static class VillagerShopConfig {
+
+        private Location location;
+        private String inventoryGUI;
+        private Villager.Profession profession;
+        private String customName;
+
+        public VillagerShopConfig(YamlDocument config, @Nonnull String shopKey) throws ConfigValidationException {
+            this.parseAndValidateConfig(config, shopKey);
+        }
+
+        private void parseAndValidateConfig(YamlDocument config, @Nonnull String shopKey) throws ConfigValidationException {
+
+            String baseRoute = String.join(".", "locations", "general", "npcs", shopKey);
+
+            this.location = parseLocation(config.getString(String.join(".", baseRoute, "location")));
+            this.inventoryGUI = parseString(config.getString(String.join(".", baseRoute, "inventoryGUI")));
+            this.profession = parseVillagerProfession(config.getString(String.join(".", baseRoute, "profession")));
+            this.customName = config.getString(String.join(".", baseRoute, "customName"));
+        }
+
+        public VillagerShop spawnVillagerShop() {
+            return new VillagerShop(location, inventoryGUI, profession, customName);
         }
     }
 }

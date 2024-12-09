@@ -31,12 +31,7 @@ public class ShopManager {
     }
 
     public void spawnNPCs() {
-        Game.getTeamHandler().getTeams().forEach(team -> {
-            spawnItemNPCs(team.getColor());
-            spawnUpgradeNPCs(team.getColor());
-        });
-        spawnEnchanterNPCs();
-        spawnSpecialistNPCs();
+        Game.getMapConfig().spawnNPCs();
     }
 
     public Shop getShop(Entity entity) {
@@ -91,21 +86,5 @@ public class ShopManager {
             amount.addAndGet(itemStack.getAmount());
         });
         return amount.get();
-    }
-
-    private void spawnItemNPCs(TeamColor teamColor) {
-        Game.getMapConfig().getTeamItemNPCLocations(teamColor).forEach(Items::new);
-    }
-
-    private void spawnUpgradeNPCs(TeamColor teamColor) {
-        Game.getMapConfig().getTeamUpgradesNPCLocations(teamColor).forEach(Upgrades::new);
-    }
-
-    private void spawnEnchanterNPCs() {
-        Game.getMapConfig().getEnchanterNPCLocations().forEach(Enchanter::new);
-    }
-
-    private void spawnSpecialistNPCs() {
-        Game.getMapConfig().getSpecialistNPCLocations().forEach(Specialist::new);
     }
 }
