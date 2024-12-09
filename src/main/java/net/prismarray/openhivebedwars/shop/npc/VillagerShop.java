@@ -1,7 +1,7 @@
-package net.prismarray.openhivebedwars.bedwars.shop.npc;
+package net.prismarray.openhivebedwars.shop.npc;
 
 import net.minecraft.server.v1_8_R3.NBTTagCompound;
-import net.prismarray.openhivebedwars.bedwars.shop.ShopManager;
+import net.prismarray.openhivebedwars.shop.ShopManager;
 import net.prismarray.openhivebedwars.gui.InventoryGUIManager;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;

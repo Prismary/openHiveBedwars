@@ -1,10 +1,9 @@
-package net.prismarray.openhivebedwars.bedwars.shop;
+package net.prismarray.openhivebedwars.shop;
 
 import net.prismarray.openhivebedwars.bedwars.Game;
-import net.prismarray.openhivebedwars.bedwars.shop.npc.*;
+import net.prismarray.openhivebedwars.shop.npc.*;
 import net.prismarray.openhivebedwars.util.Broadcast;
 import net.prismarray.openhivebedwars.util.Currency;
-import net.prismarray.openhivebedwars.util.TeamColor;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;

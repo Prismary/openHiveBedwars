@@ -2,7 +2,7 @@ package net.prismarray.openhivebedwars.gui.components;
 
 import net.prismarray.openhivebedwars.OpenHiveBedwars;
 import net.prismarray.openhivebedwars.bedwars.Game;
-import net.prismarray.openhivebedwars.bedwars.shop.ShopManager;
+import net.prismarray.openhivebedwars.shop.ShopManager;
 import net.prismarray.openhivebedwars.bedwars.summoner.SummonerManager;
 import net.prismarray.openhivebedwars.gui.InventoryGUIManager;
 import net.prismarray.openhivebedwars.gui.actions.InventoryGUIActionHandler;
@@ -13,8 +13,6 @@ import net.prismarray.openhivebedwars.util.Currency;
 import net.prismarray.openhivebedwars.util.TeamColor;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-
-import java.util.concurrent.Callable;
 
 public class SummonerUpgrade extends InventoryGUIItem {
 

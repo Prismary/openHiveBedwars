@@ -1,6 +1,6 @@
 package net.prismarray.openhivebedwars.gui.components;
 
-import net.prismarray.openhivebedwars.bedwars.shop.ShopManager;
+import net.prismarray.openhivebedwars.shop.ShopManager;
 import net.prismarray.openhivebedwars.gui.actions.InventoryGUIActionHandler;
 import net.prismarray.openhivebedwars.gui.actions.InventoryGUIActionListener;
 import net.prismarray.openhivebedwars.gui.actions.InventoryGUILeftOrShiftLeftClickAction;

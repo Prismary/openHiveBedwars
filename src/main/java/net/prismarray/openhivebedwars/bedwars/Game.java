@@ -2,7 +2,7 @@ package net.prismarray.openhivebedwars.bedwars;
 
 import net.prismarray.openhivebedwars.OpenHiveBedwars;
 import net.prismarray.openhivebedwars.bedwars.scoreboard.ScoreboardManager;
-import net.prismarray.openhivebedwars.bedwars.shop.ShopManager;
+import net.prismarray.openhivebedwars.shop.ShopManager;
 import net.prismarray.openhivebedwars.bedwars.stats.SessionStatsManager;
 import net.prismarray.openhivebedwars.bedwars.stats.StatsManager;
 import net.prismarray.openhivebedwars.bedwars.summoner.*;

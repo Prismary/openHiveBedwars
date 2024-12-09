@@ -1,4 +1,4 @@
-package net.prismarray.openhivebedwars.bedwars.shop.npc;
+package net.prismarray.openhivebedwars.shop.npc;
 
 
 import org.bukkit.entity.Entity;

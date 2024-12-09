@@ -2,7 +2,7 @@ package net.prismarray.openhivebedwars.config;
 
 import dev.dejvokep.boostedyaml.YamlDocument;
 import dev.dejvokep.boostedyaml.block.implementation.Section;
-import net.prismarray.openhivebedwars.bedwars.shop.npc.VillagerShop;
+import net.prismarray.openhivebedwars.shop.npc.VillagerShop;
 import net.prismarray.openhivebedwars.util.Mode;
 import net.prismarray.openhivebedwars.util.TeamColor;
 import org.apache.commons.io.FilenameUtils;

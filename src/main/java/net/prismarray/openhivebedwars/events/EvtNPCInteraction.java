@@ -1,7 +1,7 @@
 package net.prismarray.openhivebedwars.events;
 
-import net.prismarray.openhivebedwars.bedwars.shop.ShopManager;
-import net.prismarray.openhivebedwars.bedwars.shop.npc.Shop;
+import net.prismarray.openhivebedwars.shop.ShopManager;
+import net.prismarray.openhivebedwars.shop.npc.Shop;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 
