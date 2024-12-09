@@ -8,6 +8,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Villager;
 import org.bukkit.inventory.ItemFlag;
 
 import java.io.File;
@@ -254,6 +255,24 @@ public abstract class ConfigFile {
         }
 
         return entityType;
+    }
+
+    public static Villager.Profession parseVillagerProfession(String input) {
+
+        if (Objects.isNull(input)) {
+            //throw new ConfigValidationException("Could not parse null input to entity type.");
+            return null;
+        }
+
+        Villager.Profession profession;
+        try {
+            profession = Villager.Profession.valueOf(input.toUpperCase());
+
+        } catch (IllegalArgumentException e) {
+            throw new ConfigValidationException("Could not parse villager profession type '" + input + "'.");
+        }
+
+        return profession;
     }
 
     public static Set<ItemFlag> parseItemFlagSet(List<String> input) {
