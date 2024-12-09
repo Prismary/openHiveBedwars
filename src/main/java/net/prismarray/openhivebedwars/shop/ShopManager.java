@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class ShopManager {
@@ -48,8 +49,13 @@ public class ShopManager {
             return;
         }
 
-        // Add purchased item
-        player.getInventory().addItem(item);
+        // Add purchased item, if possible
+        Map<Integer, ItemStack> leftOver = player.getInventory().addItem(item);
+
+        // If target inventory is full, drop item(s) instead
+        if (leftOver.size() > 0) {
+            leftOver.values().forEach(itemStack -> player.getWorld().dropItemNaturally(player.getLocation(), itemStack));
+        }
 
         Broadcast.toPlayer(player, String.format(
                 "§aPurchased §f%s §afor %s%s %s.",
