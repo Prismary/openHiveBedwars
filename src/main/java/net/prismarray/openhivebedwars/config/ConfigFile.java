@@ -340,17 +340,4 @@ public abstract class ConfigFile {
 
         return enchantment;
     }
-
-    public static String[] listToArray(List<String> input) {
-
-        if (Objects.isNull(input)) {
-            return null;
-        }
-
-        String[] result = new String[input.size()];
-        for (int i = 0; i < result.length; i++) {
-            result[i] = input.get(i);
-        }
-        return result;
-    }
 }

@@ -10,6 +10,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 public class TestGUI extends InventoryGUIBase {
 
     public TestGUI() {
@@ -18,7 +21,7 @@ public class TestGUI extends InventoryGUIBase {
         setItem(0, new InventoryGUIItem(Material.DIAMOND, 1, "§bShop Diaz!!1!elf"));
         setItem(1, new InventoryGUIItem(Material.IRON_INGOT, 1, "§fSnack Iron ftw"));
         setItem(2, new InventoryGUIPlayerHead("paulklee2000"));
-        setItem(3, new InventoryGUIItem(Material.STAINED_GLASS_PANE, (short) 2,1, "Color Test", new String[]{"Lore0", "§cLore1"}, false, null));
+        setItem(3, new InventoryGUIItem(Material.STAINED_GLASS_PANE, (short) 2,1, "Color Test", Stream.of("Lore0", "§cLore1").collect(Collectors.toList()), false, null));
         setItem(4, new InventoryGUIItem(Material.BARRIER, 1, "§4Exit", null, true));
 
         addSlotClickActionHandler(0, new InventoryGUIActionListener() {

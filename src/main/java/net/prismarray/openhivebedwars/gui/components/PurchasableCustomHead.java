@@ -10,6 +10,7 @@ import net.prismarray.openhivebedwars.util.ItemNameBuilder;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nullable;
+import java.util.List;
 
 public class PurchasableCustomHead extends InventoryGUICustomHead {
 
@@ -40,7 +41,7 @@ public class PurchasableCustomHead extends InventoryGUICustomHead {
             Currency currency,
             boolean showFavStatus,
             boolean isFavorite,
-            @Nullable String[] bonusLore,
+            @Nullable List<String> bonusLore,
             ItemStack purchaseItem
     ) {
         super(

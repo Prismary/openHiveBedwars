@@ -1,6 +1,12 @@
 package net.prismarray.openhivebedwars.util;
 
+import net.prismarray.openhivebedwars.gui.components.SummonerUpgrade;
+
 import javax.annotation.Nullable;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class ItemNameBuilder {
 
@@ -12,35 +18,105 @@ public class ItemNameBuilder {
         );
     }
 
-    public static String[] getPurchasableLore(int cost, Currency currency, boolean showFavStatus, boolean isFavorite, @Nullable String[] bonusLore) {
+    public static List<String> getPurchasableLore(int cost, Currency currency, boolean showFavStatus, boolean isFavorite, @Nullable List<String> bonusLore) {
 
-        // Format bonus lore
-        if (bonusLore == null) {
-            bonusLore = new String[]{""};
-        } else {
-            String[] tempLore = new String[bonusLore.length + 2];
-            System.arraycopy(bonusLore, 0, tempLore, 1, bonusLore.length);
-            tempLore[0] = "";
-            tempLore[tempLore.length - 1] = "";
-            bonusLore = tempLore;
+        Stream<String> loreStream = Stream.of("");
+
+        if (Objects.nonNull(bonusLore) && bonusLore.size() > 0) {
+            loreStream = Stream.concat(loreStream, bonusLore.stream());
+            loreStream = Stream.concat(loreStream, Stream.of(""));
         }
 
-        // Prepare lore array
-        String[] lore = new String[(showFavStatus) ? 6 + bonusLore.length : 5 + bonusLore.length];
+        loreStream = Stream.concat(loreStream, Stream.of(
+                "§6§lCost",
+                String.format(
+                        "  %s%s %s",
+                        currency.color,
+                        cost,
+                        currency.getChatNameForAmount(cost)
+                )
+        ));
 
-        System.arraycopy(bonusLore, 0, lore, 0, bonusLore.length);
+        if (showFavStatus) {
+            loreStream = Stream.concat(loreStream,
+                    Stream.of((isFavorite) ? "§d➜ Right-Click to unfavorite" : "§d➜ Right-Click to favorite")
+            );
+        }
 
-        lore[bonusLore.length] = "§6§lCost";
-        lore[1 + bonusLore.length] = String.format(
-                "  %s%s %s",
-                currency.color,
-                cost,
-                ((cost > 1) ? Currency.getNamePlural(currency) : currency.chatName)
+        loreStream = Stream.concat(loreStream, Stream.of("§b➜ Left-Click to purchase"));
+
+        return loreStream.collect(Collectors.toList());
+    }
+
+    public static List<String> getEnchantableLore(List<String> initialLore) {
+
+        Stream<String> loreStream = Stream.of("");
+
+        if (Objects.nonNull(initialLore) && initialLore.size() > 0) {
+            loreStream = Stream.concat(loreStream, initialLore.stream());
+            loreStream = Stream.concat(loreStream, Stream.of(""));
+        }
+
+        loreStream = Stream.concat(loreStream, Stream.of(
+                "§b➜ Click to Enchant"
+        ));
+
+        return loreStream.collect(Collectors.toList());
+    }
+
+    public static List<String> getCategorySelectorLore(String name, List<String> lore) {
+
+        Stream<String> loreStream = Stream.of("");
+
+        if (Objects.nonNull(lore) && lore.size() > 0) {
+            loreStream = Stream.concat(loreStream, lore.stream());
+            loreStream = Stream.concat(loreStream, Stream.of(""));
+        }
+
+        loreStream = Stream.concat(loreStream, Stream.of(
+                String.format("§b► Click to view %s", name)
+        ));
+
+        return loreStream.collect(Collectors.toList());
+    }
+
+    public static String getSummonerUpgradeName(Currency currency, int level) {
+        if (level > 1) {
+            return String.format(
+                    "§b§lLevel %s %s%s Summoner",
+                    level,
+                    currency.color,
+                    currency.chatName
+            );
+        }
+
+        return String.format(
+                "§b§l%s Summoner",
+                currency.chatName
         );
-        lore[2 + bonusLore.length] = "";
-        lore[3 + bonusLore.length] = ((isFavorite) ? "§d➜ Right-Click to unfavorite" : "§d➜ Right-Click to favorite");
-        lore[lore.length - 1] = "§b➜ Left-Click to purchase"; // Will overwrite previous line if fav isn't shown
+    }
 
-        return lore;
+    public static List<String> getSummonerUpgradeLore(TeamColor teamColor, Currency currency, int level, Currency purchaseCurrency, int cost) {
+        if (SummonerUpgrade.isOwned(teamColor, currency, level)) {
+            return Stream.of(
+                    "",
+                    "§a§lYou already own this.",
+                    "",
+                    "§b➜ §7Already owned"
+            ).collect(Collectors.toList());
+        }
+
+        return Stream.of(
+                "",
+                "§6§lCost",
+                String.format(
+                        "  %s%s %s",
+                        purchaseCurrency.color,
+                        cost,
+                        purchaseCurrency.getChatNameForAmount(cost)
+                ),
+                "",
+                "§b➜ Left-Click to purchase"
+        ).collect(Collectors.toList());
     }
 }

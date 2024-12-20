@@ -11,6 +11,7 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nullable;
+import java.util.List;
 
 public class PurchasableItem extends InventoryGUIItem {
 
@@ -20,7 +21,7 @@ public class PurchasableItem extends InventoryGUIItem {
     }
 
     public PurchasableItem(InventoryGUIBase gui, int slot, Material material, short damage, int amount, boolean enchanted, String name,
-                           int cost, Currency currency, boolean showFavStatus, boolean isFavorite, @Nullable String[] bonusLore) {
+                           int cost, Currency currency, boolean showFavStatus, boolean isFavorite, @Nullable List<String> bonusLore) {
         this(gui, slot, material, damage, amount, enchanted, name, cost, currency, showFavStatus, isFavorite, bonusLore, new ItemStack(material, amount, damage));
     }
 
@@ -30,7 +31,7 @@ public class PurchasableItem extends InventoryGUIItem {
     }
 
     public PurchasableItem(InventoryGUIBase gui, int slot, Material material, short damage, int amount, boolean enchanted, String name,
-                           int cost, Currency currency, boolean showFavStatus, boolean isFavorite, @Nullable String[] bonusLore, ItemStack purchaseItem) {
+                           int cost, Currency currency, boolean showFavStatus, boolean isFavorite, @Nullable List<String> bonusLore, ItemStack purchaseItem) {
         super(
                 gui,
                 slot,

@@ -57,7 +57,7 @@ public class InventoryGUICustomHead extends InventoryGUIItem {
         this(actionHandlingInventoryGUI, slotInInventoryGUI, url, amount, name, null);
     }
 
-    public InventoryGUICustomHead(String url, int amount, String name, String[] lore) {
+    public InventoryGUICustomHead(String url, int amount, String name, List<String> lore) {
         this(url, amount, name, lore, false);
     }
 
@@ -67,12 +67,12 @@ public class InventoryGUICustomHead extends InventoryGUIItem {
             String url,
             int amount,
             String name,
-            String[] lore
+            List<String> lore
     ) {
         this(actionHandlingInventoryGUI, slotInInventoryGUI, url, amount, name, lore, false);
     }
 
-    public InventoryGUICustomHead(String url, int amount, String name, String[] lore, boolean enchanted) {
+    public InventoryGUICustomHead(String url, int amount, String name, List<String> lore, boolean enchanted) {
         this(url, amount, name, lore, enchanted, null);
     }
 
@@ -82,7 +82,7 @@ public class InventoryGUICustomHead extends InventoryGUIItem {
             String url,
             int amount,
             String name,
-            String[] lore,
+            List<String> lore,
             boolean enchanted
     ) {
         this(actionHandlingInventoryGUI, slotInInventoryGUI, url, amount, name, lore, enchanted, null);
@@ -92,7 +92,7 @@ public class InventoryGUICustomHead extends InventoryGUIItem {
             String url,
             int amount,
             String name,
-            String[] lore,
+            List<String> lore,
             boolean enchanted,
             List<ItemFlag> flags
     ) {
@@ -105,7 +105,7 @@ public class InventoryGUICustomHead extends InventoryGUIItem {
             String url,
             int amount,
             String name,
-            String[] lore,
+            List<String> lore,
             boolean enchanted,
             List<ItemFlag> flags
     ) {

@@ -101,7 +101,7 @@ public class InventoryGUIItem extends ItemStack {
         this(actionHandlingInventoryGUI, slotInInventoryGUI, material, damage, amount, name, null);
     }
 
-    public InventoryGUIItem(Material material, int amount, String name, String[] lore) {
+    public InventoryGUIItem(Material material, int amount, String name, List<String> lore) {
         this(material, amount, name, lore, false);
     }
 
@@ -111,12 +111,12 @@ public class InventoryGUIItem extends ItemStack {
             Material material,
             int amount,
             String name,
-            String[] lore
+            List<String> lore
     ) {
         this(actionHandlingInventoryGUI, slotInInventoryGUI, material, amount, name, lore, false);
     }
 
-    public InventoryGUIItem(Material material, short damage, int amount, String name, String[] lore) {
+    public InventoryGUIItem(Material material, short damage, int amount, String name, List<String> lore) {
         this(material, damage, amount, name, lore, false);
     }
 
@@ -127,12 +127,12 @@ public class InventoryGUIItem extends ItemStack {
             short damage,
             int amount,
             String name,
-            String[] lore
+            List<String> lore
     ) {
         this(actionHandlingInventoryGUI, slotInInventoryGUI, material, damage, amount, name, lore, false);
     }
 
-    public InventoryGUIItem(Material material, int amount, String name, String[] lore, boolean enchanted) {
+    public InventoryGUIItem(Material material, int amount, String name, List<String> lore, boolean enchanted) {
         this(material, amount, name, lore, enchanted, null);
     }
 
@@ -142,13 +142,13 @@ public class InventoryGUIItem extends ItemStack {
             Material material,
             int amount,
             String name,
-            String[] lore,
+            List<String> lore,
             boolean enchanted
     ) {
         this(actionHandlingInventoryGUI, slotInInventoryGUI, material, amount, name, lore, enchanted, null);
     }
 
-    public InventoryGUIItem(Material material, short damage, int amount, String name, String[] lore, boolean enchanted) {
+    public InventoryGUIItem(Material material, short damage, int amount, String name, List<String> lore, boolean enchanted) {
         this(material, damage, amount, name, lore, enchanted, null);
     }
 
@@ -159,13 +159,13 @@ public class InventoryGUIItem extends ItemStack {
             short damage,
             int amount,
             String name,
-            String[] lore,
+            List<String> lore,
             boolean enchanted
     ) {
         this(actionHandlingInventoryGUI, slotInInventoryGUI, material, damage, amount, name, lore, enchanted, null);
     }
 
-    public InventoryGUIItem(Material material, int amount, String name, String[] lore, boolean enchanted, List<ItemFlag> flags) {
+    public InventoryGUIItem(Material material, int amount, String name, List<String> lore, boolean enchanted, List<ItemFlag> flags) {
         this(material, (short) 0, amount, name, lore, enchanted, flags);
     }
 
@@ -175,7 +175,7 @@ public class InventoryGUIItem extends ItemStack {
             Material material,
             int amount,
             String name,
-            String[] lore,
+            List<String> lore,
             boolean enchanted,
             List<ItemFlag> flags
     ) {
@@ -187,7 +187,7 @@ public class InventoryGUIItem extends ItemStack {
             short damage,
             int amount,
             String name,
-            String[] lore,
+            List<String> lore,
             boolean enchanted,
             List<ItemFlag> flags
     ) {
@@ -201,7 +201,7 @@ public class InventoryGUIItem extends ItemStack {
             short damage,
             int amount,
             String name,
-            String[] lore,
+            List<String> lore,
             boolean enchanted,
             List<ItemFlag> flags
     ) {
@@ -230,7 +230,7 @@ public class InventoryGUIItem extends ItemStack {
             short damage,
             int amount,
             String name,
-            String[] lore,
+            List<String> lore,
             boolean enchanted,
             List<ItemFlag> flags,
             boolean autoAddToContainingInventory
@@ -253,7 +253,7 @@ public class InventoryGUIItem extends ItemStack {
         }
 
         if (Objects.nonNull(lore)) {
-            meta.setLore(Arrays.asList(lore));
+            meta.setLore(lore);
         }
 
         if (enchanted) {

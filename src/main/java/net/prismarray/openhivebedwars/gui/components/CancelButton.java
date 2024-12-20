@@ -3,11 +3,12 @@ package net.prismarray.openhivebedwars.gui.components;
 import net.prismarray.openhivebedwars.OpenHiveBedwars;
 import net.prismarray.openhivebedwars.gui.actions.InventoryGUIActionHandler;
 import net.prismarray.openhivebedwars.gui.actions.InventoryGUIActionListener;
-import net.prismarray.openhivebedwars.gui.components.InventoryGUIBase;
-import net.prismarray.openhivebedwars.gui.components.InventoryGUIItem;
 import net.prismarray.openhivebedwars.gui.actions.InventoryGUIClickAction;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class CancelButton extends InventoryGUIItem {
 
@@ -18,7 +19,12 @@ public class CancelButton extends InventoryGUIItem {
                 Material.BARRIER,
                 1,
                 "§c§lCancel",
-                new String[]{"", "§7Click here to", "§7close this", "§7menu."}
+                Stream.of(
+                        "",
+                        "§7Click here to",
+                        "§7close this",
+                        "§7menu."
+                ).collect(Collectors.toList())
         );
 
         addActionListenerToContainingInventory(new InventoryGUIActionListener() {

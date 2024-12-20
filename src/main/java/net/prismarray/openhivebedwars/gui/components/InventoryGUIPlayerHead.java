@@ -56,7 +56,7 @@ public class InventoryGUIPlayerHead extends InventoryGUIItem {
         this(actionHandlingInventoryGUI, slotInInventoryGUI, playerName, amount, name, null);
     }
 
-    public InventoryGUIPlayerHead(String playerName, int amount, String name, String[] lore) {
+    public InventoryGUIPlayerHead(String playerName, int amount, String name, List<String> lore) {
         this(playerName, amount, name, lore, false);
     }
 
@@ -66,12 +66,12 @@ public class InventoryGUIPlayerHead extends InventoryGUIItem {
             String playerName,
             int amount,
             String name,
-            String[] lore
+            List<String> lore
     ) {
         this(actionHandlingInventoryGUI, slotInInventoryGUI, playerName, amount, name, lore, false);
     }
 
-    public InventoryGUIPlayerHead(String playerName, int amount, String name, String[] lore, boolean enchanted) {
+    public InventoryGUIPlayerHead(String playerName, int amount, String name, List<String> lore, boolean enchanted) {
         this(playerName, amount, name, lore, enchanted, null);
     }
 
@@ -81,7 +81,7 @@ public class InventoryGUIPlayerHead extends InventoryGUIItem {
             String playerName,
             int amount,
             String name,
-            String[] lore,
+            List<String> lore,
             boolean enchanted
     ) {
         this(actionHandlingInventoryGUI, slotInInventoryGUI, playerName, amount, name, lore, enchanted, null);
@@ -91,7 +91,7 @@ public class InventoryGUIPlayerHead extends InventoryGUIItem {
             String playerName,
             int amount,
             String name,
-            String[] lore,
+            List<String> lore,
             boolean enchanted,
             List<ItemFlag> flags
     ) {
@@ -104,7 +104,7 @@ public class InventoryGUIPlayerHead extends InventoryGUIItem {
             String playerName,
             int amount,
             String name,
-            String[] lore,
+            List<String> lore,
             boolean enchanted,
             List<ItemFlag> flags
     ) {

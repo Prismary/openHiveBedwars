@@ -242,7 +242,7 @@ public class InventoryGUIConfig extends ConfigFile {
                             customHeadUrl,
                             amount,
                             context.parseStringPlaceholders(name),
-                            listToArray(lore.stream().map(context::parseStringPlaceholders).collect(Collectors.toList())),
+                            lore.stream().map(context::parseStringPlaceholders).collect(Collectors.toList()),
                             enchanted,
                             new ArrayList<>(itemFlags)
                 );
@@ -270,7 +270,7 @@ public class InventoryGUIConfig extends ConfigFile {
                             currency,
                             showFavStatus,
                             isFavourite,
-                            listToArray(lore.stream().map(context::parseStringPlaceholders).collect(Collectors.toList())),
+                            lore.stream().map(context::parseStringPlaceholders).collect(Collectors.toList()),
                             createItemStack(
                                     purchasedMaterial,
                                     purchasedDamage,
@@ -302,7 +302,7 @@ public class InventoryGUIConfig extends ConfigFile {
                             currency,
                             showFavStatus,
                             isFavourite,
-                            listToArray(lore.stream().map(context::parseStringPlaceholders).collect(Collectors.toList())),
+                            lore.stream().map(context::parseStringPlaceholders).collect(Collectors.toList()),
                             createCustomHead(
                                     purchasedCustomHeadUrl,
                                     purchasedAmount,
@@ -335,7 +335,7 @@ public class InventoryGUIConfig extends ConfigFile {
                             currency,
                             showFavStatus,
                             isFavourite,
-                            listToArray(lore.stream().map(context::parseStringPlaceholders).collect(Collectors.toList())),
+                            lore.stream().map(context::parseStringPlaceholders).collect(Collectors.toList()),
                             new BridgeBuilderItem(purchasedMaterial, purchasedBridgeBuilderBlocks, (byte) purchasedDamage, purchasedAmount)
                     );
                 };
@@ -348,7 +348,7 @@ public class InventoryGUIConfig extends ConfigFile {
                         material,
                         damage,
                         context.parseStringPlaceholders(name),
-                        listToArray(lore.stream().map(context::parseStringPlaceholders).collect(Collectors.toList())),
+                        lore.stream().map(context::parseStringPlaceholders).collect(Collectors.toList()),
                         destinationGUI
                 );
 
@@ -381,7 +381,7 @@ public class InventoryGUIConfig extends ConfigFile {
                         damage,
                         amount,
                         context.parseStringPlaceholders(name),
-                        listToArray(lore.stream().map(context::parseStringPlaceholders).collect(Collectors.toList())),
+                        lore.stream().map(context::parseStringPlaceholders).collect(Collectors.toList()),
                         enchanted,
                         new ArrayList<>(itemFlags)
                 );

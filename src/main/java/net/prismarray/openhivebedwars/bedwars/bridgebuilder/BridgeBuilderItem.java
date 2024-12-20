@@ -12,6 +12,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class BridgeBuilderItem extends InventoryGUICustomHead {
 
@@ -34,7 +36,7 @@ public class BridgeBuilderItem extends InventoryGUICustomHead {
                 getURLForMaterial(blockType, blockTypeData),
                 amount,
                 String.format(NAMING_FORMAT, getBridgeBuilderNameFromMaterial(blockType, blockTypeData), remainingBlocks),
-                new String[]{
+                Stream.of(
                         "",
                         ChatColor.GRAY + "Builds a bridge in the",
                         ChatColor.GRAY + "direction you were looking.",
@@ -47,7 +49,7 @@ public class BridgeBuilderItem extends InventoryGUICustomHead {
                         "",
                         ChatColor.AQUA + "" + ChatColor.BOLD + "Blocks left",
                         ChatColor.GRAY + String.valueOf(remainingBlocks)
-                }
+                ).collect(Collectors.toList())
         );
 
         this.remainingBlocks = remainingBlocks;

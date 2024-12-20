@@ -5,12 +5,15 @@ import net.prismarray.openhivebedwars.gui.InventoryGUIManager;
 import net.prismarray.openhivebedwars.gui.actions.InventoryGUIActionHandler;
 import net.prismarray.openhivebedwars.gui.actions.InventoryGUIActionListener;
 import net.prismarray.openhivebedwars.gui.actions.InventoryGUIClickAction;
+import net.prismarray.openhivebedwars.util.ItemNameBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 
+import java.util.List;
+
 public class CategorySelector extends InventoryGUIItem {
 
-    public CategorySelector(InventoryGUIBase gui, int slot, Material material, short damage, String name, String[] lore, String destinationGUI) {
+    public CategorySelector(InventoryGUIBase gui, int slot, Material material, short damage, String name, List<String> lore, String destinationGUI) {
         super(
                 gui,
                 slot,
@@ -18,7 +21,7 @@ public class CategorySelector extends InventoryGUIItem {
                 damage,
                 1,
                 name,
-                getFullLore(name, lore)
+                ItemNameBuilder.getCategorySelectorLore(name, lore)
         );
 
         addActionListenerToContainingInventory(new InventoryGUIActionListener() {
@@ -35,15 +38,4 @@ public class CategorySelector extends InventoryGUIItem {
         });
     }
 
-    public static String[] getFullLore(String name, String[] lore) {
-        String[] fullLore = new String[lore.length + 3];
-
-        fullLore[0] = "";
-        fullLore[lore.length + 1] = "";
-        fullLore[lore.length + 2] = "§b► Click to view " + name;
-
-        System.arraycopy(lore, 0, fullLore, 1, lore.length);
-
-        return fullLore;
-    }
 }

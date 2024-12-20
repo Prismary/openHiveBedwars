@@ -62,7 +62,7 @@ public class ShopManager {
                 name,
                 currency.color,
                 cost,
-                ((cost == 1) ? currency.chatName : Currency.getNamePlural(currency))
+                currency.getChatNameForAmount(cost)
         ));
     }
 
@@ -74,7 +74,7 @@ public class ShopManager {
                     "§cYou need %s%s %s §c(§7%s §cmore) for §7%s§c!",
                     currency.color,
                     cost,
-                    ((cost == 1) ? currency.chatName : Currency.getNamePlural(currency)),
+                    currency.getChatNameForAmount(cost),
                     cost - playerCurrency,
                     name
             ));

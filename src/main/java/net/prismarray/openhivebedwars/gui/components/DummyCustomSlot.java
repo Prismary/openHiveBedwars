@@ -2,6 +2,9 @@ package net.prismarray.openhivebedwars.gui.components;
 
 import org.bukkit.Material;
 
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 public class DummyCustomSlot extends InventoryGUIItem {
 
     public DummyCustomSlot(InventoryGUIBase gui, int slot) {
@@ -12,7 +15,11 @@ public class DummyCustomSlot extends InventoryGUIItem {
                 (short) 8,
                 1,
                 "§9Customizable Slot",
-                new String[]{"", "§7This feature is", "§7not yet available."}
+                Stream.of(
+                        "",
+                        "§7This feature is",
+                        "§7not yet available."
+                ).collect(Collectors.toList())
         );
     }
 }
