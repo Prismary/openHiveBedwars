@@ -1,5 +1,6 @@
 package net.prismarray.openhivebedwars.util;
 
+import net.prismarray.openhivebedwars.OpenHiveBedwars;
 import net.prismarray.openhivebedwars.gui.components.SummonerUpgrade;
 import org.bukkit.inventory.ItemStack;
 
@@ -76,7 +77,50 @@ public class ItemNameBuilder {
         }
 
         loreStream = Stream.concat(loreStream, Stream.of(
-                "§b► Click to Enchant"
+                "§b► §7Click to Enchant"
+        ));
+
+        return loreStream.collect(Collectors.toList());
+    }
+
+    public static String getEnchantingBookName(String enchantmentDisplayName, int enchantmentLevel) {
+        return String.format(
+                "§a§lLevel %s %s",
+                enchantmentLevel,
+                enchantmentDisplayName
+        );
+    }
+
+    public static List<String> getEnchantingBookLore(int cost, Currency currency, @Nullable List<String> bonusLore) {
+
+        Stream<String> loreStream = Stream.of("");
+
+        if (Objects.nonNull(bonusLore) && bonusLore.size() > 0) {
+            loreStream = Stream.concat(loreStream, bonusLore.stream());
+            loreStream = Stream.concat(loreStream, Stream.of(""));
+        }
+
+        loreStream = Stream.concat(loreStream, Stream.of(
+                "§6§lCost",
+                String.format(
+                        "  %s%s %s",
+                        currency.color,
+                        cost,
+                        currency.getChatNameForAmount(cost)
+                )
+        ));
+
+        if (!OpenHiveBedwars.getBWConfig().getEnchanterAllowMultipleEnchantmentsPerItem()) {
+            loreStream = Stream.concat(loreStream, Stream.of(
+                    "",
+                    "§cEnchanting this item will",
+                    "§cremove all current enchantments!"
+            ));
+        }
+
+        loreStream = Stream.concat(loreStream, Stream.of(
+                "",
+                "§b➜ Left-Click to enchant"
         ));
 
         return loreStream.collect(Collectors.toList());
@@ -92,7 +136,7 @@ public class ItemNameBuilder {
         }
 
         loreStream = Stream.concat(loreStream, Stream.of(
-                String.format("§b► Click to view %s", name)
+                String.format("§b► §7Click to view %s", name)
         ));
 
         return loreStream.collect(Collectors.toList());

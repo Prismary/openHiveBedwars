@@ -1,74 +1,18 @@
 package net.prismarray.openhivebedwars.gui.defaultGUIs;
 
+import net.prismarray.openhivebedwars.OpenHiveBedwars;
 import net.prismarray.openhivebedwars.gui.InventoryGUIContext;
 import net.prismarray.openhivebedwars.gui.components.EnchantableItem;
 import net.prismarray.openhivebedwars.gui.components.InventoryGUIBase;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.stream.IntStream;
 
 public class EnchanterRootGUI extends InventoryGUIBase {
-
-    public static final Set<Material> ENCHANTMENT_SUPPORTED = Stream.of(
-
-            Material.DIAMOND_SWORD,
-            Material.GOLD_SWORD,
-            Material.IRON_SWORD,
-            Material.STONE_SWORD,
-            Material.WOOD_SWORD,
-
-            Material.DIAMOND_AXE,
-            Material.GOLD_AXE,
-            Material.IRON_AXE,
-            Material.STONE_AXE,
-            Material.WOOD_AXE,
-
-            Material.DIAMOND_PICKAXE,
-            Material.GOLD_PICKAXE,
-            Material.IRON_PICKAXE,
-            Material.STONE_PICKAXE,
-            Material.WOOD_PICKAXE,
-
-            Material.DIAMOND_SPADE,
-            Material.GOLD_SPADE,
-            Material.IRON_SPADE,
-            Material.STONE_SPADE,
-            Material.WOOD_SPADE,
-
-            Material.BOW,
-            Material.SHEARS,
-
-            Material.DIAMOND_HELMET,
-            Material.GOLD_HELMET,
-            Material.IRON_HELMET,
-            Material.CHAINMAIL_HELMET,
-            Material.LEATHER_HELMET,
-
-            Material.DIAMOND_CHESTPLATE,
-            Material.GOLD_CHESTPLATE,
-            Material.IRON_CHESTPLATE,
-            Material.CHAINMAIL_CHESTPLATE,
-            Material.LEATHER_CHESTPLATE,
-
-            Material.DIAMOND_LEGGINGS,
-            Material.GOLD_LEGGINGS,
-            Material.IRON_LEGGINGS,
-            Material.CHAINMAIL_LEGGINGS,
-            Material.LEATHER_LEGGINGS,
-
-            Material.DIAMOND_BOOTS,
-            Material.GOLD_BOOTS,
-            Material.IRON_BOOTS,
-            Material.CHAINMAIL_BOOTS,
-            Material.LEATHER_BOOTS
-
-    ).collect(Collectors.toSet());
-
 
     public EnchanterRootGUI(InventoryGUIContext context) {
         super(
@@ -77,14 +21,19 @@ public class EnchanterRootGUI extends InventoryGUIBase {
         );
 
         int currentSlot = 0;
+        Map<String, ItemStack> enchantableItems = getEnchantableItems(context.getOpeningPlayer());
+        List<String> sortedKeys = enchantableItems.keySet().stream().sorted(
+                (a, b) -> (a.startsWith("A") ? -100 : 0) + (b.startsWith("A") ? +100 : 0)
+                        + Integer.parseInt(a.replaceAll("A", ""))
+                        - Integer.parseInt(b.replaceAll("A", ""))
+        ).collect(Collectors.toList());
 
-        for (ItemStack enchantableItem : getEnchantableItems(context.getOpeningPlayer())) {
-
+        for (String slotDescriptor : sortedKeys) {
             new EnchantableItem(
                     this,
                     currentSlot++,
-                    enchantableItem,
-                    getSlotDescriptorByItem(context.getOpeningPlayer().getInventory(), enchantableItem)
+                    enchantableItems.get(slotDescriptor),
+                    slotDescriptor
             );
         }
 
@@ -96,15 +45,30 @@ public class EnchanterRootGUI extends InventoryGUIBase {
         return getEnchantableItems(p).size();
     }
 
-    private static List<ItemStack> getEnchantableItems(Player p) {
+    private static Map<String, ItemStack> getEnchantableItems(Player p) {
 
-        return Stream.concat(
-                        Arrays.stream(p.getInventory().getContents()),
-                        Arrays.stream(p.getInventory().getArmorContents())
-                )
-                .filter(Objects::nonNull)
-                .filter(item -> ENCHANTMENT_SUPPORTED.contains(item.getType()))
-                .collect(Collectors.toList());
+        Map<String, ItemStack> items = new HashMap<>();
+
+        ItemStack[] armorContents = p.getInventory().getArmorContents();
+        ItemStack[] contents = p.getInventory().getContents();
+
+        items.putAll(
+                IntStream.range(0, armorContents.length).boxed()
+                        .filter(i -> Objects.nonNull(armorContents[i]))
+                        .filter(i -> OpenHiveBedwars.getBWConfig().getEnchanterEnchantableItems()
+                                .isEnchantableMaterial(armorContents[i].getType()))
+                        .collect(Collectors.toMap(i -> String.format("A%s", i), i -> armorContents[i]))
+        );
+
+        items.putAll(
+                IntStream.range(0, contents.length).boxed()
+                        .filter(i -> Objects.nonNull(contents[i]))
+                        .filter(i -> OpenHiveBedwars.getBWConfig().getEnchanterEnchantableItems()
+                                .isEnchantableMaterial(contents[i].getType()))
+                        .collect(Collectors.toMap(String::valueOf, i -> contents[i]))
+        );
+
+        return items;
     }
 
     public static ItemStack getItemBySlotDescriptor(PlayerInventory inventory, String slotDescriptor) {
@@ -113,16 +77,16 @@ public class EnchanterRootGUI extends InventoryGUIBase {
             return null;
         }
 
-        if ("A0".equalsIgnoreCase(slotDescriptor)) {
+        if ("A3".equalsIgnoreCase(slotDescriptor)) {
             return inventory.getHelmet();
 
-        } else if ("A1".equalsIgnoreCase(slotDescriptor)) {
+        } else if ("A2".equalsIgnoreCase(slotDescriptor)) {
             return inventory.getChestplate();
 
-        } else if ("A2".equalsIgnoreCase(slotDescriptor)) {
+        } else if ("A1".equalsIgnoreCase(slotDescriptor)) {
             return inventory.getLeggings();
 
-        } else if ("A3".equalsIgnoreCase(slotDescriptor)) {
+        } else if ("A0".equalsIgnoreCase(slotDescriptor)) {
             return inventory.getBoots();
 
         } else {
@@ -141,19 +105,19 @@ public class EnchanterRootGUI extends InventoryGUIBase {
             return false;
         }
 
-        if ("A0".equalsIgnoreCase(slotDescriptor)) {
+        if ("A3".equalsIgnoreCase(slotDescriptor)) {
             inventory.setHelmet(item);
             return inventory.getHelmet() == item;
 
-        } else if ("A1".equalsIgnoreCase(slotDescriptor)) {
+        } else if ("A2".equalsIgnoreCase(slotDescriptor)) {
             inventory.setChestplate(item);
             return inventory.getChestplate() == item;
 
-        } else if ("A2".equalsIgnoreCase(slotDescriptor)) {
+        } else if ("A1".equalsIgnoreCase(slotDescriptor)) {
             inventory.setLeggings(item);
             return inventory.getLeggings() == item;
 
-        } else if ("A3".equalsIgnoreCase(slotDescriptor)) {
+        } else if ("A0".equalsIgnoreCase(slotDescriptor)) {
             inventory.setBoots(item);
             return inventory.getBoots() == item;
 
@@ -168,10 +132,12 @@ public class EnchanterRootGUI extends InventoryGUIBase {
         }
     }
 
+    @Deprecated
     public static String getSlotDescriptorByItem(PlayerInventory inventory, ItemStack item) {
         return getSlotDescriptorByItem(inventory, item, false);
     }
 
+    @Deprecated
     public static String getSlotDescriptorByItem(PlayerInventory inventory, ItemStack item, boolean exactMatch) {
 
         if (Objects.isNull(inventory) || Objects.isNull(item)) {
@@ -179,16 +145,16 @@ public class EnchanterRootGUI extends InventoryGUIBase {
         }
 
         if (exactMatch && inventory.getHelmet() == item || !exactMatch && Objects.equals(inventory.getHelmet(), item)) {
-            return "A0";
+            return "A3";
 
         } else if (exactMatch && inventory.getChestplate() == item || !exactMatch && Objects.equals(inventory.getChestplate(), item)) {
-            return "A1";
-
-        } else if (exactMatch && inventory.getLeggings() == item || !exactMatch && Objects.equals(inventory.getLeggings(), item)) {
             return "A2";
 
+        } else if (exactMatch && inventory.getLeggings() == item || !exactMatch && Objects.equals(inventory.getLeggings(), item)) {
+            return "A1";
+
         } else if (exactMatch && inventory.getBoots() == item || !exactMatch && Objects.equals(inventory.getBoots(), item)) {
-            return "A3";
+            return "A0";
         }
 
         ItemStack[] contents = inventory.getContents();
