@@ -5,12 +5,14 @@ import net.prismarray.openhivebedwars.gui.actions.InventoryGUIActionHandler;
 import net.prismarray.openhivebedwars.gui.actions.InventoryGUIActionListener;
 import net.prismarray.openhivebedwars.gui.actions.InventoryGUILeftOrShiftLeftClickAction;
 import net.prismarray.openhivebedwars.util.ItemNameBuilder;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class EnchantableItem extends InventoryGUIItem {
 
@@ -30,7 +32,10 @@ public class EnchantableItem extends InventoryGUIItem {
                 reference.getItemMeta().getDisplayName(),
                 ItemNameBuilder.getEnchantableLore(reference.getItemMeta().getLore()),
                 reference.getEnchantments().size() > 0,
-                new ArrayList<>(reference.getItemMeta().getItemFlags())
+                Stream.concat(
+                        reference.getItemMeta().getItemFlags().stream(),
+                        Stream.of(ItemFlag.HIDE_ATTRIBUTES)
+                ).collect(Collectors.toList())
         );
 
         addActionListenerToContainingInventory(new InventoryGUIActionListener() {
