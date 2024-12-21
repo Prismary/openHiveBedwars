@@ -1,7 +1,7 @@
 package net.prismarray.openhivebedwars;
 
 import net.prismarray.openhivebedwars.bedwars.Game;
-import net.prismarray.openhivebedwars.gui.custom.EnchanterRootGUI;
+import net.prismarray.openhivebedwars.gui.defaultGUIs.EnchanterRootGUI;
 import net.prismarray.openhivebedwars.commands.gui.CommandGUI;
 import net.prismarray.openhivebedwars.commands.openhivebedwars.CommandOpenHiveBedwars;
 import net.prismarray.openhivebedwars.commands.team.CommandTeam;
@@ -10,6 +10,7 @@ import net.prismarray.openhivebedwars.config.Config;
 import net.prismarray.openhivebedwars.config.ConfigValidationException;
 import net.prismarray.openhivebedwars.config.InventoryGUIConfig;
 import net.prismarray.openhivebedwars.config.LobbyConfig;
+import net.prismarray.openhivebedwars.gui.defaultGUIs.EnchanterSelectedGUI;
 import net.prismarray.openhivebedwars.maps.MapManager;
 import net.prismarray.openhivebedwars.enchantments.InventoryGUIDummyEnchantment;
 import net.prismarray.openhivebedwars.events.*;
@@ -97,9 +98,10 @@ public final class OpenHiveBedwars extends JavaPlugin {
 
     private void initializeInventoryGUIs() {
 
-        this.getLogger().info("Registering custom inventory GUIs...");
+        this.getLogger().info("Registering default inventory GUIs...");
 
-        InventoryGUIManager.registerInventoryGUIFactory("npc-enchanter-root", EnchanterRootGUI::new);
+        InventoryGUIManager.registerInventoryGUIFactory("npc-enchanter-root", c -> new EnchanterRootGUI(c));
+        InventoryGUIManager.registerInventoryGUIFactory("npc-enchanter-selected", c -> new EnchanterSelectedGUI(c));
 
 
         this.getLogger().info("Attempting to read configuration files in GUI directory...");

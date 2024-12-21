@@ -1,14 +1,32 @@
 package net.prismarray.openhivebedwars.util;
 
 import net.prismarray.openhivebedwars.gui.components.SummonerUpgrade;
+import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nullable;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class ItemNameBuilder {
+
+    public static String getItemName(ItemStack item) {
+
+        if (Objects.isNull(item)) {
+            return "null";
+        }
+
+        if (item.getItemMeta().hasDisplayName()) {
+            return item.getItemMeta().getDisplayName();
+        }
+
+        return Arrays.stream(item.getType().toString().split("_"))
+                .map(String::toLowerCase)
+                .map(s -> s.length() == 0 ? s : s.substring(0, 1).toUpperCase() + s.substring(1))
+                .collect(Collectors.joining(" "));
+    }
 
     public static String getPurchasableName(String name, int amount) {
         return String.format(
@@ -58,7 +76,7 @@ public class ItemNameBuilder {
         }
 
         loreStream = Stream.concat(loreStream, Stream.of(
-                "§b➜ Click to Enchant"
+                "§b► Click to Enchant"
         ));
 
         return loreStream.collect(Collectors.toList());

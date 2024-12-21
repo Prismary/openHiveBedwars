@@ -7,6 +7,7 @@ import org.apache.commons.text.StringSubstitutor;
 import org.bukkit.entity.Player;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -21,25 +22,48 @@ public class InventoryGUIContext {
 
     private final Map<String, String> placeholders;
 
+    private final Map<String, String> additionalContext;
+
 
     public InventoryGUIContext(@Nonnull Player openingPlayer) {
-        this(openingPlayer, Game.getTeamHandler().getPlayerTeam(openingPlayer), null, null);
+        this(openingPlayer, Game.getTeamHandler().getPlayerTeam(openingPlayer), null, null, null);
     }
-
 
     public InventoryGUIContext(@Nonnull Player openingPlayer, @Nonnull Team openingPlayerTeam) {
-        this(openingPlayer, openingPlayerTeam, null, null);
+        this(openingPlayer, openingPlayerTeam, null, null, null);
     }
 
-    public InventoryGUIContext(Player openingPlayer, Team openingPlayerTeam, InventoryGUIBase containingGUI, Integer slot) {
+    public InventoryGUIContext(
+            @Nullable Player openingPlayer,
+            @Nullable Team openingPlayerTeam,
+            @Nullable InventoryGUIBase containingGUI,
+            @Nullable Integer slot
+    ) {
+        this(openingPlayer, openingPlayerTeam, containingGUI, slot, null);
+    }
+
+    public InventoryGUIContext(
+            @Nullable Player openingPlayer,
+            @Nullable Team openingPlayerTeam,
+            @Nullable InventoryGUIBase containingGUI,
+            @Nullable Integer slot,
+            @Nullable Map<String, String> additionalContext
+    ) {
 
         this.openingPlayer = openingPlayer;
-        this.openingPlayerTeam = openingPlayerTeam;
+        this.openingPlayerTeam = Objects.nonNull(openingPlayerTeam) ? openingPlayerTeam :
+                (Objects.isNull(openingPlayer) ? null : Game.getTeamHandler().getPlayerTeam(openingPlayer));
 
         this.containingGUI = containingGUI;
         this.slot = slot;
 
         this.placeholders = generatePlaceholders();
+
+        if (Objects.isNull(additionalContext)) {
+            this.additionalContext = new HashMap<>();
+        } else {
+            this.additionalContext = additionalContext;
+        }
     }
 
     private Map<String, String> generatePlaceholders() {
@@ -81,5 +105,9 @@ public class InventoryGUIContext {
         } catch (Exception ignored) {
             return input;
         }
+    }
+
+    public String getAdditionalContext(String key, String defaultValue) {
+        return this.additionalContext.getOrDefault(key, defaultValue);
     }
 }

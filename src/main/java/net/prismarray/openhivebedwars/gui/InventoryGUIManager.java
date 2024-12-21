@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Scanner;
 import java.util.function.Function;
@@ -60,6 +61,10 @@ public class InventoryGUIManager {
     }
 
     public static void openInventoryGUI(@Nullable String key, @Nonnull Player target) {
+        openInventoryGUI(key, target, null);
+    }
+
+    public static void openInventoryGUI(@Nullable String key, @Nonnull Player target, @Nullable Map<String, String> additionalContext) {
 
         Function<InventoryGUIContext, ? extends InventoryGUIBase> factory = instance.registeredInventoryGUIs.get(key);
 
@@ -69,7 +74,7 @@ public class InventoryGUIManager {
 
         InventoryGUIBase inventoryGUI;
         try {
-            inventoryGUI = factory.apply(new InventoryGUIContext(target));
+            inventoryGUI = factory.apply(new InventoryGUIContext(target, null, null, null, additionalContext));
         } catch (Exception ignored) {
             return;
         }
@@ -78,7 +83,7 @@ public class InventoryGUIManager {
             return;
         }
 
-        target.openInventory(inventoryGUI);
+        inventoryGUI.open(target);
         InventoryGUIActionManager.registerInventoryGUI(target, inventoryGUI);
     }
 

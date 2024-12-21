@@ -189,6 +189,15 @@ public class InventoryGUIBase implements Inventory {
         return isLocked || lockedSlots.contains(slot);
     }
 
+    public static int getSmallestPossibleInventorySize(int requestedSlots) {
+
+        if (requestedSlots <= 5) {
+            return 5;
+        }
+
+        return 9 * (int) Math.ceil(requestedSlots / 9.0);
+    }
+
     @Override
     public int getSize() {
         return inventory.getSize();
