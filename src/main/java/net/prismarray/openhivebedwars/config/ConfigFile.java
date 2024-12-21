@@ -330,7 +330,7 @@ public abstract class ConfigFile {
         ));
     }
 
-    private static Enchantment parseEnchantment(String input) {
+    public static Enchantment parseEnchantment(String input) {
 
         Enchantment enchantment = Enchantment.getByName(input);
 

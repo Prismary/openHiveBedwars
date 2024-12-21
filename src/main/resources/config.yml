@@ -82,3 +82,824 @@ shop:
   use_default_color:
     purchasable_blocks: false
     purchasable_bridge_builders: false
+
+enchanter:
+  allow_multiple_enchantments_per_item: false
+  add_previous_and_cancel_buttons: true
+  enchantable_items:
+    SHEARS:
+      DIG_SPEED:
+        display_name: "Efficiency"
+        level: 1
+        cost: 5 # ToDo: find actual value
+        currency: "DIAMOND"
+
+    BOW:
+      ARROW_DAMAGE:
+        display_name: "Power"
+        level: 1
+        cost: 5 # ToDo: find actual value
+        currency: "EMERALD"
+      ARROW_KNOCKBACK:
+        display_name: "Punch"
+        level: 1
+        cost: 10 # ToDo: find actual value
+        currency: "EMERALD"
+      ARROW_FIRE:
+        display_name: "Flame"
+        level: 1
+        cost: 15
+        currency: "EMERALD"
+      ARROW_INFINITE:
+        display_name: "Infinity"
+        level: 1
+        cost: 25 # ToDo: find actual value
+        currency: "EMERALD"
+
+    DIAMOND_SWORD:
+      DAMAGE_ALL:
+        display_name: "Sharpness"
+        level: 1
+        cost: 5
+        currency: "EMERALD"
+      KNOCKBACK:
+        display_name: "Knockback"
+        level: 1
+        cost: 10
+        currency: "EMERALD"
+      FIRE_ASPECT:
+        display_name: "Fire Aspect"
+        level: 1
+        cost: 15
+        currency: "EMERALD"
+
+    GOLD_SWORD:
+      DAMAGE_ALL:
+        display_name: "Sharpness"
+        level: 1
+        cost: 5
+        currency: "EMERALD"
+      KNOCKBACK:
+        display_name: "Knockback"
+        level: 1
+        cost: 10
+        currency: "EMERALD"
+      FIRE_ASPECT:
+        display_name: "Fire Aspect"
+        level: 1
+        cost: 15
+        currency: "EMERALD"
+
+    IRON_SWORD:
+      DAMAGE_ALL:
+        display_name: "Sharpness"
+        level: 1
+        cost: 5
+        currency: "EMERALD"
+      KNOCKBACK:
+        display_name: "Knockback"
+        level: 1
+        cost: 10
+        currency: "EMERALD"
+      FIRE_ASPECT:
+        display_name: "Fire Aspect"
+        level: 1
+        cost: 15
+        currency: "EMERALD"
+
+    STONE_SWORD:
+      DAMAGE_ALL:
+        display_name: "Sharpness"
+        level: 1
+        cost: 5
+        currency: "EMERALD"
+      KNOCKBACK:
+        display_name: "Knockback"
+        level: 1
+        cost: 10
+        currency: "EMERALD"
+      FIRE_ASPECT:
+        display_name: "Fire Aspect"
+        level: 1
+        cost: 15
+        currency: "EMERALD"
+
+    WOOD_SWORD:
+      DAMAGE_ALL:
+        display_name: "Sharpness"
+        level: 1
+        cost: 5
+        currency: "EMERALD"
+      KNOCKBACK:
+        display_name: "Knockback"
+        level: 1
+        cost: 10
+        currency: "EMERALD"
+      FIRE_ASPECT:
+        display_name: "Fire Aspect"
+        level: 1
+        cost: 15
+        currency: "EMERALD"
+
+    DIAMOND_AXE:
+      DIG_SPEED:
+        display_name: "Efficiency"
+        level: 1
+        cost: 5 # ToDo: find actual value
+        currency: "EMERALD"
+      DAMAGE_ALL:
+        display_name: "Sharpness"
+        level: 1
+        cost: 5
+        currency: "EMERALD"
+      KNOCKBACK:
+        display_name: "Knockback"
+        level: 1
+        cost: 10
+        currency: "EMERALD"
+
+    GOLD_AXE:
+      DIG_SPEED:
+        display_name: "Efficiency"
+        level: 1
+        cost: 5 # ToDo: find actual value
+        currency: "EMERALD"
+      DAMAGE_ALL:
+        display_name: "Sharpness"
+        level: 1
+        cost: 5
+        currency: "EMERALD"
+      KNOCKBACK:
+        display_name: "Knockback"
+        level: 1
+        cost: 10
+        currency: "EMERALD"
+
+    IRON_AXE:
+      DIG_SPEED:
+        display_name: "Efficiency"
+        level: 1
+        cost: 5 # ToDo: find actual value
+        currency: "EMERALD"
+      DAMAGE_ALL:
+        display_name: "Sharpness"
+        level: 1
+        cost: 5
+        currency: "EMERALD"
+      KNOCKBACK:
+        display_name: "Knockback"
+        level: 1
+        cost: 10
+        currency: "EMERALD"
+
+    STONE_AXE:
+      DIG_SPEED:
+        display_name: "Efficiency"
+        level: 1
+        cost: 5 # ToDo: find actual value
+        currency: "EMERALD"
+      DAMAGE_ALL:
+        display_name: "Sharpness"
+        level: 1
+        cost: 5
+        currency: "EMERALD"
+      KNOCKBACK:
+        display_name: "Knockback"
+        level: 1
+        cost: 10
+        currency: "EMERALD"
+
+    WOOD_AXE:
+      DIG_SPEED:
+        display_name: "Efficiency"
+        level: 1
+        cost: 5 # ToDo: find actual value
+        currency: "EMERALD"
+      DAMAGE_ALL:
+        display_name: "Sharpness"
+        level: 1
+        cost: 5
+        currency: "EMERALD"
+      KNOCKBACK:
+        display_name: "Knockback"
+        level: 1
+        cost: 10
+        currency: "EMERALD"
+
+    DIAMOND_PICKAXE:
+      DIG_SPEED:
+        display_name: "Efficiency"
+        level: 1
+        cost: 5 # ToDo: find actual value
+        currency: "EMERALD"
+      DAMAGE_ALL:
+        display_name: "Sharpness"
+        level: 1
+        cost: 5
+        currency: "EMERALD"
+      KNOCKBACK:
+        display_name: "Knockback"
+        level: 1
+        cost: 10
+        currency: "EMERALD"
+
+    GOLD_PICKAXE:
+      DIG_SPEED:
+        display_name: "Efficiency"
+        level: 1
+        cost: 5 # ToDo: find actual value
+        currency: "EMERALD"
+      DAMAGE_ALL:
+        display_name: "Sharpness"
+        level: 1
+        cost: 5
+        currency: "EMERALD"
+      KNOCKBACK:
+        display_name: "Knockback"
+        level: 1
+        cost: 10
+        currency: "EMERALD"
+
+    IRON_PICKAXE:
+      DIG_SPEED:
+        display_name: "Efficiency"
+        level: 1
+        cost: 5 # ToDo: find actual value
+        currency: "EMERALD"
+      DAMAGE_ALL:
+        display_name: "Sharpness"
+        level: 1
+        cost: 5
+        currency: "EMERALD"
+      KNOCKBACK:
+        display_name: "Knockback"
+        level: 1
+        cost: 10
+        currency: "EMERALD"
+
+    STONE_PICKAXE:
+      DIG_SPEED:
+        display_name: "Efficiency"
+        level: 1
+        cost: 5 # ToDo: find actual value
+        currency: "EMERALD"
+      DAMAGE_ALL:
+        display_name: "Sharpness"
+        level: 1
+        cost: 5
+        currency: "EMERALD"
+      KNOCKBACK:
+        display_name: "Knockback"
+        level: 1
+        cost: 10
+        currency: "EMERALD"
+
+    WOOD_PICKAXE:
+      DIG_SPEED:
+        display_name: "Efficiency"
+        level: 1
+        cost: 5 # ToDo: find actual value
+        currency: "EMERALD"
+      DAMAGE_ALL:
+        display_name: "Sharpness"
+        level: 1
+        cost: 5
+        currency: "EMERALD"
+      KNOCKBACK:
+        display_name: "Knockback"
+        level: 1
+        cost: 10
+        currency: "EMERALD"
+
+    DIAMOND_SPADE:
+      DIG_SPEED:
+        display_name: "Efficiency"
+        level: 1
+        cost: 5 # ToDo: find actual value
+        currency: "EMERALD"
+      DAMAGE_ALL:
+        display_name: "Sharpness"
+        level: 1
+        cost: 5
+        currency: "EMERALD"
+      KNOCKBACK:
+        display_name: "Knockback"
+        level: 1
+        cost: 10
+        currency: "EMERALD"
+
+    GOLD_SPADE:
+      DIG_SPEED:
+        display_name: "Efficiency"
+        level: 1
+        cost: 5 # ToDo: find actual value
+        currency: "EMERALD"
+      DAMAGE_ALL:
+        display_name: "Sharpness"
+        level: 1
+        cost: 5
+        currency: "EMERALD"
+      KNOCKBACK:
+        display_name: "Knockback"
+        level: 1
+        cost: 10
+        currency: "EMERALD"
+
+    IRON_SPADE:
+      DIG_SPEED:
+        display_name: "Efficiency"
+        level: 1
+        cost: 5 # ToDo: find actual value
+        currency: "EMERALD"
+      DAMAGE_ALL:
+        display_name: "Sharpness"
+        level: 1
+        cost: 5
+        currency: "EMERALD"
+      KNOCKBACK:
+        display_name: "Knockback"
+        level: 1
+        cost: 10
+        currency: "EMERALD"
+
+    STONE_SPADE:
+      DIG_SPEED:
+        display_name: "Efficiency"
+        level: 1
+        cost: 5 # ToDo: find actual value
+        currency: "EMERALD"
+      DAMAGE_ALL:
+        display_name: "Sharpness"
+        level: 1
+        cost: 5
+        currency: "EMERALD"
+      KNOCKBACK:
+        display_name: "Knockback"
+        level: 1
+        cost: 10
+        currency: "EMERALD"
+
+    WOOD_SPADE:
+      DIG_SPEED:
+        display_name: "Efficiency"
+        level: 1
+        cost: 5 # ToDo: find actual value
+        currency: "EMERALD"
+      DAMAGE_ALL:
+        display_name: "Sharpness"
+        level: 1
+        cost: 5
+        currency: "EMERALD"
+      KNOCKBACK:
+        display_name: "Knockback"
+        level: 1
+        cost: 10
+        currency: "EMERALD"
+
+    ####################################################################
+    #     The following enchantments are additions to the original     #
+    #     configuration on HiveMC. Feel free to comment them out.      #
+    ####################################################################
+
+    DIAMOND_HELMET:
+      PROTECTION_ENVIRONMENTAL:
+        display_name: "Protection"
+        level: 1
+        cost: 5 # ToDo: find actual value
+        currency: "EMERALD"
+      PROTECTION_PROJECTILE:
+        display_name: "Projectile Protection"
+        level: 1
+        cost: 5 # ToDo: find actual value
+        currency: "EMERALD"
+      PROTECTION_EXPLOSIONS:
+        display_name: "Blast Protection"
+        level: 1
+        cost: 10 # ToDo: find actual value
+        currency: "EMERALD"
+      THORNS:
+        display_name: "Thorns"
+        level: 1
+        cost: 15 # ToDo: find actual value
+        currency: "EMERALD"
+
+    GOLD_HELMET:
+      PROTECTION_ENVIRONMENTAL:
+        display_name: "Protection"
+        level: 1
+        cost: 5 # ToDo: find actual value
+        currency: "EMERALD"
+      PROTECTION_PROJECTILE:
+        display_name: "Projectile Protection"
+        level: 1
+        cost: 5 # ToDo: find actual value
+        currency: "EMERALD"
+      PROTECTION_EXPLOSIONS:
+        display_name: "Blast Protection"
+        level: 1
+        cost: 10 # ToDo: find actual value
+        currency: "EMERALD"
+      THORNS:
+        display_name: "Thorns"
+        level: 1
+        cost: 15 # ToDo: find actual value
+        currency: "EMERALD"
+
+    IRON_HELMET:
+      PROTECTION_ENVIRONMENTAL:
+        display_name: "Protection"
+        level: 1
+        cost: 5 # ToDo: find actual value
+        currency: "EMERALD"
+      PROTECTION_PROJECTILE:
+        display_name: "Projectile Protection"
+        level: 1
+        cost: 5 # ToDo: find actual value
+        currency: "EMERALD"
+      PROTECTION_EXPLOSIONS:
+        display_name: "Blast Protection"
+        level: 1
+        cost: 10 # ToDo: find actual value
+        currency: "EMERALD"
+      THORNS:
+        display_name: "Thorns"
+        level: 1
+        cost: 15 # ToDo: find actual value
+        currency: "EMERALD"
+
+    CHAINMAIL_HELMET:
+      PROTECTION_ENVIRONMENTAL:
+        display_name: "Protection"
+        level: 1
+        cost: 5 # ToDo: find actual value
+        currency: "EMERALD"
+      PROTECTION_PROJECTILE:
+        display_name: "Projectile Protection"
+        level: 1
+        cost: 5 # ToDo: find actual value
+        currency: "EMERALD"
+      PROTECTION_EXPLOSIONS:
+        display_name: "Blast Protection"
+        level: 1
+        cost: 10 # ToDo: find actual value
+        currency: "EMERALD"
+      THORNS:
+        display_name: "Thorns"
+        level: 1
+        cost: 15 # ToDo: find actual value
+        currency: "EMERALD"
+
+    LEATHER_HELMET:
+      PROTECTION_ENVIRONMENTAL:
+        display_name: "Protection"
+        level: 1
+        cost: 5 # ToDo: find actual value
+        currency: "EMERALD"
+      PROTECTION_PROJECTILE:
+        display_name: "Projectile Protection"
+        level: 1
+        cost: 5 # ToDo: find actual value
+        currency: "EMERALD"
+      PROTECTION_EXPLOSIONS:
+        display_name: "Blast Protection"
+        level: 1
+        cost: 10 # ToDo: find actual value
+        currency: "EMERALD"
+      THORNS:
+        display_name: "Thorns"
+        level: 1
+        cost: 15 # ToDo: find actual value
+        currency: "EMERALD"
+
+
+    DIAMOND_CHESTPLATE:
+      PROTECTION_ENVIRONMENTAL:
+        display_name: "Protection"
+        level: 1
+        cost: 5 # ToDo: find actual value
+        currency: "EMERALD"
+      PROTECTION_PROJECTILE:
+        display_name: "Projectile Protection"
+        level: 1
+        cost: 5 # ToDo: find actual value
+        currency: "EMERALD"
+      PROTECTION_EXPLOSIONS:
+        display_name: "Blast Protection"
+        level: 1
+        cost: 10 # ToDo: find actual value
+        currency: "EMERALD"
+      THORNS:
+        display_name: "Thorns"
+        level: 1
+        cost: 15 # ToDo: find actual value
+        currency: "EMERALD"
+
+    GOLD_CHESTPLATE:
+      PROTECTION_ENVIRONMENTAL:
+        display_name: "Protection"
+        level: 1
+        cost: 5 # ToDo: find actual value
+        currency: "EMERALD"
+      PROTECTION_PROJECTILE:
+        display_name: "Projectile Protection"
+        level: 1
+        cost: 5 # ToDo: find actual value
+        currency: "EMERALD"
+      PROTECTION_EXPLOSIONS:
+        display_name: "Blast Protection"
+        level: 1
+        cost: 10 # ToDo: find actual value
+        currency: "EMERALD"
+      THORNS:
+        display_name: "Thorns"
+        level: 1
+        cost: 15 # ToDo: find actual value
+        currency: "EMERALD"
+
+    IRON_CHESTPLATE:
+      PROTECTION_ENVIRONMENTAL:
+        display_name: "Protection"
+        level: 1
+        cost: 5 # ToDo: find actual value
+        currency: "EMERALD"
+      PROTECTION_PROJECTILE:
+        display_name: "Projectile Protection"
+        level: 1
+        cost: 5 # ToDo: find actual value
+        currency: "EMERALD"
+      PROTECTION_EXPLOSIONS:
+        display_name: "Blast Protection"
+        level: 1
+        cost: 10 # ToDo: find actual value
+        currency: "EMERALD"
+      THORNS:
+        display_name: "Thorns"
+        level: 1
+        cost: 15 # ToDo: find actual value
+        currency: "EMERALD"
+
+    CHAINMAIL_CHESTPLATE:
+      PROTECTION_ENVIRONMENTAL:
+        display_name: "Protection"
+        level: 1
+        cost: 5 # ToDo: find actual value
+        currency: "EMERALD"
+      PROTECTION_PROJECTILE:
+        display_name: "Projectile Protection"
+        level: 1
+        cost: 5 # ToDo: find actual value
+        currency: "EMERALD"
+      PROTECTION_EXPLOSIONS:
+        display_name: "Blast Protection"
+        level: 1
+        cost: 10 # ToDo: find actual value
+        currency: "EMERALD"
+      THORNS:
+        display_name: "Thorns"
+        level: 1
+        cost: 15 # ToDo: find actual value
+        currency: "EMERALD"
+
+    LEATHER_CHESTPLATE:
+      PROTECTION_ENVIRONMENTAL:
+        display_name: "Protection"
+        level: 1
+        cost: 5 # ToDo: find actual value
+        currency: "EMERALD"
+      PROTECTION_PROJECTILE:
+        display_name: "Projectile Protection"
+        level: 1
+        cost: 5 # ToDo: find actual value
+        currency: "EMERALD"
+      PROTECTION_EXPLOSIONS:
+        display_name: "Blast Protection"
+        level: 1
+        cost: 10 # ToDo: find actual value
+        currency: "EMERALD"
+      THORNS:
+        display_name: "Thorns"
+        level: 1
+        cost: 15 # ToDo: find actual value
+        currency: "EMERALD"
+
+
+    DIAMOND_LEGGINGS:
+      PROTECTION_ENVIRONMENTAL:
+        display_name: "Protection"
+        level: 1
+        cost: 5 # ToDo: find actual value
+        currency: "EMERALD"
+      PROTECTION_PROJECTILE:
+        display_name: "Projectile Protection"
+        level: 1
+        cost: 5 # ToDo: find actual value
+        currency: "EMERALD"
+      PROTECTION_EXPLOSIONS:
+        display_name: "Blast Protection"
+        level: 1
+        cost: 10 # ToDo: find actual value
+        currency: "EMERALD"
+      THORNS:
+        display_name: "Thorns"
+        level: 1
+        cost: 15 # ToDo: find actual value
+        currency: "EMERALD"
+
+    GOLD_LEGGINGS:
+      PROTECTION_ENVIRONMENTAL:
+        display_name: "Protection"
+        level: 1
+        cost: 5 # ToDo: find actual value
+        currency: "EMERALD"
+      PROTECTION_PROJECTILE:
+        display_name: "Projectile Protection"
+        level: 1
+        cost: 5 # ToDo: find actual value
+        currency: "EMERALD"
+      PROTECTION_EXPLOSIONS:
+        display_name: "Blast Protection"
+        level: 1
+        cost: 10 # ToDo: find actual value
+        currency: "EMERALD"
+      THORNS:
+        display_name: "Thorns"
+        level: 1
+        cost: 15 # ToDo: find actual value
+        currency: "EMERALD"
+
+    IRON_LEGGINGS:
+      PROTECTION_ENVIRONMENTAL:
+        display_name: "Protection"
+        level: 1
+        cost: 5 # ToDo: find actual value
+        currency: "EMERALD"
+      PROTECTION_PROJECTILE:
+        display_name: "Projectile Protection"
+        level: 1
+        cost: 5 # ToDo: find actual value
+        currency: "EMERALD"
+      PROTECTION_EXPLOSIONS:
+        display_name: "Blast Protection"
+        level: 1
+        cost: 10 # ToDo: find actual value
+        currency: "EMERALD"
+      THORNS:
+        display_name: "Thorns"
+        level: 1
+        cost: 15 # ToDo: find actual value
+        currency: "EMERALD"
+
+    CHAINMAIL_LEGGINGS:
+      PROTECTION_ENVIRONMENTAL:
+        display_name: "Protection"
+        level: 1
+        cost: 5 # ToDo: find actual value
+        currency: "EMERALD"
+      PROTECTION_PROJECTILE:
+        display_name: "Projectile Protection"
+        level: 1
+        cost: 5 # ToDo: find actual value
+        currency: "EMERALD"
+      PROTECTION_EXPLOSIONS:
+        display_name: "Blast Protection"
+        level: 1
+        cost: 10 # ToDo: find actual value
+        currency: "EMERALD"
+      THORNS:
+        display_name: "Thorns"
+        level: 1
+        cost: 15 # ToDo: find actual value
+        currency: "EMERALD"
+
+    LEATHER_LEGGINGS:
+      PROTECTION_ENVIRONMENTAL:
+        display_name: "Protection"
+        level: 1
+        cost: 5 # ToDo: find actual value
+        currency: "EMERALD"
+      PROTECTION_PROJECTILE:
+        display_name: "Projectile Protection"
+        level: 1
+        cost: 5 # ToDo: find actual value
+        currency: "EMERALD"
+      PROTECTION_EXPLOSIONS:
+        display_name: "Blast Protection"
+        level: 1
+        cost: 10 # ToDo: find actual value
+        currency: "EMERALD"
+      THORNS:
+        display_name: "Thorns"
+        level: 1
+        cost: 15 # ToDo: find actual value
+        currency: "EMERALD"
+
+
+    DIAMOND_BOOTS:
+      PROTECTION_ENVIRONMENTAL:
+        display_name: "Protection"
+        level: 1
+        cost: 5 # ToDo: find actual value
+        currency: "EMERALD"
+      PROTECTION_PROJECTILE:
+        display_name: "Projectile Protection"
+        level: 1
+        cost: 5 # ToDo: find actual value
+        currency: "EMERALD"
+      PROTECTION_EXPLOSIONS:
+        display_name: "Blast Protection"
+        level: 1
+        cost: 10 # ToDo: find actual value
+        currency: "EMERALD"
+      THORNS:
+        display_name: "Thorns"
+        level: 1
+        cost: 15 # ToDo: find actual value
+        currency: "EMERALD"
+
+    GOLD_BOOTS:
+      PROTECTION_ENVIRONMENTAL:
+        display_name: "Protection"
+        level: 1
+        cost: 5 # ToDo: find actual value
+        currency: "EMERALD"
+      PROTECTION_PROJECTILE:
+        display_name: "Projectile Protection"
+        level: 1
+        cost: 5 # ToDo: find actual value
+        currency: "EMERALD"
+      PROTECTION_EXPLOSIONS:
+        display_name: "Blast Protection"
+        level: 1
+        cost: 10 # ToDo: find actual value
+        currency: "EMERALD"
+      THORNS:
+        display_name: "Thorns"
+        level: 1
+        cost: 15 # ToDo: find actual value
+        currency: "EMERALD"
+
+    IRON_BOOTS:
+      PROTECTION_ENVIRONMENTAL:
+        display_name: "Protection"
+        level: 1
+        cost: 5 # ToDo: find actual value
+        currency: "EMERALD"
+      PROTECTION_PROJECTILE:
+        display_name: "Projectile Protection"
+        level: 1
+        cost: 5 # ToDo: find actual value
+        currency: "EMERALD"
+      PROTECTION_EXPLOSIONS:
+        display_name: "Blast Protection"
+        level: 1
+        cost: 10 # ToDo: find actual value
+        currency: "EMERALD"
+      THORNS:
+        display_name: "Thorns"
+        level: 1
+        cost: 15 # ToDo: find actual value
+        currency: "EMERALD"
+
+    CHAINMAIL_BOOTS:
+      PROTECTION_ENVIRONMENTAL:
+        display_name: "Protection"
+        level: 1
+        cost: 5 # ToDo: find actual value
+        currency: "EMERALD"
+      PROTECTION_PROJECTILE:
+        display_name: "Projectile Protection"
+        level: 1
+        cost: 5 # ToDo: find actual value
+        currency: "EMERALD"
+      PROTECTION_EXPLOSIONS:
+        display_name: "Blast Protection"
+        level: 1
+        cost: 10 # ToDo: find actual value
+        currency: "EMERALD"
+      THORNS:
+        display_name: "Thorns"
+        level: 1
+        cost: 15 # ToDo: find actual value
+        currency: "EMERALD"
+
+    LEATHER_BOOTS:
+      PROTECTION_ENVIRONMENTAL:
+        display_name: "Protection"
+        level: 1
+        cost: 5 # ToDo: find actual value
+        currency: "EMERALD"
+      PROTECTION_PROJECTILE:
+        display_name: "Projectile Protection"
+        level: 1
+        cost: 5 # ToDo: find actual value
+        currency: "EMERALD"
+      PROTECTION_EXPLOSIONS:
+        display_name: "Blast Protection"
+        level: 1
+        cost: 10 # ToDo: find actual value
+        currency: "EMERALD"
+      THORNS:
+        display_name: "Thorns"
+        level: 1
+        cost: 15 # ToDo: find actual value
+        currency: "EMERALD"
