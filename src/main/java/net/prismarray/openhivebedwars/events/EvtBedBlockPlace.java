@@ -47,7 +47,7 @@ public class EvtBedBlockPlace extends EventBase {
             return;
         }
 
-        CraftItemStack.asNMSCopy(p.getItemInHand()).placeItem(
+        boolean successful = CraftItemStack.asNMSCopy(p.getItemInHand()).placeItem(
                 ((CraftPlayer) p).getHandle(),
                 ((CraftWorld) p.getLocation().getWorld()).getHandle(),
                 new BlockPosition(clickedBlock.getX(), clickedBlock.getY(), clickedBlock.getZ()),
@@ -56,6 +56,10 @@ public class EvtBedBlockPlace extends EventBase {
                 0,
                 0
         );
+
+        if (!successful) {
+            return;
+        }
 
         if (Objects.equals(p.getItemInHand().getType(), Material.TNT)) {
             // Prevent removing double the items when placing instant TNT against a bed
