@@ -196,6 +196,8 @@ public final class OpenHiveBedwars extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new EvtSpectatorCompass(), this);
         getServer().getPluginManager().registerEvents(new EvtInstantTNT(), this);
         getServer().getPluginManager().registerEvents(new EvtBedBlockPlace(), this);
+        getServer().getPluginManager().registerEvents(new EvtPersonalDog(), this);
+        getServer().getPluginManager().registerEvents(new EvtPoisonCure(), this);
     }
 
     @SuppressWarnings({"deprecation", "unchecked"})
