@@ -37,6 +37,8 @@ public class EvtBedBlockPlace extends EventBase {
         }
         Player p = event.getPlayer();
 
+        event.setCancelled(true);
+
         if (Objects.isNull(p.getItemInHand()) || Objects.isNull(CraftItemStack.asNMSCopy(p.getItemInHand()))) {
             return;
         }
@@ -44,8 +46,6 @@ public class EvtBedBlockPlace extends EventBase {
         if (!p.getItemInHand().getType().isBlock()) {
             return;
         }
-
-        event.setCancelled(true);
 
         CraftItemStack.asNMSCopy(p.getItemInHand()).placeItem(
                 ((CraftPlayer) p).getHandle(),
