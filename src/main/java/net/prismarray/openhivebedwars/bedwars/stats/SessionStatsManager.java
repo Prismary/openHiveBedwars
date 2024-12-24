@@ -5,7 +5,7 @@ import org.bukkit.entity.Player;
 import java.util.HashMap;
 import java.util.Map;
 
-public class SessionStatsManager extends StatsManagerBase implements StatsManager {
+public class SessionStatsManager extends StatsManagerBase {
 
     Map<Player, LocalPlayerStats> stats;
 
