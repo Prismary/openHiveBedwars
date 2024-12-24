@@ -145,7 +145,6 @@ public class InventoryGUIConfig extends ConfigFile {
         private Material material;
         private int amount;
         private short damage;
-        private byte data;
         private String name;
         private List<String> lore;
         private boolean enchanted;
@@ -159,7 +158,6 @@ public class InventoryGUIConfig extends ConfigFile {
         private Material purchasedMaterial;
         private int purchasedAmount;
         private short purchasedDamage;
-        private byte purchasedData;
         private String purchasedName;
         private List<String> purchasedLore;
         private Map<Enchantment, Integer> purchasedEnchantments;
@@ -204,7 +202,6 @@ public class InventoryGUIConfig extends ConfigFile {
             this.material = parseMaterial(config.getString(String.join(".", baseRoute, "material"), "AIR"));
             this.amount = config.getInt(String.join(".", baseRoute, "amount"), 1);
             this.damage = config.getShort(String.join(".", baseRoute, "damage"), (short) 0);
-            this.data = config.getByte(String.join(".", baseRoute, "data"), (byte) 0);
             this.name = config.getString(String.join(".", baseRoute, "name"));
             this.lore = config.getStringList(String.join(".", baseRoute, "lore"));
             this.enchanted = config.getBoolean(String.join(".", baseRoute, "enchanted"), false);
@@ -218,7 +215,6 @@ public class InventoryGUIConfig extends ConfigFile {
             this.purchasedMaterial = parseMaterial(config.getString(String.join(".", baseRoute, "purchasedItem", "material"), material.toString()));
             this.purchasedAmount = config.getInt(String.join(".", baseRoute, "purchasedItem", "amount"), amount);
             this.purchasedDamage = config.getShort(String.join(".", baseRoute, "purchasedItem", "damage"), damage);
-            this.purchasedData = config.getByte(String.join(".", baseRoute, "purchasedItem", "data"), data);
             this.purchasedName = config.getString(String.join(".", baseRoute, "purchasedItem", "name"));
             this.purchasedLore = config.getStringList(String.join(".", baseRoute, "purchasedItem", "lore"));
             this.purchasedEnchantments = parseEnchantmentMap(config.getStringList(String.join(".", baseRoute, "purchasedItem", "enchantments")));
@@ -256,7 +252,6 @@ public class InventoryGUIConfig extends ConfigFile {
 
                     short damage = getTeamSpecificDamageValue(context, material, this.damage);
                     short purchasedDamage = getTeamSpecificDamageValue(context, purchasedMaterial, this.purchasedDamage);
-                    byte purchasedData = (byte) purchasedDamage;
 
                     return new PurchasableItem(
                             context.getContainingGUI(),
@@ -274,7 +269,6 @@ public class InventoryGUIConfig extends ConfigFile {
                             createItemStack(
                                     purchasedMaterial,
                                     purchasedDamage,
-                                    purchasedData,
                                     purchasedAmount,
                                     context.parseStringPlaceholders(purchasedName),
                                     purchasedLore.stream().map(context::parseStringPlaceholders).collect(Collectors.toList()),
@@ -392,14 +386,13 @@ public class InventoryGUIConfig extends ConfigFile {
     public static ItemStack createItemStack(
             Material material,
             short damage,
-            byte data,
             int amount,
             String name,
             List<String> lore,
             Map<Enchantment, Integer> enchantmentLevels,
             List<ItemFlag> itemFlags) {
 
-        ItemStack item = new ItemStack(material, amount, damage, data);
+        ItemStack item = new ItemStack(material, amount, damage);
         ItemMeta meta = item.getItemMeta();
 
         meta.setDisplayName(name);
