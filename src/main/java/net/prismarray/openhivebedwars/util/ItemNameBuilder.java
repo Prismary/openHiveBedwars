@@ -53,7 +53,8 @@ public class ItemNameBuilder {
                         currency.color,
                         cost,
                         currency.getChatNameForAmount(cost)
-                )
+                ),
+                ""
         ));
 
         if (showFavStatus) {
