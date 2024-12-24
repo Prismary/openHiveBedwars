@@ -1,6 +1,7 @@
 package net.prismarray.openhivebedwars.shop.npc;
 
 import net.minecraft.server.v1_8_R3.NBTTagCompound;
+import net.prismarray.openhivebedwars.bedwars.Hologram;
 import net.prismarray.openhivebedwars.shop.ShopManager;
 import net.prismarray.openhivebedwars.gui.InventoryGUIManager;
 import org.bukkit.Location;
@@ -9,6 +10,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
+import org.bukkit.util.Vector;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -37,7 +39,8 @@ public class VillagerShop extends Shop {
         }
 
         if (Objects.nonNull(customName)) {
-            getVillager().setCustomName(customName);
+            Hologram hologram = new Hologram(getVillager().getEyeLocation().add(new Vector(0, 0.25, 0)));
+            hologram.setContent(customName);
         }
 
         entity.setCustomNameVisible(true);
