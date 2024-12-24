@@ -62,10 +62,12 @@ public class IngameScoreboard extends PlayerScoreboard {
             return "§8Waiting...";
         }
 
-        if (Game.getTeamHandler().getPlayerTeam(player).hasBed()) {
-            return "§aAlive";
-        } else {
+        Team team = Game.getTeamHandler().getPlayerTeam(player);
+
+        if (Objects.isNull(team) || !team.hasBed()) {
             return "§cDestroyed";
+        } else {
+            return "§aAlive";
         }
     }
 
