@@ -19,6 +19,10 @@ public class EvtEntityDamage extends EventBase {
             return;
         }
 
+        if (Objects.equals(event.getEntityType(), EntityType.IRON_GOLEM)) {
+            return;
+        }
+
         event.setCancelled(true);
     }
 }

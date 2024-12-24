@@ -42,6 +42,11 @@ public class Config extends ConfigFile {
     private boolean enchanterAllowMultipleEnchantmentsPerItem;
     private boolean enchanterAddPreviousAndCancelButtons;
 
+    private double specialistPersonalDogHealth;
+    private double specialistTeamGolemHealth;
+
+    private boolean unbreakingTools;
+
     private EnchantableItemsConfig enchanterEnchantableItems;
 
 
@@ -127,6 +132,18 @@ public class Config extends ConfigFile {
         return this.enchanterEnchantableItems;
     }
 
+    public double getSpecialistPersonalDogHealth() {
+        return specialistPersonalDogHealth;
+    }
+
+    public double getSpecialistTeamGolemHealth() {
+        return specialistTeamGolemHealth;
+    }
+
+    public boolean getUnbreakingTools() {
+        return this.unbreakingTools;
+    }
+
     @Override
     protected void parseAndValidateConfig(YamlDocument yamlContent) throws ConfigValidationException {
 
@@ -154,6 +171,11 @@ public class Config extends ConfigFile {
         this.enchanterAllowMultipleEnchantmentsPerItem = yamlContent.getBoolean("enchanter.allow_multiple_enchantments_per_item");
         this.enchanterAddPreviousAndCancelButtons = yamlContent.getBoolean("enchanter.add_previous_and_cancel_buttons", true);
         this.enchanterEnchantableItems = new EnchantableItemsConfig(yamlContent, "enchanter.enchantable_items");
+
+        this.specialistPersonalDogHealth = yamlContent.getDouble("specialist.personal_dog_health", 20.0);
+        this.specialistTeamGolemHealth = yamlContent.getDouble("specialist.team_golem_health", 100.0);
+
+        this.unbreakingTools = yamlContent.getBoolean("unbreaking_tools", true);
     }
 
     public static class EnchantableItemsConfig {

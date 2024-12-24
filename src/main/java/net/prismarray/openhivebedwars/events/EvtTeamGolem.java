@@ -3,14 +3,12 @@ package net.prismarray.openhivebedwars.events;
 import net.prismarray.openhivebedwars.OpenHiveBedwars;
 import net.prismarray.openhivebedwars.bedwars.Game;
 import net.prismarray.openhivebedwars.bedwars.Team;
+import net.prismarray.openhivebedwars.util.Broadcast;
 import net.prismarray.openhivebedwars.util.Status;
 import net.prismarray.openhivebedwars.util.TeamMetadataValue;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Wolf;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -20,7 +18,7 @@ import org.bukkit.util.Vector;
 
 import java.util.Objects;
 
-public class EvtPersonalDog extends EventBase {
+public class EvtTeamGolem extends EventBase {
 
     @EventHandler
     public void onSpawnEggClick(PlayerInteractEvent event) {
@@ -42,11 +40,13 @@ public class EvtPersonalDog extends EventBase {
             return;
         }
 
-        if (!Objects.equals(event.getItem().getType(), Material.MONSTER_EGG)) {
+        if (!Objects.equals(event.getItem().getType(), Material.PUMPKIN)) {
             return;
         }
 
-        if (event.getItem().getDurability() != 95) {
+        if (!event.getItem().hasItemMeta()
+                || !event.getItem().getItemMeta().hasDisplayName()
+                || !Objects.equals(event.getItem().getItemMeta().getDisplayName(), "Team Golem")) {
             return;
         }
 
@@ -57,17 +57,20 @@ public class EvtPersonalDog extends EventBase {
 
         event.setCancelled(true);
 
-        long personalDogs = p.getWorld().getEntitiesByClasses(Wolf.class).stream()
-                .map(entity -> (Wolf) entity)
-                .filter(wolf -> Objects.equals(wolf.getOwner(), p))
+        long teamGolems = p.getWorld().getEntitiesByClasses(Golem.class).stream()
+                .map(entity -> (Golem) entity)
+                .filter(golem -> golem.hasMetadata("team"))
+                .filter(golem -> Objects.equals(golem.getMetadata("team").get(0).value(), Game.getTeamHandler().getPlayerTeam(p)))
                 .count();
 
-        if (personalDogs > 0) {
+        if (teamGolems > 0) {
             // ToDo: send error message
             return;
         }
 
-        Wolf dog = (Wolf) event.getPlayer().getWorld().spawnEntity(
+        // ToDo: implement custom entity type extending Golem, which modifies the pathfinding such that the golem
+        //  attacks any player of competing teams in a certain range (https://www.spigotmc.org/threads/force-iron-golems-to-attack-players.482652/)
+        Golem golem = (Golem) event.getPlayer().getWorld().spawnEntity(
                 clickedBlock.getLocation()
                         .add(new Vector(0.5, 0, 0.5))
                         .add(new Vector(
@@ -75,22 +78,27 @@ public class EvtPersonalDog extends EventBase {
                                 event.getBlockFace().getModY(),
                                 event.getBlockFace().getModZ()
                         )),
-                EntityType.WOLF
+                EntityType.IRON_GOLEM
         );
-        dog.setMetadata("team", new TeamMetadataValue(Game.getTeamHandler().getPlayerTeam(p)));
+        golem.setMetadata("team", new TeamMetadataValue(Game.getTeamHandler().getPlayerTeam(p)));
 
-        dog.setCollarColor(Game.getTeamHandler().getPlayerTeam(p).getColor().woolColor);
-        dog.setCustomName(String.format(
-                "%s§l%s's §b§lPersonal Doggo",
+        golem.setCustomName(String.format(
+                "%s%s's Protector",
                 Game.getTeamHandler().getPlayerTeam(p).getColor().chatColor,
-                p.getDisplayName()
+                Game.getTeamHandler().getPlayerTeam(p).getColor().chatName
         ));
-        dog.setCustomNameVisible(true);
-        dog.setOwner(p);
-        dog.setTamed(true);
-        dog.setSitting(false);
-        dog.setMaxHealth(OpenHiveBedwars.getBWConfig().getSpecialistPersonalDogHealth());
-        dog.setHealth(OpenHiveBedwars.getBWConfig().getSpecialistPersonalDogHealth());
+        golem.setCustomNameVisible(true);
+        golem.setMaxHealth(OpenHiveBedwars.getBWConfig().getSpecialistTeamGolemHealth());
+        golem.setHealth(OpenHiveBedwars.getBWConfig().getSpecialistTeamGolemHealth());
+
+        Broadcast.toTeam(
+                Game.getTeamHandler().getPlayerTeam(p),
+                String.format(
+                        "§6A Team Golem was spawned by %s%s",
+                        Game.getTeamHandler().getPlayerTeam(p).getColor().chatColor,
+                        p.getDisplayName()
+                )
+        );
 
         if (p.getItemInHand().getAmount() > 1) {
             p.getItemInHand().setAmount(p.getItemInHand().getAmount() - 1);
@@ -103,7 +111,7 @@ public class EvtPersonalDog extends EventBase {
     @EventHandler
     public void entityDamage(EntityDamageEvent event) {
 
-        if (!Objects.equals(event.getEntityType(), EntityType.WOLF)) {
+        if (!Objects.equals(event.getEntityType(), EntityType.IRON_GOLEM)) {
             return;
         }
 

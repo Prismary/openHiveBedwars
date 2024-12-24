@@ -83,6 +83,12 @@ shop:
     purchasable_blocks: false
     purchasable_bridge_builders: false
 
+unbreaking_tools: true
+
+specialist:
+  personal_dog_health: 20
+  team_golem_health: 100
+
 enchanter:
   allow_multiple_enchantments_per_item: false
   add_previous_and_cancel_buttons: true
