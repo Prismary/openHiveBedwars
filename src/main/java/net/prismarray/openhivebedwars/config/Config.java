@@ -45,7 +45,7 @@ public class Config extends ConfigFile {
     private double specialistPersonalDogHealth;
     private double specialistTeamGolemHealth;
 
-    private boolean unbreakingTools;
+    private Set<Material> unbreakableTools;
 
     private EnchantableItemsConfig enchanterEnchantableItems;
 
@@ -140,8 +140,8 @@ public class Config extends ConfigFile {
         return specialistTeamGolemHealth;
     }
 
-    public boolean getUnbreakingTools() {
-        return this.unbreakingTools;
+    public Set<Material> getUnbreakableTools() {
+        return this.unbreakableTools;
     }
 
     @Override
@@ -175,7 +175,7 @@ public class Config extends ConfigFile {
         this.specialistPersonalDogHealth = yamlContent.getDouble("specialist.personal_dog_health", 20.0);
         this.specialistTeamGolemHealth = yamlContent.getDouble("specialist.team_golem_health", 100.0);
 
-        this.unbreakingTools = yamlContent.getBoolean("unbreaking_tools", true);
+        this.unbreakableTools = parseMaterialSet(yamlContent.getStringList("unbreakable_tools"));
     }
 
     public static class EnchantableItemsConfig {

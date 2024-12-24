@@ -1,5 +1,6 @@
 package net.prismarray.openhivebedwars.shop;
 
+import net.minecraft.server.v1_8_R3.NBTTagCompound;
 import net.prismarray.openhivebedwars.OpenHiveBedwars;
 import net.prismarray.openhivebedwars.bedwars.Game;
 import net.prismarray.openhivebedwars.gui.defaultGUIs.EnchanterRootGUI;
@@ -7,6 +8,7 @@ import net.prismarray.openhivebedwars.shop.npc.*;
 import net.prismarray.openhivebedwars.util.Broadcast;
 import net.prismarray.openhivebedwars.util.Currency;
 import net.prismarray.openhivebedwars.util.ItemNameBuilder;
+import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -54,6 +56,15 @@ public class ShopManager {
     public static void purchase(Player player, String name, ItemStack item, Currency currency, int cost) {
         if (!takePayment(player, currency, cost, name)) { // Attempt to take payment
             return;
+        }
+
+        if (OpenHiveBedwars.getBWConfig().getUnbreakableTools().contains(item.getType())) {
+
+            net.minecraft.server.v1_8_R3.ItemStack craftItem = CraftItemStack.asNMSCopy(item);
+            NBTTagCompound tag = craftItem.hasTag() ? craftItem.getTag() : new NBTTagCompound();
+            tag.setInt("Unbreakable", 1);
+            craftItem.setTag(tag);
+            item = CraftItemStack.asBukkitCopy(craftItem);
         }
 
         // Add purchased item, if possible
