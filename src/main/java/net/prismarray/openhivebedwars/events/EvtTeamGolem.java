@@ -3,11 +3,15 @@ package net.prismarray.openhivebedwars.events;
 import net.prismarray.openhivebedwars.OpenHiveBedwars;
 import net.prismarray.openhivebedwars.bedwars.Game;
 import net.prismarray.openhivebedwars.bedwars.Team;
+import net.prismarray.openhivebedwars.bedwars.team_golem.EntityTypes;
+import net.prismarray.openhivebedwars.bedwars.team_golem.TeamGolem;
 import net.prismarray.openhivebedwars.util.Broadcast;
 import net.prismarray.openhivebedwars.util.Status;
 import net.prismarray.openhivebedwars.util.TeamMetadataValue;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.Action;
@@ -58,29 +62,28 @@ public class EvtTeamGolem extends EventBase {
         event.setCancelled(true);
 
         long teamGolems = p.getWorld().getEntitiesByClasses(Golem.class).stream()
-                .map(entity -> (Golem) entity)
-                .filter(golem -> golem.hasMetadata("team"))
-                .filter(golem -> Objects.equals(golem.getMetadata("team").get(0).value(), Game.getTeamHandler().getPlayerTeam(p)))
+                .map(entity -> (TeamGolem) ((CraftEntity) entity).getHandle())
+                .filter(golem -> Objects.equals(golem.getTeam(), Game.getTeamHandler().getPlayerTeam(p)))
                 .count();
 
         if (teamGolems > 0) {
-            // ToDo: send error message
+            Broadcast.toPlayer(p, "§cYour team already has a Protector!"); //ToDo: find actual message
             return;
         }
 
-        // ToDo: implement custom entity type extending Golem, which modifies the pathfinding such that the golem
-        //  attacks any player of competing teams in a certain range (https://www.spigotmc.org/threads/force-iron-golems-to-attack-players.482652/)
-        Golem golem = (Golem) event.getPlayer().getWorld().spawnEntity(
-                clickedBlock.getLocation()
-                        .add(new Vector(0.5, 0, 0.5))
-                        .add(new Vector(
-                                event.getBlockFace().getModX(),
-                                event.getBlockFace().getModY(),
-                                event.getBlockFace().getModZ()
-                        )),
-                EntityType.IRON_GOLEM
-        );
-        golem.setMetadata("team", new TeamMetadataValue(Game.getTeamHandler().getPlayerTeam(p)));
+        Location location = clickedBlock.getLocation()
+                .add(new Vector(0.5, 0, 0.5))
+                .add(new Vector(
+                        event.getBlockFace().getModX(),
+                        event.getBlockFace().getModY(),
+                        event.getBlockFace().getModZ()
+                ));
+        Team team = Game.getTeamHandler().getPlayerTeam(p);
+
+        // TeamGolem golem = new TeamGolem(location.getWorld(), team);
+        // EntityTypes.spawnEntity(golem, location);
+
+        TeamGolem golem = (TeamGolem) EntityTypes.TEAM_GOLEM.spawn(location);
 
         golem.setCustomName(String.format(
                 "%s%s's Protector",
@@ -88,8 +91,8 @@ public class EvtTeamGolem extends EventBase {
                 Game.getTeamHandler().getPlayerTeam(p).getColor().chatName
         ));
         golem.setCustomNameVisible(true);
-        golem.setMaxHealth(OpenHiveBedwars.getBWConfig().getSpecialistTeamGolemHealth());
-        golem.setHealth(OpenHiveBedwars.getBWConfig().getSpecialistTeamGolemHealth());
+        //golem.setMaxHealth(OpenHiveBedwars.getBWConfig().getSpecialistTeamGolemHealth());
+        golem.setHealth((float) OpenHiveBedwars.getBWConfig().getSpecialistTeamGolemHealth());
 
         Broadcast.toTeam(
                 Game.getTeamHandler().getPlayerTeam(p),
