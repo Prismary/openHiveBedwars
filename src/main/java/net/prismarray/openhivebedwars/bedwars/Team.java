@@ -4,6 +4,7 @@ import net.prismarray.openhivebedwars.util.TeamColor;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Team {
 
@@ -27,6 +28,11 @@ public class Team {
 
     public void setColor(TeamColor color) {
         this.color = color;
+
+        if (Objects.nonNull(color)) {
+            players.forEach(p -> p.setPlayerListName(color.chatColor + p.getDisplayName()));
+            players.forEach(p -> p.setDisplayName(color.chatColor + p.getDisplayName()));
+        }
     }
 
     public int getPlayerCount() {
@@ -52,6 +58,12 @@ public class Team {
         }
 
         players.add(player);
+
+        if (Objects.nonNull(color)) {
+            player.setPlayerListName(color.chatColor + player.getDisplayName());
+            player.setDisplayName(color.chatColor + player.getDisplayName());
+        }
+
         return true;
     }
 

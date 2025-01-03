@@ -49,6 +49,10 @@ public class Config extends ConfigFile {
 
     private EnchantableItemsConfig enchanterEnchantableItems;
 
+    private List<String> tabManuHeaderLines;
+    private List<String> tabManuFooterLines;
+    private boolean tabMenuDisableCustomMenu;
+
 
     public Config(Logger logger, File configFile) {
         super(logger, configFile);
@@ -144,6 +148,18 @@ public class Config extends ConfigFile {
         return this.unbreakableTools;
     }
 
+    public List<String> getTabManuHeaderLines() {
+        return this.tabManuHeaderLines;
+    }
+
+    public List<String> getTabManuFooterLines() {
+        return this.tabManuFooterLines;
+    }
+
+    public boolean getTabMenuDisableCustomMenu() {
+        return tabMenuDisableCustomMenu;
+    }
+
     @Override
     protected void parseAndValidateConfig(YamlDocument yamlContent) throws ConfigValidationException {
 
@@ -176,6 +192,10 @@ public class Config extends ConfigFile {
         this.specialistTeamGolemHealth = yamlContent.getDouble("specialist.team_golem_health", 100.0);
 
         this.unbreakableTools = parseMaterialSet(yamlContent.getStringList("unbreakable_tools"));
+
+        this.tabManuHeaderLines = yamlContent.getStringList("tab_menu.header_lines", new ArrayList<>());
+        this.tabManuFooterLines = yamlContent.getStringList("tab_menu.footer_lines", new ArrayList<>());
+        this.tabMenuDisableCustomMenu = yamlContent.getBoolean("tab_menu.disable_custom_tab_menu", false);
     }
 
     public static class EnchantableItemsConfig {

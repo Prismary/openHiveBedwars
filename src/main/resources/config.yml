@@ -11,6 +11,15 @@ mode: "teams"
 # General chat prefix
 prefix: "§8▍ §3§lBed§b§lWars §8┃ §7"
 
+tab_menu:
+  header_lines:
+    - "§6§lOpen§e§lHive§6§lBedwars"
+    - "§bAn §aopen source §bre-implementation of Bedwars"
+    - ""
+  footer_lines:
+    - ""
+    - "§agithub.com/Prismary/openHiveBedwars/"
+
 # World copy names
 lobby_name: "lobby"
 arena_name: "arena"
