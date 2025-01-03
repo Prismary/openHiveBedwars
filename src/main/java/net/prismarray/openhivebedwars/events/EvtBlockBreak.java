@@ -60,17 +60,5 @@ public class EvtBlockBreak extends EventBase {
                 .collect(Collectors.toList());
 
         event.blockList().removeAll(toCancel);
-
-        if (event.getEntity().hasMetadata("placingPlayer")) {
-
-            Player p = (Player) event.getEntity().getMetadata("placingPlayer").get(0).value();
-            toCancel.stream()
-                    .filter(block -> block.getType() == Material.BED_BLOCK)
-                    .forEach(
-                            block -> ((CraftPlayer) p).getHandle().playerInteractManager.breakBlock(
-                                    new BlockPosition(block.getX(), block.getY(), block.getZ())
-                            )
-                    );
-        }
     }
 }
