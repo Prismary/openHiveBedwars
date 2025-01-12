@@ -6,7 +6,9 @@ If you would like to contribute to this project, you need to obtain all project 
 repository to your machine and setting up an IDE of your choice. This project uses Maven to handle dependencies, 
 so as long as you have unrestricted access to the internet, you should be fine for the most part. However, due to 
 licensing issues with compiled artifacts of Spigot (or Bukkit) server JAR files, you will need to compile those 
-manually and add them to your local Maven repository.
+manually and add them to your local Maven repository. If you have not installed Maven on your machine already, you 
+need to do so before proceeding further. A guide for installing Maven can be found 
+[here](https://maven.apache.org/install.html).
 
 Fortunately, there is a tool which makes this easy to do: [BuildTools](https://www.spigotmc.org/wiki/buildtools/) 
 enables you to automatically download and build any required server artifact (this project requires 
